@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+
+        <h:panelGroup layout="block" class="Container Wid100" id="datos-liquidacion">
+            <h:panelGroup layout="block" class="Container Wid100 MarTop10">
+                <div class="Container100">
+                    <h1 class="BigTopic Fs15">Datos de liquidaci&oacute;n</h1>                    
+                    <h:panelGroup layout="block" class="Container Wid100 MarTop10">
+                        <p:panelGrid style="border: 2px #761c19 solid; width: 400px; float: left; padding: 15px; border-radius: 20px;" rendered="#{consultasView.predioSeleccionado.tipoPropiedad != 2}">
+                            <p:row>
+                                <p:column colspan="3" class="FontBold">Dirección:</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column style="text-align: left" colspan="3">
+                                    #{consultasView.predioSeleccionado.terreno.barrio}
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column style="text-align: left" colspan="3">&nbsp;</p:column>
+                            </p:row>
+                            <tr class="ui-datatable-odd">
+                                <td style="width:170px;border-bottom: 1px #E3C6C5 solid !important;" class="FontBold">A&ntilde;o:</td>
+                                <td style="text-align: right; width:85px;border-bottom: 1px #E3C6C5 solid !important;" class="FontBold">#{consultasView.anioEmision -1}</td>
+                                <td style="text-align: right; width:85px;border-bottom: 1px #E3C6C5 solid !important;" class="FontBold">#{consultasView.anioEmision}</td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">&Aacute;rea del Terreno:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.areaTerreno}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.areaTerreno}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr  style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Valor del m&sup2; de Terreno:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.valorMetro()}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.valorMetro()}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr  style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Aval&uacute;o del Terreno:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.avaluoTerreno}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.avaluoTerreno}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">&Aacute;rea de Edificación:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.areaConstruccion}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.areaConstruccion}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Aval&uacute;o de Edificación:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.avaluoEdificacion}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.avaluoEdificacion}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Obras Complementarias:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.avaluoComplementarias}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.avaluoComplementarias}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Avalúo Predial:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.avaluoPredial}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.avaluoPredial}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Exenciones:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.exenciones}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.exenciones}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Base Imponible:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.baseImponible}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.baseImponible}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Banda impositiva:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.bandaImpositiva}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.bandaImpositiva}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Impuesto Predial:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.impuestoPredial}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.impuestoPredial}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Servicios administrativos:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.tasa}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.tasa}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Bomberos:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.bombero}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.bombero}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Recargo Pers. Jur&iacute;dica:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.recargoPersonasJuridicas}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.recargoPersonasJuridicas}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">CEM:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.cem}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.cem}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Solar No Edificado:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.solarNoEdificado}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.solarNoEdificado}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Salud y seguridad ciudadana:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.saludSeguridad}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.saludSeguridad}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Servicios administrativos:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.tasa}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.tasa}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Vetustez:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.vetustez}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.vetustez}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">No edif. Zona promoci&oacute;n:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.noEdificadoZonaPromo}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.noEdificadoZonaPromo}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Total a pagar:</td>
+                                <td>
+                                    <h:outputText value="#{consultasView.impuestoPredialAnterior.total}" class="Fright FontBold">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{consultasView.impuestoPredial.total}" class="Fright FontBold">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <p:row>
+                                <p:column colspan="3">&nbsp;</p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <p:panel style="border: 2px #761c19 solid; width: 400px; height: 530px;float: left; padding: 15px; border-radius: 20px;text-align: center; background-color: white;" rendered="#{consultasView.predioSeleccionado.tipoPropiedad == 2}">
+                            <span style="margin-top: 200px; font-size: 30px; display: block;">
+                                FICHA MADRE
+                            </span>
+                        </p:panel>
+
+                        <p:panelGrid style="border: 2px #761c19 solid; width: 650px; float: right; padding: 15px; border-radius: 20px;">
+                            <p:row>
+                                <p:column class="FontBold">Datos de infraestructura:</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>&nbsp;</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid class="ui-datatable">
+                                        <p:row class="FontBold TexAlCenter ui-datatable-odd">
+                                            <p:column style="width:300px;border-bottom: 1px #E3C6C5 solid !important;">Rubro</p:column>
+                                            <p:column style="width:250px;border-bottom: 1px #E3C6C5 solid !important;">Indicador</p:column>
+                                            <p:column style="width:115px;border-bottom: 1px #E3C6C5 solid !important;">Coeficiente</p:column>
+                                        </p:row>
+
+                                        <ui:repeat value="#{consultasView.creaListaInfraestructura()}" var="infra">
+
+                                            <tr style="border-bottom: 1px #E3C6C5 solid !important;#{infra.bolt== true ? 'background: #dedede;': ''}">
+                                                <td class="TexAlLeft FontBold">#{infra.descripcion}</td>
+                                                <td class="TexAlCenter #{infra.bolt== true ? 'FontBold': ''}">#{infra.existencia}</td>
+                                                <td class="TexAlRight">
+                                                    <h:outputText value="#{infra.coeficiente == -1 ? '': infra.coeficiente}">
+
+                                                    </h:outputText>
+                                                </td>
+                                            </tr>
+
+                                        </ui:repeat>
+
+                                    </p:panelGrid>
+
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </h:panelGroup>
+                    <h:panelGroup layout="grid" class="Container Wid100 MarTop10">
+                        <h1 class="BigTopic Fs15">Datos de las edificaciones</h1>
+                        <hr/>
+                        <p:dataTable var="bloque" value="#{consultasView.creaListaBloques()}">
+                            <p:column style="width:16px">
+                                <p:rowToggler />
+                            </p:column>
+                            <p:column headerText="Nro Bloque">
+                                <h:outputText value="#{bloque.numeroBloque}" />
+                            </p:column>
+                            <p:column headerText="&Aacute;rea total">
+                                <h:outputText value="#{bloque.areaTotal}" />
+                            </p:column>
+                            <p:column headerText="Estructura">
+                                <h:outputText value="#{bloque.estructura}" />
+                            </p:column>                          
+                            <p:column headerText="Valor Base">
+                                <h:outputText value="#{bloque.valorBase}" />
+                            </p:column>
+                            <p:column headerText="Nro Niveles">
+                                <h:outputText value="#{bloque.numeroPisos}" />
+                            </p:column>
+                            <p:column headerText="Coef Estruct/Nivel">
+                                <h:outputText value="#{bloque.coefEstNivel}" />
+                            </p:column>
+                             <p:column headerText="Coef Acabados">
+                                 <h:outputText value="#{bloque.coefAcabados}" />
+                            </p:column>
+                            <p:column headerText="Aval&uacute;o">
+                                <h:outputText value="#{bloque.avaluo}">
+                                    <f:convertNumber type="currency" currencySymbol="" />
+                                </h:outputText>
+                            </p:column>
+                            <p:rowExpansion>
+                                <p:panelGrid style="border: 2px #761c19 solid; padding: 15px; border-radius: 20px; margin-top: 15px;">
+                                    <p:row>
+                                        <p:column>
+                                            <p:panelGrid class="ui-datatable Wid100">
+                                                <p:row class="FontBold TexAlCenter ui-datatable-odd">
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Sobrepiso</p:column>
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Coef</p:column>
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Revestimiento</p:column>
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Coef</p:column>
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Cubierta</p:column>
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Coef</p:column>
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Ventanas</p:column>
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Coef</p:column>
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Edad</p:column>
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Estado</p:column>
+                                                    <p:column style="border-bottom: 1px #E3C6C5 solid !important;">Coef</p:column>
+                                                </p:row>
+
+                                                <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                                    <td class="TexAlCenter">#{bloque.sobrepiso}</td>
+                                                    <td class="TexAlCenter">#{bloque.coefSobrepiso}</td>
+                                                    <td class="TexAlCenter">#{bloque.revestimiento}</td>
+                                                    <td class="TexAlCenter">#{bloque.coefRevestimiento}</td>
+                                                    <td class="TexAlCenter">#{bloque.cubierta}</td>
+                                                    <td class="TexAlCenter">#{bloque.coefCubierta}</td>
+                                                    <td class="TexAlCenter">#{bloque.ventanas}</td>
+                                                    <td class="TexAlCenter">#{bloque.coefVentanas}</td>
+                                                    <td class="TexAlCenter">#{bloque.edad}</td>
+                                                    <td class="TexAlCenter">#{bloque.estado}</td>
+                                                    <td class="TexAlCenter">#{bloque.coefEdadEstado}</td>
+                                                </tr>
+
+                                            </p:panelGrid>
+
+                                        </p:column>
+                                    </p:row>
+                                </p:panelGrid>
+                            </p:rowExpansion>
+                        </p:dataTable>
+
+                    </h:panelGroup>
+                    <!--                    <div style="width: 1px;height: 1px;clear: both;"></div>-->
+
+                </div>
+            </h:panelGroup>
+
+        </h:panelGroup>
+    </ui:composition>
+</html>

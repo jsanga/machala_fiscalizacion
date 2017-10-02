@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="../../WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Ingreso de Ficha Resumen"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form>
+                <div class="Container100">
+                    <div class="ContainerIndent">
+                        <div class="Card whiteback">
+                            <h1 class="BigTopic Fs16">Factores para la creación de tipologías</h1>
+                            <p:tabView style="margin-top: 15px;">
+                                <p:tab title="Equipo">
+                                    <p:commandButton title="Adicionar"
+                                        id="adicionar-btn-1" 
+                                        icon="fa fa-plus white" actionListener="#{tipologiasView.nuevoRegistro(2)}"
+                                        value="Adicionar"
+                                        />
+                                    <p:dataTable id="dtEquipo" value="#{tipologiasView.equipos}" rows="5" var="equipo" lazy="true"
+                                                paginatorPosition="bottom"
+                                                paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                rowsPerPageTemplate="5,10,15,20">
+                                        
+                                        <p:column headerText="Código" style="text-align: center">
+                                            #{equipo.codigo}
+                                        </p:column>
+
+                                        <p:column headerText="Descripción" style="text-align: center">
+                                            #{equipo.descripcion}
+                                        </p:column>
+
+                                        <p:column headerText="Acción" style="text-align: center">
+                                            <p:commandLink value="Ver Detalles"/>
+                                            <h:outputText value=" / "/>
+                                            <p:commandLink value="Editar"/>
+                                            <h:outputText value=" / "/>
+                                            <p:commandLink value="Eliminar" rendered="#{equipo.estado}"/>
+                                            <p:commandLink value="Habilitar" rendered="#{!equipo.estado}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+
+                                <p:tab title="Material">
+                                    <p:commandButton title="Adicionar"
+                                        id="adicionar-btn-2" 
+                                        icon="fa fa-plus white" actionListener="#{tipologiasView.nuevoRegistro(3)}"
+                                        value="Adicionar"
+                                        />
+                                    <p:dataTable id="dtMaterial" value="#{tipologiasView.materiales}" rows="5" var="material" lazy="true">
+                                        <p:column headerText="Código" style="text-align: center">
+                                            #{material.codigo}
+                                        </p:column>
+
+                                        <p:column headerText="Descripción" style="text-align: center">
+                                            #{material.descripcion}
+                                        </p:column>
+
+                                        <p:column headerText="Acción" style="text-align: center">
+                                            <p:commandLink value="Ver Detalles"/>
+                                            <h:outputText value=" / "/>
+                                            <p:commandLink value="Editar"/>
+                                            <h:outputText value=" / "/>
+                                            <p:commandLink value="Eliminar" rendered="#{material.estado}"/>
+                                            <p:commandLink value="Habilitar" rendered="#{!material.estado}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+
+                                <p:tab title="Personal" >
+                                    <p:commandButton title="Adicionar"
+                                        id="adicionar-btn-3" 
+                                        icon="fa fa-plus white" actionListener="#{tipologiasView.nuevoRegistro(1)}"
+                                        value="Adicionar"
+                                        />
+                                    <p:dataTable id="dtPersonal" value="#{tipologiasView.personal}" rows="5" var="personal" lazy="true">
+                                        <p:column headerText="Código" style="text-align: center">
+                                            #{personal.codigo}
+                                        </p:column>
+
+                                        <p:column headerText="Descripción" style="text-align: center">
+                                            #{personal.descripcion}
+                                        </p:column>
+
+                                        <p:column headerText="Acción" style="text-align: center">
+                                            <p:commandLink value="Ver Detalles"/>
+                                            <h:outputText value=" / "/>
+                                            <p:commandLink value="Editar"/>
+                                            <h:outputText value=" / "/>
+                                            <p:commandLink value="Eliminar" rendered="#{personal.estado}"/>
+                                            <p:commandLink value="Habilitar" rendered="#{!personal.estado}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:tab>
+                            </p:tabView>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+            
+            <!-- -->
+        
+            <p:dialog id="idPersonal" modal="true" resizable="false" appendTo="@(body)" widgetVar="idPersonal"
+                      header="Personal" style="width: 600px;">
+                <h:form id="idFrmPersonal">
+                    <p:panelGrid columns="3">
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="codigo" value="Código:" class="DispBlock Wid100"/>
+                            <p:inputText id="codigo" value="#{tipologiasView.personal_n.codigo}" class="input_200"
+                                         required="true" requiredMessage="Se requiere el nombre del integrante." onkeypress="focusNextOnEnter(event, 'official_lastname')"/>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="descripcion" value="Descripción:" class="DispBlock Wid100"/>
+                            <p:inputText id="descripcion" value="#{tipologiasView.personal_n.descripcion}" class="input_200"
+                                         required="true" requiredMessage="Se requiere el nombre del integrante." onkeypress="focusNextOnEnter(event, 'official_lastname')"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="categoria" value="Categoría:" class="DispBlock Wid100"/>
+                            <p:inputText id="categoria" value="#{tipologiasView.personal_n.categ}" class="input_200"
+                                         required="true" requiredMessage="Se requiere el nombre del integrante." onkeypress="focusNextOnEnter(event, 'official_lastname')"/>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="srh" value="S.R.H.:" class="DispBlock Wid100"/>
+                            <p:inputText id="srh" value="#{tipologiasView.personal_n.srh}" class="input_200"
+                                         required="true" requiredMessage="Se requiere el nombre del integrante." onkeypress="focusNextOnEnter(event, 'official_lastname')"/>
+                        </h:panelGroup>
+                        
+                        <h:panelGroup layout="block">
+                            <var:varDisInputText id="id_inec" label="INEC:"
+                                             table="comun" column="inec"
+                                             bind="#{tipologiasView.personal_n.inec}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             labelPosition="top"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <p:commandButton value="Aceptar" id="aceptar"  icon="fa fa-save" style="float: right"
+                                             onclick="PF('idPersonal').hide();"
+                                             class="white"/>
+                    <p:commandButton value="Cancelar" id="cancelar"  icon="fa fa-ban" style="float: right"
+                                             onclick="PF('idPersonal').hide();"
+                                             class="white"/>
+                </h:form>
+            </p:dialog>
+
+            <!-- -->
+
+            <p:dialog id="idEquipo" modal="true" resizable="false" appendTo="@(body)" widgetVar="idEquipo"
+                      header="Equipo" style="width: 600px;">
+                <h:form id="idFrmEquipo">
+
+                </h:form>
+            </p:dialog>
+
+            <!-- -->
+
+            <p:dialog id="idMaterial" modal="true" resizable="false" appendTo="@(body)" widgetVar="idMaterial"
+                      header="Material" style="width: 600px;">
+                <h:form id="idFrmMaterial">
+
+                </h:form>
+            </p:dialog>
+
+        </ui:define>        
+    </ui:composition>
+</html>

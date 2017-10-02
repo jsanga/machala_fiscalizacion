@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <h1 class="BigTopic Fs16">Datos del bloque Nro. #{updateConstruccionView.bloqueSeleccionado.numeroBloque}</h1>
+            <hr></hr>
+            
+            <p:fieldset legend="Usos del suelo para el bloque Nro. #{updateConstruccionView.bloqueSeleccionado.numeroBloque}" toggleable="true" toggleSpeed="500" >
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent Container100">
+                        <h:panelGroup layout="block" class="actions" id="usos-suelo-update">
+                            <p:commandButton title="Adicionar uso"
+                                             id="nuevo-uso-btn"  styleClass="Fs16" update="usos-dlg,usos-form" 
+                                             icon="fa fa-plus white" actionListener="#{updateConstruccionView.initNuevoUso()}"
+                                             process="@this,usos-suelo-update"
+                                             value="Adicionar"
+                                             class="Fleft"
+                                             oncomplete="PF('usosDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                             style="margin-right: 10px; margin-bottom: 5px;"/>
+                            
+                            <p:commandButton title="Eliminar"
+                                             id="eliminar-uso-btn" styleClass="Fs16"
+                                             icon="fa fa-trash white" actionListener="#{updateConstruccionView.eliminarUso()}"
+                                             class="Fleft"
+                                             process="@this"
+                                             update="usos-list,usos-dataTable,usos-suelo-update"
+                                             disabled="#{updateConstruccionView.usosSuelo.size() == 0}"
+                                             value="Eliminar">
+                                <p:confirm header="Confirmación" message="Está seguro de eliminar el uso del suelo #{updateConstruccionView.usoSeleccionado.valorDiscreto.texto} del grupo #{updateConstruccionView.usoSeleccionado.valorDiscreto.variable.nombre}.?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:outputLabel value="El terreno no tiene uso del suelo seleccionado." class="Fleft Fs16 FontBold" rendered="#{updateConstruccionView.predio.terreno.usoSuelo == 0}" style="margin-top: 8px; margin-left: 20px; color: red !important;"/>
+                        </h:panelGroup>
+                    </div>
+                    <div class="ContainerIndent Container100 MarBot10" id="usos-suelo">
+                        <h:panelGroup layout="block" class="actions" id="usos-list">
+                            <p:dataTable id="usos-dataTable" var="uso" value="#{updateConstruccionView.usosSuelo}" selection="#{updateConstruccionView.usoSeleccionado}" rowKey="#{uso.cod}" style="margin-bottom:0"
+                                         rows="5" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15"
+                                         paginatorPosition="bottom" selectionMode="single"
+                                         emptyMessage="No existen usos del suelo registrados al bloque.">
+
+                                <p:ajax event="rowSelect" listener="#{updateConstruccionView.onRowSelectUso}" update="usos-dataTable,usos-suelo-update" />
+                                <p:ajax event="rowUnselect" listener="#{updateConstruccionView.onRowUnselectUso}" update="usos-dataTable,usos-suelo-update" />
+                                <p:column headerText="Grupo">
+                                    <h:outputText value="#{uso.valorDiscreto.variable.nombre}"  />
+                                </p:column>
+                                <p:column headerText="C&oacute;digo">
+                                    <h:outputText value="#{uso.cod}"  />
+                                </p:column>
+                                <p:column headerText="Uso del suelo">
+                                    <h:outputText value="#{uso.valorDiscreto.texto}"  />
+                                </p:column>
+                            </p:dataTable>
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+            </p:fieldset>                        
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Responsive50 Container100">                                       
+                <p:fieldset legend="Caraster&iacute;sticas de la edificaci&oacute;n" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="DatosEstructuraTbl">
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="bloq_nro_bloque" value="Nro del bloque:" class="DispBlock Wid100" />
+                            <p:inputText id="bloq_nro_bloque" value="#{updateConstruccionView.bloqueSeleccionado.numeroBloque}"
+                                         class="input_180" disabled="true">
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="bloq_nro_niveles" value="Nro de niveles:" class="DispBlock Wid100" />
+                            <p:inputText id="bloq_nro_niveles" value="#{updateConstruccionView.bloqueSeleccionado.numeroNiveles}"
+                                         class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'bloq_area_permiso')">
+                                <p:ajax event="keyup" update="bloque-form" />
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="bloq_area_permiso" value="&Aacute;rea seg&uacute;n permiso:" class="DispBlock Wid100" />
+                            <p:inputText id="bloq_area_permiso" value="#{updateConstruccionView.bloqueSeleccionado.areaPermiso}"
+                                         class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'bloq_etapa_construccion:cat_bloque-etapa_construccion-input')"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="bloq_area_levantamiento" value="&Aacute;rea seg&uacute;n levantamiento:" class="DispBlock Wid100" />
+                            <p:inputText id="bloq_area_levantamiento" value="#{updateConstruccionView.bloqueSeleccionado.areaTotal}" disabled="true"
+                                         class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'bloq_etapa_construccion:cat_bloque-etapa_construccion-input')">
+                                    <f:convertNumber pattern="#0.00" /> 
+                            </p:inputText>
+                        </h:panelGroup>
+                        <var:varDisInputText id="bloq_etapa_construccion" label="Etapas de construcci&oacute;n:" 
+                                             table="cat_bloque" column="etapa_construccion" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.etapaConstruccion}"
+                                             showlabel="true"   
+                                             defaultValue="3"
+                                             changeOnEnter="true"
+                                             next="bloq_edad:cat_bloque-edad_edificacion-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_edad" label="Edad edificaci&oacute;n:" 
+                                             table="cat_bloque" column="edad_edificacion" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.edadEdificacion}"
+                                             showlabel="true"   
+                                             defaultValue="3"
+                                             changeOnEnter="true"
+                                             next="bloq_estado_conservacion:cat_bloque-estado_conservacion-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_estado_conservacion" label="Estado conservaci&oacute;n:" 
+                                             table="cat_bloque" column="estado_conservacion" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.estadoConservacion}"
+                                             showlabel="true"   
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="bloq_estructura:cat_bloque-estructura-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_estructura" label="Estructura:" 
+                                             table="cat_bloque" column="estructura" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.estructura}"
+                                             showlabel="true"   
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="bloq_paredes:cat_bloque-paredes-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_paredes" label="Paredes:" 
+                                             table="cat_bloque" column="paredes" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.paredes}"
+                                             showlabel="true"   
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="bloq_pisos:cat_bloque-pisos-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_pisos" label="Piso:" 
+                                             table="cat_bloque" column="pisos" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.piso}"
+                                             showlabel="true"   
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="bloq_sobrepiso:cat_bloque-sobrepiso-input"
+                                             labelPosition="top"/>
+
+                    </h:panelGrid>
+
+                </p:fieldset>                                      
+            </div>                                   
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Responsive50 Container100">                                       
+                <p:fieldset legend="Acabados" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="DatosEstructuraTbl">
+
+                        <var:varDisInputText id="bloq_sobrepiso" label="Sobrepiso:" 
+                                             table="cat_bloque" column="sobrepiso" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.sobrepiso}"
+                                             showlabel="true"   
+                                             defaultValue="5"
+                                             changeOnEnter="true"
+                                             next="bloq_revestimiento:cat_bloque-revestimiento-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_revestimiento" label="Revestimiento ext./inter.:" 
+                                             table="cat_bloque" column="revestimiento" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.revestimiento}"
+                                             showlabel="true"   
+                                             defaultValue="6"
+                                             changeOnEnter="true"
+                                             next="bloq_tumbado:cat_bloque-tumbado-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_tumbado" label="Tumbado:" 
+                                             table="cat_bloque" column="tumbado" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.tumbado}"
+                                             showlabel="true"   
+                                             defaultValue="6"
+                                             changeOnEnter="true"
+                                             next="bloq_cubierta:cat_bloque-cubierta-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_cubierta" label="Cubierta:" 
+                                             table="cat_bloque" column="cubierta" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.cubierta}"
+                                             showlabel="true"   
+                                             defaultValue="7"
+                                             changeOnEnter="true"
+                                             next="bloq_ventana:cat_bloque-ventana-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_ventana" label="Ventana:" 
+                                             table="cat_bloque" column="ventana" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.ventana}"
+                                             showlabel="true"   
+                                             defaultValue="6"
+                                             changeOnEnter="true"
+                                             next="bloq_vidrios:cat_bloque-vidrios-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_vidrios" label="Vidrios:" 
+                                             table="cat_bloque" column="vidrios" 
+                                             bind="#{updateConstruccionView.bloqueSeleccionado.vidrio}"
+                                             showlabel="true"   
+                                             defaultValue="5"
+                                             changeOnEnter="true"
+                                             next="bloq_us_habitacional:cat_bloque-us_habitacional-input"
+                                             labelPosition="top"/>
+
+                    </h:panelGrid>
+
+                </p:fieldset>                                      
+            </div>                                   
+        </h:panelGroup>
+         <h:panelGroup layout="block" class="Wid100 MarTop10 Container">
+
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h:panelGroup layout="block" class="Responsive Container50">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs16">Adicionar y eliminar nuevas fotos</h1>
+                        <p:fileUpload fileUploadListener="#{updateConstruccionView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                      multiple="true" fileLimit="15" allowTypes="/(\.|\/)(gif|jpe?g|png|tif)$/"
+                                      cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="image-upload-view,image-preview"/>
+                        <h:panelGroup layout="block" id="image-upload-view">
+                            <table>
+                                <tbody>
+                                    <c:forEach var="foto" items="#{updateConstruccionView.fotos}" varStatus="loop">
+                                        <c:if test="#{not empty updateConstruccionView.fotos}">
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel value="#{loop.index +1}" class="Fs14" style="font-weight: bold;"/>
+                                                </td>
+                                                <td>
+                                                    <h:graphicImage  width="95" height="95" url="#{foto.pathToFile}"/>
+                                                </td>
+                                                <td>
+                                                    <p:inputText maxlength="255" value="#{foto.description}"/>
+                                                </td>
+                                                <td class="column-photo-actions">
+                                                    <p:commandButton icon="fa fa-trash-o white" actionListener="#{updateConstruccionView.eliminarFoto(loop.index)}" update="image-upload-view,image-preview" process="@this">
+                                                        <p:confirm header="Confirmación" message="Está seguro de eliminar la Foto Nro #{loop.index +1}?" icon="ui-icon-alert" />
+                                                    </p:commandButton>
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                    </p:confirmDialog>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="Responsive Container50">
+                    <h:panelGroup layout="block" id="image-actual-view">
+                        <div class="ContainerIndent">
+                            <h1 class="BigTopic Fs16">Eliminar fotos actuales</h1>
+
+                            <h:panelGrid columns="8" width="100%">
+                                <c:forEach var="actual" items="#{updateConstruccionView.fotosPreview}" varStatus="loop">
+                                    <h:panelGroup layout="block" style="vertical-align: middle; text-align: center;">
+                                        <h:graphicImage  width="90" height="90" url="#{actual.ruta}"/>
+                                        <div style="clear: both"></div>
+                                        <p:selectBooleanCheckbox value="#{actual.eliminado}">
+                                            <p:ajax update="image-preview,image-actual-view" listener="#{updateConstruccionView.selectFotoEliminar(actual.idArchivo)}" />
+                                        </p:selectBooleanCheckbox>
+                                    </h:panelGroup>.
+                                </c:forEach>
+                            </h:panelGrid>
+
+                        </div>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarBot10">
+            <h:panelGroup layout="block" class="Responsive Container100">
+                <div class="ContainerIndent">
+                    <h1 class="BigTopic Fs16">Clic sobre la foto para visualizarla a tamaño original</h1>
+
+                    <h:panelGroup layout="block" id="image-preview">
+                        <p:outputLabel style="margin-left: 30px;" value="No se han registrado fotos al predio." rendered="#{empty updateConstruccionView.fotos and empty updateConstruccionView.fotosPreview}"/>
+                        <p:lightBox styleClass="imagebox" id="lighbox4">
+                            <c:forEach var="foto1" items="#{updateConstruccionView.fotosPreview}" varStatus="loop">
+                                <h:outputLink value="#{foto1.ruta}" class="MarRight20 Fleft" rendered="#{!foto1.eliminado}">
+                                    <h:graphicImage url="#{foto1.ruta}" width="150" height="150" title="Fotos del predio"/>
+                                </h:outputLink>
+                            </c:forEach>
+                            <c:forEach var="foto" items="#{updateConstruccionView.fotos}" varStatus="loop">
+                                <c:if test="#{not empty updateConstruccionView.fotos}">
+                                    <h:outputLink value="#{foto.pathToFile}" class="MarRight20 Fleft" >
+                                        <h:graphicImage url="#{foto.pathToFile}" width="150" height="150" title="Fotos del predio"/>
+                                    </h:outputLink>
+                                </c:if>
+                            </c:forEach>                                 
+                        </p:lightBox>
+
+                    </h:panelGroup>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20" style="margin-bottom: 20px;">
+
+            <p:commandButton id="cancelar-bloque-btn"
+                             class="Fleft MarRight20"
+                             value="Cancelar"  
+                             update="datosConstruccion,bloque-form,piso-list-form,datosConstruccionMessages"
+                             icon="fa fa-ban white" action="#{updateConstruccionView.cancelarCreacionBloque()}"
+                             process="@this"
+                             />
+            <p:commandButton id="guardar-bloque-btn"
+                             class="Fright"
+                             value="Guardar"  
+                             process="@this,bloque-form,piso-list-form"
+                             update="datosConstruccion,piso-list-form,bloque-form,datosConstruccionMessages" 
+                             icon="fa fa-save white" action="#{updateConstruccionView.crearBloque}"
+                             />
+        </h:panelGroup>   
+
+
+        <p:dialog id="datos-piso-dlg" widgetVar="datosPisoDialog" 
+                  modal="true" resizable="false"
+                  header="Datos del piso">   
+            <p:ajax event="close" update="piso-list-form" listener="#{updateConstruccionView.cancelarCreacionPiso}" />
+            <h:form id="datos-piso-form" prependId="false">
+                <p:messages id="datos-piso-messages" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                <h:panelGrid columns="2">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="area_piso" value="&Aacute;rea:" class="DispBlock"/>
+                        <p:inputText id="area_piso" 
+                                     required="true"
+                                     class="Wid70"
+                                     value="#{updateConstruccionView.pisoSeleccionado.area}" 
+                                     onkeypress="validateFloatValueAndFocusNext(event, 'crear-piso-btn')"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="&nbsp;" class="DispBlock"/>
+                        <p:commandButton id="crear-piso-btn" 
+                                         icon="fa fa-save" styleClass="white Fright" value="#{updateConstruccionView.creandoPiso ? 'Guardar' : 'Actualizar'}"
+                                         process="@this,area_piso"
+                                         actionListener="#{updateConstruccionView.guardarPiso}"
+                                         update="datosConstruccion,bloque-form,datosConstruccionMessages"
+                                         oncomplete="PF('datosPisoDialog').hide();"/>
+
+                    </h:panelGroup>
+
+                </h:panelGrid>
+
+            </h:form>
+        </p:dialog>
+
+        <ui:include src="_formUsoSuelo.xhtml"/>
+    </ui:composition>
+</html>

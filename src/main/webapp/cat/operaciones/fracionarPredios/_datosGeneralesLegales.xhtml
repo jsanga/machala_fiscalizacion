@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" style="margin-bottom: 10px;">
+            <h1 class="BigTopic Fs16">Datos generales del predio</h1>
+            <hr></hr>
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Datos del predio" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="clave_anterior_f" value="Clave anterior:" class="DispBlock Wid100"/>
+                                <p:inputText id="clave_anterior_f" value="#{fraccionarPredioView.predio.claveAnterior}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'barrio_f')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="barrio_f" value="Sitio/Barrio/Cooperativa/Urb.:" class="DispBlock Wid100"/>
+                                <p:inputText id="barrio_f" value="#{fraccionarPredioView.terreno.barrio}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'cat_predio_manzana_f')"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_manzana_f" value="Manzana:" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_predio_manzana_f" value="#{fraccionarPredioView.predio.manzana}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nro_personas')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_personas" value="Nro personas habitan:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_personas" value="#{fraccionarPredioView.predio.nroPersonasHabitan}"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'tipo_propiedad:cat_predio-tipo_propiedad-input')"/>
+                            </h:panelGroup>
+                            <var:varDisInputText id="tipo_propiedad" label="Tipo propiedad:"
+                                                 table="cat_predio" column="tipo_propiedad"
+                                                 bind="#{fraccionarPredioView.predio.tipoPropiedad}"
+                                                 showlabel="true"
+                                                 changeOnEnter="true"
+                                                 defaultValue="3"
+                                                 next="origen:cat_predio-origen-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="origen" label="Origen:"
+                                                 table="cat_predio" column="origen"
+                                                 bind="#{fraccionarPredioView.predio.origen}"
+                                                 showlabel="true"
+                                                 defaultValue="1"
+                                                 changeOnEnter="true"
+                                                 next="dominio:cat_predio-dominio-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="dominio" label="Dominio:"
+                                                 table="cat_predio" column="dominio"
+                                                 bind="#{fraccionarPredioView.predio.dominio}"
+                                                 showlabel="true"
+                                                 defaultValue="1"
+                                                 changeOnEnter="true"
+                                                 next="permitieron_ingreso:comun-si_no-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="permitieron_ingreso" label="Permitieron ingreso:"
+                                                 table="comun" column="si_no"
+                                                 bind="#{fraccionarPredioView.predio.permitieronIngreso}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                 changeOnEnter="true"
+                                                 next="calle1"
+                                                 labelPosition="top"/>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Datos de localizaci&oacute;n" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle1" value="Calle 1:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle1" value="#{fraccionarPredioView.terreno.dirCalle1}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'calle2')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle2" value="Calle 2:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle2" value="#{fraccionarPredioView.terreno.dirCalle2}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'calle3')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle3" value="Calle 3:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle3" value="#{fraccionarPredioView.terreno.dirCalle3}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'calle4')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle4" value="Calle 4:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle4" value="#{fraccionarPredioView.terreno.dirCalle4}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nomenclatura1')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura1" value="Nomenclatura calle 1:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura1" value="#{fraccionarPredioView.terreno.dirNomenclatura1}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nomenclatura2')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura2" value="Nomenclatura calle 2:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura2" value="#{fraccionarPredioView.terreno.dirNomenclatura2}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nomenclatura3')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura3" value="Nomenclatura calle 3:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura3" value="#{fraccionarPredioView.terreno.dirNomenclatura3}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nomenclatura4')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura4" value="Nomenclatura calle 4:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura4" value="#{fraccionarPredioView.terreno.dirNomenclatura4}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nro_predio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_predio" value="Nro predio:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_predio" value="#{fraccionarPredioView.predio.nroPredio}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nro_dpto')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_dpto" value="Nro departamento:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_dpto" value="#{fraccionarPredioView.predio.nroDepartamento}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nro_piso')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_piso" value="Nro piso:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_piso" value="#{fraccionarPredioView.predio.nroPiso}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nro_bloque')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_bloque" value="Nro bloque:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_bloque" value="#{fraccionarPredioView.predio.nroBloque}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nombre_edificio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nombre_edificio" value="Nombre edificio:" class="DispBlock Wid100"/>
+                                <p:inputText id="nombre_edificio" value="#{fraccionarPredioView.predio.nombreEdificio}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'cat_predio_direccion')"/>
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container100 Wid100" style="margin-bottom: 20px;">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Observaciones" toggleable="true" toggleSpeed="500" >
+                        <p:inputTextarea id="cat_predio-observacion" style="width: 97%" value="#{fraccionarPredioView.predio.observacion}"
+                                         onkeypress="focusNextOnEnter(event, 'wiz_next')"/>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Wid100 MarTop10 Container">
+
+                <h:panelGroup layout="block" class="Container Wid100">
+                    <h:panelGroup layout="block" class="Responsive Container50">
+                        <div class="ContainerIndent">
+                            <h1 class="BigTopic Fs16">Adicionar y eliminar nuevas fotos</h1>
+                            <p:fileUpload fileUploadListener="#{fraccionarPredioView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                          multiple="true" fileLimit="15" allowTypes="/(\.|\/)(gif|jpe?g|png|tif)$/"
+                                          cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="image-upload-view,image-preview"/>
+                            <h:panelGroup layout="block" id="image-upload-view">
+                                <table>
+                                    <tbody>
+                                        <c:forEach var="foto" items="#{fraccionarPredioView.datosFotos}" varStatus="loop">
+                                            <c:if test="#{not empty fraccionarPredioView.datosFotos[loop.index]}">
+                                                <tr>
+                                                    <td>
+                                                        <p:outputLabel value="#{loop.index +1}" class="Fs14" style="font-weight: bold;"/>
+                                                    </td>
+                                                    <td>
+                                                        <h:graphicImage  width="95" height="95" url="#{fraccionarPredioView.datosFotos[loop.index].data}"/>
+                                                    </td>
+                                                    <td>
+                                                        <p:inputText maxlength="255" value="#{fraccionarPredioView.datosFotos[loop.index].description}"/>
+                                                    </td>
+                                                    <td class="column-photo-actions">
+                                                        <p:commandButton icon="fa fa-trash-o white" actionListener="#{fraccionarPredioView.eliminarFoto(loop.index)}" update="image-upload-view,image-preview" process="@this">
+                                                            <p:confirm header="Confirmación" message="Está seguro de eliminar la Foto Nro #{loop.index +1}?" icon="ui-icon-alert" />
+                                                        </p:commandButton>
+                                                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                        </p:confirmDialog>
+                                                    </td>
+                                                </tr>
+                                            </c:if>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </h:panelGroup>
+                        </div>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" class="Responsive Container50">
+                        <h:panelGroup layout="block" id="image-actual-view">
+                            <div class="ContainerIndent">
+                                <h1 class="BigTopic Fs16">Eliminar fotos actuales</h1>
+
+                                <h:panelGrid columns="8" width="100%">
+                                    <c:forEach var="actual" items="#{fraccionarPredioView.fotosPreview}" varStatus="loop">
+                                        <h:panelGroup layout="block" style="vertical-align: middle; text-align: center;">
+                                            <h:graphicImage  width="90" height="90" url="#{actual.ruta}"/>
+                                            <div style="clear: both"></div>
+                                            <p:selectBooleanCheckbox value="#{actual.eliminado}">
+                                                <p:ajax update="image-preview,image-actual-view" listener="#{fraccionarPredioView.selectFotoEliminar(actual.idArchivo)}" />
+                                            </p:selectBooleanCheckbox>
+                                        </h:panelGroup>.
+                                    </c:forEach>
+                                </h:panelGrid>
+
+                            </div>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container Wid100 MarBot10">
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs16">Clic sobre la foto para visualizarla a tamaño original</h1>
+
+                        <h:panelGroup layout="block" id="image-preview">
+                            <p:outputLabel style="margin-left: 30px;" value="No se han registrado fotos al predio." rendered="#{empty fraccionarPredioView.fotos and empty fraccionarPredioView.fotosPreview}"/>
+                            <p:lightBox styleClass="imagebox" id="lighbox4">
+                                <c:forEach var="foto1" items="#{fraccionarPredioView.fotosPreview}" varStatus="loop">
+                                    <h:outputLink value="#{foto1.ruta}" class="MarRight20 Fleft" rendered="#{!foto1.eliminado}">
+                                        <h:graphicImage url="#{foto1.ruta}" width="150" height="150" title="Fotos del predio"/>
+                                    </h:outputLink>
+                                </c:forEach>
+                                <c:forEach var="foto" items="#{fraccionarPredioView.datosFotos}" varStatus="loop">
+                                    <c:if test="#{not empty fraccionarPredioView.datosFotos[loop.index]}">
+                                        <h:outputLink value="#{fraccionarPredioView.datosFotos[loop.index].data}" class="MarRight20 Fleft" >
+                                            <h:graphicImage url="#{fraccionarPredioView.datosFotos[loop.index].data}" width="150" height="150" title="Fotos del predio"/>
+                                        </h:outputLink>
+                                    </c:if>
+                                </c:forEach>                                 
+                            </p:lightBox>
+
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:panelGroup>
+    </ui:composition>
+</html>

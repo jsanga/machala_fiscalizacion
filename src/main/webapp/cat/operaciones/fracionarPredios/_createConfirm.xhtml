@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop20">
+            <h1 class="BigTopic Fs16">Datos del predio fraccionado</h1>
+            <hr></hr>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Wid100 MarTop10">
+            
+            <p:fieldset legend="Predio fraccionado" toggleable="true" toggleSpeed="500" >
+                <p:panelGrid columns="4">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Clave catastral: " class="show-detail" />
+                        <p:outputLabel  value="#{fraccionarPredioView.predio.claveCatastral}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Tipo de propiedad: " class="show-detail" />
+                        <p:outputLabel value="#{fraccionarPredioView.predio.tipoPropiedad}"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Cantidad de edificaciones: " class="show-detail" />
+                        <p:outputLabel  value="#{fraccionarPredioView.predio.bloques == null ? 0 : fraccionarPredioView.predio.bloques.size()}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Manzana: " class="show-detail" />
+                        <p:outputLabel  value="#{fraccionarPredioView.predio.manzana}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="&Aacute;rea terreno: " class="show-detail" />
+                        <p:outputLabel  value="#{fraccionarPredioView.terreno.areaLevantamiento} m&sup2;." />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Localizaci&oacute;n: " class="show-detail" />
+                        <p:outputLabel value="#{fraccionarPredioView.variablesService.obtenerValor('cat_terreno', 'ubicacion', fraccionarPredioView.predio.terreno.ubicacion, 2017)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Topograf&iacute;a: " class="show-detail" />
+                        <p:outputLabel value="#{fraccionarPredioView.variablesService.obtenerValor('cat_terreno', 'topografia', fraccionarPredioView.predio.terreno.topografia, 2017)}" />
+                    </h:panelGroup>
+                </p:panelGrid>
+                
+                <h:panelGroup layout="block" class="Container Wid100 MarBot10">
+                    <h:panelGroup layout="block" id="image-preview">
+                        <p:outputLabel style="margin-left: 30px;" value="No se han registrado fotos al predio." rendered="#{empty fraccionarPredioView.images}"/>
+                        <p:lightBox styleClass="imagebox" id="lighbox4">
+                            <c:forEach var="foto1" items="#{fraccionarPredioView.images}" varStatus="loop">
+                                <h:outputLink value="#{foto1}" class="MarRight20 Fleft" >
+                                    <h:graphicImage url="#{foto1}" width="150" height="150" title="Fotos del predio"/>
+                                </h:outputLink>
+                            </c:forEach>                          
+                        </p:lightBox>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </p:fieldset>
+            
+            <p:fieldset legend="Nuevos predios" toggleable="true" toggleSpeed="500" >
+                <p:dataTable value="#{fraccionarPredioView.prediosFinales}" var="p" >
+                    
+                    <p:column headerText="Clave Catastral">
+                        <h:outputText value="#{p.claveCatastral}" />
+                    </p:column>
+                    
+                    <p:column headerText="Tipo de Propiedad">
+                        <h:outputText value="#{p.tipoPropiedad}" />
+                    </p:column>
+                    
+                    <p:column headerText="# Edificaciones">
+                        <h:outputText value="#{p.bloques == null ? 0 : p.bloques.size()}" />
+                    </p:column>
+                    
+                    <p:column headerText="Manzana">
+                        <h:outputText value="#{p.manzana}" />
+                    </p:column>
+                    
+                    <p:column headerText="A. Terreno">
+                        <h:outputText value="#{p.terreno.areaLevantamiento}" />
+                    </p:column>
+                    
+                    <p:column headerText="A. Construccion">
+                        <h:outputText value="#{p.claveCatastral}" />
+                    </p:column>
+                    
+                </p:dataTable>
+            </p:fieldset>
+        </h:panelGroup>
+    </ui:composition>
+</html>

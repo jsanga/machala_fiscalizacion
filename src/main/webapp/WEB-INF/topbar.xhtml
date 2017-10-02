@@ -1,0 +1,38 @@
+<ui:composition
+
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pretty="http://ocpsoft.com/prettyfaces">
+
+    <div id="layout-topbar" class="ShadowGray" style="width: 1100px; margin: 0 auto; background-image: url('#{resource['images:banner.png']}');height: 130px;">
+        <div id="layout-topbar-indent">
+            <a href="#{request.contextPath}">
+                <h:graphicImage name="images/alcaldia-salinas.png" styleClass="Fleft" id="logo" class="Fleft"/></a>
+            <a href="#" id="mobile-menu-button" class="BordRad3 white ShowOnMobile"><i class="fa fa-bars"></i> Menu</a>
+            <a href="#" id="mobile-menu-button-gray" class="BordRad3 white ShowOnMobile"><i class="fa fa-caret-down"></i> Top Menu</a>
+
+            <ul id="layout-topbar-menu" class="cat-user-menu">
+                <li>
+                    <a href="#{request.contextPath}/logout" class="Animated05"><i class="fa fa-sign-out red"></i> Salir</a>
+                </li>
+                <h:form>
+                    <p:poll interval="#{sessionTimeBean.checkInterval}" listener="#{sessionTimeBean.checkAlive()}" />
+                </h:form>
+                <!--
+                <li class="fa fa-ellipsis-v menu-separator"></li>
+                <li>
+                    <a class="Animated05 CursPointer"><i class="fa fa-bell animated swing infinite red"></i> Notificaciones <span class="notification-bubble BordRad3 animated rubberBand">24</span> <i class="fa fa-chevron-down Fs14 Fright ShowOnMobile"></i></a>
+                    <ul style="width:200px; margin-left:-45px;" class="Animated03 submenu">
+                        <li><a href="#" class="Animated05"><i class="fa fa-th-large Fs16 red animated infinite rubberBand"></i> <span class="Fright Fs16 TexAlRight">Arrendamientos<span class="Fs10 DispBlock">Vencidos</span></span></a></li>
+                        <li><a href="#" class="Animated05"><i class="fa fa-th-large Fs16 black"></i> <span class="Fright Fs16 TexAlRight">Arrendamientos <span class="Fs10 DispBlock">Proximos a vencer</span></span></a></li>
+                    </ul>
+                </li>
+                -->
+            </ul>
+        </div>
+    </div>
+
+</ui:composition>

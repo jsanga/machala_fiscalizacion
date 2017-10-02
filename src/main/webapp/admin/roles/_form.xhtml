@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="rol-dlg" widgetVar="rolDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Definición de rol">   
+            <p:ajax event="close" update="rol-list-form" listener="#{rolAdminView.cancelarCreacionRol}" />
+            <h:panelGroup layout="block" rendered="#{rolAdminView.creandoRol or rolAdminView.editandoRol}">
+                <h:form id="rol-form" prependId="false">
+                    <!--<p:messages id="datos-rol-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />-->
+                    <p:messages id="datos-rol-messages" showDetail="true" autoUpdate="false" closable="true" />
+                    <h:panelGrid columns="2" class="Wid100">
+                        <h:panelGroup>
+                            <p:outputLabel for="rol_nombre" value="Nombre rol:" class="DispBlock Wid70"/> 
+                            <p:inputText id="rol_nombre" value="#{rolAdminView.rolSeleccionado.rol}" required="true"
+                                         onkeypress="focusNextOnEnter(event, 'rol_descripcion')" requiredMessage="Nombre requerido"/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:outputLabel for="rol_descripcion" value="Descripci&oacute;n" class="DispBlock Wid70"/> 
+                            <p:inputText id="rol_descripcion" value="#{rolAdminView.rolSeleccionado.descripcion}" required="true" class="input_200"
+                                         onkeypress="focusNextOnEnter(event, 'pickListPermisos')" requiredMessage="Descripci&oacute;n requerido"/>                             
+                        </h:panelGroup>                       
+                    </h:panelGrid>
+                    <p:pickList id="pickListPermisos" value="#{rolAdminView.permisos}" var="permiso" itemLabel="#{permiso.permiso}" itemValue="#{permiso}" converter="permisoConverter">
+                    <!--<p:ajax event="transfer" listener="#{rolAdminView.onTransfer}" update="msg" />-->
+                    </p:pickList>
+                    <h:panelGroup layout="block">
+                        <p:commandButton id="crear-rol-btn"  rendered="#{rolAdminView.creandoRol}"
+                                         icon="fa fa-save" styleClass="white Fright" value="Guardar"                                         
+                                         actionListener="#{rolAdminView.crearRol()}"
+                                         update="rol-list-form,rol-form"/>
+                        <p:commandButton id="actualizar-rol-btn" 
+                                         rendered="#{rolAdminView.editandoRol}"
+                                         icon="fa fa-save" styleClass="white Fright" value="Actualizar"                                         
+                                         actionListener="#{rolAdminView.editRol()}"
+                                         update="rol-list-form,messages"
+                                         oncomplete="PF('rolDialog').hide();"/>
+                        <p:commandButton id="cancelar-rol-btn" 
+                                         icon="fa fa-ban white" styleClass="white" value="Cancelar"                                         
+                                         process="@this"
+                                         oncomplete="PF('rolDialog').hide();"/>
+
+                    </h:panelGroup>
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

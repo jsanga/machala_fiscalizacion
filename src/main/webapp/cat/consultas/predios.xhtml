@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition template="../../WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Consultar predios"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <div class="Card whiteback">
+                        <h:panelGroup layout="block" id="all-update">
+                            <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="datosConsultas" style="margin-bottom: 20px;">
+                                <h:form id="predio-list-form" prependId="false">
+                                    <h:panelGroup layout="block" class="Container Wid100 MarTop10">
+                                        <p:outputLabel for="tipo_predio" value="Tipo de predio: " />
+                                        <p:selectOneRadio id="tipo_predio" value="#{consultasView.tipoPredio}">
+                                            <f:selectItem itemLabel="Urbano" itemValue="#{1}" />
+                                            <f:selectItem itemLabel="Rural" itemValue="#{2}" />
+                                            <f:selectItem itemLabel="Áreas con inconsistencias" itemValue="#{3}" />
+                                            <f:selectItem itemLabel="Predios codantes" itemValue="#{4}" />
+                                            <p:ajax update="predios-list" listener="#{consultasView.changeList()}"/>
+                                        </p:selectOneRadio>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" class="Container Wid100 MarTop10">
+                                        <p:dataTable var="predio" value="#{consultasView.prediosLazy}" widgetVar="logTable" style="margin-top: 10px;" id="predios-list"
+                                                     emptyMessage="No hay predios encontrados."
+                                                     paginator="true"
+                                                     rows="5"
+                                                     paginatorPosition="bottom"
+                                                     rowsPerPageTemplate="5,10,25,50"
+                                                     currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords}"
+                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     lazy="true" filterEvent="enter"
+                                                     selectionMode="single"
+                                                     selection="#{consultasView.predioSeleccionado}"
+                                                     rowKey="#{predio.id}"
+                                                     >                                          
+                                            <p:column headerText="Pr" class="predio-buscar" width="5%"  >
+                                                <h:outputText value="#{predio.terreno.terrenoPK.codProvincia}" />
+                                            </p:column>
+                                            <p:column headerText="C" class="predio-buscar" width="5%" >
+                                                <h:outputText value="#{predio.terreno.terrenoPK.codCanton}" />
+                                            </p:column>
+                                            <p:column filterBy="#{predio.terreno.terrenoPK.codParroquia}" headerText="P" filterMatchMode="exact" class="predio-buscar" width="6%" sortBy="#{predio.terreno.terrenoPK.codParroquia}">
+                                                <h:outputText value="#{predio.terreno.terrenoPK.codParroquia}" />
+                                            </p:column>
+                                            <p:column filterBy="#{predio.terreno.terrenoPK.codZona}" headerText="Z" filterMatchMode="exact" class="predio-buscar" width="6%" sortBy="#{predio.terreno.terrenoPK.codZona}">
+                                                <h:outputText value="#{predio.terreno.terrenoPK.codZona}" />
+                                            </p:column>
+                                            <p:column filterBy="#{predio.terreno.terrenoPK.codSector}" headerText="S" filterMatchMode="exact" class="predio-buscar" width="6%" sortBy="#{predio.terreno.terrenoPK.codSector}">
+                                                <h:outputText value="#{predio.terreno.terrenoPK.codSector}" />
+                                            </p:column>
+                                            <p:column filterBy="#{predio.terreno.terrenoPK.codManzana}" headerText="M" filterMatchMode="exact" class="predio-buscar" width="6%" sortBy="#{predio.terreno.terrenoPK.codManzana}">
+                                                <h:outputText value="#{predio.terreno.terrenoPK.codManzana}" />
+                                            </p:column>
+                                            <p:column filterBy="#{predio.terreno.terrenoPK.codSolar}" headerText="S" filterMatchMode="exact" class="predio-buscar" width="6%" sortBy="#{predio.terreno.terrenoPK.codSolar}">
+                                                <h:outputText value="#{predio.terreno.terrenoPK.codSolar}" />
+                                            </p:column>
+                                            <p:column filterBy="#{predio.codBloque}" headerText="B" filterMatchMode="exact" class="predio-buscar" width="6%" sortBy="#{predio.codBloque}" rendered="#{consultasView.tipoPredio != 2}">
+                                                <h:outputText value="#{predio.codBloque}" />
+                                            </p:column>
+                                            <p:column filterBy="#{predio.codPhv}" headerText="C. Piso" filterMatchMode="exact" class="predio-buscar" width="6%" sortBy="#{predio.codPhv}" rendered="#{consultasView.tipoPredio != 2}">
+                                                <h:outputText value="#{predio.codPhv}" />
+                                            </p:column>
+                                            <p:column filterBy="#{predio.codPhh}" headerText="C. Unidad" filterMatchMode="exact" class="predio-buscar" width="6%" sortBy="#{predio.codPhh}" rendered="#{consultasView.tipoPredio != 2}">
+                                                <h:outputText value="#{predio.codPhh}" />
+                                            </p:column>
+                                            <p:column rendered="#{consultasView.tipoPredio != 2}" filterBy="#{predio.claveAnterior}" headerText="Clave Ant." filterMatchMode="exact" class="predio-edificio" width="9%">
+                                                <h:outputText value="#{predio.claveAnterior}" />
+                                            </p:column>
+                                            <p:column rendered="#{consultasView.tipoPredio == 2}" filterBy="#{predio.registroCatastral}" headerText="Reg. Cat." filterMatchMode="exact" class="predio-edificio" width="9%">
+                                                <h:outputText value="#{predio.registroCatastral}" />
+                                            </p:column>
+                                            <p:column headerText="Nombres" filterBy="#{predio.nombresPropietariosJS}" filterStyle="width: 80%;" width="17%">
+                                                <h:outputText value="#{predio.nombresPropietariosJS}" />
+                                            </p:column>
+                                            <!--<p:column headerText="Fecha ingreso" filterBy="#{predio.fechaCreacion}"  class="predio-edificio" style="width: 15px; text-align: center;">
+                                                <f:facet name="filter">
+                                                    <p:calendar  pattern="dd-MM-yyyy">
+                                                        <p:ajax event="dateSelect"  oncomplete="PF('logTable').filter()"/>
+                                                    </p:calendar>      
+                                                </f:facet>
+                                                <h:outputText value="#{predio.fechaCreacion}">
+                                                    <f:convertDateTime type="date" pattern="dd-MMMM-yyyy"/>
+                                                </h:outputText>
+                                            </p:column>-->
+                                            <p:column class="column-user-actions" width="7%">
+                                                <p:commandButton icon="fa fa-list-alt white" title="Mostrar Datos" update="datosConsultas,predios-list,datos-tab" action="#{consultasView.MostrarDatosPredioSeleccionado(predio.id)}"/>
+                                                <p:commandButton icon="fa fa-align-left white" title="Ver estado" action="#{consultasView.consultarEstado(predio.claveAnterior)}" update="datos-tab"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block" class="Container Wid100" id="datos-tab">
+                                        <h:panelGroup layout="block" class="Container Wid100 MarTop20" rendered="#{consultasView.visualizarDatos and consultasView.predioSeleccionado.tipoPredio}" >                                            
+                                            <p:panelGrid layout="grid" columns="2" >
+                                                <h1 class="BigTopic Fs16">Clave Catastral: #{consultasView.predioSeleccionado.claveCatastral}</h1>
+                                                <f:facet name="footer">
+                                                    <div align="right">
+                                                        <p:commandButton id="btnImprimir" value="Imprimir" icon="ui-icon-print" actionListener="#{consultasView.imprimirFichaPredial(null)}"/>
+                                                    </div>
+                                                </f:facet>
+                                            </p:panelGrid>
+                                            <p:tabView>
+                                                <!--                                <p:tab title="Ubicaci&oacute;n">
+                                                                                    <ui:include src="_datosUbicacion.xhtml"/>
+                                                                                </p:tab>-->
+                                                <p:tab title="Clave catastral y Localizaci&oacute;n">
+                                                    <ui:include src="predio_urbano/_datosGenerales.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="T&iacute;tulo de dominio" rendered="#{consultasView.predioSeleccionado.tipoPropiedad != 2}">
+                                                    <ui:include src="predio_urbano/_datosLegales.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="T&iacute;tulo de dominio" rendered="#{consultasView.predioSeleccionado.tipoPropiedad == 2}">
+                                                    <ui:include src="predio_urbano/_tituloDominio.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="Terreno y V&iacute;as">
+                                                    <ui:include src="predio_urbano/_datosTerreno.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="Construcci&oacute;n">
+                                                    <ui:include src="predio_urbano/_datosConstruccion.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="Integrantes">
+                                                    <ui:include src="predio_urbano/_integrantes.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="Liquidaci&oacute;n">
+                                                    <ui:include src="predio_urbano/_datosLiquidacion.xhtml"/>
+                                                </p:tab>
+                                            </p:tabView>
+                                        </h:panelGroup>
+
+                                        <h:panelGroup rendered="#{consultasView.mostrarEstado}">
+                                            <ui:include src="predio_urbano/_estado.xhtml"/>
+                                        </h:panelGroup>
+
+                                        <!-- -->
+
+                                        <h:panelGroup layout="block" class="Container Wid100 MarTop20" rendered="#{consultasView.visualizarDatos and !consultasView.predioSeleccionado.tipoPredio}" >                                            
+                                            <h1 class="BigTopic Fs16">Clave Catastral: #{consultasView.predioSeleccionado.claveCatastral}</h1>
+                                            <p:tabView>                                                
+                                                <p:tab title="Clave catastral y Localizaci&oacute;n">                                                    
+                                                    <ui:include src="predio_rural/_datosGenerales.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="T&iacute;tulo de dominio" rendered="#{consultasView.predioSeleccionado.tipoPropiedad != 2}">
+                                                    <ui:include src="predio_rural/_datosLegales.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="T&iacute;tulo de dominio" rendered="#{consultasView.predioSeleccionado.tipoPropiedad == 2}">
+                                                    <ui:include src="predio_rural/_tituloDominio.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="Terreno y V&iacute;as">
+                                                    <ui:include src="predio_rural/_datosTerreno.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="Construcci&oacute;n">
+                                                    <ui:include src="predio_rural/_datosConstruccion.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="Integrantes">
+                                                    <ui:include src="predio_rural/_integrantes.xhtml"/>
+                                                </p:tab>
+                                                <p:tab title="Liquidaci&oacute;n">
+                                                    <ui:include src="predio_rural/_datosLiquidacion.xhtml"/>
+                                                </p:tab>
+                                            </p:tabView>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:form>
+
+                                <!-- -->
+
+                                <p:dialog id="dlgAvisoCoactiva" widgetVar="dlgAvisoCoactiva" header="Mensaje" modal="true" closable="true" resizable="false" closeOnEscape="true">
+                                    <h:outputText value="El predio seleccionado se encuentra en coactiva."/>
+                                </p:dialog>
+
+                                <!-- -->
+                                <p:dialog id="dlgRubros" widgetVar="dlgRubros" header="Rubros" modal="true" closable="true" closeOnEscape="true" resizable="false">
+                                    <h:form id="frmRubros">
+                                        <p:panelGrid columns="6">
+                                            <h:outputText value="Rubro 1: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val1}"/>
+                                            <h:outputText value="Rubro 2: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val2}"/>
+                                            <h:outputText value="Rubro 3: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val3}"/>
+                                            <h:outputText value="Rubro 4: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val4}"/>
+                                            <h:outputText value="Rubro 5: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val5}"/>
+                                            <h:outputText value="Rubro 6: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val6}"/>
+                                            <h:outputText value="Rubro 7: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val7}"/>
+                                            <h:outputText value="Rubro 8: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val8}"/>
+                                            <h:outputText value="Rubro 9: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val9}"/>
+                                            <h:outputText value="Rubro 10: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val10}"/>
+                                            <h:outputText value="Rubro 11: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val11}"/>
+                                            <h:outputText value="Rubro 12: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val12}"/>
+                                            <h:outputText value="Rubro 13: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val13}"/>
+                                            <h:outputText value="Rubro 14: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val14}"/>
+                                            <h:outputText value="Rubro 15: " style="font-weight: bold;"/>
+                                            <h:outputText value="#{consultasView.deudaSelec.val15}"/>
+
+                                        </p:panelGrid>
+                                    </h:form>
+                                </p:dialog>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+
+    </ui:composition>
+
+</html>

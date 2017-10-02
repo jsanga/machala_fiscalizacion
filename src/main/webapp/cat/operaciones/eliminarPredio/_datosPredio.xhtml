@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:predio="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+
+    <ui:composition>
+
+        <h:panelGroup  layout="block" class="Container Wid100">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">Listado de Propietarios</h1>
+                <h:form>
+                    <p:dataTable id="DT_propietarios" var="prop" value="#{deletePredioView.propietarios}" selection="#{deletePredioView.propietarioSeleccionado}" rowKey="#{prop.id}" style="margin-bottom:0"
+                                 rows="5" paginator="true"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" 
+                                 paginatorPosition="bottom">
+
+                        <p:ajax event="rowSelectCheckbox" listener="#{deletePredioView.onRowSelect}" update="messages,DT_propietarios,datos-propietarios" />
+                        <p:ajax event="rowUnselectCheckbox" listener="#{deletePredioView.onRowUnselect}" update="messages, datos-propietarios" />
+                        <p:ajax event="rowSelect" listener="#{deletePredioView.onRowSelect}" update="messages, DT_propietarios, datos-propietarios" />
+                        <p:ajax event="rowUnselect" listener="#{deletePredioView.onRowUnselect}" update="messages, datos-propietarios" />
+
+                        <p:column selectionMode="single" style="width:16px;text-align:center"/>
+                        <p:column headerText="Nombres">
+                            <h:outputText value="#{prop.nombre}" />
+                        </p:column>
+                        <p:column headerText="Apellidos">
+                            <h:outputText value="#{prop.apellidoPaterno} #{prop.apellidoMaterno}" />
+                        </p:column>
+                        <p:column headerText="Tipo identificaci&oacute;n">
+                            <h:outputText value="#{prop.valorIdentificacion()}" />                       
+                        </p:column>
+                        <p:column headerText="Nro. Identificaci&oacute;n">
+                            <h:outputText value="#{prop.identificacion}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container Wid100 MarBot10 MarTop20" id="datos-propietarios">
+                <fieldset>
+                    <legend>Datos del propietario seleccionado</legend>
+                    <p:panelGrid id="pripietarios-list" columns="6" rendered="#{deletePredioView.personeria}">
+                        <p:outputLabel value="Tipo Propitario:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.valorPersoneria()}"></p:outputLabel>
+                        <p:outputLabel value="Tipo Identificaci&oacute;n"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.valorIdentificacion()}"></p:outputLabel>
+                        <p:outputLabel value="Nro. Identificaci&oacute;n:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.identificacion}"></p:outputLabel>
+                        <p:outputLabel value="Apellidos:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.apellidoPaterno} #{deletePredioView.propietarioSeleccionado.apellidoMaterno}"></p:outputLabel>
+                        <p:outputLabel value="Nombres:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.nombre}"></p:outputLabel>
+                        <p:outputLabel value="Sexo:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.sexo}"></p:outputLabel>
+                    </p:panelGrid>
+                    <p:panelGrid id="pripietarios-list1" columns="6" rendered="#{!deletePredioView.personeria}">
+                        <p:outputLabel value="Tipo Propitario:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.valorPersoneria()}"></p:outputLabel>
+                        <p:outputLabel value="RUC:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.valorIdentificacion()}"></p:outputLabel>
+                        <p:outputLabel value="Nro. Identificaci&oacute;n:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.identificacion}"></p:outputLabel>
+                        <p:outputLabel value="Raz&oacute;n Social:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.nombre}"></p:outputLabel>                      
+                        <p:outputLabel value="Representante Legal:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.representanteLegal}"></p:outputLabel>
+                        <p:outputLabel value="Cedula Representante Legal:"></p:outputLabel>
+                        <p:outputLabel value="#{deletePredioView.propietarioSeleccionado.representanteLegalCedula}"></p:outputLabel>
+                    </p:panelGrid>
+                </fieldset>
+            </h:panelGroup>
+        </h:panelGroup>                                
+
+    </ui:composition>
+</html>

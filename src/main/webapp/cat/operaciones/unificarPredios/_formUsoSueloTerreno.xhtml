@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <p:dialog id="usosT-dlg" widgetVar="usosTDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Datos del uso del suelo" style="width: 700px;"> 
+            <p:ajax event="close" update="usosT-form,datos-usosT-messages,usosT-dataTable,usosT-suelo-update" listener="#{unificarPredioView.cancelarCrearUso()}" />
+            <h:panelGroup layout="block" class="Container Container100">
+                <p:panel class="sentinel-panel">
+                    <h:form id="usosT-form" prependId="false">
+                        <p:messages id="datos-usosT-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+
+                        <h:panelGroup layout="block" class="Wid100" style="width: 500px !important;">
+                            <h:panelGrid columns="1" class="Wid100">
+
+                                <h:panelGroup layout="block" styleClass="varDisContainerCombo"> 
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <p:outputLabel for="usoT_suelo-input" value="Uso del suelo:" class="DispBlock" style="width: 201px;"/>
+                                            </td>
+
+                                            <td>
+                                                <p:outputLabel for="grupoT_suelo-input" value="Grupo:" class="DispBlock Wid80" style="width: 200px;"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:175px;">
+                                                <h:panelGroup layout="block">
+                                                    <p:inputText id="usoT_suelo-input"  value="#{unificarPredioView.usoSeleccionado.cod}"
+                                                                 style="width: 15px; display: block; margin-right: 5px; margin-bottom: 5px;float:left;"
+                                                                 pass:data-field="uso_suelo"
+                                                                 pass:data-default-value="12"
+                                                                 pass:data-all-values="#{unificarPredioView.codigosVariablesuUsos()}"
+                                                                 onkeypress="validateIntegerValueAndFocusNext(event, 'crear-usoT-btn')">
+                                                        <p:ajax event="change" update="usosT-form" listener="#{unificarPredioView.changeUso(regPredioUrbanoView.usoSeleccionado.cod)}"/>
+                                                    </p:inputText>                                                   
+                                                    <p:selectOneMenu id="usoT_suelo-select" value="#{unificarPredioView.usoSeleccionado.cod}" disabled="false"
+                                                                     pass:data-field="uso_suelo" styleClass="varDisSelectContainer"
+                                                                     pass:data-default-value="12"
+                                                                     pass:data-all-values="#{unificarPredioView.codigosVariablesuUsos()}"
+                                                                     style="display: block; margin-right: 5px; width: 100px;float:left;">
+                                                        <p:ajax update="usosT-form" listener="#{unificarPredioView.changeUso(unificarPredioView.usoSeleccionado.cod)}"/>
+                                                        <f:selectItems value="#{unificarPredioView.valoresVariablesuUsos()}" />
+                                                    </p:selectOneMenu>
+                                                </h:panelGroup>
+                                            </td>
+
+                                            <td style="width:175px;">
+                                                <h:panelGroup layout="block" id="grupoT_uso_seleccionado">
+                                                    <p:inputText id="grupoT_suelo-input"  value="#{unificarPredioView.valorDiscreto.variable.nombre}"
+                                                                 disabled="true" 
+                                                                 style="width: 180px; display: block; margin-right: 5px; margin-bottom: 5px;float:left;"
+                                                                 onkeypress="validateIntegerValueAndFocusNext(event, 'crear-usoT-btn')"/>
+
+                                                </h:panelGroup>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" class="MarTop20">
+                                    <p:commandButton id="crear-usoT-btn" 
+                                                     icon="fa fa-save" styleClass="white Fright" value="Adicionar"  
+                                                     process="@this,usoT_suelo-input,usoT_suelo-select"
+                                                     actionListener="#{unificarPredioView.crearNuevoUso(false)}"
+                                                     update="usosT-form,datos-usosT-messages,usosT-dataTable,usosT-suelo-update"
+
+                                                     />
+
+                                    <p:commandButton id="cancelar-usoT-btn" 
+                                                     icon="fa fa-ban" styleClass="white" value="Cancelar" actionListener="#{unificarPredioView.cancelarCrearUso()}"                                        
+                                                     onclick="PF('usosTDialog').hide();"
+                                                     />
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:form>
+                </p:panel>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

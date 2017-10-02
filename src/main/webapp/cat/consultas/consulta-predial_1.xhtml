@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces"
+      xmlns:mensura="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition template="../../WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Reporte Predial"></h:outputText>
+        </ui:define>
+
+        <ui:define name="content">
+           <div class="Container100">
+                <div class="ContainerIndent">
+                    <div class="Card whiteback">
+                        <h:panelGroup layout="block" id="all-update">
+                            <h:panelGroup layout="block" class="Container Wid100 Responsive100">
+                                <h:panelGroup layout="block" class="Container100 Responsive Fright" id="busqueda-opcion">
+                                    <h1 class="BigTopic Fs15">Consulta de predios</h1>
+                                    <hr/>
+                                    <h:panelGroup layout="block" class="Wid100">
+                                        <mensura:buscarFiltro opcionesBusqueda="#{consultasView.opcionesBusqueda}"
+                                                              mostrarPalabraClave="true"
+                                                              accionBuscar="#{consultasView.buscarPredio()}"
+                                                              actualizarLuegoDeBusqueda="datosConsultas,predios-list,btn_exportar"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="datosConsultas" style="margin-bottom: 20px;">
+                                <h:form id="predio-list-form" prependId="false">
+                                    <h:panelGroup id="btn_exportar" layout="block" class="Container Wid100 MarTop10">
+                                        <p:outputPanel class="HeaderTbl">
+                                            <h:commandLink rendered="#{consultasView.exportar}"  actionListener="#{consultasView.predialExcelExport()}" class="Fleft btn">
+                                                <i class="fa fa-file-excel-o Fs30 red" title="Exportar a Excel" style="color: #800020 !important;"><span style="font-size: 15px !important; padding-left: 5px !important">Exportar</span></i>
+                                            </h:commandLink>
+                                            <p:commandButton style="margin-left: 25px; margin-right: 10px;" rendered="#{consultasView.exportar}" icon="fa fa-pencil-square-o" 
+                                                             value="Editar Manzana" actionListener="#{consultasView.inicializarEdicionManzanaPredial()}" update="addDlg,form-form" 
+                                                             process="@this" title="Editar el nombre de la Manzana"
+                                                             oncomplete="PF('addDialog').show();$('.ui-state-error').removeClass('ui-state-error');"/>
+                                            <p:commandButton style="margin-right: 10px;" rendered="#{consultasView.exportar}" icon="fa fa-pencil-square-o" 
+                                                             value="Editar Sitio" actionListener="#{consultasView.inicializarEdicionSitioPredial()}" update="addDlg,form-form" 
+                                                             process="@this" title="Editar nombre del Sitio"
+                                                             oncomplete="PF('addDialog').show();$('.ui-state-error').removeClass('ui-state-error');"/>
+                                                     
+                                        </p:outputPanel>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="Container wid100 MarTop10" >
+                                     <p:dataTable id="predios-list"
+                                                  var="predio" value="#{consultasView.prediosF}"
+                                                  emptyMessage="No se han encontrado Predios"
+                                                  style="margin-top: 10px; font-size: small; width: auto;" 
+                                                  paginator="true" rows="10" 
+                                                  paginatorPosition="bottom"
+                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                  rowsPerPageTemplate="10,25,50,100">
+                                                 <p:column>
+                                                    <p:commandButton rendered="#{consultasView.exportar}" icon="fa fa-pencil-square-o" 
+                                                             title="Editar Clave Catastral" actionListener="#{consultasView.inicializarEdicionClaveCatastral(predio)}" update="addDlg,form-form" 
+                                                             process="@this" 
+                                                             oncomplete="PF('addDialog').show();$('.ui-state-error').removeClass('ui-state-error');">
+                                                    </p:commandButton>
+                                                </p:column>
+                                                <p:column headerText="F. Ingreso" class="Datos">
+                                                    <p:outputLabel value="#{predio.FIngreso}">
+                                                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>
+                                                    </p:outputLabel>
+                                                </p:column>
+                                                <p:column headerText="F. Actualizaci&oacute;n" class="Datos">
+                                                    <p:outputLabel value="#{predio.FModificacion}">
+                                                    <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>
+                                                    </p:outputLabel>
+                                                </p:column>
+                                                <p:column headerText="Propietario" class="Datos">
+                                                    <p:outputLabel value="#{predio.propietario}"/>
+                                                </p:column>
+                                                <p:column headerText="Cod. Anterior" class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.cod_anterior}"/>
+                                                </p:column>
+                                               <p:column headerText="Cod. Catastral" class="predio-edificio">
+                                                   <p:outputLabel value="#{predio.cod_actual}" />
+                                                </p:column>
+                                                <p:column headerText="Manzana" class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.manzana}" />
+                                                </p:column>
+                                                <p:column headerText="Superficie" class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.superficie}">
+                                                        <f:convertNumber pattern="#0.00" /> 
+                                                    </p:outputLabel>
+                                                </p:column>
+                                     
+                                                 <p:column headerText="Perimetro" class="predio-edificio">
+                                                     <p:outputLabel value="#{predio.perimetro}">
+                                                        <f:convertNumber pattern="#0.00" /> 
+                                                    </p:outputLabel>
+                                                </p:column>
+                                     
+                                                <p:column headerText="A. Const."  class="predio-edificio">
+                                                    <p:outputLabel value=" #{predio.area_construccion}" >
+                                                        <f:convertNumber pattern="#0.00" /> 
+                                                     </p:outputLabel>                                          
+                                                </p:column>   
+                                                <p:column headerText="Usos de Suelo"  class="Datos">
+                                                    <p:outputLabel value=" #{predio.uso_suelo}" />
+                                                </p:column>
+                                                <p:column headerText="A. Const. OC"  class="Datos">
+                                                    <p:outputLabel value=" #{predio.otros_construccion}" />
+                                                </p:column>
+                                                <p:column headerText="# Niveles"  class="predio-buscar">
+                                                    <p:outputLabel value="#{predio.niveles}"/>
+                                                </p:column>
+                                                <p:column headerText="Estado" class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.estado}" />
+                                                </p:column>
+                                                <p:column headerText="Dominio" class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.dominio}"/>
+                                                </p:column>             
+                                                <p:column headerText="Sitio" class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.sitio}"/>
+                                                </p:column>
+                                                <p:column headerText="#Predio" class="predio-buscar">
+                                                    <p:outputLabel value="#{predio.predio}"/>
+                                                </p:column>
+                                                <p:column headerText="Geometr&iacute;a" class="predio-buscar">
+                                                    <p:outputLabel value="#{predio.geometria}"/>
+                                                </p:column>
+                                                <p:column headerText="Lindero Norte" class="predio-buscar">
+                                                    <p:outputLabel value="#{predio.lind_norte}"/>
+                                                </p:column>  
+                                               <p:column headerText="Longitud" class="predio-buscar">
+                                                   <p:outputLabel value="#{predio.lind_norte_long}"/>
+                                                </p:column>  
+                                                <p:column headerText="Lindero Sur" class="predio-buscar">
+                                                    <p:outputLabel value="#{predio.lind_sur}"/>
+                                                </p:column>  
+                                               <p:column headerText="Longitud" class="predio-buscar">
+                                                   <p:outputLabel value="#{predio.lind_sur_long}"/>
+                                                </p:column> 
+                                         
+                                               <p:column headerText="Lindero Este" class="predio-buscar">
+                                                   <p:outputLabel value="#{predio.lind_este}"/>
+                                                </p:column>  
+                                               <p:column headerText="Longitud" class="predio-buscar">
+                                                   <p:outputLabel value="#{predio.lind_este_long}"/>
+                                                </p:column>  
+                                                <p:column headerText="Lindero Oeste" class="predio-buscar">
+                                                    <p:outputLabel value="#{predio.lind_oeste}"/>
+                                                </p:column>  
+                                               <p:column headerText="Longitud" class="predio-buscar">
+                                                   <p:outputLabel value="#{predio.lind_oeste_long}"/>
+                                                </p:column> 
+                                            <p:column headerText="Ancho V&iacute;a P." class="predio-buscar">
+                                                  <p:outputLabel value="#{predio.ancho_via_pub}"/>
+                                                </p:column>  
+                                               <p:column headerText="Ancho Acera" class="predio-buscar">
+                                                   <p:outputLabel value="#{predio.ancho_acera}"/>
+                                                </p:column> 
+                                         
+                                                <p:column headerText="Relevamiento" class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.relevamiento}"/>
+                                                </p:column>      
+                                                <p:column headerText="Sup. Relev." class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.sup_relevamiento}"/>
+                                                </p:column>     
+                                                <p:column headerText="C. Calidad" class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.c_calidad}"/>
+                                                </p:column>     
+                                                <p:column headerText="Digitalizaci&oacute;n" class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.digitalizacion}"/>
+                                                </p:column>     
+                                                <p:column headerText="Digitaci&oacute;n" class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.digitacion}"/>
+                                                </p:column>     
+                                                <p:column headerText="Sup. Digit." class="predio-edificio">
+                                                    <p:outputLabel value="#{predio.sup_digitacion}"/>
+                                                </p:column>   
+                                               
+                                         <f:facet name="footer">
+                                             Total de Predios Encontrados: #{consultasView.prediosF.size()}
+                                         </f:facet>
+                                    </p:dataTable>
+                                    </h:panelGroup>     
+                            </h:form>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </div>
+                </div>
+           </div>
+            <ui:include src="_updateManzana.xhtml"/>
+        </ui:define>
+        
+    </ui:composition>       
+</html>

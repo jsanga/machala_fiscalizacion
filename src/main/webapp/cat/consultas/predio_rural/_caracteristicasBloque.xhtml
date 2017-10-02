@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20" style="width: 100%">
+            <div class="Responsive50 Container100" style="width: 100%">                                       
+                <p:fieldset legend="Caraster&iacute;sticas de la edificaci&oacute;n" toggleable="true" toggleSpeed="500" style="width: 98%">
+                    <h:panelGrid columns="4" class="DatosEstructuraTbl" style="width: 100%">
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="bloq_nro_bloque" value="Nro del bloque:" class="DispBlock Wid100" />
+                            <p:inputText id="bloq_nro_bloque" value="#{consultasView.bloqueSeleccionado.numeroBloque}" 
+                                         class="input_180" disabled="true">
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="bloq_nro_niveles" value="Nro de niveles:" class="DispBlock Wid100" />
+                            <p:inputText id="bloq_nro_niveles" value="#{consultasView.bloqueSeleccionado.numeroNiveles}" disabled="true"
+                                         class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'uso_construccion:cat_terreno-uso_construccion_rural-input')">
+                                <p:ajax event="keyup" update="bloque-form" />
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="bloq_area_permiso" value="&Aacute;rea total:" class="DispBlock Wid100" />
+                            <p:inputText id="bloq_area_permiso" value="#{consultasView.bloqueSeleccionado.areaTotal}" disabled="true"
+                                         class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'bloq_etapa_construccion:cat_bloque-etapa_construccion-input')"/>
+                        </h:panelGroup>
+                        <var:varDisInputText id="uso_construccion" label="Uso de la construcción:"
+                                             table="cat_bloque" column="uso_construccion_rural"
+                                             bind="#{consultasView.bloqueSeleccionado.usoConstruccionRural}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="bloq_etapa_construccion:cat_predio_rural-etapa_construccion-input"
+                                             labelPosition="top"/>
+                        <!-- 
+                        <var:varDisInputText id="uso_construccion_rural" label="Uso de la construcción:"
+                                             table="cat_terreno" column="uso_construccion_rural"
+                                             bind="# {consultasView.terreno.usoConstruccionRural}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="terreno_norte_ref"
+                                             labelPosition="top"/>
+                        -->
+                        <var:varDisInputText id="bloq_etapa_construccion" label="Etapa de la construcci&oacute;n:" 
+                                             table="cat_predio_rural" column="etapa_construccion" 
+                                             bind="#{consultasView.bloqueSeleccionado.etapaConstruccion}"
+                                             showlabel="true"   
+                                             defaultValue="3"
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="bloq_estado_conservacion:cat_bloque-estado_conservacion-input"
+                                             labelPosition="top"/>
+                        
+                        <var:varDisInputText id="bloq_estado_conservacion" label="Estado de conservaci&oacute;n:" 
+                                             table="cat_bloque" column="estado_conservacion" 
+                                             bind="#{consultasView.bloqueSeleccionado.estadoConservacion}"
+                                             showlabel="true"   
+                                             defaultValue="2"
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="bloq_edad:cat_predio_rural-edad_edificacion-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_edad" label="Edad de la construcci&oacute;n:" 
+                                             table="cat_predio_rural" column="edad_edificacion" 
+                                             bind="#{consultasView.bloqueSeleccionado.edadEdificacion}"
+                                             showlabel="true"   
+                                             defaultValue="3"
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="bloq_columna:cat_bloque-columna-input"
+                                             labelPosition="top"/>                      
+                        
+                    </h:panelGrid>
+
+                </p:fieldset>
+            </div>                                   
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Responsive50 Container100">                                       
+                <p:fieldset legend="Estructura" toggleable="true" toggleSpeed="500" style="width: 98%">
+                    <h:panelGrid columns="4" class="DatosEstructuraTbl" style="width: 100%">
+                        <var:varDisInputText id="bloq_columna" label="Columna:" 
+                                             table="cat_bloque" column="columna" 
+                                             bind="#{consultasView.bloqueSeleccionado.columna}"
+                                             showlabel="true"   
+                                             defaultValue="1"
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="bloq_vigas:cat_bloque-vigas-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_vigas" label="Vigas:" 
+                                             table="cat_bloque" column="vigas" 
+                                             bind="#{consultasView.bloqueSeleccionado.vigas}"
+                                             showlabel="true"   
+                                             defaultValue="1"
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="bloq_entrepiso:cat_bloque-entrepiso-input"
+                                             labelPosition="top"/>
+                    </h:panelGrid>
+                </p:fieldset>
+                
+                <p:fieldset style="width: 98%">
+                    <h:panelGrid columns="1" class="DatosEstructuraTbl" style="width: 100%">
+                        <var:varDisInputText id="bloq_entrepiso" label="Entrepiso:" 
+                                                 table="cat_bloque" column="entrepiso" 
+                                                 bind="#{consultasView.bloqueSeleccionado.entrepiso}"
+                                                 showlabel="true"   
+                                                 defaultValue="2"
+                                                 changeOnEnter="true"
+                                                 disabled="true"
+                                                 next="bloq_paredes:cat_bloque-paredes_r-input"
+                                                 labelPosition="top"/>
+                        <var:varDisInputText id="bloq_paredes" label="Paredes:" 
+                                                 table="cat_bloque" column="paredes_r" 
+                                                 bind="#{consultasView.bloqueSeleccionado.paredes}"
+                                                 showlabel="true"   
+                                                 defaultValue="2"
+                                                 changeOnEnter="true"
+                                                 disabled="true"
+                                                 next="bloq_cubierta:cat_bloque-cubierta_r-input"
+                                                 labelPosition="top"/>
+                        <var:varDisInputText id="bloq_cubierta" label="Cubierta:" 
+                                                 table="cat_bloque" column="cubierta_r" 
+                                                 bind="#{consultasView.bloqueSeleccionado.cubierta}"
+                                                 showlabel="true"   
+                                                 defaultValue="2"
+                                                 disabled="true"
+                                                 changeOnEnter="true"
+                                                 next="bloq_revestimiento_cubierta:cat_bloque-revestimiento_cubierta-input"
+                                                 labelPosition="top"/>
+                    </h:panelGrid>
+                </p:fieldset>
+                
+                <p:fieldset legend="Acabados" toggleable="true" toggleSpeed="500" style="width: 100%">
+                    <h:panelGrid columns="4" class="DatosEstructuraTbl" style="width: 98%">
+
+                        <var:varDisInputText id="bloq_revestimiento_cubierta" label="Revestimiento Cubierta:" 
+                                             table="cat_bloque" column="revestimiento_cubierta" 
+                                             bind="#{consultasView.bloqueSeleccionado.revestimientoCubierta}"
+                                             showlabel="true"   
+                                             defaultValue="5"
+                                             changeOnEnter="true"
+                                             disabled="true"
+                                             next="bloq_tumbado:cat_bloque-tumbado_r-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_tumbado" label="Tumbado:" 
+                                             table="cat_bloque" column="tumbado_r" 
+                                             bind="#{consultasView.bloqueSeleccionado.tumbado}"
+                                             showlabel="true"   
+                                             defaultValue="5"
+                                             changeOnEnter="true"
+                                             disabled="true"
+                                             next="bloq_revestimiemto_pared:cat_bloque-revestimiento_pared-input"
+                                             labelPosition="top"/>
+                        
+                        <var:varDisInputText id="bloq_revestimiemto_pared" label="Revestimiento pared:" 
+                                             table="cat_bloque" column="revestimiento_pared" 
+                                             bind="#{consultasView.bloqueSeleccionado.revestimientoPared}"
+                                             showlabel="true"   
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             disabled="true"
+                                             next="bloq_piso:cat_bloque-pisos_r-input"
+                                             labelPosition="top"/>
+                        
+                        <var:varDisInputText id="bloq_piso" label="Piso:" 
+                                             table="cat_bloque" column="pisos_r" 
+                                             bind="#{consultasView.bloqueSeleccionado.piso}"
+                                             showlabel="true"   
+                                             defaultValue="7"
+                                             changeOnEnter="true"
+                                             disabled="true"
+                                             next="bloq_ventana:cat_bloque-ventana_r-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_ventana" label="Ventana:" 
+                                             table="cat_bloque" column="ventana_r" 
+                                             bind="#{consultasView.bloqueSeleccionado.ventana}"
+                                             showlabel="true"   
+                                             defaultValue="6"
+                                             changeOnEnter="true"
+                                             disabled="true"
+                                             next="bloq_puerta:cat_bloque-puerta_r-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_puerta" label="Puerta:" 
+                                             table="cat_bloque" column="puerta_r" 
+                                             bind="#{consultasView.bloqueSeleccionado.puerta}"
+                                             showlabel="true"   
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             disabled="true"
+                                             next="bloq_vidrios:cat_bloque-vidrio_r-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_vidrios" label="Vidrios:" 
+                                             table="cat_bloque" column="vidrio_r" 
+                                             bind="#{consultasView.bloqueSeleccionado.vidrio}"
+                                             showlabel="true"   
+                                             defaultValue="5"
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="guardar-bloque-btn"
+                                             labelPosition="top"/>
+
+                    </h:panelGrid>
+
+                </p:fieldset>                                      
+            </div>                                   
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarBot10 MarTop20">
+            <p:fieldset legend="Fotos del Bloque Nro. #{consultasView.bloqueSeleccionado.numeroBloque}" toggleable="true" toggleSpeed="500" style="width: 100%">
+                <h:panelGroup layout="block" class="Responsive Container100" style="width: 98%">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs16">Clic sobre la foto para visualizarla a tamaño original</h1>
+
+                        <h:panelGroup layout="block" class="MarTop20">
+                            <p:outputLabel style="margin-left: 30px; margin-top: 15px;" value="No se han registrado fotos al bloque Nro. #{consultasView.bloqueSeleccionado.numeroBloque}" rendered="#{empty consultasView.imagesBloque}"/>
+                            <p:lightBox styleClass="imagebox">
+                                <c:forEach var="foto1" items="#{consultasView.imagesBloque}" varStatus="loop">
+                                    <h:outputLink value="#{foto1.ruta}" class="MarRight20 Fleft" >
+                                        <h:graphicImage url="#{foto1.ruta}" width="150" height="150" title="Fotos del bloque"/>
+                                    </h:outputLink>
+                                </c:forEach>                          
+                            </p:lightBox>
+
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+            </p:fieldset>
+        </h:panelGroup>
+    </ui:composition>
+</html>

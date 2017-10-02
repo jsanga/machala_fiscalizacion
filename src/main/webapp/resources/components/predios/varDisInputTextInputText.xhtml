@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:pass="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <cc:interface name="varDisInputTextInputText">
+        <cc:attribute name="table1" required="true"/>
+        <cc:attribute name="table2" required="true"/>
+        <cc:attribute name="table3" required="true"/>
+        <cc:attribute name="column1" required="true"/>
+        <cc:attribute name="column2" required="true"/>
+        <cc:attribute name="column3" required="true"/>
+        <cc:attribute name="label1" required="true"/>
+        <cc:attribute name="label2" required="true"/>
+        <cc:attribute name="label3" required="true"/>
+        <cc:attribute name="showlabel" required="false" default="true"/>
+        <cc:attribute name="disabled" required="false" default="false"/>
+        <cc:attribute name="required" required="false" default="true"/>
+        <cc:attribute name="labelPosition" required="false" default="top"/>
+        <cc:attribute name="changeOnEnter" required="false" default="true"/>
+        <cc:attribute name="defaultValue1" required="true"/>
+        <cc:attribute name="defaultValue2" required="true"/>
+        <cc:attribute name="next1" required="false" default="true"/>
+        <cc:attribute name="next2" required="false" default="true"/>
+        <cc:attribute name="next3" required="false" default="true"/>
+        <cc:attribute name="bind1" required="true"/>
+        <cc:attribute name="bind2" required="true"/>
+        <cc:attribute name="bind3" required="true"/>
+    </cc:interface>
+    <cc:implementation>
+        <h:panelGroup layout="block" styleClass="varDisContainer" id="#{cc.attrs.table1}-#{cc.attrs.column1}-#{cc.attrs.table2}-#{cc.attrs.column2}-container" style="width: 280px !important;">
+            <c:choose>
+                <c:when test="#{not empty cc.attrs.labelPosition and cc.attrs.labelPosition=='top'}">
+
+                    <table>
+                        <tr>
+                            <td>
+                                <c:if test="#{not empty cc.attrs.showlabel and cc.attrs.showlabel=='true'}">
+                                    <p:outputLabel for="#{cc.attrs.table1}-#{cc.attrs.column1}-input" value="#{cc.attrs.label1}" class="DispBlock" style="width: 201px;"/>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="#{not empty cc.attrs.showlabel and cc.attrs.showlabel=='true'}">
+                                    <p:outputLabel for="#{cc.attrs.table2}-#{cc.attrs.column2}-#{cc.attrs.column1}-input" value="#{cc.attrs.label2}" class="DispBlock Wid80" style="width: 150px;"/>
+                                </c:if>
+                            </td>
+                            <td>
+                                <c:if test="#{not empty cc.attrs.showlabel and cc.attrs.showlabel=='true'}">
+                                    <p:outputLabel for="#{cc.attrs.table3}-#{cc.attrs.column3}-valor-input" value="#{cc.attrs.label3}" class="DispBlock Wid80" style="width: 200px;"/>
+                                </c:if>
+                            </td>
+                            
+                        </tr>
+                        <tr>
+                            <td style="width:175px;">
+                                <h:panelGroup layout="block">
+                                    <p:inputText id="#{cc.attrs.table1}-#{cc.attrs.column1}-input" required="#{cc.attrs.required}" value="#{cc.attrs.bind1}"
+                                                 disabled="#{cc.attrs.disabled}"
+                                                 style="width: 15px; display: block; margin-right: 5px; margin-bottom: 5px;float:left;"
+                                                 pass:data-field="#{cc.attrs.table1}-#{cc.attrs.column1}"
+                                                 pass:data-default-value="#{cc.attrs.defaultValue1}"
+                                                 pass:data-all-values="#{variableAdmin.codigosVariable(cc.attrs.table1,cc.attrs.column1)}"
+                                                 pass:data-min-value="#{variableAdmin.getMinValue(cc.attrs.table1,cc.attrs.column1)}"
+                                                 pass:data-max-value="#{variableAdmin.getMaxValue(cc.attrs.table1,cc.attrs.column1)}"
+                                                 >
+
+                                        <c:choose>
+                                            <c:when test="#{not empty cc.attrs.changeOnEnter and cc.attrs.changeOnEnter=='true'}">
+                                                <c:choose>
+                                                    <c:when test="#{not empty cc.attrs.next1}">
+                                                        <f:attribute name="onkeypress" value="validateIntegerValueAndFocusNext(event,'#{cc.attrs.next1}')" />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:attribute name="onkeypress" value="validateIntegerKeyPress(event)" />
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <f:attribute name="onkeypress" value="validateIntegerKeyPress(event)" />
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </p:inputText>
+
+                                    <p:selectOneMenu id="#{cc.attrs.table1}-#{cc.attrs.column1}-select" value="#{cc.attrs.bind1}" disabled="#{cc.attrs.disabled}"
+                                                     pass:data-field="#{cc.attrs.table1}-#{cc.attrs.column1}" styleClass="varDisSelectContainer"
+                                                     pass:data-default-value="#{cc.attrs.defaultValue2}"
+                                                     pass:data-all-values="#{variableAdmin.codigosVariableDobleCombo(cc.attrs.table2,cc.attrs.column2,cc.attrs.table3,cc.attrs.column3,cc.attrs.bind1)}"
+                                                     style="display: block; margin-right: 5px; width: 100px;float:left;">
+                                        <p:ajax update="#{cc.attrs.table1}-#{cc.attrs.column1}-#{cc.attrs.table2}-#{cc.attrs.column2}-container" />
+                                        <f:selectItems value="#{variableAdmin.valoresVariables(cc.attrs.table1,cc.attrs.column1)}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                            </td>
+                            <td style="width:95px;">
+                                <h:panelGroup layout="block">
+                                    <p:inputText id="#{cc.attrs.table2}-#{cc.attrs.column2}-#{cc.attrs.column1}-input" required="#{cc.attrs.required}" value="#{cc.attrs.bind2}"
+                                                 disabled="#{cc.attrs.disabled}"
+                                                 style="width: 15px; display: block; margin-right: 5px; margin-bottom: 5px; float:left;"
+                                                 pass:data-field="#{cc.attrs.table2}-#{cc.attrs.column2}"
+                                                 pass:data-min-value="#{variableAdmin.getMinValue(cc.attrs.table2,cc.attrs.column2)}"
+                                                 pass:data-max-value="#{variableAdmin.getMaxValue(cc.attrs.table2,cc.attrs.column2)}"
+                                                 >
+
+                                        <c:choose>
+                                            <c:when test="#{not empty cc.attrs.changeOnEnter and cc.attrs.changeOnEnter=='true'}">
+                                                <c:choose>
+                                                    <c:when test="#{not empty cc.attrs.next2}">
+                                                        <f:attribute name="onkeypress" value="validateIntegerValueAndFocusNext(event,'#{cc.attrs.next2}')" />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:attribute name="onkeypress" value="validateIntegerKeyPress(event)" />
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <f:attribute name="onkeypress" value="validateIntegerKeyPress(event)" />
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </p:inputText>
+
+                                    <p:selectOneMenu id="#{cc.attrs.table2}-#{cc.attrs.column2}-select" value="#{cc.attrs.bind2}" disabled="#{cc.attrs.disabled}"
+                                                     pass:data-field="#{cc.attrs.table2}-#{cc.attrs.column2}" styleClass="varDisSelectContainer"
+                                                     style="display: block; margin-right: 5px; width: 20px;float:left;">
+                                        <f:selectItems value="#{variableAdmin.valoresVariables(cc.attrs.table2,cc.attrs.column2)}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                            </td>
+                            <td style="width:150px;">
+                                <p:inputText id="#{cc.attrs.table3}-#{cc.attrs.column3}-valor-input" required="#{cc.attrs.required}" value="#{cc.attrs.bind3}"
+                                             disabled="#{cc.attrs.disabled}" style="width: 150px; display: block; float:left;">
+                                    <c:choose>
+                                        <c:when test="#{not empty cc.attrs.changeOnEnter and cc.attrs.changeOnEnter=='true'}">
+                                            <c:choose>
+                                                <c:when test="#{not empty cc.attrs.next3}">
+                                                    <f:attribute name="onkeypress" value="validateFloatValueAndFocusNext(event,'#{cc.attrs.next3}')" />
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <f:attribute name="onkeypress" value="validateFloatKeyPress(event)" />
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <f:attribute name="onkeypress" value="validateFloatKeyPress(event)" />
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p:inputText>
+                            </td>
+                            
+                        </tr>
+                    </table>
+
+                </c:when>
+                <c:otherwise>
+                 
+                </c:otherwise>
+            </c:choose>
+        </h:panelGroup>
+    </cc:implementation>
+</html>

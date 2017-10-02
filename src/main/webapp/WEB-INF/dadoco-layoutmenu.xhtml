@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pm="http://primefaces.org/adamantium">
+
+    <div class="layout-menu-cover-top Animated05" id="layout-menu-cover">
+        <h:form id="menuform">
+            <pm:menu>
+                <p:submenu id="rm_operaciones" label="Operaciones" icon="fa fa-gears">
+                    <p:submenu id="rm_urbano" label="Predio Urbano" icon="fa fa-gears">
+                        <!--<p:menuitem id="rm_predio-propio" value="Nuevo predio Propio" icon="fa fa-home" outcome="pretty:cat-crear-predio-propio"/>-->
+                        <p:menuitem id="rm_nuevo-predio" value="Ingreso de Predio Urbano" icon="fa fa-home" outcome="pretty:ingresar-predio" rendered="#{securityBean.hasAnyPermision('CREAR_PREDIO')}"/>
+                        <p:menuitem id="rm_ficha_resumen" value="Ingreso de Ficha Resumen" icon="fa fa-building-o" outcome="pretty:ingresar-ficha-resumen" rendered="#{securityBean.hasAnyPermision('CREAR_PREDIO')}"/>
+    <!--                    <p:menuitem id="rm_eliminar-predio" value="Eliminar predio" icon="fa fa-trash" outcome="pretty:cat-eliminar-predio" rendered="#{securityBean.hasAnyPermision('ELIMINAR_PREDIO')}"/>-->
+                        <p:menuitem id="rm_unifica-predio" value="Unificar predios" icon="fa fa-cube" outcome="pretty:cat-unificar-predio" rendered="#{securityBean.hasAnyPermision('UNIFICAR_PREDIO')}"/>
+                        <p:menuitem id="rm_fraccionar-predio" value="Fraccionar predio" icon="fa fa-delicious" outcome="pretty:cat-fraccionar-predio" rendered="#{securityBean.hasAnyPermision('FRACCIONAR_PREDIO')}"/>
+                        <!--
+                        <p:menuitem id="rm_catastro-escrituras" value="Catastro de escrituras" icon="fa fa-paste" outcome="pretty:cat-catastro-escritura" rendered="#{securityBean.hasAnyPermision('CATASTRO_ESCRITURA')}"/>
+                        <p:menuitem id="rm_arrendamiento" value="Arrendamientos" icon="fa fa-th-large" outcome="pretty:cat-registro-arrendamiento" rendered="#{securityBean.hasAnyPermision('REGISTRO_ARRENDAMIENTO')}"/>
+                        <p:menuitem id="rm_Exenciones" value="Exenciones" icon="fa fa-money" outcome="pretty:cat-exencion-rebaja" rendered="#{securityBean.hasAnyPermision('REGISTRO_EXCENCION_PREDIO')}"/>
+                        <p:menuitem id="rm_Expropiadiocne" value="Expropiaciones" icon="fa fa-bank" outcome="pretty:cat-expropiaciones" rendered="#{securityBean.hasAnyPermision('EXPROPIAR_PREDIO')}"/>-->
+                        <p:menuitem id="rm_inspecciones" value="Inspecciones" icon="fa fa-book" outcome="pretty:cat-registro-inspeccion" rendered="#{securityBean.hasAnyPermision('REGISTRO_INSPECCION')}"/>
+
+                        <p:menuitem id="rm_nueva_incidencia" value="Nueva incidencia" icon="fa fa-file-text" outcome="pretty:cat-incidencias" rendered="#{securityBean.hasAnyPermision('CREAR_INCIDENCIA')}"/>                        
+                    </p:submenu>
+                    <p:submenu id="rm_rural" label="Predio Rural" icon="fa fa-gears">
+                        <p:menuitem id="rm_nuevo-predio-rural" value="Ingreso de Predio Rural" icon="fa fa-home" outcome="pretty:ingresar-predio-rural" rendered="#{securityBean.hasAnyPermision('CREAR_PREDIO')}"/>                       
+                    </p:submenu>
+                </p:submenu>
+                <p:submenu id="rm_mod_solar-datos" label="Actualizar Predio Urbano" icon="fa fa-refresh">
+                    <p:menuitem id="rm_clave_localizacion" value="Clave catastral y Localizaci&oacute;n" icon="fa fa-credit-card" outcome="pretty:actualizar-predio-clave-catastral" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_GENERALES_PREDIO')}"/>
+                    <p:menuitem id="rm_dominio" value="T&iacute;tulo de dominio" icon="fa fa-list-alt" outcome="pretty:actualizar-predio-dominio" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_GENERALES_PREDIO')}"/>
+                    <p:menuitem id="rm_mod-terreno-vias" value="Terreno y V&iacute;as" icon="fa fa-inbox" outcome="pretty:actualizar-predio-terreno" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_TERRENO_PREDIO')}"/>
+                    <p:menuitem id="rm_mod-bloque" value="Construcciones" icon="fa fa-cubes" outcome="pretty:actualizar-predio-construccion" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_CONSTRUCCION_PREDIO')}"/>
+                    <p:menuitem id="rm_mod-integrantes" value="Integrantes actualizaci&oacute;n" icon="fa fa-users" outcome="pretty:actualizar-predio-integrantes" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_CONSTRUCCION_PREDIO')}"/>
+                    <p:menuitem id="rm_mod-full" value="Actualizaci&oacute;n completa" icon="fa fa-home" outcome="pretty:actualizar-predio-completo" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_GENERALES_PREDIO')}"/>
+                    <p:menuitem id="rm-hist-predial" value="Historial de cambios" icon="fa fa-list" outcome="pretty:historico-predios"/>
+                </p:submenu>
+                <p:submenu id="rm_consultas" label="Consultas" icon="fa fa-newspaper-o">
+                    <p:menuitem id="rm_con-aud" value="Auditoría" icon="fa fa-user-secret" outcome="pretty:auditoria" rendered="#{securityBean.hasAnyPermision('AUDITORIA')}"/>
+                    <p:menuitem id="rm_con-predios" value="Predios" icon="fa fa-trello" outcome="pretty:consulta-predio" rendered="#{securityBean.hasAnyPermision('CONSULTA')}"/>
+
+                    <!--  <p:menuitem value="Historia Dominio" icon="fa fa-slack" outcome="pretty:consulta-historia-dominio" /> -->
+                </p:submenu>
+                <p:submenu id="rm_solcitudes" label="Liquidac&iacute;on" icon="fa fa-leanpub">
+                    <!--<p:menuitem id="rm_fichapredial" value="Ficha predial" icon="fa fa-life-ring" outcome="pretty:generar-ficha-catastral" rendered="#{securityBean.hasAnyPermision('FICHA_PREDIAL')}"/>-->
+                    <!--<p:menuitem id="rm_certificadoavaluo" value="Certificado de avalúo" icon="fa fa-file-text" outcome="pretty:cat-certificado-avaluo" rendered="#{securityBean.hasAnyPermision('CERTIFICADO_AVALUO')}"/>-->
+                    <p:menuitem id="rm_inquilinato" value="Trámite de Inquilinato" icon="fa fa-file-text" outcome="pretty:cat-certificado-inquilinato" rendered="#{securityBean.hasAnyPermision('CERTIFICADO_INQUILINATO')}"/>
+                    <p:menuitem id="rm_liquidacion_anual" value="Anual" icon="fa fa-asterisk" outcome="pretty:emision-masiva" rendered="#{securityBean.hasAnyPermision('LIQUIDACION_ANUAL')}"/>
+                    <!--<p:menuitem id="rm_liquidacion_individual" value="Individual" icon="fa fa-asterisk" outcome="pretty:liquidacion-individual" rendered="#{securityBean.hasAnyPermision('LIQUIDACION_ANUAL')}"/>-->
+                    <p:menuitem id="rm_reemitir" value="Reemitir liquidac&iacute;on" icon="fa fa-repeat" outcome="pretty:reemision-impuesto" rendered="#{securityBean.hasAnyPermision('REEMITIR_IMPUESTO')}"/>
+                    <!--<p:menuitem value="Verificar impuesto" icon="fa fa-file-text" outcome="pretty:verificacion-avaluos-e-impuestos"/>-->
+
+                </p:submenu>
+                <p:submenu id="rm_pagos" label="Pagos" icon="fa fa-gear">
+                    <p:menuitem id="rm_ip" value="Impuesto predial" icon="fa fa-money" outcome="pretty:pago-impuesto-predial" rendered="#{securityBean.hasAnyPermision('PAGOS')}"/>
+<!--                    <p:menuitem id="rm_rch" value="Registro de cheques" icon="fa fa-newspaper-o" outcome="pretty:pago-registro-cheques" rendered="#{securityBean.hasAnyPermision('REGISTRO_CHEQUE')}"/>
+                    <p:menuitem id="rm_rdp" value="Registro de depósitos" icon="fa fa-clipboard" outcome="pretty:pago-registro-depositos" rendered="#{securityBean.hasAnyPermision('REGISTRO_DEPOSITO')}"/>
+                    <p:menuitem id="rm_desbloq" value="Desbloqueo de deuda" icon="fa fa-unlock" outcome="pretty:pago-desbloqueo-deuda" rendered="#{securityBean.hasAnyPermision('DESBLOQUEAR_DEUDA')}"/>-->
+                </p:submenu>
+                <p:submenu id="rm_admin-full" label="Administración" icon="fa fa-gear" >
+                    <p:submenu id="rm_coef" label="Coeficientes Avalúos" rendered="#{securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}">
+                        <p:menuitem id="rm_avaluo_simples" value="Coeficientes " icon="fa fa-tag" outcome="pretty:coef-avaluos-valores-simples"/>    
+                        <p:menuitem id="rm_avaluo_general" value="Generales " icon="fa fa-tag" outcome="pretty:coef-avaluos-generales"/>
+                        <p:menuitem id="rm_avaluo_zona_homo" value="Zonas homo&eacute;neas " icon="fa fa-tag" outcome="pretty:admin-zonas-homogeneas"/>
+                        <p:menuitem id="rm_avaluo_factor_AR" value="Factores Aumento/Reducci&oacute;n " icon="fa fa-tag" outcome="pretty:admin-factor-aumento-reduccion"/>
+                        <p:menuitem id="rm_avaluo_tasas" value="Tasas Inter&eacute;s " icon="fa fa-tag" outcome="pretty:tasa-interes"/>
+                        <p:menuitem id="rm_avaluo_cem" value="CEM " icon="fa fa-tag" outcome="pretty:admin-contribucion-especial"/>
+                        <p:submenu id="rm_avaluo_compuestos" label="Coeficientes compuestos">
+                            <p:menuitem id="rm_edad_estado" value="Edad vs Estado " icon="fa fa-tag" outcome="pretty:coef-edad-estado"/>
+                            <p:menuitem id="rm_estructura_acabadao" value="Estructura vs Acabados" icon="fa fa-building-o" outcome="pretty:coef-estructura-acabados"/>
+                            <p:menuitem id="rm_estructura_nivel" value="Estructura vs Niveles" icon="fa fa-building-o" outcome="pretty:coef-estructura-niveles"/>
+                            <p:menuitem id="rm_rango_areas" value="Variaci&oacute;n &aacute;rea" icon="fa fa-building-o" outcome="pretty:coef-variacion-area"/>
+                            <p:menuitem id="rm_categoria_estructura_nivel" value="Categoria Estructura/Nivel" icon="fa fa-building-o" outcome="pretty:categoria-estructura-nivel"/>    
+                        </p:submenu>
+                        <!--                        <p:menuitem id="rm_ubicacion" value="Ubicaci&oacute;n" icon="fa fa-tag" outcome="pretty:coef-ubicacion"/>
+                                                <p:menuitem id="rm_topografia" value="Topograf&iacute;a" icon="fa fa-tag" outcome="pretty:coef-topografia"/>
+                                                <p:menuitem id="rm_geometria" value="Geometr&iacute;a" icon="fa fa-tag" outcome="pretty:coef-geometrico"/>
+                                                <p:menuitem id="rm_suelo" value="Suelo" icon="fa fa-tag" outcome="pretty:coef-suelo"/>
+                                                <p:menuitem id="rm_energia_elec" value="Energ&iacute;a el&eacute;ctrica" icon="fa fa-tag" outcome="pretty:coef-energia-electrica"/>
+                                                <p:menuitem id="rm_agua_potable" value="Agua potable" icon="fa fa-tag" outcome="pretty:coef-agua-potable"/>
+                                                <p:menuitem id="rm_alcantarillado" value="Alcantarillado" icon="fa fa-tag" outcome="pretty:coef-alcantarillado"/>
+                                                <p:menuitem id="rm_capa" value="Capa de rodaura" icon="fa fa-tag" outcome="pretty:coef-capa-rodadura"/>-->
+                    </p:submenu>
+                    <p:submenu id="rm_security" label="Seguridad" rendered="#{securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}">
+                        <p:menuitem id="rm_secuser" value="Usuarios" icon="fa fa-user" outcome="pretty:admin-usuarios" />
+                        <p:menuitem id="rm_secrol" value="Roles" icon="fa fa-group" outcome="pretty:admin-roles"/>
+                        <p:menuitem id="rm_secperm" value="Permisos" icon="fa fa-toggle-on" outcome="pretty:admin-permisos"/>
+                    </p:submenu>
+                    <p:submenu id="rm_catalos" label="Catálogos" rendered="#{securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}">
+                        <p:menuitem id="rm_contrib" value="Contribuyentes" icon="fa fa-user" outcome="pretty:admin-contribuyente"/>
+                        <p:menuitem id="rm_integrantes" value="Integrantes" icon="fa fa-group " outcome="pretty:admin-integrantes"/>
+                    </p:submenu>
+                    <!--                    <p:submenu id="rm_otras" label="Otras configuraciones">
+                                            <p:menuitem id="rm_avaluosimpue" value="Avalúos e impuestos" icon="fa fa-user" outcome="pretty:config-avaluos"/>
+                                        </p:submenu>-->
+                    <p:submenu id="rm_zonifica" label="Zonificación" rendered="#{securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}">
+                        <!-- <p:menuitem value="Parroquia" icon="fa fa-user" outcome="pretty:admin-usuarios" /> -->
+                        <!--<p:menuitem id="rm_zh" value="Zona Homogeneas" icon="fa fa-th-large" outcome="pretty:admin-zonas-homogeneas"/>-->
+                        <p:menuitem id="rm_z" value="Zona" icon="fa fa-th-large" outcome="pretty:admin-zonas"/>
+                        <p:menuitem id="rm_s" value="Sector" icon="fa fa-th-list" outcome="pretty:admin-sectores"/>
+                        <p:menuitem id="rm_m" value="Manzana" icon="fa fa-table" outcome="pretty:admin-manzanas"/>
+                    </p:submenu>
+                    <p:submenu id="rm_recod" label="Recodificación" rendered="#{securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}">
+                        <!--  <p:menuitem value="Código Zona" icon="fa fa-building-o" outcome="pretty:cat-clave-catastral-ph"/>
+                          <p:menuitem value="Código Sector" icon="fa fa-tag" outcome="pretty:cat-clave-catastral-solar"/>
+                          <p:menuitem value="Código Manzana" icon="fa fa-building-o" outcome="pretty:cat-clave-catastral-ph"/>
+                        -->
+                        <!--<p:menuitem id="rm_parr" value="Código Parroquia" icon="fa fa-building-o" outcome="pretty:cat-clave-parroquia"/>-->
+                        <!--                        <p:menuitem id="rm_solarcod" value="Código Solar" icon="fa fa-tag" outcome="pretty:cat-clave-catastral-solar"/>
+                                                <p:menuitem id="rm_phcod" value="Código PH" icon="fa fa-building-o" outcome="pretty:cat-clave-catastral-ph"/>-->
+                    </p:submenu>
+
+                    <p:submenu id="rm_adm_flujo" label="Flujo de Incidencias">
+                        <p:menuitem id="rm_flujo_manzana" value="Manzanas " icon="fa fa-random" rendered="#{securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}" outcome="pretty:flujo-manzanas"/>
+                        <p:menuitem id="rm_control_relevamiento" value="Control de relevamiento" rendered="#{securityBean.hasAnyPermision('CORDINADOR_RELEVAMIENTO')}" icon="fa fa-check-square-o" outcome="pretty:flujo-control-relevamiento-supervisor"/>                   
+                        <p:menuitem id="rm_control_inspector" value="Control de inspector" rendered="#{securityBean.hasAnyPermision('SUPER_RELEVAMIENTO,CORDINADOR_RELEVAMIENTO')}" icon="fa fa-check-square-o" outcome="pretty:flujo-control-relevamiento-inspector"/>                   
+                        <p:menuitem id="rm_control_calidad" value="Control de calidad" icon="fa fa-check-square-o" rendered="#{securityBean.hasAnyPermision('CONTROL_CALIDAD')}" outcome="pretty:flujo-control-calidad-validador"/>
+                        <!--p:menuitem id="rm_ingreso_relevado" value="Ingreso predio relevado" icon="fa fa-home" outcome="pretty:flujo-add-predio"/>
+                        <p:menuitem id="rm_revision_relevado" value="Revici&oacute;n predios relevados" icon="fa fa-home" outcome="pretty:flujo-list-predio"/-->
+                        <p:menuitem id="rm_flujo" value="Flujo " rendered="#{securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}" icon="fa fa-random" outcome="pretty:config-flujo"/>
+                        <p:menuitem id="rm_actividad" value="Actividad" rendered="#{securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}" icon="fa fa-tag" outcome="pretty:config-actividad"/>
+                        <p:menuitem id="rm_tramite_ev" value="Tramite de Incidencias Enviadas" icon="fa fa-send-o" outcome="pretty:tramite-incidencias-env"/>
+                        <p:menuitem id="rm_tramite_rc" value="Tramite de Incidencias Recibidas" icon="fa fa-envelope-o" outcome="pretty:tramite-incidencias-recib"/>
+                    </p:submenu>
+                    <!--<p:menuitem id="rm_reporte_incidencias" value="Reporte Incidencias" icon="fa fa-print" rendered="# {securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}" outcome="pretty:rep-incidencias"/>-->
+                    <p:menuitem id="rm_reporte_predial" value="Reporte Predial" icon="fa fa-print" rendered="#{securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}" outcome="pretty:digitacion-reportes"/>
+
+                    <p:menuitem id="rm-predios-parametro" value="Predios Sin Edificaci&oacute;n" rendered="#{securityBean.hasAnyPermision('ADMIN,SUPER_ADMIN')}" icon="fa fa-print" outcome="pretty:rep-predios-parametro" />
+                    <p:menuitem id="rm-generar-fichas" value="Generar Fichas" icon="fa fa-book" outcome="pretty:admin-generar-fichas"/>
+                </p:submenu>
+                <p:menuitem id="rm_migracion" value="MIGRACION" icon="fa fa-money" outcome="pretty:migracion-informacion" rendered="#{securityBean.hasAnyPermision('MIGRACION')}"/>
+<!--                    <p:menuitem id="rm_rch" value="Registro de cheques" icon="fa fa-newspaper-o" outcome="pretty:pago-registro-cheques" rendered="#{securityBean.hasAnyPermision('REGISTRO_CHEQUE')}"/>
+                <p:menuitem id="rm_rdp" value="Registro de depósitos" icon="fa fa-clipboard" outcome="pretty:pago-registro-depositos" rendered="#{securityBean.hasAnyPermision('REGISTRO_DEPOSITO')}"/>
+                <p:menuitem id="rm_desbloq" value="Desbloqueo de deuda" icon="fa fa-unlock" outcome="pretty:pago-desbloqueo-deuda" rendered="#{securityBean.hasAnyPermision('DESBLOQUEAR_DEUDA')}"/>-->
+                <!--                <p:menuitem id="rm_dashboard" value=" Dashboard" icon="icon-feather" />
+                                <p:menuitem id="rm_promotion" value=" Promotion Page" icon="icon-globe" />
+                                <p:submenu id="rm_orientation" label=" Menu Options" icon="icon-menu">
+                                    <p:menuitem id="rm_top" value=" Top Menu" icon="icon-layout7" url="#" onclick="Adamantium.changeMenuLayout('top');return false;" />
+                                    <p:menuitem id="rm_left" value=" Left Menu" icon="icon-layout14" url="#" onclick="Adamantium.changeMenuLayout('left');return false;" />
+                                    <p:menuitem id="rm_dark" value=" Dark Menu" icon="icon-pen-alt-fill" url="#" onclick="$('body').addClass('dark');return false;" />
+                                    <p:menuitem id="rm_light" value=" Light Menu" icon="icon-pen-alt-stroke" url="#" onclick="$('body').removeClass('dark');return false;" />
+                                </p:submenu>
+                                <p:submenu id="rm_theme" label="Adamantium Theme" icon="icon-screen">
+                                    <p:menuitem id="rm_sample" value="Sample Page" icon="fa fa-columns"  />
+                                    <p:menuitem id="rm_forms" value=" Form Elements" icon="icon-browser"  />
+                                    <p:menuitem id="rm_data" value=" Data Components" icon="icon-ipad"  />
+                                    <p:menuitem id="rm_datatable" value=" DataTable" icon="icon-newspaper-alt"  />
+                                    <p:menuitem id="rm_panels" value=" Panels" icon="icon-windows Fs16"  />
+                                    <p:menuitem id="rm_overlays" value=" Overlays" icon="icon-gallery"  />
+                                    <p:menuitem id="rm_menus" value=" Menus" icon="icon-grid Fs16"  />
+                                    <p:menuitem id="rm_messages" value=" Messages" icon="icon-chat-alt-stroke Fs16"  />
+                                    <p:menuitem id="rm_charts" value=" Charts" icon="icon-image Fs16" />
+                                    <p:menuitem id="rm_fileupload" value=" FileUpload" icon="icon-attachment"  />
+                                    <p:menuitem id="rm_misc" value=" Misc" icon="icon-googleplus"  />
+                                </p:submenu>
+                                <p:submenu id="rm_default" label=" Default Pages" icon="icon-list">
+                                    <p:menuitem id="rm_empty" value=" Empty Page" icon="icon-document-stroke"  />
+                                    <p:menuitem id="rm_login" value=" Login Page" icon="icon-unlock-stroke"  />
+                                    <p:menuitem id="rm_error" value=" Error Page" icon="icon-close"  />
+                                    <p:menuitem id="rm_404" value=" 404 Page" icon="icon-exclamation"  />
+                                    <p:menuitem id="rm_access" value=" Access Denied Page" icon="icon-eye"/>
+                                </p:submenu>
+                                <p:submenu id="rm_hierarchy" label=" Menu Hierarchy" icon="icon-folder-stroke">
+                                    <p:submenu id="rm_sm1" label=" Submenu 1" icon="icon-folder-stroke">
+                                        <p:submenu id="rm_sm11" label=" Submenu 1.1" icon="icon-folder-stroke">
+                                            <p:submenu id="rm_sm111" label=" Submenu 1.1.1" icon="icon-folder-stroke">
+                                                <p:menuitem id="rm_lnk1111" value=" Link 1" icon="icon-hyperlink" url="#" />
+                                                <p:menuitem id="rm_lnk1112" value=" Link 2" icon="icon-hyperlink" url="#" />
+                                                <p:menuitem id="rm_lnk1113" value=" Link 3" icon="icon-hyperlink" url="#" />
+                                            </p:submenu>
+                                        </p:submenu>
+                                    </p:submenu>
+                                    <p:submenu id="rm_sm2" label=" Submenu 2" icon="icon-folder-stroke">
+                                        <p:submenu id="rm_22" label=" Submenu 2.2" icon="icon-folder-stroke">
+                                            <p:submenu id="rm_221" label=" Submenu 2.2.1" icon="icon-folder-stroke">
+                                                <p:menuitem id="rm_lnk2211" value=" Link 1" icon="icon-hyperlink" url="#" />
+                                                <p:menuitem id="rm_lnk2212" value=" Link 2" icon="icon-hyperlink" url="#" />
+                                                <p:menuitem id="rm_lnk2213" value=" Link 3" icon="icon-hyperlink" url="#" />
+                                            </p:submenu>
+                                        </p:submenu>
+                                    </p:submenu>
+                                </p:submenu>
+                                
+                                <p:submenu id="rm_links" label=" Links" icon="icon-inbox">
+                                    <p:menuitem id="rm_icons" value=" Font Icons" icon="icon-cmd"  />
+                                    <p:submenu id="rm_docs" label=" Documentation" icon="icon-inbox">
+                                        <p:submenu id="rm_docs_core" label=" Core CSS Docs" icon="fa fa-code">
+                                            <p:menuitem id="rm_docs_1" value=" Installation" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_2" value=" Menus" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_3" value=" Responsive Mode" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_4" value=" ContainerX" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_5" value=" WidX" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_6" value=" Selection" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_7" value=" Visibility" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_8" value=" Displaying" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_9" value=" Positioning" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_10" value=" Underline" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_11" value=" Floating" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_12" value=" Overflows" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_13" value=" Empty Boxes" icon="icon-menu" />
+                                            <p:menuitem id="rm_docs_14" value=" Opacity" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_15" value=" Text Aligning" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_16" value=" Box Sizing" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_17" value=" Font Size" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_18" value=" Font Weights" icon="icon-menu" />
+                                            <p:menuitem id="rm_docs_19" value=" Transitions" icon="icon-menu"  />
+                                        </p:submenu>
+                                        <p:submenu id="rm_docs_layout" label=" Layout CSS Docs" icon="fa fa-code">
+                                            <p:menuitem id="rm_docs_20" value=" LESS" icon="icon-menu" />
+                                            <p:menuitem id="rm_docs_21" value=" Cards" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_22" value=" Text Colors" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_23" value=" Background Colors" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_24" value=" Borders" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_25" value=" Separators" icon="icon-menu"  />
+                                            <p:menuitem id="rm_docs_26" value=" Effects" icon="icon-menu" />
+                                            <p:menuitem id="rm_docs_27" value=" Lato Font" icon="icon-menu" />
+                                        </p:submenu>
+                                    </p:submenu>
+                                </p:submenu>-->
+            </pm:menu>
+        </h:form>
+
+    </div>
+
+</ui:composition>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" style="margin-bottom: 10px;">    
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Nombre de quien proporciona la informaci&oacute;n" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="relevamiento" value="T&eacute;cnico:"  class="DispBlock Wid100"/>
+                                <h:outputText id="relevamiento" value="#{FWPRedioValidadorView.entidadSeleccionada.relevamiento.nombreCompleto}"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="supervision" value="Supervisor t&eacute;cnico:"  class="DispBlock Wid100"/>
+                                <h:outputText id="supervision" value="#{FWPRedioValidadorView.entidadSeleccionada.supervisor.nombreCompleto}"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+</html>

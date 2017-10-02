@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:messages id="datosConstruccionMessages" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+
+        <h:panelGroup layout="block" class="Responsive Container100 MarTop20 MarBot20">
+            <div class="Container100">
+                <h1 class="BigTopic Fs16">Otros tipos de construcci&oacute;n</h1>
+                <hr></hr>
+                <p:fieldset legend="Otros tipos de construcci&oacute;n" toggleable="true" toggleSpeed="500" >
+                    <h:panelGroup layout="block" class="Responsive Container100">
+                        <div class="ContainerIndent Container100">
+                            <h:panelGroup layout="block" class="actions" id="obras-complementarias-update">
+                                <p:commandButton title="Adicionar"
+                                                 id="nuevo-muro-btn"  styleClass="Fs16" update="obras-dlg,:obras-form"
+                                                 icon="fa fa-plus white" actionListener="#{regPredioUrbanoView.initNuevaObra()}"
+                                                 process="@this,obras-complementarias-update"
+                                                 value="Adicionar"
+                                                 class="Fleft"
+                                                 oncomplete="PF('obrasDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                 style="margin-right: 10px; margin-bottom: 5px;"/>
+                                <p:commandButton title="Editar"
+                                                 id="edit-obra-btn"  styleClass="Fs16" update="obras-dlg,:obras-form"
+                                                 icon="fa fa-plus white" actionListener="#{regPredioUrbanoView.initEditObra()}"
+                                                 process="@this,obras-complementarias-update"
+                                                 value="Editar"
+                                                 disabled="#{regPredioUrbanoView.obrasComplementarias.size() == 0}"
+                                                 class="Fleft"
+                                                 oncomplete="PF('obrasDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                 style="margin-right: 10px; margin-bottom: 5px;"/>
+                                <p:commandButton title="Eliminar"
+                                                 id="eliminar-obra-btn" styleClass="Fs16"
+                                                 icon="fa fa-trash white" actionListener="#{regPredioUrbanoView.eliminarObra()}"
+                                                 class="Fleft"
+                                                 process="@this"
+                                                 update="obras-complementarias-list,obras-dataTable,obras-complementarias-update"
+                                                 disabled="#{regPredioUrbanoView.obrasComplementarias.size() == 0}"
+                                                 value="Eliminar">
+                                    <p:confirm header="Confirmación" message="Está seguro de eliminar el tipo de construcci&oacute;n?" icon="ui-icon-alert" />
+                                </p:commandButton>
+                            </h:panelGroup>
+                        </div>
+                        <div class="ContainerIndent Container100 MarBot10" id="obras-complementarias">
+                            <h:panelGroup layout="block" class="actions" id="obras-complementarias-list">
+                                <p:dataTable id="obras-dataTable" var="obra" value="#{regPredioUrbanoView.obrasComplementarias}" selection="#{regPredioUrbanoView.obraSeleccionada}" rowKey="#{obra.numero}" style="margin-bottom:0"
+                                             rows="5" paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15"
+                                             paginatorPosition="bottom" selectionMode="single"
+                                             emptyMessage="No se han registrados otros tipos de construcciones.">
+
+                                    <p:ajax event="rowSelect" listener="#{regPredioUrbanoView.onRowSelectObra}" update="obras-form,obras-dataTable,obras-complementarias-update" />
+                                    <p:ajax event="rowUnselect" listener="#{regPredioUrbanoView.onRowUnselectObra}" update="obras-form,obras-dataTable,obras-complementarias-update" />
+                                    <p:column headerText="Tipo de construcci&oacute;n">
+                                        <h:outputText value="#{regPredioUrbanoView.nombreVariable(obra.variable)}"  />
+                                    </p:column>
+                                    <p:column headerText="Material/Construcci&oacute;n">
+                                        <h:outputText value="#{regPredioUrbanoView.nombreValorDiscreto(obra.variable, obra.tipoConstruccion, obra.estructura, obra.cubierta)}"  />
+                                    </p:column>
+                                    <p:column headerText="Valor">
+                                         <h:outputText value="#{obra.medida()}" escape="false" />                                       
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+                        </div>
+                    </h:panelGroup>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20" rendered="#{regPredioUrbanoView.terreno.estado != 2}" >
+            <h:panelGroup layout="block" id="datosConstruccion"> 
+                <h1 class="BigTopic Fs16">Caracter&iacute;sticas de las edificaciones</h1>
+                <hr></hr>
+                <div class="Responsive Container50">
+                    <h:panelGroup id="bloque-list-form" layout="block" class="Container MarRight20">
+                        <p:fieldset legend="Bloques" toggleable="false" toggleSpeed="500" >
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: left;">
+                                            <p:selectOneMenu id="bloqueSelect" value="#{regPredioUrbanoView.bloqueSeleccionadoIndex}" style="width: 85%"> 
+                                                <p:ajax listener="#{regPredioUrbanoView.cambiarBloque}" update="bloque-list-form,piso-list-form,bloque-form" process="@this"/>
+                                                <c:forEach items="#{regPredioUrbanoView.bloques}" var="bloque" varStatus="loop">
+                                                    <f:selectItem itemValue="#{loop.index}" itemLabel="Bloque #{bloque.numeroBloque}" />
+                                                </c:forEach>
+                                            </p:selectOneMenu> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:commandButton id="eliminar-bloque-btn"                                                                             
+                                                             class="Fright"
+                                                             disabled="#{empty regPredioUrbanoView.bloques}"
+                                                             update="bloque-list-form,piso-list-form,bloque-form"  
+                                                             icon="fa fa-trash white" action="#{regPredioUrbanoView.eliminarBloque()}" >
+                                                <p:confirm header="Confirmaci&oacute;n de eliminaci&oacute;n" message="Est&aacute; seguro de eliminar el Bloque #{regPredioUrbanoView.bloqueSeleccionado.numeroBloque} ?" icon="ui-icon-alert" />
+                                            </p:commandButton>
+                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            </p:confirmDialog>
+                                            <p:commandButton id="editar-bloque-btn"
+                                                             disabled="#{empty regPredioUrbanoView.bloques}"
+                                                             update="bloque-list-form,piso-list-form,bloque-form" 
+                                                             icon="fa fa-edit white" action="#{regPredioUrbanoView.inicializarActualizacionBloque()}"
+                                                             styleClass="Fright" />
+                                            <p:commandButton id="adicionar-bloque-btn"
+                                                             process="@this"
+                                                             update="bloque-list-form,piso-list-form,bloque-form,datosConstruccionMessages" 
+                                                             icon="fa fa-plus white" action="#{regPredioUrbanoView.inicializarNuevoBloque}"
+                                                             styleClass="Fright" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </p:fieldset>
+                    </h:panelGroup>
+                </div>
+                <div class="Responsive Container50">
+                    <h:panelGroup id="piso-list-form" layout="block" class="Container">
+                        <h:panelGroup layout="block" rendered="#{regPredioUrbanoView.creandoBloque or regPredioUrbanoView.editandoBloque}">
+                            <p:fieldset legend="Pisos" toggleable="false" toggleSpeed="500" >
+                                <table style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align: right;">
+                                                <p:selectOneMenu id="pisoSelect" value="#{regPredioUrbanoView.pisoSeleccionadoIndex}"
+                                                                 disabled="#{(regPredioUrbanoView.creandoPiso or regPredioUrbanoView.editandoPiso)}"
+                                                                 style="width: 90%">   
+                                                    <p:ajax listener="#{regPredioUrbanoView.cambiarPiso}" update="piso-btns" process="@this,pisoSelect"/>
+
+                                                    <c:forEach items="#{regPredioUrbanoView.pisos}" var="piso" varStatus="loop">
+                                                        <f:selectItem itemValue="#{loop.index}" itemLabel="Piso-#{piso.numeroPiso} (#{piso.area} m&sup2;)" />
+                                                    </c:forEach>
+                                                </p:selectOneMenu>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:panelGroup layout="block" class="Container100" id="piso-btns"> 
+
+                                                    <p:commandButton id="eliminar-piso-btn"                                                                             
+                                                                     class="Fright"
+                                                                     disabled="#{empty regPredioUrbanoView.pisos}"
+                                                                     update="datosConstruccion,bloque-form,datosConstruccionMessages" 
+                                                                     process="@this"
+                                                                     icon="fa fa-trash white" action="#{regPredioUrbanoView.eliminarPiso()}" >
+                                                        <p:confirm header="Confirmaci&oacute;n de eliminaci&oacute;n" message="Est&aacute; seguro de eliminar el Piso #{regPredioUrbanoView.pisoSeleccionado.numeroPiso} del Bloque #{regPredioUrbanoView.bloqueSeleccionado.numeroBloque}?" icon="ui-icon-alert" />
+                                                    </p:commandButton>
+                                                    <p:commandButton id="editar-piso-btn" 
+                                                                     disabled="#{empty regPredioUrbanoView.pisos}"
+                                                                     class="Fright"
+                                                                     process="@this"
+                                                                     update="datos-piso-dlg,datosConstruccion,bloque-form,piso-list-form,datosConstruccionMessages" 
+                                                                     oncomplete="PF('datosPisoDialog').show();"
+                                                                     icon="fa fa-edit white" action="#{regPredioUrbanoView.inicializarActualizacionPiso}"
+                                                                     />
+                                                    <p:commandButton id="nuevo-piso-btn" 
+                                                                     class="Fright"
+                                                                     process="@this"
+                                                                     update="datos-piso-dlg,piso-list-form,datosConstruccionMessages,messages,bloque-form" 
+                                                                     icon="fa fa-plus white" action="#{regPredioUrbanoView.inicializarNuevoPiso}"
+
+                                                                     />
+                                                </h:panelGroup>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </p:fieldset>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <h:panelGroup class="Container Wid100" layout="block" id="bloque-form" style="margin-bottom: 30px;" rendered="#{regPredioUrbanoView.terreno.estado != 2}">
+            <h:panelGroup layout="block" rendered="#{(regPredioUrbanoView.creandoBloque or regPredioUrbanoView.editandoBloque)}">
+                <ui:include src="_caracteristicasBloque.xhtml"/>
+            </h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup class="Container Wid100" layout="block" style="margin-bottom: 30px;" rendered="#{regPredioUrbanoView.terreno.estado == 2}">
+            <h:panelGroup layout="block" >
+                <p:outputLabel  value="TERRENO ESTA MARCADO SIN EDIFICACI&Oacute;N, ES UN SOLAR VACIO" class="DispBlock Wid100 Fright"/>
+            </h:panelGroup>
+        </h:panelGroup>
+        <ui:include src="_formOtroTipoConstruccion.xhtml"/>
+    </ui:composition>
+</html>

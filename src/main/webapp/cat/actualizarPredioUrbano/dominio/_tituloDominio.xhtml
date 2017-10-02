@@ -1,0 +1,365 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="escriturasContainerPH" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">Datos legales de la propiedad horizontal </h1>
+                <hr></hr>
+
+                <h:panelGroup layout="block" class="Responsive Container100 MarRight20">
+                    <p:fieldset legend="Contribuyentes" toggleable="true" toggleSpeed="500" style="margin-bottom: 20px;">   
+                        <div class="ContainerIndent Container100">
+
+                            <h:panelGroup layout="block" class="actions" id="propietarioListDelete-updatePH">
+                                <p:commandButton title="Adicionar"
+                                                 id="buscar-propietario-btnPH"  styleClass="Fs16" update=":BuscarContribuyenteForm"
+                                                 icon="fa fa-user-plus white" actionListener="#{updateDominioView.inicializarBusquedaContribuyente()}"
+                                                 process="@this,propietarioListDelete-updatePH"
+                                                 value="Adicionar"
+                                                 oncomplete="PF('BuscarContribuyenteDialog').show();"
+                                                 style="margin-right: 10px; margin-bottom: 5px;"/>
+                                <p:commandButton title="Eliminar"
+                                                 id="eliminar-propietario-btnPH" styleClass="Fs16" update="propietarioListDeletePH,propietarioListDelete-updatePH"
+                                                 icon="fa fa-user-times white" actionListener="#{updateDominioView.eliminarPropietario}"
+                                                 process="@this"
+                                                 style="margin-right: 10px; margin-bottom: 5px;"
+                                                 disabled="#{updateDominioView.propietarioSeleccionado == null}"
+                                                 value="Eliminar">
+                                    <p:commandButton title="Agregar"
+                                                     id="add-propietario-btn"  styleClass="Fs16" update="CreateContribuyenteDlg"
+                                                     icon="fa fa-user-plus white" actionListener="#{updateDominioView.inicializarNuevo()}"
+                                                     process="@this"
+                                                     value="Agregar"
+                                                     oncomplete="PF('CreateContribuyenteDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                     style="margin-right: 10px; margin-bottom: 5px;"/>
+
+                                    <p:confirm header="Confirmación" message="Está seguro de eliminar el usuario seleccionado #{updateDominioView.propietarioSeleccionado.nombreCompleto}?" icon="ui-icon-alert" />
+                                </p:commandButton>
+                                <p:inputText style="margin-left: 20px;"  id="clave_anterior3" placeholder="Clave catastral anterior" value="#{updateDominioView.predio.claveAnterior}" maxlength="11"
+                                             class="input_200" onkeypress="validateIntegerValueAndFocusNext(event, '#{updateDominioView.predio.claveAnterior}btn_bucarCA3')"/>
+                                <p:commandButton id="btn_bucarCA3" icon="fa fa-search" action="#{consultaRegistroView.ejecutarConsulta(updateDominioView.predio.claveAnterior)}" 
+                                                 oncomplete="PF('dlgResultadoConsulta').show();" title="Busqueda de Propietario por Clave Anterior." 
+                                                 update="resultBusquedaCA-form,messages"/>  
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog>
+
+                            </h:panelGroup>
+                        </div>
+                        <div class="ContainerIndent Container100 MarBot10" id="propietariosPH">
+                            <div class="ContainerIndent Container96">
+                                <p:dataTable id="propietarioListDeletePH" var="prop" value="#{updateDominioView.propietarios}" selection="#{updateDominioView.propietarioSeleccionado}" rowKey="#{prop.id}" style="margin-bottom:0"
+                                             rows="5" paginator="true"
+                                             editable="true" editMode="cell"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15"
+                                             emptyMessage="No se han registrados contribuyentes al predio."
+                                             paginatorPosition="bottom" selectionMode="single">
+                                    <p:ajax event="rowSelect" listener="#{updateDominioView.onRowSelect}" update="propietarioListDelete-update,propietarioListDelete" />
+                                    <p:ajax event="rowUnselect" listener="#{updateDominioView.onRowSelect}" update="propietarioListDelete-update,propietarioListDelete" />
+                                    <!--<p:ajax event="cellEdit" listener="#{updateDominioView.onCellEditPropietario}" />-->
+
+                                    <!--                                    <f:facet name="header">
+                                                                            Clic en Tipo propietario para cambiar el tipo
+                                                                        </f:facet>-->
+                                    <p:column style="width:16px">
+                                        <p:rowToggler />
+                                    </p:column>
+                                    <p:column headerText="Tipo propietario">
+                                        <!--<p:cellEditor>-->
+                                        <f:facet name="output"><h:outputText value="#{prop.valorTipoPropietario()}" /></f:facet>
+                                        <!--                                            <f:facet name="input">
+                                                                                        <h:selectOneMenu value="#{prop.tipoPropietario}" style="width:100%; height: 24px;" >
+                                                                                            <f:selectItems value="#{updateDominioView.tiposPropietarios}" var="item" itemLabel="#{item.label}" itemValue="#{item.value}" />
+                                                                                        </h:selectOneMenu>
+                                                                                    </f:facet>-->
+                                        <!--</p:cellEditor>-->
+                                    </p:column>
+                                    <p:column headerText="Propietario">
+                                        <h:outputText value="#{prop.nombreCompleto}"  />
+                                    </p:column>
+                                    <p:column headerText="C&eacute;dula/RUC">
+                                        <h:outputText value="#{prop.identificacion}" />
+                                    </p:column>
+                                    <p:column headerText="Tel&eacute;fono celular">
+                                        <h:outputText value="#{prop.celular}" />
+                                    </p:column>
+                                    <p:column headerText="Tel&eacute;fono convencional">
+                                        <h:outputText value="#{prop.telefono}" />
+                                    </p:column>
+                                    <p:rowExpansion>
+                                        <p:panelGrid  columns="6" columnClasses="show-detail,value,show-detail,value,show-detail,value">
+                                            <h:outputText value="Personer&iacute;a:" />
+                                            <h:outputText value="#{prop.valorPersoneria()}" />
+                                            <h:outputText value="Nombre Representante legal:" />
+                                            <h:outputText value="#{prop.representanteLegal}" />
+                                            <h:outputText value="C&eacute;dula Representante legal:" />
+                                            <h:outputText value="#{prop.representanteLegalCedula}" />
+                                        </p:panelGrid>
+                                    </p:rowExpansion>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </p:fieldset>
+                    <p:fieldset legend="Datos del Administrador/Promotor" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid columns="4" style="width: 100%">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="admin_nombre" value="Nombre y apellidos:" class="DispBlock Wid100"/>
+                                <p:inputText id="admin_nombre" value="#{updateDominioView.predio.administrador}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'admin_cedula')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="admin_cedula" value="C&eacute;dula:"  class="DispBlock Wid100"/>
+                                <p:inputText id="admin_cedula" value="#{updateDominioView.predio.administradorCedula}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'admin_celular')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="admin_celular" value="Tel&eacute;fono celular:"  class="DispBlock Wid100"/>
+                                <p:inputText id="admin_celular" value="#{updateDominioView.predio.administradorCelular}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'admin_telefono')"/>
+                            </h:panelGroup> 
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="admin_telefono" value="Tel&eacute;fono convencional:"  class="DispBlock Wid100"/>
+                                <p:inputText id="admin_telefono" value="#{updateDominioView.predio.administradorTelefono}"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'notaria')"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Responsive Container100 MarTop20" style="margin-bottom: 20px;">
+                <div class="ContainerIndent Wid100 MarRight20">
+                    <p:fieldset legend="Datos legales de la declaratoria PROPIEDAD HORIZONTAL" toggleable="true" toggleSpeed="500" style="margin-bottom: 20px;">
+                        <h:panelGrid columns="4" style="width: 100%">
+
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="notariaPH" value="Notar&iacute;a:" class="DispBlock Wid100"/>
+                                <p:inputText id="notariaPH" value="#{updateDominioView.escritura.notaria}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'canton')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cantonPH" value="Canton:"  class="DispBlock Wid100"/>
+                                <p:inputText id="cantonPH" value="#{updateDominioView.escritura.canton}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'fecha_escritura_input')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_escrituraPH" value="Fecha escritura:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_escrituraPH" value="#{updateDominioView.escritura.fechaEscritura}" style="width: 180px;"
+                                            class="input_180" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'ficha_registral')"/>
+                            </h:panelGroup> 
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="folioPH" value="Fojas:"  class="DispBlock Wid100"/>
+                                <p:inputText id="folioPH" value="#{updateDominioView.escritura.folio}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nro_inscripcion')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_inscripcionPH" value="No. inscripci&oacute;n:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_inscripcionPH" value="#{updateDominioView.escritura.nroInscripcion}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'repertorio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="repertorioPH" value="Repertorio:" class="DispBlock Wid100"/>
+                                <p:inputText id="repertorioPH" value="#{updateDominioView.escritura.repertorio}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'fecha_inscripcion_input')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_inscripcionPH" value="Fecha inscripci&oacute;n:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_inscripcionPH" value="#{updateDominioView.escritura.fechaInscripcion}" style="width: 180px;"
+                                            class="input_180" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'dominio:cat_predio-dominio-input')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="ficha_registralPH" value="Ficha registral:"  class="DispBlock Wid100"/>
+                                <p:inputText id="ficha_registralPH" value="#{updateDominioView.escritura.fichaRegistral}"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'dominioPH:cat_predio-dominio-input')"/>
+                            </h:panelGroup>    
+
+                            <var:varDisInputText id="dominioPH" label="Dominio:"
+                                                 table="cat_predio" column="dominio"
+                                                 bind="#{updateDominioView.predio.dominio}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                 changeOnEnter="true"
+                                                 next="origenPH:cat_predio-origen-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="origenPH" label="Origen del predio:"
+                                                 table="cat_predio" column="origen"
+                                                 bind="#{updateDominioView.predio.origen}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                 changeOnEnter="true"
+                                                 next="tipo_ph:cat_predio-tipo_ph-input"
+                                                 labelPosition="top"/>                           
+                        </h:panelGrid>
+                    </p:fieldset>
+                    <p:fieldset legend="Datos de aprobaci&oacute;n" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid columns="4" style="width: 100%">
+
+                            <var:varDisInputText id="tipo_ph" label="Tipos de PH:"
+                                                 table="cat_escritura" column="tipos_ph"
+                                                 bind="#{updateDominioView.escritura.tipoPH}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                 changeOnEnter="true"
+                                                 next="resolucion_municipal"
+                                                 labelPosition="top"/>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="resolucion_municipal" value="Resoluci&oacute;n:" class="DispBlock Wid100"/>
+                                <p:inputText id="resolucion_municipal" value="#{updateDominioView.escritura.resolucionMunicipal}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'fecha_resolucion_input')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_resolucion" value="Fecha resoluci&oacute;n:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_resolucion" value="#{updateDominioView.escritura.fechaResolucionMunicipal}" style="width: 180px;"
+                                            class="input_180" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'area_solar')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="area_solar" value="&Aacute;rea solar:"  class="DispBlock Wid100"/>
+                                <p:inputText id="area_solar" value="#{updateDominioView.escritura.area}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'area_construccionPH')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="area_construccionPH" value="&Aacute;rea construcci&oacute;n:" class="DispBlock Wid100"/>
+                                <p:inputText id="area_construccionPH" value="#{updateDominioView.escritura.areaConstruccion}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'cant_bloques')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cant_bloques" value="Nro. Bloques :" class="DispBlock Wid100"/>
+                                <p:inputText id="cant_bloques" value="#{updateDominioView.escritura.cantidadBloques}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'cant_alicuotas')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cant_alicuotas" value="Nro. Al&iacute;cuotas:"  class="DispBlock Wid100"/>
+                                <p:inputText id="cant_alicuotas" value="#{updateDominioView.escritura.cantidadAlicuotas}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'esc_norte_refPH')"/>
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container Wid100 MarTop20" id="LinderosDivPH">
+                <h:panelGroup layout="block" class="Responsive Container100 MarRight20">
+                    <div class="ContainerIndent Wid100">
+                        <p:fieldset legend="Linderos y mensuras de acuerdo al t&iacute;tulo de dominio" toggleable="true" toggleSpeed="500" >
+                            <div class="Responsive Container50">
+                                <div class="ContainerIndent MarRight20">
+                                    <h:panelGrid columns="5" class="linderoEscritura">
+                                        <p:outputLabel for="esc_norte_refPH" value="Norte:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_norte_refPH" value="#{updateDominioView.escritura.norteRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_norte_longPH')"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel for="esc_norte_longPH" value="Con:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_norte_longPH" value="#{updateDominioView.escritura.norteLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_sur_refPH')"
+                                                     class="input_160" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_sur_refPH" value="Sur:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_sur_refPH" value="#{updateDominioView.escritura.surRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_sur_longPH')"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel for="esc_sur_longPH" value="Con:" class="DispBlock Wid100"/>
+                                        <p:inputText id="esc_sur_longPH" value="#{updateDominioView.escritura.surLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_perimetroPH')"
+                                                     class="input_160" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_perimetroPH" value="Per&iacute;metro:" class="DispBlock Wid100" />
+                                        <p:inputText id="esc_perimetroPH" value="#{updateDominioView.escritura.perimetro}"
+                                                     onkeypress="validateFloatValueAndFocusNext(event, 'esc_este_refPH')"
+                                                     class="input_160 MarRight10" />
+                                        <p:outputLabel value="mts." />
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                            <div class="Responsive Container50">
+                                <div class="ContainerIndent">
+                                    <h:panelGrid columns="5" class="linderoEscritura">
+                                        <p:outputLabel for="esc_este_refPH" value="Este:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_este_refPH" value="#{updateDominioView.escritura.esteRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_este_longPH')"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel for="esc_este_longPH" value="Con:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_este_longPH" value="#{updateDominioView.escritura.esteLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_oeste_refPH')"
+                                                     class="input_160" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_oeste_refPH" value="Oeste:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_oeste_refPH" value="#{updateDominioView.escritura.oesteRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_oeste_longPH')"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel for="esc_oeste_longPH" value="Con:" class="DispBlock Wid100"/>
+                                        <p:inputText id="esc_oeste_longPH" value="#{updateDominioView.escritura.oesteLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_superficiePH')"
+                                                     class="input_160" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_superficiePH" value="Superficie:" class="DispBlock Wid100" />
+                                        <p:inputText id="esc_superficiePH" value="#{updateDominioView.escritura.superficie}"
+                                                     onkeypress="validateFloatValueAndFocusNext(event, 'wiz_next')"
+                                                     class="input_160 MarRight10"/>
+                                        <p:outputLabel value="m&sup2;." />
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                        </p:fieldset>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+            <!--            <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+                            <h:panelGroup layout="block" class="Responsive Container100 MarRight20">   
+                                <p:fieldset legend="T&iacute;tulo de dominio escaneado" toggleable="true" toggleSpeed="500" >
+                                    <div class="ContainerIndent">
+                                        <p:fileUpload fileUploadListener="#{updateDominioView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                                      multiple="true" fileLimit="1" allowTypes="/(\.|\/)(pdf)$/" invalidFileMessage="Solo formato PDF"
+                                                      cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="documento-preview" fileLimitMessage="Solo se admite un documento."/>
+                                        <h:panelGroup layout="block" id="documento-preview">
+                                            <table>
+                                                <tbody>
+                                                    <c:forEach var="doc" items="#{updateDominioView.documentos}" varStatus="loop">
+                                                        <c:if test="#{not empty updateDominioView.documentos}">                                           
+                                                            <tr>
+                                                                <td>
+                                                                    <h:graphicImage  width="80" height="80" name="images/pdf96x96.png"/>
+                                                                </td>
+                                                                <td>
+                                                                    <h:panelGroup layout="block">
+                                                                        <p:outputLabel value="#{doc.fileName}" class="DispBlock Wid100"/>
+                                                                        <p:inputTextarea style="height: 70%" maxlength="255" value="#{doc.description}"
+                                                                                         placeholder="Descripci&oacute;n del documento" />
+                                                                    </h:panelGroup>
+                                                                </td>
+                                                                <td class="column-photo-actions">
+                                                                    <p:commandButton icon="fa fa-times white" actionListener="#{updateDominioView.eliminarDocumento(index)}" update="documento-preview" process="@this"/>
+                                                                </td>
+                                                            </tr>                                          
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </h:panelGroup>
+                                    </div>
+                                </p:fieldset>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" class="Responsive Container100 MarRight20">   
+                                <p:fieldset legend="Visualizar Documento" toggleable="true" toggleSpeed="500" >
+                                    <div class="ContainerIndent">
+                                        <object type="application/pdf" data="/showcase/resources/demo/media/guide.pdf?pfdrid_c=true" height="300px" width="100%" internalinstanceid="4">
+                                            Your browser can't display pdf, <a href="/resources/demo/media/guide.pdf">click</a> to download pdf instead.
+                                        </object>
+                                    </div>
+                                </p:fieldset>
+                            </h:panelGroup>
+                        </h:panelGroup>-->
+        </h:panelGroup>
+
+    </ui:composition>
+
+</html>

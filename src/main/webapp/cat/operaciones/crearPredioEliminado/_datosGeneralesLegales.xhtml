@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container">
+            <h:panelGroup layout="block" class="Container Wid100">
+
+                <h:panelGroup layout="block" class="Responsive Container60">
+                    <div class="ContainerIndent MarRight10">
+                        <h1 class="BigTopic Fs16">Datos adicionales</h1>
+                        <h:panelGrid style="width: 100%" columns="2">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="tipoLoteSelect" value="Tipo de lote:"  class="form-field-label"/>
+                                <p:selectOneMenu id="tipoLoteSelect" value="#{crearPredioPropioView.terreno.tipoLote}"
+                                                 styleClass="select_150" class="select_150">
+                                    <f:selectItems value="#{crearPredioPropioView.valoresTipoLote}" />
+
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_sector" value="Sector" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_predio_sector" value="#{crearPredioPropioView.predio.sector}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'cat_predio_barrio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_barrio" value="Urbanizaci&oacute;n, Ciudadela o Lotizaci&oacute;n" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_predio_barrio" value="#{crearPredioPropioView.predio.barrio}"
+                                             class="input_300" onkeypress="focusNextOnEnter(event, 'cat_predio_manzana')"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_manzana" value="Manzana" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_predio_manzana" value="#{crearPredioPropioView.predio.manzana}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'cat_predio_direccion')"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_direccion" value="Direcci&oacute;n" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_predio_direccion" value="#{crearPredioPropioView.predio.direccion}"
+                                             class="input_300" onkeypress="focusNextOnEnter(event, 'cat_predio_solar')"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_solar" value="Solar" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_predio_solar" value="#{crearPredioPropioView.predio.solar}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'wiz_next')"/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <p:outputLabel for="cat_predio_tipo_ubicacion" value="Tipo ubicaci&oacute;n" class="DispBlock Wid100"/>
+                                <p:selectOneMenu id="cat_predio_tipo_ubicacion" value="#{crearPredioPropioView.predio.tipoUbicacion}"
+
+                                                 style="display: inline-table; margin-right: 5px; width: 130px;">
+                                    <f:selectItems value="#{variableAdmin.valoresVariables('cat_predio','tipo_ubicacion')}" />
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+
+                        </h:panelGrid>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="Container40">
+                    <div class="ContainerIndent MarRight10">
+                        <h1 class="BigTopic Fs16">Datos adicionales</h1>
+                        <h:panelGrid style="width: 100%" columns="2">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_edificio" value="Edificio" class="form-field-label"/>
+                                <p:inputText id="cat_predio_edificio" value="#{crearPredioPropioView.predio.edificio}" class="input_150"
+                                             onkeypress="focusNextOnEnter(event, 'cat_predio_piso')" />
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_piso" value="Piso" class="form-field-label" />
+                                <p:inputText id="cat_predio_piso" value="#{crearPredioPropioView.predio.piso}" class="input_150"
+                                             onkeypress="focusNextOnEnter(event, 'cat_predio_departamento')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_bodega" value="Bodega" class="form-field-label"/>
+                                <p:inputText id="cat_predio_bodega" value="#{crearPredioPropioView.predio.bodega}" class="input_150"
+                                             onkeypress="focusNextOnEnter(event, 'cat_predio_casillero')" />
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_departamento" value="Departamento" class="form-field-label" />
+                                <p:inputText id="cat_predio_departamento" value="#{crearPredioPropioView.predio.departamento}" class="input_150"
+                                             onkeypress="focusNextOnEnter(event, 'cat_predio_alicuota')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_casillero" value="Casillero" class="form-field-label"/>
+                                <p:inputText id="cat_predio_casillero" value="#{crearPredioPropioView.predio.casillero}"  class="input_150"
+                                             onkeypress="focusNextOnEnter(event, 'cat_predio_cochera')"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_alicuota" value="Alicuota" class="form-field-label"/>
+                                <p:inputText id="cat_predio_alicuota" value="#{crearPredioPropioView.predio.alicuotaPh}" class="input_150"
+                                             onkeypress="validateFloatValueAndFocusNext(event, 'cat_predio_bodega')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_cochera" value="Cochera" class="form-field-label"/>
+                                <p:inputText id="cat_predio_cochera" value="#{crearPredioPropioView.predio.cochera}" class="input_150"
+                                             onkeypress="focusNextOnEnter(event)"/>
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                    </div>
+                </h:panelGroup>
+
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Responsive Container100">
+                <h1 class="BigTopic Fs15">Propietarios</h1>
+                <div class="ContainerIndent Container20">
+                    <h:panelGroup layout="block" class="actions" id="propietarioListDelete-update">
+                        <p:commandButton title="Nuevo propietario"
+                                         id="buscar-propietario-btn"  styleClass="Fs16" update=":BuscarContribuyenteForm"
+                                         icon="fa fa-user-plus white" actionListener="#{crearPredioPropioView.inicializarBusquedaContribuyente()}"
+                                         process="@this,propietarioListDelete-update"
+                                         value="Adicionar"
+                                         oncomplete="PF('BuscarContribuyenteDialog').show();"
+                                         style="margin-right: 10px; margin-bottom: 5px;"/>
+                        <p:commandButton title="Eliminar"
+                                         id="eliminar-propietario-btn" styleClass="Fs16" update="propietarioListDelete"
+                                         icon="fa fa-user-times white" actionListener="#{crearPredioPropioView.eliminarPropietario}"
+                                         process="@this"
+                                         disabled="#{crearPredioPropioView.propietarios.size() == 0}"
+                                         value="Eliminar">
+                            <p:confirm header="Confirmación" message="Está seguro de eliminar el usuario seleccionado ?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </h:panelGroup>
+                </div>
+                <div class="ContainerIndent Container80 MarBot10" id="propietarios">
+
+                    <p:dataTable id="propietarioListDelete" var="prop" value="#{crearPredioPropioView.propietarios}" selection="#{crearPredioPropioView.propietarioSeleccionado}" rowKey="#{prop.id}" style="margin-bottom:0"
+                                 rows="5" paginator="true"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15"
+                                 paginatorPosition="bottom" selectionMode="single">
+
+                        <p:column headerText="Nombre">
+                            <h:outputText value="#{prop.apellidoPaterno} #{prop.apellidoMaterno} #{prop.nombre}"  />
+                        </p:column>
+                        <p:column headerText="Tipo identificaci&oacute;n">
+                            <h:outputText value="#{prop.valorIdentificacion()}" />
+                        </p:column>
+                        <p:column headerText="Identificaci&oacute;n">
+                            <h:outputText value="#{prop.identificacion}" />
+                        </p:column>
+
+                    </p:dataTable>
+                </div>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs16">Fotos</h1>
+                        <p:fileUpload fileUploadListener="#{crearPredioPropioView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                      multiple="true" fileLimit="10" allowTypes="/(\.|\/)(gif|jpe?g|png|tif)$/"
+                                      cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="image-preview"/>
+                        <h:panelGroup layout="block" id="image-preview">
+
+                            <table>
+                                <tbody>
+                                    <c:forEach var="foto" items="#{crearPredioPropioView.datosFotos}" varStatus="loop">
+                                        <c:if test="#{not empty crearPredioPropioView.datosFotos[loop.index]}">
+                                            <tr>
+                                                <td>
+                                                    <h:graphicImage  width="95" height="95" url="#{crearPredioPropioView.datosFotos[loop.index].data}"/>
+                                                </td>
+                                                <td>
+                                                    <p:inputTextarea style="height: 90%" maxlength="255" value="#{crearPredioPropioView.datosFotos[loop.index].description}"/>
+                                                </td>
+                                                <td class="column-photo-actions">
+
+                                                    <p:commandButton icon="fa fa-times white" actionListener="#{crearPredioPropioView.eliminarFoto(loop.index)}" update="image-preview" process="@this"/>
+
+                                                </td>
+                                            </tr>
+                                        </c:if>
+
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+
+
+
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <ui:include src="_buscarContribuyente.xhtml"/>
+
+
+        </h:panelGroup>
+    </ui:composition>
+</html>

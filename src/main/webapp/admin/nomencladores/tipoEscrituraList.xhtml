@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+        <ui:composition template="./../../WEB-INF/dadoco-template.xhtml">
+
+            <ui:define name="title">title</ui:define>         
+
+            <ui:define name="content">
+                <h:form>
+                    <p:growl id="msgs" showDetail="true" />
+
+                    <p:dataTable id="DT_tipo_escritura" var="tipo" value="#{tipoEscrituraView.tipoEscrituras}">
+                        <f:facet name="header">
+                            Listado de Tipos de escritura
+                        </f:facet>
+                        <p:column headerText="Tipo de escritura">
+                            <h:outputText value="#{tipo.tipo}" />
+                        </p:column>
+                        <p:column headerText="Emisor">
+                            <h:outputText value="#{tipo.ValorByEmisorReceptor(0)}" />
+                        </p:column>
+                        <p:column headerText="Receptor">
+                            <h:outputText value="#{tipo.ValorByEmisorReceptor(1)}" />
+                        </p:column>
+                        <p:column headerText="Aplica al solar">
+                            <h:outputText value="#{tipo.ValorByAplica(0)}" />
+                        </p:column>
+                        <p:column headerText="Aplica al bloque">
+                            <h:outputText value="#{tipo.ValorByAplica(1)}" />
+                        </p:column>
+                        <p:column headerText="Aplica a PH">
+                            <h:outputText value="#{tipo.ValorByAplica(2)}" />
+                        </p:column>
+                        <p:column headerText="Cambia propietario">
+                            <h:outputText value="#{tipo.ValorByAplica(3)}" />
+                        </p:column>
+                        <p:column style="width:32px;text-align: center">
+                            <p:commandButton update=":form:carDetail" oncomplete="PF('carDialog').show()" icon="ui-icon-search" title="View">
+                               
+                            </p:commandButton>
+                        </p:column>
+                    </p:dataTable>
+
+                    <p:dialog header="Car Info" widgetVar="carDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="carDetail" style="text-align:center;">
+                            <p:panelGrid  columns="2" columnClasses="label,value">
+                                <f:facet name="header">
+                                    <p:outputLabel value="Ejemplo"></p:outputLabel> 
+                                </f:facet>
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+
+
+            </ui:define>
+
+
+        </ui:composition>
+</html>

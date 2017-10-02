@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+    <ui:composition> 
+
+        <h:panelGroup layout="block" class="Container Wid100" id="datos-liquidacion">
+            <h:panelGroup layout="block" class="Container Wid100 MarTop10">          
+                <div class="Container100">        
+                    <h1 class="BigTopic Fs15">Datos de liquidaci&oacute;n</h1>
+                    <fieldset id="inf_datos">
+
+                        <h:panelGrid columns="6" class="Wid100">
+                            <p:outputLabel value="&Aacute;rea del terreno: " class="liquidacion-column" />
+                            <p:outputLabel value="#{consultasView.areaTerreno} m&sup2;" class="liquidacion-column-value" />
+
+                            <p:outputLabel value="&Aacute;rea de construcci&oacute;n: " class="liquidacion-column" />
+                            <p:outputLabel value="#{consultasView.areaConstruccion} m&sup2;" class="liquidacion-column-value" />
+
+                            <p:outputLabel value="Valor del m&sup2; de terreno: " class="liquidacion-column" />
+                            <p:outputLabel value="$#{consultasView.areaTerreno}" class="liquidacion-column-value" />
+
+                            <p:outputLabel value="Avaluo del terreno: " class="liquidacion-column" />
+                            <p:outputLabel value="$#{consultasView.avaluoTerreno}" class="liquidacion-column-value" />
+
+                            <p:outputLabel value="Avaluo de contrucci&oacute;n: " class="liquidacion-column" />
+                            <p:outputLabel value="$#{consultasView.avaluoConstruccion}" class="liquidacion-column-value" />
+
+                            <p:outputLabel value="Avaluo de complementarias: " class="liquidacion-column" />
+                            <p:outputLabel value="$#{consultasView.avaluoComplementarias}" class="liquidacion-column-value" />
+
+                            <p:outputLabel value="Impuesto Predial: " class="liquidacion-column" />
+                            <p:outputLabel value="$#{consultasView.avaluoPredial}" class="liquidacion-column-value" />
+                                                       
+                        </h:panelGrid>
+                    </fieldset>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+</html>

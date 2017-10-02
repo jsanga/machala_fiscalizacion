@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:predio="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+
+    <ui:composition>
+
+        <h:panelGroup  layout="block" class="Container Wid100">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">Listado de Propietarios</h1>
+                <h:form>
+                    <p:dataTable id="DT_propietarios" var="prop" value="#{expropiacionView.propietarios}" selection="#{expropiacionView.propietarioSeleccionado}" rowKey="#{prop.id}" style="margin-bottom:0"
+                                 rows="5" paginator="true"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15" 
+                                 paginatorPosition="bottom" selectionMode="single">
+
+                       
+                        <p:ajax event="rowSelect" listener="#{expropiacionView.onRowSelect}" update="messages, DT_propietarios, datos_propietario_seleccionado" />
+                        <p:ajax event="rowUnselect" listener="#{expropiacionView.onRowUnselect}" update="messages, datos_propietario_seleccionado" />
+
+                        <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                        <p:column headerText="Nombres">
+                            <h:outputText value="#{prop.nombre}" />
+                        </p:column>
+                        <p:column headerText="Apellidos">
+                            <h:outputText value="#{prop.apellidoPaterno} #{prop.apellidoMaterno}" />
+                        </p:column>
+                        <p:column headerText="Tipo identificaci&oacute;n">
+                            <h:outputText value="#{prop.valorIdentificacion()}" />                       
+                        </p:column>
+                        <p:column headerText="Nro. Identificaci&oacute;n">
+                            <h:outputText value="#{prop.identificacion}" />
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup id="datos_propietario_seleccionado">
+                 <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs15">Datos del propietario seleccionado</h1>
+                <p:panelGrid columns="6" style="width: 100%">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="tipo_contribuyente_cat" value="Tipo de contribuyente:" class="form-field-label"/>
+                        <p:selectOneMenu id="tipo_contribuyente_cat" value="#{expropiacionView.propietarioSeleccionado.tipo}" style="width:125px" disabled="true">
+                            <f:selectItem itemLabel="Natural" itemValue="N" />
+                            <f:selectItem itemLabel="Juridico" itemValue="J" />
+                            <f:selectItem itemLabel="Instituci&oacute;n" itemValue="I" />
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="tipo_identificacion" value="Tipo de identificaci&oacute;n:" class="form-field-label"/>
+                        <p:selectOneMenu id="tipo_identificacion" value="#{expropiacionView.propietarioSeleccionado.tipoIdentificacion}" style="width:125px" disabled="true">
+                            <f:selectItem itemLabel="Cedula" itemValue="C" />
+                            <f:selectItem itemLabel="RUC" itemValue="R" />
+                            <f:selectItem itemLabel="Pasaporte" itemValue="P" />
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="numero_identificacion" value="Identificaci&oacute;n:" class="form-field-label"/>
+                        <p:inputText id="numero_identificacion" value="#{expropiacionView.propietarioSeleccionado.identificacion}" disabled="true" class="input_125"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="fecha_nacimiento" value="Fecha nacimiento" class="form-field-label"/>
+                        <p:calendar id="fecha_nacimiento" value="#{expropiacionView.propietarioSeleccionado.fechaNacimiento}"  pattern="dd/MM/yyyy" mask="true" disabled="true"/>                                    
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="sexo" value="Sexo:" class="form-field-label"/>
+                        <p:selectOneMenu id="sexo" value="#{expropiacionView.propietarioSeleccionado.sexo}" style="width:125px" disabled="true">
+                            <f:selectItem itemLabel="Masculino" itemValue="0" />
+                            <f:selectItem itemLabel="Femenino" itemValue="1" />
+                        </p:selectOneMenu>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="nombre_contribuyente" value="Nombre:" class="form-field-label"/>
+                        <p:inputText id="nombre_contribuyente" value="#{expropiacionView.propietarioSeleccionado.nombre}" disabled="true" class="input_125"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="apellido_paterno" value="Apellido paterno:" class="form-field-label"/>
+                        <p:inputText id="apellido_paterno" value="#{expropiacionView.propietarioSeleccionado.apellidoPaterno}" disabled="true" class="input_125"/>                                    
+                    </h:panelGroup>                                    
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="apellido_materno" value="Apellido materno:" class="form-field-label"/>
+                        <p:inputText id="apellido_materno" value="#{expropiacionView.propietarioSeleccionado.apellidoMaterno}" disabled="true" class="input_125"/>                                    
+                    </h:panelGroup>                 
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="celular" value="Celular:" class="form-field-label"/>
+                        <p:inputText id="celular" value="#{expropiacionView.propietarioSeleccionado.celular}" disabled="true" class="input_125"/>                                    
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="telefono" value="Tel&eacute;fono:" class="form-field-label"/>
+                        <p:inputText id="telefono" value="#{expropiacionView.propietarioSeleccionado.telefono}" disabled="true" class="input_125"/>                                    
+                    </h:panelGroup>
+                     <h:panelGroup layout="block">
+                        <p:outputLabel for="email" value="Email:" class="form-field-label"/>
+                        <p:inputText id="email" value="#{expropiacionView.propietarioSeleccionado.email}" disabled="true" class="input_125"/>                                    
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="direccion" value="Direcci&oacute;n:" class="form-field-label"/>
+                        <p:inputText id="direccion" value="#{expropiacionView.propietarioSeleccionado.direccion}" disabled="true" class="input_125"/>                                    
+                    </h:panelGroup>
+                </p:panelGrid>                 
+            </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>                                
+
+    </ui:composition>
+</html>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" style="margin-bottom: 10px;">  
+
+            <h1 class="BigTopic Fs15">Datos complementarios del predio</h1>
+            <h:panelGroup layout="block" class="Container100 Wid100 MarTop20">
+                <div class="Container100">
+                    <p:fieldset legend="Linderos y mensuras seg&uacute;n levantamiento en campo" toggleable="true" toggleSpeed="500" >
+                        <div class="Responsive Container50">
+                            <div class="ContainerIndent MarRight20">
+                                <h:panelGrid columns="4" class="linderoEscritura">
+                                    <p:outputLabel for="terreno_norte_ref" value="Norte:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="terreno_norte_ref" value="#{registroInpView.datoInspeccion.linNorteRef}"
+                                                 onkeypress="focusNextOnEnter(event, 'terreno_norte_long')"
+                                                 class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="terreno_norte_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="terreno_norte_long" value="#{registroInpView.datoInspeccion.linNorteLongitud}"
+                                                 onkeypress="focusNextOnEnter(event, 'terreno_sur_ref')"
+                                                 class="input_160" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="terreno_sur_ref" value="Sur:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="terreno_sur_ref" value="#{registroInpView.datoInspeccion.linSurRef}"
+                                                 onkeypress="focusNextOnEnter(event, 'terreno_sur_long')"
+                                                 class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="terreno_sur_long" value="Con:" class="DispBlock Wid100"/>
+                                    <p:inputText id="terreno_sur_long" value="#{registroInpView.datoInspeccion.linSurLongitud}"
+                                                 onkeypress="focusNextOnEnter(event, 'terreno_perimetro')"
+                                                 class="input_160" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="terreno_perimetro" value="Per&iacute;metro:" class="DispBlock Wid100" />
+                                    <p:inputText id="terreno_perimetro" value="#{registroInpView.datoInspeccion.perimetro}"
+                                                 onkeypress="validateFloatValueAndFocusNext(event, 'terreno_este_ref')"
+                                                 class="input_160 MarRight10" />
+                                    <p:outputLabel value="mts." />
+
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                        <div class="Responsive Container50">
+                            <div class="ContainerIndent">
+                                <h:panelGrid columns="4" class="linderoEscritura">
+                                    <p:outputLabel for="terreno_este_ref" value="Este:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="terreno_este_ref" value="#{registroInpView.datoInspeccion.linEsteRef}"
+                                                 onkeypress="focusNextOnEnter(event, 'terreno_este_long')"
+                                                 class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="terreno_este_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="terreno_este_long" value="#{registroInpView.datoInspeccion.linEsteLongitud}"
+                                                 onkeypress="focusNextOnEnter(event, 'terreno_oeste_ref')"
+                                                 class="input_160" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="terreno_oeste_ref" value="Oeste:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="terreno_oeste_ref" value="#{registroInpView.datoInspeccion.linOesteRef}"
+                                                 onkeypress="focusNextOnEnter(event, 'terreno_oeste_long')"
+                                                 class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="terreno_oeste_long" value="Con:" class="DispBlock Wid100"/>
+                                    <p:inputText id="terreno_oeste_long" value="#{registroInpView.datoInspeccion.linOesteLongitud}"
+                                                 onkeypress="focusNextOnEnter(event, 'terreno_superficie')"
+                                                 class="input_160" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="terreno_superficie" value="Superficie:" class="DispBlock Wid100" />
+                                    <p:inputText id="terreno_superficie" value="#{registroInpView.datoInspeccion.area}"
+                                                 onkeypress="validateFloatValueAndFocusNext(event, 'ancho_via_publica')"
+                                                 class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel value="m&sup2;."/>
+                                    
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs15">Fotos de la inspecci&oacute;n</h1>
+                        <p:fileUpload fileUploadListener="#{registroInpView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                      multiple="true" fileLimit="10" allowTypes="/(\.|\/)(gif|jpe?g|png|tif)$/" 
+                                      cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="image-preview"/>
+                        <h:panelGroup layout="block" id="image-preview">
+                            <table>
+                                <tbody>
+                                    <c:forEach var="foto" items="#{registroInpView.datosFotos}" varStatus="loop">
+                                        <c:if test="#{not empty registroInpView.datosFotos[loop.index]}">
+                                            <tr>
+                                                <td>
+                                                    <h:graphicImage  width="95" height="95" url="#{registroInpView.datosFotos[loop.index].data}"/> 
+                                                </td>
+                                                <td>
+                                                    <p:inputTextarea style="height: 90%" maxlength="255" value="#{registroInpView.datosFotos[loop.index].description}"/> 
+                                                </td>
+                                                <td class="column-photo-actions">
+
+                                                    <p:commandButton icon="fa fa-times white" actionListener="#{registroInpView.eliminarFoto(loop.index)}" update="image-preview" process="@this"/>
+
+                                                </td>
+                                            </tr>
+                                        </c:if>
+
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </h:panelGroup>
+                    </div> 
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+</html>

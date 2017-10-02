@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_digitadoras_subreport1" language="groovy" pageWidth="470" pageHeight="20" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="470" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="da8dd5e4-cbe9-434f-afda-f9a00355457a">
+	<property name="ireport.zoom" value="3.138428376721004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ID_PREDIO" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT string_agg(A.msg, '') FROM(
+Select id_predio, 'El bloque ' || numero_bloque::varchar || ' tiene un área de: ' ||
+round(area_total::numeric, 2) || '; CANTIDAD DE PISOS: ' || numero_niveles::VARCHAR ||
+'; ESTRUCTURA: ' ||
+
+case 	when prd.tipo_predio = true THEN
+	case when estructura = 0 THEN 'SIN DATO'
+	when estructura = 1 THEN 'H. ARMADO'
+	when estructura = 2 THEN 'ACERO/HIERRO'
+	when estructura = 3 THEN 'LADRILLO/BLOQUE'
+	when estructura = 4 THEN 'MADERA'
+	when estructura = 5 THEN 'CAÑA'
+	when estructura = 6 THEN 'NO TIENE' END
+
+	when tipo_predio = false THEN 'N.N.' END || '; PAREDES: ' ||
+
+case 	when prd.tipo_predio = true THEN
+	case when paredes = 0 THEN 'NO TIENE'
+	when paredes = 1 THEN 'BLOQUE'
+	when paredes = 2 THEN 'LADRILLO'
+	when paredes = 3 THEN 'VIDRIO'
+	when paredes = 4 THEN 'ALUCOBOND'
+	when paredes = 5 THEN 'MADERA'
+	when paredes = 6 THEN 'CAÑA'
+	when paredes = 7 THEN 'BLOQUE-MADERA'
+	when paredes = 8 THEN 'BLOQUE-CAÑA'
+	when paredes = 9 THEN 'LADRILLO-MADERA'
+	when paredes = 10 THEN 'LADRILLO-CAÑA' END
+
+	when tipo_predio = false THEN
+	case
+	when paredes = 1 THEN 'NO TIENE'
+	when paredes = 2 THEN 'SIN DATOS'
+	when paredes = 3 THEN 'BLOQUES'
+	when paredes = 4 THEN 'LADRILLOS'
+	when paredes = 5 THEN 'BAHAREQUE'
+	when paredes = 6 THEN 'FERRO CEMENTO'
+	when paredes = 7 THEN 'PREFABRICADO HORMIGON SIMPLE'
+	when paredes = 8 THEN 'MADERA PROCESADA FINA'
+	when paredes = 9 THEN 'ZINC'
+	when paredes = 10 THEN 'LONA'
+	when paredes = 11 THEN 'MALLA'
+	when paredes = 12 THEN 'CAÑA'
+	when paredes = 13 THEN 'MADERA COMUN' END  END || '; CUBIERTA: ' ||
+
+case 	when prd.tipo_predio = true THEN
+	case
+	when cubierta = 1 THEN 'TEJAS'
+	when cubierta = 2 THEN 'POLICARB. - ACLIRICO'
+	when cubierta = 3 THEN 'FIBRA MINERAL'
+	when cubierta = 4 THEN 'ASBESTO CEMENTO'
+	when cubierta = 5 THEN 'STELL PANEL/ZINC'
+	when cubierta = 6 THEN 'LOSA'
+	when cubierta = 7 THEN 'NO TIENE' END
+
+	when tipo_predio = false THEN
+	case when cubierta = 0 THEN 'SIN DATO'
+	when cubierta = 1 THEN 'NO TIENE'
+	when cubierta = 2 THEN 'TEJAS'
+	when cubierta = 3 THEN 'ACERO'
+	when cubierta = 4 THEN 'CAÑA'
+	when cubierta = 5 THEN 'HIERRO'
+	when cubierta = 6 THEN 'LOSA HORMIGON ARMADO'
+	when cubierta = 7 THEN 'MADERA PROCESADA FINA'
+	when cubierta = 8 THEN 'MADERA COMUN'
+	when cubierta = 9 THEN 'ZINC' END  END || chr(10)
+
+	as msg  FROM cat_bloque bloque
+	INNER JOIN cat_predio prd
+	ON prd.id = bloque.id_predio
+WHERE id_predio = $P{ID_PREDIO}
+ORDER BY numero_bloque ASC
+) AS A
+GROUP BY A.id_predio]]>
+	</queryString>
+	<field name="string_agg" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="470" height="20" uuid="53896be3-2615-42df-b66f-5f6b51e5acc4"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{string_agg}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

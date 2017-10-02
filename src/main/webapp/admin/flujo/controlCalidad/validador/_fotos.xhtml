@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <p:dataGrid var="img" value="#{FWPRedioValidadorView.entidadSeleccionada.images}" columns="1" layout="grid"
+                    rows="12" paginator="true" id="images" paginatorPosition="bottom" 
+                    emptyMessage="No se han encontrado Fotos"
+                    paginatorTemplate="{PreviousPageLink} {NextPageLink}"
+                    style="width: auto;height: auto;">
+            <p:lightBox styleClass="imagebox" id="lighbox1">  
+                <h:outputLink value="#{tramiteView.urlFoto(img.ruta)}" title="#{img.descripcion}">  
+                    <p:graphicImage style="text-align:center;" height="150" width="150"  url="#{tramiteView.urlFoto(img.ruta)}"/> 
+                </h:outputLink>
+            </p:lightBox>
+        </p:dataGrid>
+        <!--<p:fileUpload mode="basic"/>-->
+   
+        <div class="Separator"></div>
+        <h:panelGrid id="panel-botones" columns="2">
+            <p:commandButton id="crear-usuario-btn"
+                             icon="fa fa-save" styleClass="white Fright" value="#{FWPRedioValidadorView.opcion eq 0?'Crear Nuevo':'Modificar '}"
+                             actionListener="#{FWPRedioValidadorView.guardar}"
+                             update=":listado-form,:form-form,table-list"/>
+
+            <p:commandButton id="cancelar-usuario-btn"
+                             icon="fa fa-cancel" styleClass="white" value="Cancelar" actionListener="#{FWPRedioValidadorView.cancelar()}"
+                             onclick="PF('addDialog').hide();"
+                             />
+        </h:panelGrid>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+
+            <div class="Container100">
+                <p:fieldset legend="Descripci&oacute;n del terreno" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="Wid100">
+                        <var:varDisInputText id="terreno_estado" label="Ocupaci&oacute;n:"
+                                             table="cat_terreno" column="ocupacion_rural"
+                                             bind="#{regPredioRuralView.terreno.estado}"
+                                             showlabel="true"
+                                             accionListenerUpdate="#{regPredioRuralView.verificarEstadoTerreno()}"
+                                             defaultValue="1"
+                                             update="tipo_vivienda_rural:cat_terreno-tipo_vivienda_rural-container"
+                                             changeOnEnter="true"
+                                             next="caracteristicas_suelo:cat_terreno-caracteristicas_suelo-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="caracteristicas_suelo" label="Caract. del suelo:"
+                                             table="cat_terreno" column="caracteristicas_suelo"
+                                             bind="#{regPredioRuralView.terreno.caracteristicasSuelo}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="topografia_rural:cat_terreno-topografia_rural-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="topografia_rural" label="Topograf&iacute;a:"
+                                             table="cat_terreno" column="topografia_rural"
+                                             bind="#{regPredioRuralView.terreno.topografia}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="geometria_rural:cat_terreno-geometria_rural-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="geometria_rural" label="Forma:"
+                                             table="cat_terreno" column="geometria_rural"
+                                             bind="#{regPredioRuralView.terreno.geometria}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="relacion_rasante_rural:cat_terreno-relacion_rasante_rural-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="relacion_rasante_rural" label="Relaci&oacute;n de rasante:"
+                                             table="cat_terreno" column="relacion_rasante_rural"
+                                             bind="#{regPredioRuralView.terreno.relacionRasante}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="localizacion_manzana_rural:cat_terreno-localizacion_manzana_rural-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="localizacion_manzana_rural" label="Localizaci&oacute;n en manzana:"
+                                             table="cat_terreno" column="localizacion_manzana_rural"
+                                             bind="#{regPredioRuralView.terreno.ubicacion}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="clasificacion_suelo_rural:cat_terreno-clasificacion_suelo_rural-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="clasificacion_suelo_rural" label="Subclasificaci&oacute;n del suelo rural:"
+                                             table="cat_terreno" column="clasificacion_suelo_rural"
+                                             bind="#{regPredioRuralView.terreno.clasificacionsuelo}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             changeOnEnter="true"
+                                             next="en_venta:comun-si_no-input"
+                                             labelPosition="top"/>
+                    </h:panelGrid>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Container100">
+                <p:fieldset legend="Estudio de componente econ&oacute;mico" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="Wid100">
+                        <var:varDisInputText id="en_venta" label="En venta:"
+                                             table="comun" column="si_no"
+                                             bind="#{regPredioRuralView.predio.enVenta}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             changeOnEnter="true"
+                                             next="en_alquiler:comun-si_no-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="en_alquiler" label="En alquiler:"
+                                             table="comun" column="si_no"
+                                             bind="#{regPredioRuralView.predio.enAlquiler}"
+                                             showlabel="true"
+                                             defaultValue="3"
+                                             changeOnEnter="true"
+                                             update="valor_mensual"
+                                             next="valor_terreno"
+                                             labelPosition="top"/>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="valor_terreno" value="Valor del suelo"  class="DispBlock Wid100"/>
+                            <p:inputText id="valor_terreno" value="#{regPredioRuralView.predio.ventaValorTerreno}"
+                                         class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'valor_construccion')"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="valor_construccion" value="Valor de las construcciones:"  class="DispBlock Wid100"/>
+                            <p:inputText id="valor_construccion" value="#{regPredioRuralView.predio.ventaValorConstruccion}"
+                                         class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'numero_telefono')"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="valor_mensual" value="Valor mensual de alquiler:"  class="DispBlock Wid100"/>
+                            <p:inputText id="valor_mensual" value="#{regPredioRuralView.predio.valorAlquiler}" disabled="#{regPredioRuralView.predio.enAlquiler != 1}"
+                                         class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'numero_telefono')"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="numero_telefono" value="N&uacute;mero telef&oacute;nico del informante:"  class="DispBlock Wid100"/>
+                            <p:inputText id="numero_telefono" value="#{regPredioRuralView.predio.ventaTelefono}"
+                                         class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'nombre_informante')"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="nombre_informante" value="Nombre informante:"  class="DispBlock Wid100"/>
+                            <p:inputText id="nombre_informante" value="#{regPredioRuralView.predio.ventaNombreInformante}"
+                                         class="input_180" onkeypress="focusNextOnEnter(event, 'cat_predio-observacion')"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGroup layout="block" class="Container100 Wid100">
+                        <div class="ContainerIndent">
+                            <p:fieldset legend="Observaciones " toggleable="true" toggleSpeed="500" >
+                                <p:inputTextarea id="cat_predio-observacion" style="width: 100%" value="#{regPredioRuralView.predio.observacion}"
+                                                 onkeypress="focusNextOnEnter(event, 'ecosistema_relevante_rural:cat_terreno-ecosistema_relevante_rural-input')"/>
+                            </p:fieldset>
+                        </div>
+                    </h:panelGroup>
+                </p:fieldset>                
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Container100">
+                <p:fieldset legend="Ecosistema relevante y cobertura natural predominante" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="Wid100">
+                        <var:varDisInputText id="ecosistema_relevante_rural" label="Ecosistema relevante:"
+                                             table="cat_terreno" column="ecosistema_relevante_rural"
+                                             bind="#{regPredioRuralView.terreno.ecosistemaRelevante}"
+                                             showlabel="true"
+                                             defaultValue="4"
+                                             changeOnEnter="true"
+                                             next="cobertura_predominante_rural:cat_terreno-cobertura_predominante_rural-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="cobertura_predominante_rural" label="Cobertura predominante:"
+                                             table="cat_terreno" column="cobertura_predominante_rural"
+                                             bind="#{regPredioRuralView.terreno.coberturaPredominante}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="terreno_rodadura:comun-si_no-input"
+                                             labelPosition="top"/>
+                    </h:panelGrid>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Container100">
+                <p:fieldset legend="V&iacute;as" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="Wid100">
+
+                        <var:varDisInputText id="terreno_rodadura" label="Rodadura:"
+                                             table="comun" column="si_no"
+                                             bind="#{regPredioRuralView.terreno.rodadura}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_aceras:comun-si_no-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_aceras" label="Aceras:"
+                                             table="comun" column="si_no"
+                                             bind="#{regPredioRuralView.terreno.aceras}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_bordillos:comun-si_no-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_bordillos" label="Bordillos:"
+                                             table="comun" column="si_no"
+                                             bind="#{regPredioRuralView.terreno.bordillos}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="otras_vias_acceso_rural:cat_terreno-otras_vias_acceso_rural-input"
+                                             labelPosition="top"/>
+                        <!--<var:varDisInputText id="material_via_rural" label="Material de la v&iacute;a:"
+                                             table="cat_terreno" column="material_via_rural"
+                                             bind="# {regPredioRuralView.terreno.tipoCapaRodadura}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="tipo_via_rural:cat_terreno-tipo_via_rural-input"
+                                             labelPosition="top"/>-->
+                        <!--<var:varDisInputText id="tipo_via_rural" label="Tipo de v&iacute;a:"
+                                             table="cat_terreno" column="tipo_via_rural"
+                                             bind="# {regPredioRuralView.terreno.tipoVias}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="otras_vias_accedo_rural:cat_terreno-otras_vias_accedo_rural-input"
+                                             labelPosition="top"/>-->
+                        <var:varDisInputText id="otras_vias_acceso_rural" label="Otras v&iacute;as de acceso:"
+                                             table="cat_terreno" column="otras_vias_acceso_rural"
+                                             bind="#{regPredioRuralView.terreno.otrasViasAcceso}"
+                                             showlabel="true"
+                                             defaultValue="4"
+                                             changeOnEnter="true"
+                                             next="uso_via_rural:cat_terreno-uso_via_rural-input"
+                                             labelPosition="top"/>
+
+                        <var:varDisInputText id="uso_via_rural" label="Uso de la v&iacute;a;"
+                                             table="cat_terreno" column="uso_via_rural"
+                                             bind="#{regPredioRuralView.terreno.usoVia}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="estado_conservacion_rural:cat_terreno-estado_conservacion_rural-input"
+                                             labelPosition="top"/>
+
+                        <var:varDisInputText id="estado_conservacion_rural" label="Estado conservaci&oacute;n:"
+                                             table="cat_terreno" column="estado_conservacion_rural"
+                                             bind="#{regPredioRuralView.terreno.estadoConservacion}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="red_energia_electrica_rural:cat_terreno-red_energia_electrica_rural-input"
+                                             labelPosition="top"/>
+                    </h:panelGrid>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Container100">
+                <p:fieldset legend="Servicios" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="Wid100">
+                        <var:varDisInputText id="red_energia_electrica_rural" label="Energ&iacute;a el&eacute;ctrica:"
+                                             table="cat_terreno" column="red_energia_electrica_rural"
+                                             bind="#{regPredioRuralView.terreno.redEnergiaElectrica}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="medidor_agua_rural:comun-si_no-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="medidor_agua_rural" label="Medidor de agua:"
+                                             table="comun" column="si_no"
+                                             bind="#{regPredioRuralView.terreno.medidorAgua}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             update="medidor_agua_cantidad"
+                                             next="medidor_agua_cantidad"
+                                             labelPosition="top"/>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="medidor_agua_cantidad" value="Nro. medidores agua:"  class="DispBlock Wid100"/>
+                            <p:inputText id="medidor_agua_cantidad" type="number" value="#{regPredioRuralView.terreno.numMedidoresAgua}" maxlength="2" disabled="#{regPredioRuralView.terreno.medidorAgua == 2}"
+                                         class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'medidor_luz_rural:comun-si_no-input')"/>
+                        </h:panelGroup>
+                        <var:varDisInputText id="medidor_luz_rural" label="Medidor de luz:"
+                                             table="comun" column="si_no"
+                                             bind="#{regPredioRuralView.terreno.medidorLuz}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             update="medidor_luz_cantidad"
+                                             next="medidor_luz_cantidad"
+                                             labelPosition="top"/>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="medidor_luz_cantidad" value="Nro. medidores de luz:"  class="DispBlock Wid100"/>
+                            <p:inputText id="medidor_luz_cantidad" type="number" value="#{regPredioRuralView.terreno.numMedidoresLuz}" maxlength="2" disabled="#{regPredioRuralView.terreno.medidorLuz == 2}"
+                                         class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'red_agua_potable_rural:cat_terreno-red_agua_potable_rural-input')"/>
+                        </h:panelGroup>
+                        <var:varDisInputText id="red_agua_potable_rural" label="Acceso al agua:"
+                                             table="cat_terreno" column="red_agua_potable_rural"
+                                             bind="#{regPredioRuralView.terreno.redAguaPotable}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="disponibilidad_riego:cat_terreno-disponibilidad_riego-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="disponibilidad_riego" label="Disponibilidad del riego:"
+                                             table="cat_terreno" column="disponibilidad_riego"
+                                             bind="#{regPredioRuralView.terreno.disponibilidadRiego}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="red_eliminacion_excretas_rural:cat_terreno-red_eliminacion_excretas_rural-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="red_eliminacion_excretas_rural" label="Eliminación de excretas:"
+                                             table="cat_terreno" column="red_eliminacion_excretas_rural"
+                                             bind="#{regPredioRuralView.terreno.eliminacionExcretas}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="red_alcantarillado:cat_terreno-red_alcantarillado_rural-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="red_alcantarillado" label="Alcantarillado:"
+                                             table="cat_terreno" column="red_alcantarillado_rural"
+                                             bind="#{regPredioRuralView.terreno.redAlcantarillado}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="aseo_calle:comun-si_no-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="aseo_calle" label="Aseo de Calles:"
+                                             table="comun" column="si_no"
+                                             bind="#{regPredioRuralView.terreno.aseoCalles}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="recoleccion_basura:comun-si_no-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="recoleccion_basura" label="Recolección de basura:"
+                                             table="comun" column="si_no"
+                                             bind="#{regPredioRuralView.terreno.recoleccionBasura}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="metodo_riego:cat_terreno-red_metodo_del_riego_rural-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="metodo_riego" label="Método del riego:"
+                                             table="cat_terreno" column="red_metodo_del_riego_rural"
+                                             bind="#{regPredioRuralView.terreno.metodoRiego}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="alumbrado:comun-si_no-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="alumbrado" label="Alumbrado público:"
+                                             table="comun" column="si_no"
+                                             bind="#{regPredioRuralView.terreno.alumbrado}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             changeOnEnter="true"
+                                             next="red_telefonica:comun-si_no_sin_dato-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="red_telefonica" label="Red telefónica:"
+                                             table="comun" column="si_no_sin_dato"
+                                             bind="#{regPredioRuralView.terreno.redTelefonica}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             changeOnEnter="true"
+                                             next="transporte_publico:comun-si_no_sin_dato-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="transporte_publico" label="Transporte público:"
+                                             table="comun" column="si_no_sin_dato"
+                                             bind="#{regPredioRuralView.terreno.transportePublico}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             changeOnEnter="true"
+                                             next="internet:comun-si_no_sin_dato-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="internet" label="Internet a la vivienda:"
+                                             table="comun" column="si_no_sin_dato"
+                                             bind="#{regPredioRuralView.terreno.internet}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             changeOnEnter="true"
+                                             next="cable_satelital:comun-si_no_sin_dato-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="cable_satelital" label="Cable satelital a la vivienda:"
+                                             table="comun" column="si_no_sin_dato"
+                                             bind="#{regPredioRuralView.terreno.cableSatelital}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             changeOnEnter="true"
+                                             next="transporte_privado:comun-si_no_sin_dato-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="transporte_privado" label="Transporte privado:"
+                                             table="comun" column="si_no_sin_dato"
+                                             bind="#{regPredioRuralView.terreno.transportePrivado}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             changeOnEnter="true"
+                                             next="tipo_vivienda_rural:cat_terreno-tipo_vivienda_rural-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="tipo_vivienda_rural" label="Tipo vivienda rural:"
+                                             table="cat_terreno" column="tipo_vivienda_rural"
+                                             bind="#{regPredioRuralView.terreno.tipoViviendaRural}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             disabled="#{regPredioRuralView.terreno.estado == 2}"
+                                             changeOnEnter="true"
+                                             next="uso_suelo:cat_terreno-uso_suelo-input"
+                                             labelPosition="top"/>
+                    </h:panelGrid>
+                </p:fieldset>
+                
+                <p:fieldset legend="Usos" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="2" class="Wid100">
+                        <var:varDisInputText id="uso_suelo" label="Uso del suelo del predio:"
+                                             table="cat_terreno" column="uso_suelo"
+                                             bind="#{regPredioRuralView.terreno.usoSuelo}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="wiz_next"
+                                             labelPosition="top"/>
+                    </h:panelGrid>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        
+        <!--         <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+                    <p:fieldset legend="Usos del suelo del solar vacio" toggleable="true" toggleSpeed="500" >
+                        <h:panelGroup layout="block" class="Responsive Container100">
+                            <div class="ContainerIndent Container100">
+                                <h:panelGroup layout="block" class="actions" id="usosT-suelo-update">
+                                    <p:commandButton title="Adicionar uso"
+                                                     id="nuevo-usoT-btn"  styleClass="Fs16" update="usosT-dlg,usosT-form"
+                                                     icon="fa fa-plus white" actionListener="#{regPredioRuralView.initNuevoUso()}"
+                                                     process="@this,usosT-suelo-update"
+                                                     value="Adicionar"
+                                                     class="Fleft"
+                                                     oncomplete="PF('usosTDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                     style="margin-right: 10px; margin-bottom: 5px;"/>
+
+                                    <p:commandButton title="Eliminar"
+                                                     id="eliminar-usoT-btn" styleClass="Fs16"
+                                                     icon="fa fa-trash white" actionListener="#{regPredioRuralView.eliminarUso(false)}"
+                                                     class="Fleft"
+                                                     process="@this"
+                                                     update="usosT-list,usosT-dataTable,usosT-suelo-update"
+                                                     disabled="#{regPredioRuralView.usosSueloTerreno.size() == 0}"
+                                                     value="Eliminar">
+                                        <p:confirm header="Confirmación" message="Está seguro de eliminar el uso del suelo #{regPredioRuralView.usoSeleccionado.valorDiscreto.texto} del grupo #{regPredioRuralView.usoSeleccionado.valorDiscreto.variable.nombre}.?" icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                </h:panelGroup>
+                            </div>
+                            <div class="ContainerIndent Container100 MarBot10" id="usosT-suelo">
+                                <h:panelGroup layout="block" class="actions" id="usosT-list">
+                                    <p:dataTable id="usosT-dataTable" var="uso" value="#{regPredioRuralView.usosSueloTerreno}" selection="#{regPredioRuralView.usoSeleccionado}" rowKey="#{uso.cod}" style="margin-bottom:0"
+                                                 rows="5" paginator="true"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15"
+                                                 paginatorPosition="bottom" selectionMode="single"
+                                                 emptyMessage="No existen usos del suelo registrados al terreno.">
+
+                                        <p:ajax event="rowSelect" listener="#{regPredioRuralView.onRowSelectUso}" update="usosT-dataTable,usosT-suelo-update" />
+                                        <p:ajax event="rowUnselect" listener="#{regPredioRuralView.onRowUnselectUso}" update="usosT-dataTable,usosT-suelo-update" />
+                                        <p:column headerText="Grupo">
+                                            <h:outputText value="#{uso.valorDiscreto.variable.nombre}"  />
+                                        </p:column>
+                                        <p:column headerText="C&oacute;digo">
+                                            <h:outputText value="#{uso.cod}"  />
+                                        </p:column>
+                                        <p:column headerText="Uso del suelo">
+                                            <h:outputText value="#{uso.valorDiscreto.texto}"  />
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGroup>
+                            </div>
+                        </h:panelGroup>
+                    </p:fieldset>
+                </h:panelGroup>-->
+        <!--        <h:panelGroup layout="block" class="Container100 Wid100 MarTop20" style="margin-bottom: 20px;">
+                    <div class="Container100">
+                        <p:fieldset legend="Observaciones generales del terreno" toggleable="true" toggleSpeed="500" >
+                            <p:inputTextarea id="cat_terreno-observacion" style="width: 97%" value="#{regPredioRuralView.terreno.observacion}"
+                                             onkeypress="focusNextOnEnter(event, 'wiz_next')"/>
+                        </p:fieldset>
+                    </div>
+                </h:panelGroup>-->
+        <!--
+                <ui:include src="_formUsoSueloTerreno.xhtml"/>-->
+    </ui:composition>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="../../../WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Mantenimiento Coeficientes Generales"></h:outputText>
+        </ui:define>
+
+        <ui:define name="content">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <div class="Card whiteback">
+                        <h1 class="BigTopic Fs16">Coeficientes Generales</h1>
+                        <hr></hr>
+                        <h:form id="listado-form" prependId="false" style="margin-top: 15px;">
+
+                            <p:dataTable id="table-list" var="coef" value="#{coefGeneralView.coeficientes}" widgetVar="listadoTable">
+                                <p:column headerText="Rubro">
+                                    <h:outputText value="#{coef.texto}" escape="false"/>
+                                </p:column>
+                                <p:column headerText="Coeficiente">
+                                    <h:outputText value="#{coef.coeficiente}" />
+                                </p:column>
+                                <p:column class="column-actions">
+                                    <p:commandButton update="addDlg" process="@this" icon="fa fa-pencil white" title="Editar"
+                                                     oncomplete="PF('addDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                     actionListener="#{coefGeneralView.inicializarEdicion(coef.valorDiscretoPK)}"   />
+
+                                </p:column>
+                            </p:dataTable>
+
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <ui:include src="_form.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

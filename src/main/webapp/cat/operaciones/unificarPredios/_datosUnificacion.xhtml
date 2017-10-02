@@ -1,0 +1,328 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="unificar_datos" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+
+                <h:panelGroup layout="block" class="Responsive Container50">
+                    <div class="ContainerIndent MarRight10"> 
+                        <h1 class="BigTopic Fs16">Seleccione los predios a unificar</h1>
+
+                        <h:form id="form">
+                            <p:dataTable id="DT_predios_por_manzana" var="predio" value="#{unificarPredioView.prediosEnManzana}" selection="#{unificarPredioView.prediosSeleccionados}" rowKey="#{predio.id}" style="margin-bottom:0"
+                                         rows="10" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15" 
+                                         paginatorPosition="bottom">
+
+                                <p:ajax event="rowSelectCheckbox" listener="#{unificarPredioView.onRowSelect}" update="messages,DT_predios_por_manzana" />
+                                <p:ajax event="rowUnselectCheckbox" listener="#{unificarPredioView.onRowUnselect}" update="messages" />
+                                <p:ajax event="rowSelect" listener="#{unificarPredioView.onRowSelect}" update="messages, DT_predios_por_manzana" />
+                                <p:ajax event="rowUnselect" listener="#{unificarPredioView.onRowUnselect}" update="messages" />
+
+                                <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+                                <p:column headerText="Zona">
+                                    <h:outputText value="#{predio.terreno.terrenoPK.codZona}" />
+                                </p:column>
+                                <p:column headerText="Sector">
+                                    <h:outputText value="#{predio.terreno.terrenoPK.codSector}" />
+                                </p:column>
+                                <p:column headerText="Manzana">
+                                    <h:outputText value="#{predio.terreno.terrenoPK.codManzana}" />
+                                </p:column>
+                                <p:column headerText="Solar">
+                                    <h:outputText value="#{predio.terreno.terrenoPK.codSolar}" />
+                                </p:column>
+                                <p:column headerText="Bloque">
+                                    <h:outputText value="#{predio.codBloque}" />
+                                </p:column>
+                                <p:column headerText="PHV">
+                                    <h:outputText value="#{predio.codPhv}" />
+                                </p:column>
+                                <p:column headerText="PHH">
+                                    <h:outputText value="#{predio.codBloque}" />
+                                </p:column>
+                                <p:column headerText="&Aacute;rea">
+                                    <h:outputText value="#{predio.terreno.areaLevantamiento}" />
+                                </p:column>
+                            </p:dataTable>
+
+                            <p:confirmDialog id="users"  widgetVar="UsersWidget" severity="info" closable="true" header="Datos del predio: #{unificarPredioView.claveOnclic}" message="Linderos y mesuras segun SISCAT" style="width: 650px;">
+
+                                <div class="ContainerIndent">
+
+                                    <fieldset style="margin-right: 20px; margin-bottom: 20px;">
+
+                                        <h:panelGrid columns="6"> 
+                                            <p:outputLabel for="td_norte" value="Norte:" class="DispBlock Wid100"/>
+                                            <p:inputText id="td_norte" value="#{unificarPredioView.predioOnClic.terreno.lindero.linNorteRefSis}"
+                                                         class="input_160" disabled="true"/>                            
+                                            <p:inputText id="tl_norte" value="#{unificarPredioView.predioOnClic.terreno.lindero.linNorteLongitudSis}"
+                                                         class="input_115" disabled="true"/>
+                                            <p:outputLabel for="tl_norte" value="m." class="DispBlock Wid100"/>
+                                            <p:outputLabel for="f_norte_s" value="Frente:" class="DispBlock Wid100"/>                   
+                                            <p:inputText id="f_norte_s" value="#{unificarPredioView.predioOnClic.terreno.lindero.linFrenteNorteSis}" 
+                                                         class="input_15 app-input-integer" disabled="true"/>
+                                            <p:outputLabel for="td_sur" value="Sur:" class="DispBlock Wid100"/>
+                                            <p:inputText id="td_sur" value="#{unificarPredioView.predioOnClic.terreno.lindero.linSurRefSis}" 
+                                                         class="input_160" disabled="true"/>
+                                            <p:inputText id="tl_sur" value="#{unificarPredioView.predioOnClic.terreno.lindero.linSurLongitudSis}" 
+                                                         class="input_115" disabled="true"/>
+                                            <p:outputLabel for="tl_sur" value="m." class="DispBlock Wid100"/>
+                                            <p:outputLabel for="f_sur_s" value="Frente:" class="DispBlock Wid100" />
+                                            <p:inputText id="f_sur_s" value="#{unificarPredioView.predioOnClic.terreno.lindero.linFrenteSurSIs}" 
+                                                         class="input_15 app-input-integer" disabled="true"/>
+                                            <p:outputLabel for="td_este" value="Este:" class="DispBlock Wid100"/>
+                                            <p:inputText id="td_este" value="#{unificarPredioView.predioOnClic.terreno.lindero.linEsteRefSis}" 
+                                                         class="input_160" disabled="true"/>
+                                            <p:inputText id="tl_este" value="#{unificarPredioView.predioOnClic.terreno.lindero.linEsteLongitudSis}" 
+                                                         class="input_115" disabled="true"/> 
+                                            <p:outputLabel for="tl_este" value="m." class="DispBlock Wid100"/>
+                                            <p:outputLabel for="f_este_s" value="Frente:" class="DispBlock Wid100" />
+                                            <p:inputText id="f_este_s" value="#{unificarPredioView.predioOnClic.terreno.lindero.linFrenteEsteSis}" 
+                                                         class="input_15 app-input-integer" disabled="true"/>
+                                            <p:outputLabel for="td_oeste" value="Oeste:" class="DispBlock Wid100" />
+                                            <p:inputText id="td_oeste" value="#{unificarPredioView.predioOnClic.terreno.lindero.linOesteRefSis}"
+                                                         class="input_160" disabled="true"/>
+                                            <p:inputText id="tl_oeste" value="#{unificarPredioView.predioOnClic.terreno.lindero.linOesteLongitudSis}"
+                                                         class="input_115" disabled="true"/>
+                                            <p:outputLabel for="tl_oeste" value="m." class="DispBlock Wid100" style="margin-right: 15px;"/>
+                                            <p:outputLabel for="f_oeste_s" value="Frente:" class="DispBlock Wid100" />
+                                            <p:inputText id="f_oeste_s" value="#{unificarPredioView.predioOnClic.terreno.lindero.linFrenteOesteSis}" 
+                                                         class="input_15 app-input-integer" disabled="true"/>
+                                            <p:outputLabel value="&Aacute;rea:" />                    
+                                            <p:inputText id="area_esc" value="#{unificarPredioView.predioOnClic.terreno.areaLevantamiento}"                                          
+                                                         class="input_160" disabled="true" required="false"/>
+
+                                        </h:panelGrid>
+                                    </fieldset>
+                                </div>
+
+                            </p:confirmDialog>
+
+                            <p:commandButton id="link" style="display: none;" value="aqui" ajax="true" process="@this"
+                                             actionListener="#{unificarPredioView.doSomething()}" update="users">
+
+                            </p:commandButton>
+                            <p:inputText id="input" style="display: none;" value="No hay value"></p:inputText>
+                        </h:form>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="Responsive Container50">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs16">Plano Manzanero</h1>
+
+                        <div id="map" style="width: 90%; height: 350px; margin: 0 auto;">
+
+                        </div>
+                    </div>
+
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+
+
+        <h:outputStylesheet library="js" name="leaflet/leaflet.css" />
+        <h:outputStylesheet library="js" name="leaflet/L.Control.Locate.css" />
+        <h:outputStylesheet library="js" name="leaflet/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.css" />
+        <h:outputStylesheet library="js" name="leaflet/leaflet-draw/leaflet.draw.css" />
+        <h:outputStylesheet library="js" name="leaflet/leaflet-measurecontrol/leaflet.measurecontrol.css" />
+        <h:outputStylesheet library="js" name="leaflet/leaflet-fullscreen/Control.FullScreen.css" />
+        <h:outputStylesheet library="js" name="leaflet/leaflet.awesome-markers/leaflet.awesome-markers.css" />
+        <h:outputStylesheet library="font-awesome-4.3" name="css/font-awesome.css" />
+
+
+        <h:outputScript library="js" name="leaflet/leaflet.js" />
+        <h:outputScript library="js" name="leaflet/proj4Leaflet/proj4.js" />
+        <h:outputScript library="js" name="leaflet/proj4Leaflet/proj4leaflet.js" />
+        <h:outputScript library="js" name="leaflet/leaflet.awesome-markers/leaflet.awesome-markers.min.js" />
+
+        <h:outputScript library="js" name="spin.min.js" />
+        <h:outputScript library="js" name="constants.js" />
+        <h:outputScript library="js" name="mapManager.js" />     
+
+
+
+        <script>
+
+            function predioNoGeoreferenciado() {
+                var div = document.getElementById("map");
+                var imagen = document.createElement("img");
+                // agregamos propiedades al elemento
+                imagen.src = "#{request.contextPath}/resources/images/escudo.png";
+                imagen.id = "img_uno";
+                imagen.className = "logo";
+                imagen.width = div.offsetWidth;
+                imagen.height = div.offsetHeight;
+                imagen.title = "Predio no georeferenciado";
+                imagen.alt = "Predio no georeferenciado";
+
+                // definimos el elemento donde insertamos la imagen
+
+                // agregamos la imagen
+                div.appendChild(imagen);
+            }
+
+            function errorAlcargarCapa() {
+                var div = document.getElementById("map");
+                var imagen = document.createElement("img");
+                // agregamos propiedades al elemento
+                imagen.src = "#{request.contextPath}/resources/images/escudo.png";
+                imagen.id = "img_uno";
+                imagen.className = "logo";
+                imagen.width = div.offsetWidth;
+                imagen.title = "titulo de la imagen";
+                imagen.alt = "texto alternativo";
+
+                // definimos el elemento donde insertamos la imagen
+
+                // agregamos la imagen
+                div.appendChild(imagen);
+            }
+
+            $(document).ready(function () {
+
+
+                var coord_X = #{unificarPredioView.coord_X};
+                var coord_Y = #{unificarPredioView.coord_Y};
+
+                //alert("coord: x,y :" + coord_X + ",")
+
+
+                if (coord_X === 0 &amp;&amp; coord_Y === 0
+                        ){
+                predioNoGeoreferenciado();
+
+                }
+                else
+                {
+                    var defaultLoadParameters = {
+                        service: 'WFS',
+                        version: '1.1.0',
+                        request: 'getFeature',
+                        srsname: Constants.map.srsname,
+                        outputFormat: 'text/javascript'
+                    };
+                    var map = new L.Map('map', {
+                        center: [#{unificarPredioView.coord_Y}, #{unificarPredioView.coord_X}],
+                        zoom: 18
+                    });
+
+
+                    var bounds = map.getBounds();
+                    var bbox = '' + bounds.getSouth() + ',' + bounds.getWest() + ',' + bounds.getNorth() + ',' + bounds.getEast();
+
+                    var ortofoto = L.tileLayer.wms(Constants.geoserver.url + Constants.geoserver.workspace + '/wms', {
+                        layers: 'Salinas:last',
+                        request: 'GetMap',
+                        service: 'wms',
+                        format: 'image/png',
+                        transparent: true,
+                        version: '1.1.1',
+                        tiled: true,
+                        attribution: "Ortofoto Salinas ",
+                        maxZoom: 20,
+                        maxNativeZoom: 18
+                    });
+                    ortofoto.setZIndex(0);
+                    ortofoto.addTo(map);
+
+                    var defaultStyle = {color: "#ff0202", weight: 2, opacity: 1, fillOpacity: 0.1, fillColor: "#ff0202"};
+                    var highlightStyle = {color: '#ff0202', weight: 3, opacity: 0.6, fillOpacity: 0.65, fillColor: '#ff0202'};
+                    var selectStyle = {color: "#45f909", weight: 2, opacity: 1, fillOpacity: 0.1, fillColor: "#45f909"};
+                    var overSelectStyle = {color: '#45f909', weight: 3, opacity: 0.6, fillOpacity: 0.65, fillColor: '#45f909'};
+
+                    var clave = '#{unificarPredioView.claveGeoreferenciada}';
+
+                    var predios = new L.geoJson(null, {
+                        onEachFeature: function (feature, layer) {
+                            // Create a self-invoking function that passes in the layer
+                            // and the properties associated with this particular record.
+
+                            layer.on('click', function (e) {
+
+                                var jsfCommandLink = document.getElementById("form:link");
+                                var input = document.getElementById("form:input");
+                                input.value = feature.properties.cod_catast;
+                                jsfCommandLink.click();
+
+                            });
+                            (function (layer, properties) {
+                                // Create a mouseover event
+                                layer.on("mouseover", function (e) {
+                                    // Change the style to the highlighted version
+                                    if (clave === feature.properties.cod_catast)
+                                        layer.setStyle(selectStyle);
+                                    else
+                                        layer.setStyle(highlightStyle);
+                                });
+                                // Create a mouseout event that undoes the mouseover changes
+                                layer.on("mouseout", function (e) {
+                                    // Start by reverting the style back
+                                    if (clave === feature.properties.cod_catast)
+                                        layer.setStyle(overSelectStyle);
+                                    else
+                                        layer.setStyle(defaultStyle);
+                                });
+                            })(layer, feature.properties);
+                        },
+                        style: function (feature) {
+
+                            if (clave === feature.properties.cod_catast)
+                                return overSelectStyle;
+                            else
+                                return defaultStyle;
+                        }
+                    });
+
+                    function cargarPredios(data) {
+                        predios.addData(data);
+                    }
+
+                    var defaultP = $.extend({}, defaultLoadParameters);
+
+                    var parameters = $.extend(defaultP, {
+                        typeName: Constants.geoserver.workspace + ':predios',
+                        format_options: 'callback:getJson',
+                        bbox: bbox
+                    });
+
+                    $.ajax({
+                        url: Constants.geoserver.url + 'wfs' + L.Util.getParamString(parameters),
+                        dataType: 'jsonp',
+                        jsonp: false,
+                        timeout: 5000,
+                        success: cargarPredios,
+                        jsonpCallback: 'getJson',
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            if (jqXHR.readyState != 4) {
+                                alert("Error al cargar la capa de los predios.");
+
+                            }
+
+                        }
+                    });
+                    predios.setZIndex(3);
+                    predios.addTo(map);
+                    map.addLayer(predios);
+
+
+
+                }
+
+
+            });
+
+
+
+        </script>
+    </ui:composition>
+
+</html>

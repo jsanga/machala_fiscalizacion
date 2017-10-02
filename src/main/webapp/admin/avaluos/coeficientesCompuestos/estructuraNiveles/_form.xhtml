@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:dialog id="addDlg" widgetVar="addDialog"
+                  modal="true" resizable="false"
+                  header="Datos del coeficiente #{coefEstrucNivelView.fuerte.texto}" appendTo="@(body)">
+            <p:ajax event="close" update="listado-form,addDlg" listener="#{coefEstrucNivelView.cancelar()}" />
+            <h:panelGroup layout="block" class="Container Container100">
+                <h:form id="form-form" prependId="false">
+                    <p:messages id="datos-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="3">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="base" value="Valor Base:" class="DispBlock Wid100"/>
+                                    <p:inputText id="base" value="#{coefEstrucNivelView.fuerte.coeficiente}" 
+                                                 class="input_125" required="true" onkeypress="validateFloatValueAndFocusNext(event, 'coeficiente0')"/>
+                                </h:panelGroup>
+                                <c:forEach items="#{coefEstrucNivelView.coeficientesSeleccionados}" var="coef" varStatus="loop">
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="coeficiente#{loop.index}" value="#{coef.valorDebil.texto}:" class="DispBlock Wid100"/>
+                                        <p:inputText id="coeficiente#{loop.index}" value="#{coef.coeficiente}" 
+                                                     class="input_125" required="true" onkeypress="validateFloatValueAndFocusNext(event, '#{coef.nextOnEnter}')"/>
+                                    </h:panelGroup>
+                                </c:forEach>
+                            </h:panelGrid>
+
+                        </h:panelGrid>
+
+                        <h:panelGroup layout="block" class="MarTop20">
+
+                            <p:commandButton id="actualizar-btn"
+
+                                             icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                             actionListener="#{coefEstrucNivelView.editar()}"
+                                             
+                                             update="listado-form,datos-messages,form-form,table-list"/>
+                            <p:commandButton id="cancelar-usuario-btn"
+                                             process="@this"
+                                             icon="fa fa-save" styleClass="white" value="Cancelar" actionListener="#{coefEstrucNivelView.cancelar()}"
+                                             onclick="PF('addDialog').hide();"
+                                             />
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

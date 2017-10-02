@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" style="margin-bottom: 10px;">
+            <h1 class="BigTopic Fs16">Datos de Incidencia</h1>
+            <hr></hr>
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Datos de Incidencia" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fechaIncidencia" value="Fecha de Incidencia:" class="DispBlock Wid100"/>
+                                <p:calendar id="fechaIncidencia" value="#{crearIncidenciaView.incidencia.fechaIncidencia}" required="true"/>
+                            </h:panelGroup>
+                             <h:panelGroup layout="block">
+                                <p:outputLabel for="integrante" value="Integrante:" class="DispBlock Wid100"/>
+                                <p:selectOneMenu id="integrante" value="#{crearIncidenciaView.integranteSeleccionado}" filter="true" filterMatchMode="contains"
+                                                 class="select_180" converter="integranteConverter">
+                                    <!--<f:selectItem itemLabel="-Seleccione-" itemValue="#{null}" noSelectionOption="true" />-->
+                                    <f:selectItems  value="#{crearIncidenciaView.integrantes}" var="integrant" itemLabel="#{integrant.apellidos} #{integrant.nombre}" itemValue="#{integrant}"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </p:fieldset>
+                  
+                </div>   
+            </h:panelGroup>
+        </h:panelGroup>
+           <h:panelGroup layout="block" class="Container100 Wid100" style="margin-bottom: 20px;">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Observaciones" toggleable="true" toggleSpeed="500" >
+                        <p:inputTextarea id="cat_predio-observacion" style="width: 97%" value="#{crearIncidenciaView.incidencia.observacionIncidencia}"
+                                         onkeypress="focusNextOnEnter(event, 'wiz_next')"/>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs16">Fotos</h1>
+                        <hr></hr>
+                        <p:fileUpload fileUploadListener="#{crearIncidenciaView.handlePhotoUpload}" mode="advanced" dragDropSupport="false"
+                                      multiple="true" fileLimit="20" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                      cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="image-upload-view,image-preview"/>
+                        <h:panelGroup layout="block" id="image-upload-view">
+                            <table>
+                                <tbody>
+                                    <c:forEach var="foto" items="#{crearIncidenciaView.infoFotos}" varStatus="loop">
+                                        <c:if test="#{not empty crearIncidenciaView.infoFotos[loop.index]}">
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel value="#{loop.index +1}" class="Fs14" style="font-weight: bold;"/>
+                                                </td>
+                                                <td>
+                                                    <h:graphicImage  width="95" height="95" url="#{crearIncidenciaView.infoFotos[loop.index].data}"/>
+                                                </td>
+                                                <td>
+                                                    <p:inputText maxlength="255" value="#{crearIncidenciaView.infoFotos[loop.index].description}"/>
+                                                </td>
+                                                <td class="column-photo-actions">
+                                                    <p:commandButton icon="fa fa-trash-o white" actionListener="#{crearIncidenciaView.eliminarFoto(loop.index)}" update="image-upload-view,image-preview" process="@this">
+                                                        <p:confirm header="Confirmación" message="Está seguro de eliminar la Foto Nro #{loop.index +1}?" icon="ui-icon-alert" />
+                                                    </p:commandButton>
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                    </p:confirmDialog>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container Wid100 MarBot10">
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs16">Clic para visualizar la imagen</h1>
+                        <hr></hr>
+                        <h:panelGroup layout="block" id="image-preview">
+                            <p:outputLabel style="margin-left: 30px;" value="No se han registrado fotos a la incidencia." rendered="#{empty crearIncidenciaView.fotos}"/>
+                            <p:lightBox styleClass="imagebox" >
+                                <c:forEach var="foto" items="#{crearIncidenciaView.infoFotos}" varStatus="loop">
+                                    <c:if test="#{not empty crearIncidenciaView.infoFotos[loop.index]}">
+                                        <h:outputLink value="#{crearIncidenciaView.infoFotos[loop.index].data}" class="MarRight10 Fleft" >
+                                            <h:graphicImage url="#{crearIncidenciaView.infoFotos[loop.index].data}" width="150" height="150" title="Fotos de la Incidencia"/>
+                                        </h:outputLink>
+                                    </c:if>
+                                </c:forEach>
+                            </p:lightBox>
+
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+
+    </ui:composition>    
+</html>

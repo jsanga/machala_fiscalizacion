@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces"
+      xmlns:predio="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition template="../../WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Administraci&oacute;n de Contribuyentes"></h:outputText>
+        </ui:define>
+
+        <ui:define name="content">
+            <h:panelGroup layout="block" id="update_list">
+
+                <h:panelGroup layout="block" class="Container Wid100 Responsive100">
+                    <h:panelGroup layout="block" class="Container100 Responsive Fright" id="busqueda-opcion">
+                        <h1 class="BigTopic Fs15">Mantenimiento de Contribuyentes</h1>
+                        <h:panelGroup layout="block" class="Wid100" >
+                            <predio:buscarFiltro opcionesBusqueda="#{contribuyenteAdminView.opcionesBusqueda}"
+                                                 mostrarPalabraClave="true"
+                                                 accionBuscar="#{contribuyenteAdminView.buscar()}"
+                                                 actualizarLuegoDeBusqueda="contribuyente-list-form"/>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:form id="contribuyente-list-form" prependId="false">
+                    <h:panelGroup layout="block">
+
+                    </h:panelGroup>
+                    <!--                    <p:commandButton value="Exportar" icon="ui-icon-newwin" oncomplete="PF('dlgExportar').show();" 
+                                                         onstart="PF('dlgInicio').show()" onsuccess="PF('dlgInicio').hide()" 
+                                                         actionListener="#{contribuyenteAdminView.prepExportar()}"
+                                                         style="width: 150px;height: 30px;font-size: 12px!important"/>-->
+
+                    <p:dataTable var="contrib" widgetVar="contribuyenteTable" class="MarTop40"
+                                 emptyMessage="Contribuyentes no encontrados con esos términos de búsqueda."
+                                 id="contribuyente-list"
+                                 paginator="true"
+                                 rows="10"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords}"
+                                 rowsPerPageTemplate="5,10,15,50"
+                                 lazy="true"
+                                 rowKey="#{contrib.id}"
+                                 value="#{contribuyenteAdminView.lazyData}"
+                                 >
+
+                        <f:facet name="header">
+                            <p:outputPanel class="HeaderTbl" style="height: 33px;">
+                                <p:commandButton title="Adicionar"
+                                                 id="buscar-propietario-btn" styleClass="Fs16 Fleft" update="CreateContribuyenteDlg"
+                                                 icon="fa fa-plus white" actionListener="#{contribuyenteAdminView.inicializarNuevo()}"
+                                                 value="Adicionar"
+                                                 process="@this"
+                                                 oncomplete="PF('CreateContribuyenteDialog').show();$('.ui-state-error').removeClass('ui-state-error');"/>
+                            </p:outputPanel>
+                        </f:facet>
+                        <!--value="{contribuyenteAdminView.contribuyentes}"--> 
+
+
+                        <!--filteredValue="{contribuyenteAdminView.contribuyentesFiltrados}">-->
+                        <!--
+                                                <f:facet name="header">
+                                                    <p:outputPanel class="HeaderTbl">
+                                                        <h:outputText value="Buscar en todos los campos:" style="padding-right: 10px;"/>
+                                                        <p:inputText id="globalFilter" onkeyup="PF('contribuyenteTable').filter()" style="width:150px; margin-right: 5px;" placeholder="Palabra clave"/>
+                                                        <p:commandButton title="Adicionar"
+                                                                         id="buscar-propietario-btn-dd"  styleClass="Fs16 Fleft" update="CreateContribuyenteDlg"
+                                                                         icon="fa fa-user-plus white" actionListener="{contribuyenteAdminView.inicializarNuevo()}"
+                                                                         value="Adicionar"
+                                                                         process="@this"
+                                                                         oncomplete="PF('CreateContribuyenteDialog').show();$('.ui-state-error').removeClass('ui-state-error');"/>
+                                                    </p:outputPanel>
+                                                </f:facet>-->
+
+                        <p:column filterBy="#{contrib.nombre}" headerText="Nombres" filterMatchMode="contains">
+                            <h:outputText value="#{contrib.nombre}" />
+                        </p:column>
+                        <p:column filterBy="#{contrib.apellidoPaterno}" headerText="Apellido Paterno" filterMatchMode="contains">
+                            <h:outputText value="#{contrib.apellidoPaterno}" />
+                        </p:column>
+                        <p:column filterBy="#{contrib.apellidoMaterno}" headerText="Apellido Materno" filterMatchMode="contains">
+                            <h:outputText value="#{contrib.apellidoMaterno}" />
+                        </p:column>
+                        <p:column filterBy="#{contrib.tipoIdentificacion}" headerText="Tipo Identificaci&oacute;n" filterMatchMode="exact">
+                            <f:facet name="filter">
+                                <p:selectOneMenu onchange="PF('contribuyenteTable').filter()" >
+                                    <f:selectItem itemLabel="-Tipo Ident.:" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems value="#{contribuyenteAdminView.tiposIdentificacion}" />
+                                </p:selectOneMenu>
+                            </f:facet>
+                            <h:outputText value="#{contrib.tipoIdentificacion}" />
+                        </p:column>
+                        <p:column filterBy="#{contrib.identificacion}" headerText="Identificaci&oacute;n" filterMatchMode="contains">
+                            <h:outputText value="#{contrib.identificacion}" />
+                        </p:column>
+
+                        <p:column class="column-user-actions">
+                            <p:commandButton icon="fa fa-pencil white" actionListener="#{contribuyenteAdminView.inicializarEdicion(contrib.id)}" update="CreateContribuyenteDlg" process="@this" title="Editar"
+                                             oncomplete="PF('CreateContribuyenteDialog').show();$('.ui-state-error').removeClass('ui-state-error');"/>
+                            <p:commandButton icon="fa fa-times white" title="Eliminar" actionListener="#{contribuyenteAdminView.deleteContribuyente(contrib.id)}" update="contribuyente-list-form,messages">
+                                <p:confirm header="Confirmación" message="Está seguro que desea eliminar el Contribuyente" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check white" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times white" />
+                            </p:confirmDialog>
+                        </p:column>
+
+                    </p:dataTable>
+                    <p:dialog widgetVar="dlgInicio" header="Espere" closable="false">
+                        <h3>Espere un momento...</h3>
+                        <h3>Su información estará lista</h3>
+                    </p:dialog>
+                </h:form>
+
+            </h:panelGroup>
+            <ui:include src="_add.xhtml"/>
+            <p:dialog widgetVar="dlgExportar" modal="true" header="Exportar Datos">
+                <h:form id="frmExportar">
+                    <hr/>
+                    <h:panelGrid columns="4">
+                        <h:commandLink actionListener="#{contribuyenteAdminView.reportePDF}">
+                            <p:graphicImage id="pdfimagen" name="/iconos/PDF.png" alt="Exportar a PDF" height="60" width="60"/>
+                            <p:tooltip for="pdfimagen" value="Exportar a PDF"/>
+                        </h:commandLink>                    
+
+                        <h:commandLink actionListener="#{contribuyenteAdminView.reporteEXCEL}" >
+                            <p:graphicImage id="excelimagen" name="/iconos/EXCEL.png" alt="Exportar a Excel" height="60" width="60"/>
+                            <p:tooltip for="excelimagen" value="Exportar a Excel"/>
+                        </h:commandLink>
+
+                    </h:panelGrid>
+                    <hr/>
+                    <center>
+                        <p:commandButton value="Cerrar" type="button" onclick="PF('dlgExportar').hide();" icon="eliminar" style="height: 35px"/>
+                    </center>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+
+        <ui:define name="end_javascripts">
+
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces"
+      xmlns:predio="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition template="../../WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Creaci&oacute;n de predios"></h:outputText>
+        </ui:define>
+
+        <ui:define name="content">
+
+            <predio:buscarPredio opcionesBusqueda="#{verificarEmisionView.opcionesBusqueda}"
+                                 mostrarParroquia="true"
+                                 mostrarZona="true"
+                                 mostrarSector="true"
+                                 mostrarManzana="true"
+                                 mostrarPredio="true"
+                                 mostrarPH="true"
+                                 accionBuscar="#{verificarEmisionView.liquidaPredio()}"
+                                 accionCancelar=""
+                                 actualizarLuegoDeBusqueda="messages"
+                                 ajax="false" />
+
+            <div class="EmptyBox20"></div>
+
+            <h:form id="buscarForm">
+
+                <p:tabView rendered="#{verificarEmisionView.impuestoDefinido()}">
+                    <p:tab title="Liquidaci&oacute;n">
+
+                        <p:panelGrid style="border: 2px #761c19 solid; width: 380px; float: left; padding: 15px; border-radius: 20px;">
+                            <p:row>
+                                <p:column colspan="3" class="FontBold">Dirección:</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column style="text-align: left" colspan="3">
+                                    #{verificarEmisionView.direccionPredio(impuesto.impuestoPredialPK.idPredio)}
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column style="text-align: left" colspan="3">&nbsp;</p:column>
+                            </p:row>
+                            <tr class="ui-datatable-odd">
+                                <td style="width:170px;border-bottom: 1px #E3C6C5 solid !important;" class="FontBold">A&ntilde;o:</td>
+                                <td style="text-align: right; width:85px;border-bottom: 1px #E3C6C5 solid !important;" class="FontBold">#{verificarEmisionView.impuestoAnterior.impuestoPredialPK.anio}</td>
+                                <td style="text-align: right; width:85px;border-bottom: 1px #E3C6C5 solid !important;" class="FontBold">#{verificarEmisionView.impuestoActual.impuestoPredialPK.anio}</td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">&Aacute;rea del Terreno:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.areaTerreno}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.areaTerreno}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr  style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Valor del m&sup2; de Terreno:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.avaluoTerreno/verificarEmisionView.impuestoAnterior.areaTerreno}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.avaluoTerreno/verificarEmisionView.impuestoActual.areaTerreno}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr  style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Aval&uacute;o del Terreno:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.avaluoTerreno}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.avaluoTerreno}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">&Aacute;rea de Edificación:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.areaConstruccion}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.areaConstruccion}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Aval&uacute;o de Edificación:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.avaluoEdificacion}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.avaluoEdificacion}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Obras Complementarias:</td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.avaluoComplementarias}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.avaluoComplementarias}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Avalúo Predial:</td>
+                                <td>
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.avaluoPredial}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.avaluoPredial}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Exenciones:</td>
+                                <td>
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.exenciones}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.exenciones}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Banda impositiva:</td>
+                                <td>
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.bandaImpositiva}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.bandaImpositiva}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Impuesto Predial:</td>
+                                <td>
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.impuestoPredial}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.impuestoPredial}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Recolecci&oacute;n de basura:</td>
+                                <td>
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.recoleccionBasura}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.recoleccionBasura}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Recargo Pers. Jur&iacute;dica:</td>
+                                <td>
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.recargoPersonasJuridicas}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.recargoPersonasJuridicas}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">CEM:</td>
+                                <td>
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.cem}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.cem}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Solar No Edificado:</td>
+                                <td>
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.solarNoEdificado}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.solarNoEdificado}" class="Fright">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                <td class="FontBold">Total a pagar:</td>
+                                <td>
+                                    <h:outputText value="#{verificarEmisionView.impuestoAnterior.total}" class="Fright FontBold">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                                <td style="text-align: right">
+                                    <h:outputText value="#{verificarEmisionView.impuestoActual.total}" class="Fright FontBold">
+                                        <f:convertNumber type="currency" currencySymbol="" />
+                                    </h:outputText>
+                                </td>
+                            </tr>
+                            <p:row>
+                                <p:column colspan="3">&nbsp;</p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <p:panelGrid style="border: 2px #761c19 solid; width: 505px; float: right; padding: 15px; border-radius: 20px;">
+                            <p:row>
+                                <p:column class="FontBold">Datos de infraestructura:</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>&nbsp;</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid class="ui-datatable">
+                                        <p:row class="FontBold TexAlCenter ui-datatable-odd">
+                                            <p:column style="width:255px;border-bottom: 1px #E3C6C5 solid !important;">Dato</p:column>
+                                            <p:column style="width:150px;border-bottom: 1px #E3C6C5 solid !important;">Descripci&oacute;n</p:column>
+                                            <p:column style="width:115px;border-bottom: 1px #E3C6C5 solid !important;">Coeficiente</p:column>
+                                        </p:row>
+
+                                        <ui:repeat value="#{verificarEmisionView.creaListaInfraestructura()}" var="infra">
+
+                                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                                <td class="TexAlLeft FontBold">#{infra.descripcion}</td>
+                                                <td class="TexAlCenter">#{infra.existencia}</td>
+                                                <td class="TexAlCenter">
+                                                    <h:outputText value="#{infra.coeficiente}">
+                                                        <f:convertNumber type="currency" currencySymbol="" />
+                                                    </h:outputText>
+                                                </td>
+                                            </tr>
+
+                                        </ui:repeat>
+
+                                    </p:panelGrid>
+
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <p:panelGrid style="border: 2px #761c19 solid; width: 505px; float: right; padding: 15px; border-radius: 20px; margin-top: 15px;">
+                            <p:row>
+                                <p:column class="FontBold">Datos de construcci&oacute;n:</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>&nbsp;</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <p:panelGrid class="ui-datatable Wid100">
+                                        <p:row class="FontBold TexAlCenter ui-datatable-odd">
+                                            <p:column style="width: 35px;border-bottom: 1px #E3C6C5 solid !important;">Bloque</p:column>
+                                            <p:column style="width: 45px;border-bottom: 1px #E3C6C5 solid !important;">Pisos</p:column>
+                                            <p:column style="width: 85px;border-bottom: 1px #E3C6C5 solid !important;">Tipolog&iacute;a</p:column>
+                                            <p:column style="width: 55px;border-bottom: 1px #E3C6C5 solid !important;">&Aacute;rea</p:column>
+                                            <p:column style="width: 70px;border-bottom: 1px #E3C6C5 solid !important;">USD/m&sup2;</p:column>
+                                            <p:column style="width: 65px;border-bottom: 1px #E3C6C5 solid !important;">Construc.</p:column>
+                                            <p:column style="width: 65px;border-bottom: 1px #E3C6C5 solid !important;">Conserv.</p:column>
+                                            <p:column style="width: 80px;border-bottom: 1px #E3C6C5 solid !important;">Aval&uacute;o</p:column>
+                                        </p:row>
+
+                                        <ui:repeat value="#{generarFichaView.creaListaBloques()}" var="bloque">
+
+                                            <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                                <td class="TexAlCenter">#{bloque.numeroBloque}</td>
+                                                <td class="TexAlCenter">#{bloque.numeroPisos}</td>
+                                                <td class="TexAlCenter">#{bloque.tipologia}</td>
+                                                <td class="TexAlRight">
+                                                    <h:outputText value="#{bloque.areaTotal}">
+                                                        <f:convertNumber type="currency" currencySymbol="" />
+                                                    </h:outputText>
+                                                </td>
+                                                <td class="TexAlCenter">
+                                                    <h:outputText value="#{bloque.valorMetro}">
+                                                        <f:convertNumber type="currency" currencySymbol="" />
+                                                    </h:outputText>
+                                                </td>
+                                                <td class="TexAlCenter">
+                                                    <h:outputText value="#{bloque.porcientoConstruccion} %">
+                                                        <f:convertNumber type="number" integerOnly="true"/>
+                                                    </h:outputText>
+                                                </td>
+                                                <td class="TexAlCenter">
+                                                    <h:outputText value="#{bloque.porcientoConservacion} %">
+                                                        <f:convertNumber type="number" integerOnly="true"/>
+                                                    </h:outputText>
+                                                </td>
+                                                <td class="TexAlRight">
+                                                    <h:outputText value="#{bloque.avaluo}">
+                                                        <f:convertNumber type="currency" currencySymbol="" />
+                                                    </h:outputText>
+                                                </td>
+                                            </tr>
+
+                                        </ui:repeat>
+
+                                    </p:panelGrid>
+
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+
+                        <div style="width: 1px;height: 1px;clear: both;"></div>
+
+                    </p:tab>
+
+                    <p:tab title="Fotograf&iacute;as">
+
+                        <h:panelGroup layout="block" class="Container50 MarBot10" >
+                            <div class="ContainerIndent MarRight10">
+                                <h1 class="BigTopic Fs15">Fotos del Predio</h1>
+                                <p:galleria value="#{verificarEmisionView.fotosPredio(impuesto.predio)}" var="image" panelWidth="500" panelHeight="313" showCaption="false">
+                                    <p:graphicImage url="#{image}" width="500"/>
+                                </p:galleria>
+                            </div>
+                        </h:panelGroup>
+
+                        <div style="width: 1px;height: 1px;clear: both;"></div>
+                    </p:tab>
+
+                </p:tabView>
+
+            </h:form>
+
+        </ui:define>
+
+        <ui:define name="end_javascripts">
+
+        </ui:define>
+    </ui:composition>
+
+</html>

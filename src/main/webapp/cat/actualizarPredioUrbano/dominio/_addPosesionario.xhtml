@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition >
+
+        <p:dialog id="CreateContribuyenteDlg" widgetVar="CreateContribuyenteDialog" appendTo="@(body)"
+                  modal="true" resizable="false" header="Datos del nuevo contribuyente">
+            <h:form id="adicionarContribuyenteForm" prependId="false">
+                <p:messages id="datos-messages" globalOnly="true" showSummary="false" autoUpdate="false" closable="true" />
+                <f:event listener="#{updateDominioView.validarFormularioPosesionario}" type="postValidate"/>
+                <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+                    <fieldset>
+                        <legend>Datos generales</legend>
+                        <p:panelGrid>
+                            <p:row>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="tipo_contribuyente_cat" value="Tipo de contribuyente:" class="form-field-label"/>
+                                        <p:selectOneMenu id="tipo_contribuyente_cat" value="#{updateDominioView.nuevoPosesionario.tipo}"
+                                                         required="true" requiredMessage="Tipo de Contribuyente Requerido">
+                                            <f:selectItem itemLabel="NATURAL" itemValue="N" />
+                                            <f:selectItem itemLabel="JURIDICO" itemValue="J" />
+<!--                                            <f:selectItem itemLabel="Instituci&oacute;n" itemValue="I" />
+                                            <f:selectItem itemLabel="Gubernamental" itemValue="G" />-->
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+                                </p:column>
+
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="tipo_identificacion" value="Tipo de identificaci&oacute;n:" class="form-field-label"/>
+                                        <p:selectOneMenu id="tipo_identificacion" value="#{updateDominioView.nuevoPosesionario.tipoIdentificacion}" 
+                                                         style="width:125px" required="true" requiredMessage="Tipo de Identificaci&oacute;n Requerido">
+                                            <f:selectItem itemLabel="Cedula" itemValue="C" />
+                                            <f:selectItem itemLabel="RUC" itemValue="R" />
+                                            <f:selectItem itemLabel="Pasaporte" itemValue="P" />
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="numero_identificacion" value="N&uacute;mero de identificaci&oacute;n:" class="form-field-label" />
+                                        <p:inputText id="numero_identificacion" value="#{updateDominioView.nuevoPosesionario.identificacion}"
+                                                     class="input_125" onkeypress="focusNextOnEnter(event, 'nombre_contribuyente')"/>
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="contribuyente_especial" value="Contribuyente especial:" class="form-field-label"/>
+                                        <p:selectOneMenu id="contribuyente_especial" value="#{updateDominioView.nuevoPosesionario.contribuyenteEspecial}" style="width:125px">
+                                            <f:selectItem itemLabel="No" itemValue="N" />
+                                            <f:selectItem itemLabel="Si" itemValue="S" />
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+                                </p:column>
+
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="nombre_contribuyente" value="Nombre:" class="form-field-label"/>
+                                        <p:inputText id="nombre_contribuyente" value="#{updateDominioView.nuevoPosesionario.nombre}"
+                                                     class="input_125" onkeypress="focusNextOnEnter(event, 'apellido_paterno')" required="true" 
+                                                     requiredMessage="Nombre Requerido"/>
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="apellido_paterno" value="Apellido paterno:" class="form-field-label"/>
+                                        <p:inputText id="apellido_paterno" value="#{updateDominioView.nuevoPosesionario.apellidoPaterno}"
+                                                     class="input_125" onkeypress="focusNextOnEnter(event, 'apellido_materno')"/>
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="apellido_materno" value="Apellido materno:" class="form-field-label"/>
+                                        <p:inputText id="apellido_materno" value="#{updateDominioView.nuevoPosesionario.apellidoMaterno}"
+                                                     class="input_125" onkeypress="focusNextOnEnter(event, 'fecha_nacimiento')"/>
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="sexo" value="Sexo:" class="form-field-label"/>
+                                        <p:selectOneMenu id="sexo" value="#{updateDominioView.nuevoPosesionario.sexo}" style="width:125px">
+                                            <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                            <f:selectItem itemLabel="Femenino" itemValue="F" />
+                                        </p:selectOneMenu>
+
+                                    </h:panelGroup>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="fecha_nacimiento" value="Fecha nacimiento" class="form-field-label"/>
+                                        <p:calendar id="fecha_nacimiento" value="#{updateDominioView.nuevoPosesionario.fechaNacimiento}"  pattern="dd/MM/yyyy" mask="true"
+                                                    class="input_125" onkeypress="focusNextOnEnter(event, 'email')"/>
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="email" value="Email:" class="form-field-label"/>
+                                        <p:inputText id="email" value="#{updateDominioView.nuevoPosesionario.email}"
+                                                     class="input_125" onkeypress="focusNextOnEnter(event, 'celular')"/>
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="celular" value="Celular:" class="form-field-label"/>
+                                        <p:inputText id="celular" value="#{updateDominioView.nuevoPosesionario.celular}"
+                                                     class="input_125" onkeypress="focusNextOnEnter(event, 'telefono')"/>
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="telefono" value="Tel&eacute;fono:" class="form-field-label"/>
+                                        <p:inputText id="telefono" value="#{updateDominioView.nuevoPosesionario.telefono}"
+                                                     class="input_125" onkeypress="focusNextOnEnter(event, 'direccion')"/>
+                                    </h:panelGroup>
+                                </p:column>
+
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="estado_civil" value="Estado Civil:" class="form-field-label"/>
+
+                                        <p:selectOneMenu id="estado_civil" value="#{updateDominioView.nuevoPosesionario.estadoCivil}" style="width:125px">
+                                            <f:selectItem itemLabel="Casado" itemValue="0" />
+                                            <f:selectItem itemLabel="Soltero" itemValue="1" />
+                                        </p:selectOneMenu>
+
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column colspan="3">
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="direccion" value="Direcci&oacute;n:" class="form-field-label" style="width: 100%;"/>
+                                        <p:inputText id="direccion" value="#{updateDominioView.nuevoPosesionario.direccion}"
+                                                     class="input_125" onkeypress="focusNextOnEnter(event, 'representante_legal_cedula')"/>
+                                    </h:panelGroup>
+                                </p:column>
+
+                            </p:row>
+                        </p:panelGrid>
+                    </fieldset>
+                </h:panelGroup>
+                <p:panelGrid columns="2">
+                    <p:row>
+                        <h:panelGroup>
+                            <fieldset>
+                                <legend>Representante legal</legend>
+                                <p:panelGrid>
+                                    <p:row>
+                                        <p:column>
+                                            <h:panelGroup layout="block" >
+                                                <p:outputLabel for="representante_legal_cedula" value="C&eacute;dula:" class="form-field-label" />
+                                                <p:inputText id="representante_legal_cedula" value="#{updateDominioView.nuevoPosesionario.representanteLegalCedula}"
+                                                              requiredMessage="C&eacute;dula Requerida" />
+                                            </h:panelGroup>
+                                        </p:column>
+                                        <p:column>
+                                            <h:panelGroup layout="block">
+                                                <p:outputLabel for="representante_legal_nombre" value="Nombre y apellidos:" class="form-field-label"/>
+                                                <p:inputText id="representante_legal_nombre" value="#{updateDominioView.nuevoPosesionario.representanteLegal}"
+                                                             />
+                                            </h:panelGroup>
+                                        </p:column>
+                                    </p:row>
+
+                                </p:panelGrid>
+                            </fieldset>
+                        </h:panelGroup>
+                    </p:row>
+                    <p:row>
+                        <p:column>
+                            <h:panelGrid></h:panelGrid>
+                        </p:column>
+                        <p:column>
+                            <h:panelGrid></h:panelGrid>
+                        </p:column>
+                        <p:column style="margin-right: 20px;">
+                            <p:commandButton value="Cancelar" id="cancelar"  icon="fa fa-ban"
+                                             onclick="PF('CreateContribuyenteDialog').hide();"
+                                             class="white"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton id="add-contribuyente" style="margin-left: 50px;"
+                                             icon="fa fa-save" styleClass="white Fright" value="Guardar"
+                                             update="propietarioListDelete,propietarioListDelete-update"
+                                             process="@this,tipo_contribuyente_cat,tipo_identificacion,numero_identificacion,contribuyente_especial,nombre_contribuyente,apellido_paterno,apellido_materno,sexo,fecha_nacimiento,email,celular,telefono,estado_civil,direccion"
+                                             actionListener="#{updateDominioView.crearContribuyente()}"/>
+
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

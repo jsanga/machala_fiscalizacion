@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <p:dialog id="obras-dlg" widgetVar="obrasDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Otros tipos de cosntrucci&oacute;n" style="width: 700px;"> 
+            <p:ajax event="close" update="obras-complementarias-list,obras-complementarias-update" listener="#{regPredioUrbanoView.cancelarCrearObra()}" />
+            <h:panelGroup layout="block" class="Container Container100">
+                <p:panel class="sentinel-panel">
+                    <h:form id="obras-form" prependId="false">
+                        <p:messages id="datos-obras-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+
+                        <h:panelGroup layout="block" class="Wid100" style="width: 650px !important;">
+                            <h:panelGrid columns="1" class="Wid100">
+                                <h:panelGrid columns="3" class="Wid100">
+                                    <h:panelGroup layout="block" rendered="true">
+                                        <var:varDisInputText id="tipo_contruccion" label="Tipo de construcci&oacute;n:"
+                                                             table="cat_predio" column="otros_tipo_construccion"
+                                                             bind="#{regPredioUrbanoView.tipoConstruccion}"
+                                                             showlabel="true"
+                                                             defaultValue="1"
+                                                             changeOnEnter="true"
+                                                             update="buttons-update,valor_update,material_update,areas_cubiertas_estructura,areas_cubiertas_cubierta,obra-p-paredes,obra-p-piso,obra-p-sobrepiso,obra-p-rev,obra-p-tum,obra-p-ven,obra-p-vid,obra-p-nivel,obra-p-bloque"
+                                                             accionListenerUpdate="#{regPredioUrbanoView.changeTipoConstruccion()}"
+                                                             labelPosition="top"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="material_update" rendered="true">
+                                        <var:varDisInputText id="material" label="#{regPredioUrbanoView.materialLabel}"
+                                                             table="coef_avaluos" column="#{regPredioUrbanoView.columna}"
+                                                             bind="#{regPredioUrbanoView.obraSeleccionada.tipoConstruccion}"
+                                                             showlabel="true"
+                                                             defaultValue="1"
+                                                             changeOnEnter="true"
+                                                             update="buttons-update,valor_update,material_update,areas_cubiertas_estructura,areas_cubiertas_cubierta,obra-p-paredes,obra-p-piso,obra-p-sobrepiso,obra-p-rev,obra-p-tum,obra-p-ven,obra-p-vid,obra-p-nivel,obra-p-bloque"
+                                                             accionListenerUpdate="#{regPredioUrbanoView.changeTipoObra()}"
+                                                             next="area_area_cubierta"
+                                                             labelPosition="top"/>
+                                    </h:panelGroup>                              
+                                    <h:panelGroup layout="block" id="valor_update">
+                                        <p:outputLabel for="area_area_cubierta" value="#{regPredioUrbanoView.tipoConstruccion == 1 ? 'Vol&uacute;men(m&sup3;)': regPredioUrbanoView.tipoConstruccion == 4 ? 'Unidades' : '&Aacute;rea(m&sup2;)' }:" class="DispBlock Wid80"/>
+                                        <p:inputText id="area_area_cubierta" value="#{regPredioUrbanoView.obraSeleccionada.area}" required="true"
+                                                     class="input_160" onkeypress="validateFloatValueAndFocusNext(event, 'crear-obra-btn')"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="areas_cubiertas_estructura">
+                                        <h:panelGroup layout="block" rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and (regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 8 or regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9)}">
+                                            <var:varDisInputText id="area_estructura" label="Estructura:"
+                                                                 table="cat_bloque" column="estructura"
+                                                                 bind="#{regPredioUrbanoView.obraSeleccionada.estructura}"
+                                                                 showlabel="true"
+                                                                 defaultValue="0"
+                                                                 update="area_estructura"
+                                                                 changeOnEnter="true"
+                                                                 next="area_cubierta:cat_bloque-cubierta-input"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup> 
+                                    <h:panelGroup layout="block" id="areas_cubiertas_cubierta">
+                                        <h:panelGroup layout="block"  rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and (regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 8 or regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9)}">
+                                            <var:varDisInputText id="area_cubierta" label="Cubierta:"
+                                                                 table="cat_bloque" column="cubierta"
+                                                                 bind="#{regPredioUrbanoView.obraSeleccionada.cubierta}" 
+                                                                 showlabel="true"
+                                                                 defaultValue="7"
+                                                                 update="area_cubierta"
+                                                                 changeOnEnter="true"
+                                                                 next="#{regPredioUrbanoView.tipoConstruccion == 1 ? (regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9 ? 'obra_paredes:cat_bloque-paredes-input' : 'crear-obra-btn') :'crear-obra-btn'}"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="obra-p-paredes">
+                                        <h:panelGroup layout="block"  rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9}">
+                                            <var:varDisInputText id="obra_paredes" label="Paredes:"
+                                                                 table="cat_bloque" column="paredes"
+                                                                 bind="#{regPredioUrbanoView.obraSeleccionada.paredes}"
+                                                                 showlabel="true"
+                                                                 defaultValue="0"
+                                                                 update="obra_paredes"
+                                                                 changeOnEnter="true"
+                                                                 next="obra_piso:cat_bloque-pisos-input"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="obra-p-piso">
+                                        <h:panelGroup layout="block"  rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9}">
+                                            <var:varDisInputText id="obra_piso" label="Pisos:"
+                                                                 table="cat_bloque" column="pisos"
+                                                                 bind="#{regPredioUrbanoView.obraSeleccionada.piso}"
+                                                                 showlabel="true"
+                                                                 update="obra_piso"
+                                                                 defaultValue="3"
+                                                                 changeOnEnter="true"
+                                                                 next="obra_sobrepiso:cat_bloque-sobrepiso-input"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="obra-p-sobrepiso">
+                                        <h:panelGroup layout="block"  rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9}">
+                                            <var:varDisInputText id="obra_sobrepiso" label="Sobrepiso:"
+                                                                 table="cat_bloque" column="sobrepiso"
+                                                                 bind="#{regPredioUrbanoView.obraSeleccionada.sobrepiso}"
+                                                                 showlabel="true"
+                                                                 defaultValue="5"
+                                                                 changeOnEnter="true"
+                                                                 next="obra_rev:cat_bloque-revestimiento-input"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="obra-p-rev">
+                                        <h:panelGroup layout="block"  rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9}">
+                                            <var:varDisInputText id="obra_rev" label="Revestimiento ext./inter.:"
+                                                                 table="cat_bloque" column="revestimiento"
+                                                                 bind="#{regPredioUrbanoView.obraSeleccionada.revestimiento}"
+                                                                 showlabel="true"
+                                                                 defaultValue="6"
+                                                                 changeOnEnter="true"
+                                                                 next="obra_tum:cat_bloque-tumbado-input"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="obra-p-tum">
+                                        <h:panelGroup layout="block"  rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9}">
+                                            <var:varDisInputText id="obra_tum" label="Tumbado:"
+                                                                 table="cat_bloque" column="tumbado"
+                                                                 bind="#{regPredioUrbanoView.obraSeleccionada.tumbado}"
+                                                                 showlabel="true"
+                                                                 defaultValue="6"
+                                                                 changeOnEnter="true"
+                                                                 next="obra_ven:cat_bloque-ventana-input"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="obra-p-ven">
+                                        <h:panelGroup layout="block"  rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9}">
+                                            <var:varDisInputText id="obra_ven" label="Ventana:"
+                                                                 table="cat_bloque" column="ventana"
+                                                                 bind="#{regPredioUrbanoView.obraSeleccionada.ventana}"
+                                                                 showlabel="true"
+                                                                 defaultValue="6"
+                                                                 changeOnEnter="true"
+                                                                 next="obra_vid:cat_bloque-vidrios-input"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="obra-p-vid">
+                                        <h:panelGroup layout="block"  rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9}">
+                                            <var:varDisInputText id="obra_vid" label="Vidrios:"
+                                                                 table="cat_bloque" column="vidrios"
+                                                                 bind="#{regPredioUrbanoView.obraSeleccionada.vidrios}"
+                                                                 showlabel="true"
+                                                                 defaultValue="0"
+                                                                 changeOnEnter="true"
+                                                                 next="obra_nivel"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="obra-p-nivel">
+                                        <h:panelGroup layout="block"  rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9}">
+                                            <p:outputLabel for="obra_nivel" value="Ubicado en el Bloque #:" class="DispBlock Wid80"/>
+                                            <p:inputText id="obra_nivel" value="#{regPredioUrbanoView.obraSeleccionada.numeroBloque}" required="true"
+                                                         class="input_160" onkeypress="validateFloatValueAndFocusNext(event, 'obra_bloque')"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="obra-p-bloque">
+                                        <h:panelGroup layout="block"  rendered="#{regPredioUrbanoView.tipoConstruccion == 3 and regPredioUrbanoView.obraSeleccionada.tipoConstruccion == 9}">
+                                            <p:outputLabel for="obra_bloque" value="Ubicado en el Nivel #:" class="DispBlock Wid80"/>
+                                            <p:inputText id="obra_bloque" value="#{regPredioUrbanoView.obraSeleccionada.numeroNivel}" required="true"
+                                                         class="input_160" onkeypress="validateIntegerValueAndFocusNext(event, 'crear-obra-btn')"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+
+                                </h:panelGrid>                         
+
+                                <h:panelGroup layout="block" class="MarTop20" id="buttons-update">
+                                    <p:commandButton id="crear-obra-btn" 
+                                                     icon="fa fa-save" styleClass="white Fright" value="Guardar"  
+                                                     process="@this,tipo_contruccion:cat_predio-otros_tipo_construccion-input, material:coef_avaluos-#{regPredioUrbanoView.columna}-input,areas_cubiertas_estructura,areas_cubiertas_cubierta,area_area_cubierta,datos-obras-messages #{(updateConstruccionView.tipoConstruccion == 3 and updateConstruccionView.obraSeleccionada.tipoConstruccion == 8) ? ',area_estructura:cat_bloque-estructura-input,area_cubierta:cat_bloque-cubierta-input' : ''}"
+                                                     actionListener="#{regPredioUrbanoView.crearNuevaObra()}"
+                                                     update="obras-form,datos-obras-messages,obras-dataTable,obras-complementarias-update"
+
+                                                     />
+
+                                    <p:commandButton id="cancelar-obra-btn" process="@this"
+                                                     icon="fa fa-ban" styleClass="white" value="Cancelar" actionListener="#{regPredioUrbanoView.cancelarCrearObra()}"                                        
+                                                     onclick="PF('obrasDialog').hide();"
+                                                     />
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:form>
+                </p:panel>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

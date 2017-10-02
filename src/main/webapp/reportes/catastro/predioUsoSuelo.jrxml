@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="predioUsoSuelo" language="groovy" pageWidth="188" pageHeight="45" whenNoDataType="AllSectionsNoDetail" columnWidth="188" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="1d383547-2b6f-4826-a42a-b70c81b5a1dc">
+	<property name="ireport.zoom" value="2.3579476910000023"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idPredio" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Ing. Carlos Loor\\Documents\\NetBeansProjects\\machala\\src\\main\\webapp\\reportes\\catastro\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT P.CLAVE_CATASTRAL,
+	flow.get_valor_variable('cat_terreno', 'us', U.uso_suelo) AS USO_
+FROM CAT_PREDIO P
+	INNER JOIN CAT_TERRENO U ON U.cod_parroquia = P.cod_parroquia AND
+U.cod_zona = P.cod_zona AND
+U.cod_sector = P.cod_sector AND
+U.cod_manzana = P.cod_manzana AND
+U.cod_solar = P.cod_solar
+WHERE P.ID = $P{idPredio}
+ORDER BY 1 ASC;]]>
+	</queryString>
+	<field name="clave_catastral" class="java.lang.String"/>
+	<field name="uso_" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="188" height="15" backcolor="#CCCCCC" uuid="700fed6e-b305-4be9-8a74-dd5069bffa73"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[7.1 USOS DEL TERRENO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="188" height="15" uuid="4b299123-c254-4def-8200-ccaeca3f7d92"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{uso_}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

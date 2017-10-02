@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="observaciones" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aa75db2a-95e3-47cd-8b9b-ecbdb38e6573">
+	<property name="ireport.zoom" value="1.4641000000000006"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="id" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="DIRIGIDO_A" class="java.lang.String"/>
+	<parameter name="FECHA_REVISION" class="java.util.Date"/>
+	<parameter name="NUM_TRAMITE" class="java.lang.String"/>
+	<parameter name="INSPECTOR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM flow.tr_observacion
+WHERE aprobacion_planos = $P{id}
+AND estado = true]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="tramite" class="java.lang.Long"/>
+	<field name="aprobacion_planos" class="java.lang.Long"/>
+	<field name="cabecera_observacion" class="java.lang.String"/>
+	<field name="descripcion_observacion" class="java.lang.String"/>
+	<field name="fecha_ingreso" class="java.sql.Timestamp"/>
+	<field name="usuario_ingreso" class="java.lang.String"/>
+	<field name="estado" class="java.lang.Boolean"/>
+	<group name="obs_group">
+		<groupExpression><![CDATA[$F{cabecera_observacion}]]></groupExpression>
+		<groupHeader>
+			<band height="38">
+				<textField isBlankWhenNull="true">
+					<reportElement x="41" y="18" width="468" height="20" uuid="8da136b8-206b-40d4-9a56-df19a6e284a2"/>
+					<box leftPadding="15">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cabecera_observacion}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="182" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="42" width="519" height="20" uuid="6e48c5fe-91d2-4d71-80e2-9d96637bba81"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Machala, "+new java.text.SimpleDateFormat("MMMM dd 'del' yyyy", new Locale("es", "ES")).format($P{FECHA_REVISION})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="81" y="76" width="388" height="20" uuid="d1053247-03d2-42d4-967f-3d3124aec214"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gobierno Autónomo Descentralizado Municipal de Machala]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="41" y="131" width="412" height="50" uuid="c8d2c718-d912-4546-8091-6cc6b4ea3662"/>
+				<textElement verticalAlignment="Middle">
+					<font isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Se ha procedido con la revisión de la carpeta que reingresado el día "+new java.text.SimpleDateFormat("dd/MM/yyyy", new Locale("es", "ES")).format($P{FECHA_REVISION})
++" con el número de trámite " +$P{NUM_TRAMITE}+" la cual tiene las siguientes observaciones:"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="81" y="111" width="428" height="20" uuid="853746e1-4b9c-4dfb-9ced-1bf8b9abee9a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["SEÑOR(A) "+$P{DIRIGIDO_A}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="41" y="0" width="468" height="20" uuid="8363e754-52a0-42dc-beed-e008eeeac25d"/>
+				<box leftPadding="1">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{descripcion_observacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="168" splitType="Stretch">
+			<staticText>
+				<reportElement x="41" y="11" width="468" height="20" uuid="820b6ca4-805a-4f54-9cd6-122fc7a6bd55"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nota: Una vez corregido adjuntar segundo juego de planos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="47" width="160" height="20" uuid="e41ed2c4-4a55-4c60-a8af-2e491f672d11"/>
+				<textElement>
+					<font isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CONSTRUCCION NUEVA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="67" width="468" height="36" uuid="dd01a4a6-f8a4-4911-8da6-3be68ec7cc74"/>
+				<text><![CDATA[Por lo tanto la carpeta ha sido devuelta con fecha para que el profesional a cargo del trámite en coordinación con usted realice las correcciones pertinentes]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="41" y="118" width="160" height="20" uuid="2795dd2d-ea2a-4384-a9ae-3ea4359fdfcf"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Rev. Arq. "+$P{INSPECTOR}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="41" y="167" width="160" height="1" uuid="2ea59b68-bf7d-407f-9c39-707139109c3f"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

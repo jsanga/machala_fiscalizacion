@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+
+    <ui:composition>
+
+        <p:panel>
+            <p:messages id="datosConstruccionMessages" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+
+            <h:panelGroup layout="block" id="datosConstruccion"> 
+
+                <div class="Container">
+                    <div class="Responsive Container50">
+                        <div class="ContainerIndent">
+                            <h:panelGroup id="bloque-list-form" layout="block" class="Container">
+                                <fieldset>
+                                    <legend>Bloques</legend>
+                                    <table style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align: right;">
+                                                    <p:selectOneMenu id="bloqueSelect" value="#{crearPredioPropioView.bloqueSeleccionadoIndex}" style="width: 90%"> 
+                                                        <p:ajax listener="#{crearPredioPropioView.cambiarBloque}" update="bloque-list-form,piso-list-form,bloque-form" process="@this"/>
+                                                        <c:forEach items="#{crearPredioPropioView.bloques}" var="bloque" varStatus="loop">
+                                                            <f:selectItem itemValue="#{loop.index}" itemLabel="Bloque #{bloque.numeroBloque}" />
+                                                        </c:forEach>
+                                                    </p:selectOneMenu> 
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <p:commandButton id="adicionar-bloque-btn"
+                                                                     process="@this"
+                                                                     update="bloque-list-form,piso-list-form,bloque-form" 
+                                                                     icon="fa fa-plus white" action="#{crearPredioPropioView.inicializarNuevoBloque}"
+                                                                     styleClass="Fright" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </fieldset> 
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                    <div class="Responsive Container50">
+                        <div class="ContainerIndent">
+                            <h:panelGroup id="piso-list-form" layout="block" class="Container">
+                                <h:panelGroup layout="block" rendered="#{crearPredioPropioView.creandoBloque or crearPredioPropioView.editandoBloque}">
+                                    <fieldset>
+                                        <legend>Pisos</legend> 
+                                        <table style="width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="text-align: right;">
+                                                        <p:selectOneMenu id="pisoSelect" value="#{crearPredioPropioView.pisoSeleccionadoIndex}" required="true"
+                                                                         disabled="#{(crearPredioPropioView.creandoPiso or crearPredioPropioView.editandoPiso)}"
+                                                                         style="width: 90%">   
+                                                            <p:ajax listener="#{crearPredioPropioView.cambiarPiso}" update="piso-btns" process="@this,pisoSelect"/>
+
+                                                            <c:forEach items="#{crearPredioPropioView.pisos}" var="piso" varStatus="loop">
+                                                                <f:selectItem itemValue="#{loop.index}" itemLabel="Piso-#{piso.numeroPiso} (#{piso.area} m2)" />
+                                                            </c:forEach>
+                                                        </p:selectOneMenu>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <h:panelGroup layout="block" class="Container100" id="piso-btns"> 
+                                                            <p:commandButton id="eliminar-piso-btn" 
+                                                                             disabled="#{(crearPredioPropioView.pisoSeleccionado == null || (crearPredioPropioView.creandoPiso || crearPredioPropioView.editandoPiso))}"
+                                                                             class="Fright"
+                                                                             process="@this"
+                                                                             update="piso-list-form" 
+                                                                             icon="fa fa-times white" action="#{crearPredioPropioView.eliminarPiso}"
+                                                                             />
+                                                            <p:commandButton id="editar-piso-btn" 
+                                                                             disabled="#{(crearPredioPropioView.pisoSeleccionado == null || (crearPredioPropioView.creandoPiso || crearPredioPropioView.editandoPiso))}"
+                                                                             class="Fright"
+                                                                             process="@this"
+                                                                             update="piso-list-form,datos-piso-dlg" 
+                                                                             icon="fa fa-edit white" action="#{crearPredioPropioView.inicializarActualizacionPiso}"
+                                                                             oncomplete="PF('datosPisoDialog').show();"
+                                                                             />
+                                                            <p:commandButton id="nuevo-piso-btn" 
+                                                                             disabled="#{crearPredioPropioView.creandoPiso || crearPredioPropioView.editandoPiso}"
+                                                                             class="Fright"
+                                                                             process="@this"
+                                                                             update="piso-list-form,datos-piso-dlg" 
+                                                                             icon="fa fa-plus white" action="#{crearPredioPropioView.inicializarNuevoPiso}"
+                                                                             oncomplete="PF('datosPisoDialog').show();"
+                                                                             />
+                                                        </h:panelGroup>
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </fieldset>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </div>
+
+            </h:panelGroup>
+
+            <h:panelGroup class="Container Wid100" layout="block" id="bloque-form">
+                <h:panelGroup layout="block" rendered="#{(crearPredioPropioView.creandoBloque or crearPredioPropioView.editandoBloque) and (not empty crearPredioPropioView.bloqueSeleccionado)}">
+
+                    <ui:include src="_caracteristicasBloque.xhtml"/>
+                    
+
+                </h:panelGroup>
+            </h:panelGroup>
+        </p:panel>
+    </ui:composition>
+</html>

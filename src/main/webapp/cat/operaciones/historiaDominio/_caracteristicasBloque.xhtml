@@ -1,0 +1,478 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:predio="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+
+    <ui:composition>
+        
+        <h:panelGroup  layout="block" class="Container Wid100">
+            <fieldset>
+                <legend>Datos generales</legend>
+                 <h:panelGrid columns="5" class="DatosGeneralesTbl">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="area_total_bloque" value="&Aacute;rea total:" class="DispBlock Wid100"/>
+                                    <p:inputText id="area_total_bloque" 
+                                                 required="true"
+                                                 disabled="true"
+                                                 class="Wid70"
+                                                 value="#{consultasView.bloqueSeleccionado.areaTotal}" 
+                                                 onkeypress="validateFloatValueAndFocusNext(event, 'area_frente_bloque')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="area_frente_bloque" value="Norte:" class="DispBlock Wid100"/>
+                                    <p:inputText id="area_frente_bloque" 
+                                                 required="true"
+                                                 disabled="true"
+                                                 class="Wid70"
+                                                 value="#{consultasView.bloqueSeleccionado.areaFrente}" 
+                                                 onkeypress="validateFloatValueAndFocusNext(event, 'area_fondo_bloque')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="area_fondo_bloque" value="Sur:" class="DispBlock Wid100"/>
+                                    <p:inputText id="area_fondo_bloque" 
+                                                 required="true"
+                                                 disabled="true"
+                                                 class="Wid70"
+                                                 value="#{consultasView.bloqueSeleccionado.areaFondo}" 
+                                                 onkeypress="validateFloatValueAndFocusNext(event, 'porciento_construccion_bloque')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="lateral1" value="Este:" class="DispBlock Wid100"/>
+                                    <p:inputText id="lateral1" 
+                                                 class="Wid70"
+                                                 disabled="true"
+                                                 value="#{consultasView.bloqueSeleccionado.frente1}" 
+                                                 onkeypress="focusNextOnEnterRevisar(event, 'lateral2')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="lateral2" value="Oeste:" class="DispBlock Wid100 "/>
+                                    <p:inputText id="lateral2" 
+                                                 class="Wid70"
+                                                 disabled="true"
+                                                 value="#{consultasView.bloqueSeleccionado.frente2}" 
+                                                 onkeypress="focusNextOnEnterRevisar(event, 'porciento_construccion_bloque')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="porciento_construccion_bloque" value="% Construcc.:" class="DispBlock Wid100"/>
+                                    <p:inputText id="porciento_construccion_bloque" 
+                                                 required="true"
+                                                 disabled="true"
+                                                 class="Wid70"
+                                                 value="#{consultasView.bloqueSeleccionado.porcientoConstruccion}" 
+                                                 onkeypress="validateFloatValueAndFocusNext(event, 'porciento_conservacion_bloque')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="porciento_conservacion_bloque" value="% Conserv.:" class="DispBlock Wid100"/>
+                                    <p:inputText id="porciento_conservacion_bloque" 
+                                                 required="true"
+                                                 disabled="true"
+                                                 class="Wid70"
+                                                 value="#{consultasView.bloqueSeleccionado.porcientoConservacion}" 
+                                                 onkeypress="validateFloatValueAndFocusNext(event, 'no_departamentos')"/>
+                                </h:panelGroup>
+                                <predio:varDisInputText id="no_departamentos" label="No. Departamentos:" 
+                                                            table="cat_bloque" column="no_departamentos" 
+                                                            bind="#{consultasView.bloqueSeleccionado.noDepartamentos}"
+                                                            showlabel="true"   
+                                                            disabled="true"
+                                                            changeOnEnter="true"
+                                                            next="no_locales\\:cat_bloque-no_locales-input"
+                                                            labelPosition="top"/>
+                                <predio:varDisInputText id="no_locales" label="No. Locales:" 
+                                                            table="cat_bloque" column="no_locales" 
+                                                            bind="#{consultasView.bloqueSeleccionado.noLocales}"
+                                                            showlabel="true"   
+                                                            disabled="true"
+                                                            changeOnEnter="true"
+                                                            next="no_oficinas\\:cat_bloque-no_oficinas-input"
+                                                            labelPosition="top"/>
+                                <predio:varDisInputText id="no_oficinas" label="No. Oficinas:" 
+                                                            table="cat_bloque" column="no_oficinas" 
+                                                            bind="#{consultasView.bloqueSeleccionado.noOficinas}"
+                                                            showlabel="true"  
+                                                            disabled="true"
+                                                            changeOnEnter="true"
+                                                            next="no_galpones\\:cat_bloque-no_galpones-input"
+                                                            labelPosition="top"/>
+                                <predio:varDisInputText id="no_galpones" label="No. Galpones:" 
+                                                            table="cat_bloque" column="no_galpones" 
+                                                            bind="#{consultasView.bloqueSeleccionado.noGalpones}"
+                                                            showlabel="true" 
+                                                            disabled="true"
+                                                            changeOnEnter="true"
+                                                            next="tipo_construccion\\:cat_bloque-tipo_construccion-input"
+                                                            labelPosition="top"/>
+                                <predio:varDisInputText id="tipo_construccion" label="Tipo construcci&oacute;n:" 
+                                                            table="cat_bloque" column="tipo_construccion" 
+                                                            bind="#{consultasView.bloqueSeleccionado.tipoConstruccion}"
+                                                            showlabel="true"  
+                                                            disabled="true"
+                                                            changeOnEnter="true"
+                                                            next="residencia_permanente\\:cat_bloque-us_residencia_permanente-input"
+                                                            labelPosition="top"/>
+
+                            </h:panelGrid>
+            </fieldset>
+        </h:panelGroup>                                
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Responsive50 Container100">                                       
+                 <fieldset >
+                    <legend>Destino de la edificaci&oacute;n</legend>
+                    <h:panelGrid columns="5" class="DatosEstructuraTbl">
+                         <predio:varDisInputText id="residencia_temporal" label="Residencia temporal:" 
+                                                table="cat_bloque" column="us_residencia_temporal" 
+                                                bind="#{consultasView.bloqueSeleccionado.usResidenciaTemporal}"
+                                                showlabel="true"     
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="residencia_permanente\\:cat_bloque-us_residencia_permanente-input"
+                                                labelPosition="top"/>
+                         <predio:varDisInputText id="residencia_permanente" label="Residencia permanente:" 
+                                                table="cat_bloque" column="us_residencia_permanente" 
+                                                bind="#{consultasView.bloqueSeleccionado.usResidenciaPermanente}"
+                                                showlabel="true"      
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="comercial\\:cat_bloque-us_comercial-input"
+                                                labelPosition="top"/>
+                         <predio:varDisInputText id="comercial" label="Comercial:" 
+                                                table="cat_bloque" column="us_comercial" 
+                                                bind="#{consultasView.bloqueSeleccionado.usComercial}"
+                                                showlabel="true"     
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="artesanal\\:cat_bloque-us_artesanal-input"
+                                                labelPosition="top"/>
+                          <predio:varDisInputText id="artesanal" label="Artesanal:" 
+                                                table="cat_bloque" column="us_artesanal" 
+                                                bind="#{consultasView.bloqueSeleccionado.usArtesanal}"
+                                                showlabel="true"    
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="recreacion\\:cat_bloque-us_recreacion-input"
+                                                labelPosition="top"/>
+                          <predio:varDisInputText id="recreacion" label="Recreacional:" 
+                                                table="cat_bloque" column="us_recreacion" 
+                                                bind="#{consultasView.bloqueSeleccionado.usRecreacion}"
+                                                showlabel="true"    
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="educacional\\:cat_bloque-us_educacional-input"
+                                                labelPosition="top"/>
+                          <predio:varDisInputText id="educacional" label="Educacional:" 
+                                                table="cat_bloque" column="us_educacional" 
+                                                bind="#{consultasView.bloqueSeleccionado.usEducacional}"
+                                                showlabel="true"   
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="institucional\\:cat_bloque-us_institucional-input"
+                                                labelPosition="top"/>
+                          <predio:varDisInputText id="institucional" label="Insitucional" 
+                                                table="cat_bloque" column="us_institucional" 
+                                                bind="#{consultasView.bloqueSeleccionado.usInstitucional}"
+                                                showlabel="true"   
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="salubridad\\:cat_bloque-us_salubridad-input"
+                                                labelPosition="top"/>
+                          <predio:varDisInputText id="salubridad" label="Salubridad:" 
+                                                table="cat_bloque" column="us_salubridad" 
+                                                bind="#{consultasView.bloqueSeleccionado.usSalubridad}"
+                                                showlabel="true"      
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="industrial\\:cat_bloque-us_industrial-input"
+                                                labelPosition="top"/>
+                          <predio:varDisInputText id="industrial" label="Industrial:" 
+                                                table="cat_bloque" column="us_industrial" 
+                                                bind="#{consultasView.bloqueSeleccionado.usIndustrial}"
+                                                showlabel="true"    
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="mixto_residencial\\:cat_bloque-us_mixto_residencial-input"
+                                                labelPosition="top"/>
+                          <predio:varDisInputText id="mixto_residencial" label="Mixto residencial:" 
+                                                table="cat_bloque" column="us_mixto_residencial" 
+                                                bind="#{consultasView.bloqueSeleccionado.usMixtoResidencial}"
+                                                showlabel="true"     
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="mixto_comercial\\:cat_bloque-us_mixto_comercial-input"
+                                                labelPosition="top"/>
+                          <predio:varDisInputText id="mixto_comercial" label="Mixto comercial:" 
+                                                table="cat_bloque" column="us_mixto_comercial" 
+                                                bind="#{consultasView.bloqueSeleccionado.usMixtoComercial}"
+                                                showlabel="true"       
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="cultural\\:cat_bloque-us_cultural-input"
+                                                labelPosition="top"/>
+                          <predio:varDisInputText id="cultural" label="Cultural:" 
+                                                table="cat_bloque" column="us_cultural" 
+                                                bind="#{consultasView.bloqueSeleccionado.usCultural}"
+                                                showlabel="true"   
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_cimientos\\:cat_bloque-cimientos-input"
+                                                labelPosition="top"/>
+                    </h:panelGrid>
+                </fieldset>                                      
+            </div>                                   
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Responsive50 Container100">                                       
+                <fieldset >
+                    <legend>Datos de estructura y construcci&oacute;n</legend>
+                    <h:panelGrid columns="5" class="DatosEstructuraTbl">
+                        <predio:varDisInputText id="de_cimientos" label="Cimientos:" 
+                                                table="cat_bloque" column="cimientos" 
+                                                bind="#{consultasView.bloqueSeleccionado.cimientos}"
+                                                showlabel="true"    
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_cadenas\\:cat_bloque-cadenas-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_cadenas" label="Cadenas:" 
+                                                table="cat_bloque" column="cadenas" 
+                                                bind="#{consultasView.bloqueSeleccionado.cadenas}"
+                                                showlabel="true"    
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_columnas\\:cat_bloque-columnas-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_columnas" label="Columnas:" 
+                                                table="cat_bloque" column="columnas" 
+                                                bind="#{consultasView.bloqueSeleccionado.columnas}"
+                                                showlabel="true"    
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_vigas\\:cat_bloque-vigas-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_vigas" label="Vigas:" 
+                                                table="cat_bloque" column="vigas" 
+                                                bind="#{consultasView.bloqueSeleccionado.vigas}"
+                                                showlabel="true"    
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_pisos\\:cat_bloque-pisos-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_pisos" label="Pisos:" 
+                                                table="cat_bloque" column="pisos" 
+                                                bind="#{consultasView.bloqueSeleccionado.pisos}"
+                                                showlabel="true"   
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_sobrepisos\\:cat_bloque-sobrepisos-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_sobrepisos" label="Sobrepisos:" 
+                                                table="cat_bloque" column="sobrepisos" 
+                                                bind="#{consultasView.bloqueSeleccionado.sobrepisos}"
+                                                showlabel="true"   
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_paredes\\:cat_bloque-paredes-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_paredes" label="Paredes:" 
+                                                table="cat_bloque" column="paredes" 
+                                                bind="#{consultasView.bloqueSeleccionado.paredes}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_enlucidos\\:cat_bloque-enlucidos-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_enlucidos" label="Enlucidos:" 
+                                                table="cat_bloque" column="enlucidos" 
+                                                bind="#{consultasView.bloqueSeleccionado.enlucidos}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_cubiertas\\:cat_bloque-cubiertas-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_cubiertas" label="Cubiertas:" 
+                                                table="cat_bloque" column="cubiertas" 
+                                                bind="#{consultasView.bloqueSeleccionado.cubiertas}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_tumbados\\:cat_bloque-tumbados-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_tumbados" label="Tumbados:" 
+                                                table="cat_bloque" column="tumbados" 
+                                                bind="#{consultasView.bloqueSeleccionado.tumbados}"
+                                                showlabel="true"   
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_instalacion_electrica\\:cat_bloque-instalacion_electrica-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_instalacion_electrica" label="Inst. el&eacute;ctrica:" 
+                                                table="cat_bloque" column="instalacion_electrica" 
+                                                bind="#{consultasView.bloqueSeleccionado.instalacionElectrica}"
+                                                showlabel="true"    
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_instalacion_sanitaria\\:cat_bloque-instalacion_sanitaria-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_instalacion_sanitaria" label="Inst. sanitaria:" 
+                                                table="cat_bloque" column="instalacion_sanitaria" 
+                                                bind="#{consultasView.bloqueSeleccionado.instalacionSanitaria}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_instalaciones_especiales\\:cat_bloque-instalaciones_especiales-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_instalaciones_especiales" label="Inst. especiales:" 
+                                                table="cat_bloque" column="instalaciones_especiales" 
+                                                bind="#{consultasView.bloqueSeleccionado.instalacionesEspeciales}"
+                                                showlabel="true" 
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_sistema_contra_incendio\\:cat_bloque-sistema_contra_incendio-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_sistema_contra_incendio" label="Sist. contra Incendio:" 
+                                                table="cat_bloque" column="sistema_contra_incendio" 
+                                                bind="#{consultasView.bloqueSeleccionado.sistemaContraIncendio}"
+                                                showlabel="true" 
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_puertas_exteriores\\:cat_bloque-puertas_exteriores-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_puertas_exteriores" label="Puertas exteriores:" 
+                                                table="cat_bloque" column="puertas_exteriores" 
+                                                bind="#{consultasView.bloqueSeleccionado.puertasExteriores}"
+                                                showlabel="true"   
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_puertas_interiores\\:cat_bloque-puertas_interiores-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_puertas_interiores" label="Puertas interiores:" 
+                                                table="cat_bloque" column="puertas_interiores" 
+                                                bind="#{consultasView.bloqueSeleccionado.puertasInteriores}"
+                                                showlabel="true"    
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_ventanas\\:cat_bloque-ventanas-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_ventanas" label="Ventanas:" 
+                                                table="cat_bloque" column="ventanas" 
+                                                bind="#{consultasView.bloqueSeleccionado.ventanas}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_protectores_ventanas\\:cat_bloque-protectores_ventanas-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_protectores_ventanas" label="Proct. ventanas:" 
+                                                table="cat_bloque" column="protectores_ventanas" 
+                                                bind="#{consultasView.bloqueSeleccionado.protectoresVentanas}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_vidrios\\:cat_bloque-vidrios-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_vidrios" label="Vidrios:" 
+                                                table="cat_bloque" column="vidrios" 
+                                                bind="#{consultasView.bloqueSeleccionado.vidrios}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_fachada\\:cat_bloque-fachada-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_fachada" label="Fachada:" 
+                                                table="cat_bloque" column="fachada" 
+                                                bind="#{consultasView.bloqueSeleccionado.fachada}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_escalera\\:cat_bloque-escalera-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_escalera" label="Escaleras:" 
+                                                table="cat_bloque" column="escalera" 
+                                                bind="#{consultasView.bloqueSeleccionado.escalera}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_pintura\\:cat_bloque-pintura-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_pintura" label="Pintura:" 
+                                                table="cat_bloque" column="pintura" 
+                                                bind="#{consultasView.bloqueSeleccionado.pintura}"
+                                                showlabel="true"   
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_cocina\\:cat_bloque-cocina-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_cocina" label="Cocina:" 
+                                                table="cat_bloque" column="cocina" 
+                                                bind="#{consultasView.bloqueSeleccionado.cocina}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_closet\\:cat_bloque-closet-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_closet" label="Closet:" 
+                                                table="cat_bloque" column="closet" 
+                                                bind="#{consultasView.bloqueSeleccionado.closet}"
+                                                showlabel="true"      
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_bannos\\:cat_bloque-bannos-input"
+                                                labelPosition="top"/>
+                        <predio:varDisInputText id="de_bannos" label="Ba&ntilde;os:" 
+                                                table="cat_bloque" column="bannos" 
+                                                bind="#{consultasView.bloqueSeleccionado.bannos}"
+                                                showlabel="true" 
+                                                disabled="true"
+                                                changeOnEnter="true"
+                                                next="de_entrepisos\\:cat_bloque-entrepisos-input"
+                                                labelPosition="top"/>                        
+                        <predio:varDisInputText id="de_entrepisos" label="Entrepisos:" 
+                                                table="cat_bloque" column="entrepisos" 
+                                                bind="#{consultasView.bloqueSeleccionado.entrepisos}"
+                                                showlabel="true"  
+                                                disabled="true"
+                                                changeOnEnter="false"
+                                                labelPosition="top"/>
+                    </h:panelGrid>
+
+                </fieldset>                                       
+            </div>                                   
+        </h:panelGroup>
+        <p:dialog id="datos-piso-dlg" widgetVar="datosPisoDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Datos del piso">   
+            <p:ajax event="close" update="piso-list-form" listener="#{consultasView.cancelarCreacionPiso}" />
+            <h:form id="datos-piso-form" prependId="false">
+                <p:messages id="datos-piso-messages" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                <h:panelGrid columns="3">
+                    <p:outputLabel for="area_piso" value="&Aacute;rea:"/>
+                    <p:inputText id="area_piso" 
+                                 required="true"
+                                 class="Wid70"
+                                 value="#{consultasView.pisoSeleccionado.area}" 
+                                 onkeypress="validateFloatValueAndFocusNext(event, 'crear-piso-btn')"/>
+                    <p:commandButton id="crear-piso-btn" 
+                                     rendered="#{consultasView.creandoPiso}"
+                                     icon="fa fa-save" styleClass="white Fright" value="Guardar"
+                                     process="@this,area_piso"
+                                     actionListener="#{consultasView.guardarPiso}"
+                                     update="piso-list-form,datos-piso-messages"
+                                     oncomplete="PF('datosPisoDialog').hide();"/>
+                    <p:commandButton id="actualizar-piso-btn" 
+                                     rendered="#{consultasView.editandoPiso}"    
+                                     icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                     process="@this,area_piso"  
+                                     actionListener="#{consultasView.actualizarPiso}"
+                                     update="piso-list-form,datos-piso-messages"
+                                     oncomplete="PF('datosPisoDialog').hide();"/>
+
+                </h:panelGrid>
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

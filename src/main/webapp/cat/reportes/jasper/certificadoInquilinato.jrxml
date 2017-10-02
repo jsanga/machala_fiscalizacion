@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificadoAvaluo" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f43725ae-7611-4f8c-a7a6-0c2690e06a95">
+	<property name="ireport.zoom" value="1.5026296018031562"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="clave" class="java.lang.String"/>
+	<parameter name="parroquia" class="java.lang.String"/>
+	<parameter name="zona" class="java.lang.String"/>
+	<parameter name="sector" class="java.lang.String"/>
+	<parameter name="manzana" class="java.lang.String"/>
+	<parameter name="solar" class="java.lang.String"/>
+	<parameter name="ph" class="java.lang.String"/>
+	<parameter name="propietario" class="java.lang.String"/>
+	<parameter name="areaTerreno" class="java.lang.String"/>
+	<parameter name="avalTerreno" class="java.lang.String"/>
+	<parameter name="avalConstruccion" class="java.lang.String"/>
+	<parameter name="avaluoComercial" class="java.lang.String"/>
+	<parameter name="canon" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="121" splitType="Stretch">
+			<image scaleImage="FillFrame">
+				<reportElement x="3" y="11" width="175" height="58" uuid="09027f8c-48d4-4282-b0bb-dbb61ca9c5e7"/>
+				<imageExpression><![CDATA["logo Machala.jpg"]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement stretchType="RelativeToTallestObject" x="256" y="3" width="298" height="56" uuid="5ea53f8c-046b-4823-9ed6-20dc43187638"/>
+				<imageExpression><![CDATA["catastro-titulo.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="178" y="69" width="223" height="16" uuid="0ab57f68-d78b-458f-92ab-0cf5baabb7fe"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[	TRÁMITE DE INQUILINATO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="175" y="87" width="269" height="16" uuid="6cc80b8b-7f94-40ed-a100-ea94558049c7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[GAD MUNICIPAL DEL CANTÓN SALINAS]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="555" splitType="Stretch">
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="462" y="4" width="89" height="12" uuid="5a0b1ca7-e032-4edb-b576-bc3957ca9108"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="424" y="4" width="35" height="12" uuid="e1e8f7dc-78e2-4871-b5ff-2e01a8f50be5"/>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Salinas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="36" width="116" height="12" uuid="0247d8ae-3ec3-497d-926f-d8fe862e43e9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO CATASTRAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="133" y="36" width="137" height="12" uuid="e70a0ddd-9636-4bc0-a399-f0b34671978d"/>
+				<textFieldExpression><![CDATA[$P{clave}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="14" y="62" width="262" height="12" uuid="59b003e5-e4a6-40e9-8d8d-2e7362d52317"/>
+				<text><![CDATA[Propietario del predio que se detalla a continuación,]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="277" y="62" width="272" height="12" uuid="87b55ee7-e96f-49d1-92db-771fc7699aea"/>
+				<textElement>
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{propietario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="228" y="90" width="100" height="20" uuid="60483581-76f9-4801-9562-7378e81ae2a8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[UBICACIÓN]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="349" y="137" width="77" height="12" uuid="913b227e-5d4c-4390-86e7-a2ba3f5c347b"/>
+				<textFieldExpression><![CDATA[$P{parroquia}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="152" width="77" height="12" uuid="73d34583-7a95-49b8-a2a4-349e69b64e57"/>
+				<textFieldExpression><![CDATA[$P{zona}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="167" width="77" height="12" uuid="51ab6a7f-b5d2-4c2f-b76e-c7b0968f735d"/>
+				<textFieldExpression><![CDATA[$P{sector}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="182" width="77" height="12" uuid="e5b329f9-ac2b-4603-a71a-a045d9c1e33f"/>
+				<textFieldExpression><![CDATA[$P{manzana}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="197" width="77" height="12" uuid="42fa79f3-6302-413f-aa57-1ecbdce70d92"/>
+				<textFieldExpression><![CDATA[$P{solar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="212" width="77" height="12" uuid="0cc27b3d-47cf-48a5-ad5f-6c11b3496111"/>
+				<textFieldExpression><![CDATA[$P{areaTerreno}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="166" y="137" width="140" height="12" uuid="1ab5d27a-9c7c-4d83-8639-923faf353fec"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PARROQUIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="152" width="140" height="12" uuid="7d09a2a8-4d3d-42f4-aa7b-89c768c8b614"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ZONA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="167" width="140" height="12" uuid="36b9af4a-cd3b-449e-afaf-d716d5b1c023"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SECTOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="182" width="140" height="12" uuid="c0256d7a-5218-4457-bda6-2417feade9f4"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANZANA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="197" width="140" height="12" uuid="0d387bac-1597-4c5d-adeb-9219f2811d34"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SOLAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="212" width="140" height="12" uuid="07b76b30-02c1-485a-9aab-2b3b422e968c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ÁREA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="123" width="140" height="12" uuid="2bea2693-84c8-42b2-ab22-6f380f02304c"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="307" y="123" width="94" height="12" uuid="f7b11c17-024c-4864-9d1f-5e9c74d8e7ae"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[SALINAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="244" width="100" height="20" uuid="ada1f229-f144-4f57-bcdd-555d8577e1ab"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[AVALÚOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="129" y="293" width="212" height="12" uuid="a46ee184-9e2b-4aed-b6ff-936edf3b7ee9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AVALÚO CONSTRUCCION.........USD$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="129" y="279" width="212" height="12" uuid="a8d85da0-27b6-4e8f-925c-23288e0368fa"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AVALÚO TERRENO..................USD$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="318" width="211" height="12" uuid="ffdfb46b-76f7-4c23-a5fc-20ba3e784151"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[AVALÚO COMERCIAL...............USD$]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="370" y="279" width="85" height="12" uuid="893a6f1b-ed01-4e5a-b680-b33219dc8914"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{avalTerreno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="293" width="85" height="12" uuid="23f95f6a-5b29-4979-8721-e29f6b8e804b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{avalConstruccion}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="364" y="311" width="100" height="1" uuid="58d2fdd0-bd1f-45d4-82f1-436d4b78f0af"/>
+			</line>
+			<textField>
+				<reportElement x="371" y="318" width="83" height="12" uuid="43c5b72b-b082-4d64-80ec-0cfc0136cb01"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$P{avaluoComercial}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="35" y="362" width="488" height="41" uuid="f65fcbbd-6506-4ee1-bb0f-ed5470ccb4f8"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Ordenanza de zonificación de unidades de planeamiento, físico y urbanístico del territorio del cantón Salinas, discutida y aprobada en las sesiones: Extraordinaria del 9 de diciembre y Ordinaria del 31 de diciembre de 1992.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="35" y="448" width="488" height="42" uuid="f8816016-1a39-4a5a-b728-a16c2ae47078"/>
+				<textElement textAlignment="Justified">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[La propiedad queda debidamente inscripta en el Registro de Arrendamiento Urbano y que de acuerdo al Art. 11 de la respectiva Ordenanza y acorde a lo dispuesto en el Art. 17 de la Ley de Inquilinato esta dependencia fija en USD$]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="34" y="422" width="243" height="20" uuid="616936ad-5c1c-42be-9c5b-851b333a2ef8"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Canon Mensual de Arrendamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="34" y="508" width="294" height="20" uuid="3c991d43-8c4d-431e-9c88-0fd42a052a09"/>
+				<text><![CDATA[Es todo lo que puedo certificar en honor a la verdad.]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<pageFooter>
+		<band height="55" splitType="Stretch">
+			<image>
+				<reportElement x="285" y="3" width="274" height="52" uuid="8c1547ee-1061-4008-aa13-a9eccf6d3674"/>
+				<imageExpression><![CDATA["footer.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="324" y="10" width="102" height="10" forecolor="#FFFFFF" uuid="495b33e4-fd6d-4dd4-ad21-d74053b1815a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Av. 10 de Agosto entre calle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="20" width="130" height="10" forecolor="#FFFFFF" uuid="df42cabe-e046-4006-81d8-f0456909a179"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estados Unidos y Av. 22 de Diciembre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="30" width="102" height="10" forecolor="#FFFFFF" uuid="34283ed2-6917-44de-bb4c-9278f3a69276"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sector Ciudadela Italiana]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="40" width="102" height="10" forecolor="#FFFFFF" uuid="a43a34e7-7e66-4379-8e63-ff7fc5c2c5ae"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Salinas, Santa Elena]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="10" width="75" height="10" forecolor="#FFFFFF" uuid="986b5eaa-8735-443a-87fd-9f50d8a1ffa3"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="40" width="84" height="10" forecolor="#FFFFFF" uuid="7a0b7062-ee27-41d8-bde2-450837ebe5fa"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[alcaldia@salinas.gob.ec]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="20" width="75" height="10" forecolor="#FFFFFF" uuid="521a1339-be08-4d83-8c68-0a76d5e2840d"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[04 2 930 004]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

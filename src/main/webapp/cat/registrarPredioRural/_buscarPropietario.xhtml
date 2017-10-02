@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Propietario Seg&uacute;n C&oacute;digo Anterior</title>
+    </h:head>
+    <h:body>
+       <h:form id="resultBusquedaCA-form" >
+             <p:dataTable id="resultBusquedaCA" value="#{consultaRegistroView.resultado}" var="registro" 
+                          rows="1" paginator="true" style="font-size: smaller;"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="1,5,10,15">
+                 <p:column headerText="C&oacute;digo Anterior" width="80">
+                    <p:outputLabel value="#{registro.codAnterior}"/>
+                </p:column>
+                <p:column headerText="Descripci&oacute;n Registral" width="150">
+                    <p:inputTextarea cols="25" disabled="true" value="#{registro.desRegistral}"/>
+                </p:column>
+                 <p:column headerText="C&eacute;dula/Ruc" width="80">
+                    <p:outputLabel value="#{registro.cedRuc}" />
+                </p:column>
+                 <p:column headerText="Linderos Orientaci&oacute;n" width="150">
+                    <p:inputTextarea cols="25" disabled="true" value="#{registro.linderosOrientacion}"/>
+                </p:column>
+                <p:column headerText="#Ficha"  width="50">
+                    <p:outputLabel value="#{registro.numFicha}" />
+                </p:column>
+                <p:column headerText="Juzgado/Notaria" width="50">
+                    <p:outputLabel value="#{registro.juzgadoNotaria}"/>
+                </p:column>
+                <p:column headerText="Canton"  width="80">
+                    <p:outputLabel value="#{registro.canton}"/>
+                </p:column>
+                <p:column headerText="F. Otorgamiento"  width="80">
+                    <p:outputLabel value="#{registro.fechaOtorgamiento}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </p:outputLabel>
+                </p:column>
+                <p:column headerText="#Rep."  width="50">
+                    <p:outputLabel value="#{registro.numRepertorio}"/>
+                </p:column>
+                <p:column headerText="Folio Inicial"  width="50">
+                    <p:outputLabel value="#{registro.folioIni}"/>
+                </p:column>
+                <p:column headerText="Folio Final"  width="50">
+                    <p:outputLabel value="#{registro.folioFin}"/>
+                </p:column>
+                <p:column headerText="#Reg."  width="50">
+                    <p:outputLabel value="#{registro.numRegistro}"/>
+                </p:column>
+                <p:column headerText="F. Inscripci&oacute;n"  width="80">
+                    <p:outputLabel value="#{registro.fechaInscripcion}">
+                         <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </p:outputLabel>
+                </p:column>
+                <p:column headerText="Superfice"  width="80">
+                    <p:outputLabel value="#{registro.superficie}"/>
+                </p:column>
+                <p:column headerText="Observaciones" width="200">
+                    <p:outputLabel value="#{(registro.observaciones==null)?'':registro.observaciones}"/>
+                </p:column>
+            </p:dataTable>
+           </h:form> 
+    </h:body>
+</html>

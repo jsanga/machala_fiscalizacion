@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" style="margin-bottom: 10px;">
+            <h1 class="BigTopic Fs16">Datos generales del predio</h1>
+            <hr></hr>
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Clave catastral" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_ficha" value="No. ficha:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_ficha" value="#{consultasView.predioSeleccionado.numeroFicha}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'clave_anterior')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="clave_anterior" value="Clave catastral anterior:" class="DispBlock Wid100"/>
+                                <p:inputText id="clave_anterior" value="#{consultasView.predioSeleccionado.claveAnterior}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'cat_predio_manzana')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_manzana" value="Manzana:" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_predio_manzana" value="#{consultasView.predioSeleccionado.manzana}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'barrio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="zona_valor" value="Zona de valor:" class="DispBlock Wid100"/>
+                                <p:inputText id="zona_valor" value="#{consultasView.predioSeleccionado.terreno.manzana.zonaHomogenea.codigoZona}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'cat_clave_catastral')" disabled="true"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_clave_catastral" value="Clave catastral:" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_clave_catastral" value="#{consultasView.predioSeleccionado.claveCatastral}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'barrio')" disabled="true"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Localizaci&oacute;n" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4"> 
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="provincia" value="Provincia:" class="DispBlock Wid100"/>
+                                <p:inputText id="provincia" value="0#{consultasView.predioSeleccionado.terreno.manzana.sector.zona.parroquia.canton.provincia.codProvincia}-#{consultasView.predioSeleccionado.terreno.manzana.sector.zona.parroquia.canton.provincia.nombre}"
+                                             class="input_180" disabled="true"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_canton" value="Cant&oacute;n:" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_canton" value="0#{consultasView.predioSeleccionado.terreno.manzana.sector.zona.parroquia.canton.cantonPK.codCanton}-#{consultasView.predioSeleccionado.terreno.manzana.sector.zona.parroquia.canton.nombre}"
+                                             class="input_180" disabled="true"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="parroquia" value="Parroquia:" class="DispBlock Wid100"/>
+                                <p:inputText id="parroquia" value="0#{consultasView.predioSeleccionado.terreno.manzana.sector.zona.parroquia.parroquiaPK.codParroquia}-#{consultasView.predioSeleccionado.terreno.manzana.sector.zona.parroquia.nombre}"
+                                             class="input_180" disabled="true"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="barrio" value="Sitio/Barrio/Cooperativa/Urb.:" class="DispBlock Wid100"/>
+                                <p:inputText id="barrio" value="#{consultasView.predioSeleccionado.terreno.barrio}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'calle1')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle1" value="Calle 1:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle1" value="#{consultasView.predioSeleccionado.terreno.dirCalle1}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'calle2')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle2" value="Calle 2:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle2" value="#{consultasView.predioSeleccionado.terreno.dirCalle2}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'calle3')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle3" value="Calle 3:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle3" value="#{consultasView.predioSeleccionado.terreno.dirCalle3}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'calle4')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle4" value="Calle 4:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle4" value="#{consultasView.predioSeleccionado.terreno.dirCalle4}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nomenclatura1')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura1" value="Nomenclatura calle 1:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura1" value="#{consultasView.predioSeleccionado.terreno.dirNomenclatura1}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nomenclatura2')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura2" value="Nomenclatura calle 2:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura2" value="#{consultasView.predioSeleccionado.terreno.dirNomenclatura2}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nomenclatura3')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura3" value="Nomenclatura calle 3:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura3" value="#{consultasView.predioSeleccionado.terreno.dirNomenclatura3}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nomenclatura4')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura4" value="Nomenclatura calle 4:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura4" value="#{consultasView.predioSeleccionado.terreno.dirNomenclatura4}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nro_predio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_predio" value="Nro predio:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_predio" value="#{consultasView.predioSeleccionado.nroPredio}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nro_dpto')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_dpto" value="Nro departamento:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_dpto" value="#{consultasView.predioSeleccionado.nroDepartamento}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nro_piso')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_piso" value="Nro piso:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_piso" value="#{consultasView.predioSeleccionado.nroPiso}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nro_bloque')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_bloque" value="Nro bloque:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_bloque" value="#{consultasView.predioSeleccionado.nroBloque}"  disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'permitieron_ingreso:comun-si_no-input')"/>
+                            </h:panelGroup>
+                            <var:varDisInputText id="permitieron_ingreso" label="Permitieron ingreso:"
+                                                 table="comun" column="si_no"
+                                                 bind="#{consultasView.predioSeleccionado.permitieronIngreso}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                  disabled="true"
+                                                 changeOnEnter="true"
+                                                 next="nro_personas"
+                                                 labelPosition="top"/>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_personas" value="Nro personas habitan:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_personas" value="#{consultasView.predioSeleccionado.nroPersonasHabitan}"  disabled="true"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'nombre_edificio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nombre_edificio" value="Nombre edificio:" class="DispBlock Wid100"/>
+                                <p:inputText id="nombre_edificio" value="#{consultasView.predioSeleccionado.nombreEdificio}"  disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'cat_predio-observacion')"/>
+                            </h:panelGroup>
+                             <h:panelGroup layout="block">
+                                <p:outputLabel for="alicuotaPH" value="Al&iacute;cuota:" class="DispBlock Wid100"/>
+                                <p:inputText id="alicuotaPH" value="#{consultasView.predioSeleccionado.alicuotaPh}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'estado_legal:cat_predio-estado_legal_predio-input')"/>
+                            </h:panelGroup>
+                            <var:varDisInputText id="estado_legal" label="Estado legal:"
+                                                 table="cat_predio" column="estado_legal_predio"
+                                                 bind="#{consultasView.predioSeleccionado.estadoLegalPredio}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                 disabled="true"
+                                                 changeOnEnter="true"
+                                                 next="cat_predio-observacion"
+                                                 labelPosition="top"/>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container100 Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Observaciones generales del predio" toggleable="true" toggleSpeed="500" >
+                        <p:inputTextarea id="cat_predio-observacion" style="width: 97%" value="#{consultasView.predioSeleccionado.observacion}"
+                                         onkeypress="focusNextOnEnter(event, 'wiz_next')"  disabled="true"/>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container Wid100 MarBot10 MarTop20">
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <p:fieldset legend="Fotos del predio" toggleable="true" toggleSpeed="500" >
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs16">Clic sobre la foto para visualizarla a tamaño original</h1>
+
+                        <h:panelGroup layout="block" id="image-preview">
+                            <p:outputLabel rendered="#{empty consultasView.images}" style="margin-left: 30px;" value="No se han registrado fotos al predio." />
+                            <p:lightBox styleClass="imagebox" id="lighbox4">
+                                <c:forEach var="foto1" items="#{consultasView.images}" varStatus="loop">
+                                    <h:outputLink value="#{foto1}" class="MarRight20 Fleft" >
+                                        <h:graphicImage url="#{foto1}" width="150" height="150" title="Fotos del predio"/>
+                                    </h:outputLink>
+                                </c:forEach>                          
+                            </p:lightBox>
+
+                        </h:panelGroup>
+                    </div>
+                    </p:fieldset>
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:panelGroup>
+    </ui:composition>
+</html>

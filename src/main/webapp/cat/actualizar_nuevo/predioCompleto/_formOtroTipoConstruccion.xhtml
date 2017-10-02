@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="obras-dlg" widgetVar="obrasDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Otros tipos de cosntrucci&oacute;n" style="width: 700px;"> 
+            <p:ajax event="close" update="obras-complementarias-list,obras-complementarias-update" listener="#{updateFullView.cancelarCrearObra()}" />
+            <h:panelGroup layout="block" class="Container Container100">
+                <p:panel class="sentinel-panel">
+                    <h:form id="obras-form" prependId="false">
+                        <p:messages id="datos-obras-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                        <!-- update="valor_update,material_update,areas_cubiertas_estructura,areas_cubiertas_cubierta"
+                        next="material:coef_avaluos-#{updateFullView.columna}-input"-->
+                        <h:panelGroup layout="block" class="Wid100" style="width: 650px !important;">
+                            <h:panelGrid columns="1" class="Wid100">
+                                <h:panelGrid columns="3" class="Wid100">
+                                    <!-- <p:focus context="panel"/> -->
+                                    <var:varDisInputText id="tipo_contruccion" label="Tipo de construcci&oacute;n:"
+                                                         table="cat_predio" column="otros_tipo_construccion"
+                                                         bind="#{updateFullView.tipoConstruccion}"
+                                                         showlabel="true"
+                                                         defaultValue="1"
+                                                         changeOnEnter="true"
+                                                         next="material:coef_avaluos-#{updateFullView.columna}-input"
+                                                         accionListenerUpdate="#{updateFullView.changeTipoConstruccion()}"
+                                                         labelPosition="top"/>
+                                    <var:varDisInputText id="material" label="#{updateFullView.materialLabel}"
+                                                         table="coef_avaluos" column="#{updateFullView.columna}"
+                                                         bind="#{updateFullView.obraSeleccionada.tipoConstruccion}"
+                                                         showlabel="true"
+                                                         defaultValue="1"
+                                                         changeOnEnter="true"
+                                                         accionListenerUpdate="#{updateFullView.changeTipoObra()}"
+                                                         next="area_area_cubierta"
+                                                         labelPosition="top"/>                    
+                                    <h:panelGroup layout="block" id="valor_update">
+                                        <p:outputLabel for="area_area_cubierta" value="#{updateFullView.tipoConstruccion == 1 ? 'Vol&uacute;men(m&sup3;)': updateFullView.tipoConstruccion == 4 ? 'Unidades' : '&Aacute;rea(m&sup2;)' }:" class="DispBlock Wid60"/>
+                                        <p:inputText id="area_area_cubierta" value="#{updateFullView.obraSeleccionada.area}" required="true"
+                                                     class="input_150" onkeypress="#{updateFullView.onkeypressevent}"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" id="areas_cubiertas_estructura">
+                                        <h:panelGroup layout="block" rendered="#{updateFullView.tipoConstruccion == 3 and updateFullView.obraSeleccionada.tipoConstruccion == 8}">
+                                            <var:varDisInputText id="area_estructura" label="Estructura:"
+                                                                 table="cat_bloque" column="estructura"
+                                                                 bind="#{updateFullView.obraSeleccionada.estructura}"
+                                                                 showlabel="true"
+                                                                 defaultValue="0"
+                                                                 changeOnEnter="true"
+                                                                 next="area_cubierta:cat_bloque-cubierta-input"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup> 
+                                    <h:panelGroup layout="block" id="areas_cubiertas_cubierta">
+                                        <h:panelGroup layout="block"  rendered="#{updateFullView.tipoConstruccion == 3 and updateFullView.obraSeleccionada.tipoConstruccion == 8}">
+                                            <var:varDisInputText id="area_cubierta" label="Cubierta:"
+                                                                 table="cat_bloque" column="cubierta"
+                                                                 bind="#{updateFullView.obraSeleccionada.cubierta}"
+                                                                 showlabel="true"
+                                                                 defaultValue="7"
+                                                                 changeOnEnter="true"
+                                                                 next="crear-obra-btn"
+                                                                 labelPosition="top"/>
+                                        </h:panelGroup>
+                                    </h:panelGroup>
+                                </h:panelGrid>                         
+
+                                <h:panelGroup layout="block" class="MarTop20">
+                                    <p:commandButton id="crear-obra-btn" 
+                                                     icon="fa fa-save" styleClass="white Fright" value="Guardar"  
+                                                     process="@this,tipo_contruccion:cat_predio-otros_tipo_construccion-input, material:coef_avaluos-#{updateFullView.columna}-input, area_area_cubierta,datos-obras-messages #{(updateFullView.tipoConstruccion == 3 and updateFullView.obraSeleccionada.tipoConstruccion == 8) ? ',area_estructura:cat_bloque-estructura-input,area_cubierta:cat_bloque-cubierta-input' : ''}"
+                                                     actionListener="#{updateFullView.crearNuevaObra()}"
+                                                     update="obras-form,datos-obras-messages,obras-dataTable,obras-complementarias-update"
+
+                                                     />
+
+                                    <p:commandButton id="cancelar-obra-btn" process="@this"
+                                                     icon="fa fa-ban" styleClass="white" value="Cancelar" actionListener="#{updateFullView.cancelarCrearObra()}"                                        
+                                                     onclick="PF('obrasDialog').hide();"
+                                                     />
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:form>
+                </p:panel>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

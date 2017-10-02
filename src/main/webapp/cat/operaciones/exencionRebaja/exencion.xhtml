@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces"
+      xmlns:predio="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition template="../../../WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Registro de Exenci&oacute;n/Rebaja"></h:outputText>
+        </ui:define>
+
+        <ui:define name="content">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <div class="Card whiteback">
+                        <h1 class="BigTopic Fs16">Exenci&oacute;n/Rebaja</h1>
+                        <hr></hr>
+                        <predio:buscarPredio opcionesBusqueda="#{exencionView.opcionesBusqueda}"
+                                             mostrarParroquia="true"
+                                             mostrarZona="true"
+                                             mostrarSector="true"
+                                             mostrarManzana="true"
+                                             mostrarPredio="true"
+                                             mostrarBloque="true"
+                                             mostrarPHV="true"
+                                             mostrarPHH="true"
+                                             accionBuscar="#{exencionView.buscarPredio()}"
+                                             accionCancelar="#{exencionView.cancelar()}"
+                                             actualizarLuegoDeBusqueda="messages, buscar-predio-form,crearPredioWizardContainer"/>
+
+                        <div class="EmptyBox20"></div>
+                        <h:form id="crearPredioForm" prependId="false">
+                            <h:panelGroup layout="block" id="crearPredioWizardContainer">
+
+
+                                <p:wizard id="wiz" rendered="#{exencionView.opcionesBusqueda.ejecutandoAccion}" flowListener="#{exencionView.onFlowProcess}" nextLabel="Siguiente" backLabel="Anterior">
+
+                                    <p:tab id="step-datos-generales" title="Datos de propietarios">
+                                        <ui:include src="_registroPropietarios.xhtml"/>
+                                    </p:tab>
+                                    <p:tab id="step-datos-escritura" title="Datos de Autorizaci&oacute;n">
+                                        <ui:include src="_datosAutorizacion.xhtml"/>
+                                    </p:tab>
+
+                                    <p:tab id="step-datos-terreno" title="Registro de exoneraci&oacute;n">
+                                        <ui:include src="_datosExoneracion.xhtml"/>
+                                    </p:tab>
+                                    <p:tab id="step-confirmacion" title="Confirmaci&oacute;n">
+
+                                        <ui:include src="_createConfirm.xhtml"/>
+                                        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+                                            <p:commandButton id="guardar-predio-btn"
+                                                             rendered="#{exencionView.opcionesBusqueda.ejecutandoAccion}"
+                                                             update="messages, crearPredioForm,crearPredioWizardContainer"
+                                                             icon="fa fa-save" action="#{exencionView.RegistrarExencion()}"
+                                                             value="Guardar"
+                                                             class="white Fright"/>
+                                        </h:panelGroup>
+                                    </p:tab>
+                                </p:wizard>
+
+                                <script type="text/javascript">
+                                    transformarTitulosWizard();
+                                </script>
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+
+
+    </ui:composition>
+
+</html>

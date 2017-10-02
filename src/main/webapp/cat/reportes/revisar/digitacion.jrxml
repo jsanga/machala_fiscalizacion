@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="1190" pageHeight="842" orientation="Landscape" columnWidth="1150" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d8170224-c023-4965-9c21-47963afcab0c">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="fechaCreacion" class="java.util.Date"/>
+	<field name="fechaModificacion" class="java.util.Date"/>
+	<field name="claveAnterior" class="java.lang.String"/>
+	<field name="claveCatastral" class="java.lang.String"/>
+	<field name="manzana" class="java.lang.String"/>
+	<field name="textDominio" class="java.lang.String"/>
+	<field name="textOrigen" class="java.lang.String"/>
+	<field name="textTipoPropiedad" class="java.lang.String"/>
+	<field name="terreno.textEstadoEdificacion" class="java.lang.String"/>
+	<field name="terreno.textUbicacion" class="java.lang.String"/>
+	<field name="terreno.textTopografia" class="java.lang.String"/>
+	<field name="terreno.textGeometria" class="java.lang.String"/>
+	<field name="terreno.textCaracteristicasSuelo" class="java.lang.String"/>
+	<field name="terreno.textEnergiaElectrica" class="java.lang.String"/>
+	<field name="terreno.textAlcantarillado" class="java.lang.String"/>
+	<field name="terreno.textTelefono" class="java.lang.String"/>
+	<field name="terreno.textRecoleccionBasura" class="java.lang.String"/>
+	<field name="terreno.textEstado" class="java.lang.String"/>
+	<field name="terreno.textAseoCalle" class="java.lang.String"/>
+	<field name="terreno.textTransporte" class="java.lang.String"/>
+	<field name="terreno.textCableSatelital" class="java.lang.String"/>
+	<field name="terreno.textInternet" class="java.lang.String"/>
+	<field name="terreno.textTipoVia" class="java.lang.String"/>
+	<field name="terreno.textCapaRodadura" class="java.lang.String"/>
+	<field name="terreno.textAceras" class="java.lang.String"/>
+	<field name="terreno.textBordillos" class="java.lang.String"/>
+	<field name="terreno.textEstadoConservacion" class="java.lang.String"/>
+	<field name="terreno.textUsoSuelo" class="java.lang.String"/>
+	<field name="terreno.textTopografiaVia" class="java.lang.String"/>
+	<field name="terreno.areaLevantamiento" class="java.lang.Double"/>
+	<field name="terreno.linNorteLongitud" class="java.lang.String"/>
+	<field name="terreno.linNorteRef" class="java.lang.String"/>
+	<field name="terreno.linSurLongitud" class="java.lang.String"/>
+	<field name="terreno.linSurRef" class="java.lang.String"/>
+	<field name="terreno.linEsteLongitud" class="java.lang.String"/>
+	<field name="terreno.linEsteRef" class="java.lang.String"/>
+	<field name="terreno.linOesteLongitud" class="java.lang.String"/>
+	<field name="terreno.linOesteRef" class="java.lang.String"/>
+	<field name="terreno.pisosTerminados" class="java.lang.Short"/>
+	<field name="bloques" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="244" y="17" width="363" height="34" uuid="3a3b8c3e-398c-429e-8ab2-15a81b1c4578"/>
+				<textElement>
+					<font size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte de predios]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="2" y="2" width="90" height="20" uuid="64f9fe52-42f0-47f5-945a-07c9fd46d232"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha creación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="2" width="100" height="30" uuid="85129931-cd8e-4504-a87d-dd59334942dd"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Modificación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="215" y="2" width="100" height="20" uuid="4ab7accf-6a54-4f74-99b3-26f4f1faad21"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clave Anterior]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="331" y="2" width="100" height="20" uuid="5ec09e85-208c-419a-9643-b2a527589db5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clave Catastral]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="443" y="2" width="100" height="20" uuid="c0b9da97-3ecb-421d-b8c0-33419f3a10ac"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Manzana]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="575" y="2" width="100" height="20" uuid="9b4bb4c6-ac74-4b72-91cb-ced4af4ad083"/>
+				<text><![CDATA[terreno.textEstado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="0" width="100" height="20" uuid="d06683cf-8189-4f2a-b34d-dd294cacaf51"/>
+				<textFieldExpression><![CDATA[$F{fechaCreacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="108" y="1" width="100" height="20" uuid="12133767-0985-4546-849c-2c860f78e5c6"/>
+				<textFieldExpression><![CDATA[$F{fechaModificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="213" y="1" width="100" height="20" uuid="5b60b12d-b959-47eb-8bcb-c5d843c96b7e"/>
+				<textFieldExpression><![CDATA[$F{claveAnterior}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="2" width="100" height="20" uuid="b115a5c3-8fd2-43c1-acef-0d4efd66eeab"/>
+				<textFieldExpression><![CDATA[$F{claveCatastral}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="2" width="100" height="20" uuid="c32b8658-1008-448b-8322-b3a2c1ed8ba8"/>
+				<textFieldExpression><![CDATA[$F{manzana}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="575" y="5" width="100" height="20" uuid="d8c112b0-6638-4d9a-b41d-ca426687701a"/>
+				<textFieldExpression><![CDATA[$F{terreno.textEstado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

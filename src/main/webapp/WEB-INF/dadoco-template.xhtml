@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+       <title><ui:insert name="title">GAD Machala</ui:insert></title>
+
+        <h:outputScript name="js/ripple-effect.js" library="dadoco-layout" />
+        <h:outputScript name="js/perfect-scrollbar.js" library="dadoco-layout" />
+        <h:outputScript name="js/layout.js" library="dadoco-layout" />
+        <h:outputScript name="application.js" library="js" />
+        <h:outputStylesheet name="css/application.css"/>
+        <!--<script type="text/javascript" src="/sistema-1.0/wro/application.js"></script>-->
+        <ui:insert name="head" />
+    </h:head>
+
+    <h:body>
+
+        <ui:include src="dadoco-topbar.xhtml" />
+
+        <ui:include src="dadoco-layoutmenu.xhtml" />
+
+        <div id="layout-portlets-cover">
+
+            <p:messages id="messages" showDetail="true" autoUpdate="false" closable="true" />
+
+            <ui:insert name="content">Content</ui:insert>
+
+            <ui:include src="dadoco-footer.xhtml" />
+
+        </div>
+
+        <p:ajaxStatus style="width:32px;height:32px;position:fixed;right:7px;bottom:7px">
+            <f:facet name="start">
+                <p:graphicImage name="images/preloader.gif" library="dadoco-layout"/>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
+
+        <h:outputStylesheet name="css/core-layout.css" library="dadoco-layout" />
+        <h:outputStylesheet name="css/animate.css" library="dadoco-layout" />
+        <h:outputStylesheet name="css/dadoco-font.css" library="dadoco-layout" />
+        <h:outputStylesheet name="css/ripple-effect.css" library="dadoco-layout" />
+        <h:outputStylesheet name="css/perfect-scrollbar.css" library="dadoco-layout" />
+        <h:outputStylesheet name="css/font-awesome.css" library="dadoco-layout" />
+        <h:outputStylesheet name="css/dadoco-layout.css" library="dadoco-layout" />
+        
+        <!-- -->
+        
+        <p:dialog id="dlgEspereUnMomento" widgetVar="dlgEspereUnMomento" header="Procesando Solicitud" modal="true" closable="false">
+            <h:outputText value="Por favor, espere un momento mientras se procesa su información."/>
+        </p:dialog>
+    </h:body>
+
+</html>

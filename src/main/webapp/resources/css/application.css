@@ -1,0 +1,943 @@
+
+html,
+body{
+    font-size: 12px;
+}
+
+#wrapper {
+    margin-right: auto;
+    margin-left: auto;
+    width: 1024px;
+}
+#header {
+    margin-right: 10px;
+    margin-left: 10px;
+    width: 1024px;
+}
+#content {
+    margin-top: 10px;
+    /* float: right;
+     width: 850px;
+     min-width: 850px;*/
+    width: 100%;
+    padding: 0px !important;
+}
+
+#footer {
+    float: left;
+    margin-top: 20px;
+
+    clear: both;
+    width: 850px;
+    min-width: 850px;
+}
+
+fieldset{
+    border: solid 1px #8F9FB5;
+    border-radius: 3px;
+    background-color: #CEF3F7;
+
+}
+fieldset>legend{
+    border: none;
+    background: none;
+    padding: 2px;
+    color: #002962;
+    font-size: 14px;
+    line-height: 15px;
+    border-radius: 3px;
+}
+
+div.Wid100 {
+    padding: 0px !important;
+}
+fieldset.Wid100 {
+    padding: 0px !important;
+}
+
+.form-field-label{
+    display: block;
+    font-size: 13px !important;
+    margin-bottom: 3px;
+    margin-top: 3px;
+}
+
+.show-detail{
+    font-size: 13px !important;
+    font-weight: bold !important;
+}
+.show-detail-value{
+    font-size: 13px !important;
+    font-weight: 200;
+    font-style: normal;
+}
+#datos_infraestructura .form-field-label{
+    display: inline-block;
+}
+.tiny-size-input{
+    width: 20px;
+}
+.pull-left{
+    float:left;
+}
+.pull-right{
+    float: right;
+}
+
+.ui-outputlabel.ui-widget{
+    font-size: 13px;
+    padding-bottom: 5px;
+}
+
+
+.ui-panelgrid.ui-widget tbody tr td{
+
+    vertical-align: top;
+
+}
+
+.ui-panelgrid td, .ui-panelgrid tr
+{
+    border-style: none !important;
+}
+
+form#crearPredioForm div#codigos{
+    display: table;
+    width: 100%;
+}
+form#crearPredioForm div#codigos .ui-inputtext{
+    width: 40px;
+}
+form#crearPredioForm div#codigos .ui-inputtext>div{
+    width: 80px;
+    display: inline-block;
+}
+
+
+div#crearPredioWizardContainer  ul.ui-wizard-step-titles{
+    margin-top: 10px;
+}
+div#crearPredioWizardContainer  ul.ui-wizard-step-titles li{
+    font-size: 12px;
+}
+
+#propietarios div.data-list{
+    width: 880px;
+    display: inline-block;
+    float: left;
+}
+#propietarios div.actions{
+    width: 50px;
+    display: inline-block;
+    float: right;
+}
+#propietarios div.actions .ui-button{
+    display: table;
+    margin-bottom: 5px;
+}
+
+div.lindero{
+    margin-bottom: 5px;
+}
+div.lindero span.orientacion{
+    display: inline-block;
+    text-align: right;
+    margin-right: 5px;
+}
+
+div.lindero span.unidad{
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+div.lindero input.longitud{
+    width: 15px;
+}
+
+div.lindero input.descripcion{
+    width: 150px;
+}
+
+
+#buscar-contribuyente-search-options-tbl{
+    width: 100%;
+}
+
+#crearPredioTab #caracteristicas-fisica table{
+    width: 100%;
+}
+#crearPredioTab #caracteristicas-fisica table td{
+    vertical-align: top;
+}
+
+div#wiz ul.ui-wizard-step-titles{
+    margin-top: 10px;
+    list-style: none;
+    overflow: hidden;
+    background-color: rgb(220, 218, 221);
+}
+
+div#wiz ul.ui-wizard-step-titles li{
+    float: left;
+    padding: 0px !important;
+}
+
+div#wiz ul.ui-wizard-step-titles li a{
+    color: white;
+    text-decoration: none;
+    padding: 10px 0 10px 35px;
+    background: brown;                   /* fallback color */
+    background: #0288d1;
+    position: relative;
+    display: block;
+    float: left;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+div#wiz ul.ui-wizard-step-titles li a:after {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;           /* Go big on the size, and let overflow hide */
+    border-bottom: 50px solid transparent;
+    border-left: 30px solid #0288d1;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+    left: 100%;
+    z-index: 2;
+}
+div#wiz ul.ui-wizard-step-titles li a:before {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 50px solid transparent;
+    border-bottom: 50px solid transparent;
+    border-left: 30px solid white;
+    position: absolute;
+    top: 50%;
+    margin-top: -50px;
+    margin-left: 1px;
+    left: 100%;
+    z-index: 1;
+}
+
+div#wiz ul.ui-wizard-step-titles li.ui-state-highlight{
+    border: 0px;
+    color: none;
+    background: none;
+}
+
+div#wiz ul.ui-wizard-step-titles li.ui-state-highlight a{
+    background: #22B14C;
+}
+div#wiz ul.ui-wizard-step-titles li.ui-state-highlight a:after {
+    border-left: 30px solid #22B14C;
+}
+
+
+
+table#caracteristicas-bloque-tbl tbody tr td{
+    vertical-align: top;
+}
+table#caracteristicas-bloque-tbl tbody tr td:nth-child(3){
+    width: 100px;
+}
+
+table#caracteristicas-bloque-tbl tbody tr td:nth-child(3) fieldset{
+    padding: 5px;
+}
+
+div#datosConstruccion button{
+
+    margin-left: 10px;
+    margin-top: 12px;
+}
+
+
+div#pisoList table tbody tr td:nth-child(1) {
+    width: 50px;
+}
+
+
+table.BooleanFieldTable{
+    width: 100%;
+}
+table.BooleanFieldTable tbody tr td:nth-child(2) {
+    width: 25px;
+}
+.varDisContainer table tbody tr td:nth-child(1) {
+    width: 150px;
+}
+.varDisContainer table tbody tr td:nth-child(2) {
+    width: 15px;
+}
+.varDisContainer table tbody tr td:nth-child(3)>.ui-selectonemenu {
+    width: 100% !important;
+}
+
+#dibujo-predio-tbl{
+    width: 100%;
+}
+#dibujo-predio-tbl #dibujo-predio-map{
+    width: 100%;
+    height: 400px;
+}
+
+#bloque-form table.DatosGeneralesTbl {
+    width: 100%;
+    padding: 5px;
+}
+#bloque-form table.DatosGeneralesTbl tr td {
+    padding-bottom: 10px;
+}
+
+#bloque-form table.UsoSueloTbl {
+    width: 100%;
+    padding: 10px;
+}
+#bloque-form table.UsoSueloTbl tr td:nth-child(even) {
+    width: 60px;
+}
+
+table.BooleanTbl{
+    width: 100%;
+    padding: 10px;
+}
+table.BooleanTbl tr td:nth-child(even) {
+    width: 60px;
+}
+
+table.ObrasComplementariasTbl{
+    width: 100%;
+    padding: 10px;
+}
+table.ObrasComplementariasTbl tr td table tr td {
+    vertical-align: top;
+}
+table.ObrasComplementariasTbl tr td {
+    vertical-align: top;
+}
+
+
+
+
+
+
+#bloque-form table.ObrasInfraestructuraTbl {
+    width: 100%;
+    padding: 10px;
+}
+#bloque-form table.ObrasInfraestructuraTbl tr td:nth-child(even) {
+    width: 60px;
+}
+
+
+
+#bloque-form table.DatosEstructuraTbl {
+    width: 100%;
+    padding: 0px;
+}
+#bloque-form table.DatosEstructuraTbl tr td {
+    padding-bottom: 5px;
+}
+
+#bloque-form table.DatosEstructuraTbl tr td div.varDisContainer{
+    width: 100%;
+}
+
+
+/* LISTADO DE Contribuyentes */
+th.column-user-actions,td.column-user-actions{
+    width: 80px;
+}
+#contribuyente-list-form div.ui-datatable-header {
+    background-color: transparent;
+    text-align: right;
+    color: black;
+    font-size: 12px;
+    font-weight: normal;
+}
+#contribuyente-list-form .ui-datatable table thead tr th {
+    padding: 3px;
+    font-size: 13px;
+    color: black;
+    font-weight: normal;
+}
+#contribuyente-list-form .ui-datatable table tbody tr td {
+    color: black;
+}
+#contribuyente-list-form .ui-datatable table tbody tr td.column-user-actions{
+    text-align: center;
+
+}
+#contribuyente-list-form .ui-datatable table tbody tr td.column-user-actions span.ui-button-text.ui-c{
+    padding: 2px !important;
+}
+
+#contribuyente-list-form span.ui-column-title{
+    color: white;
+}
+#contribuyente-list-form input.ui-column-filter.ui-inputfield.ui-inputtext{
+    width: 125px;
+}
+
+#contribuyente-list-form table tbody tr td{
+    vertical-align: top;
+    padding: 5px 10px 5px 0px;
+}
+
+/* LISTADO DE USUARIOS */
+th.column-user-actions,td.column-user-actions{
+    width: 80px;
+}
+#user-list-form div.ui-datatable-header {
+    background-color: transparent;
+    text-align: right;
+    color: black;
+    font-size: 12px;
+    font-weight: normal;
+}
+#user-list-form .ui-datatable table thead tr th {
+    padding: 3px;
+    font-size: 13px;
+    color: black;
+    font-weight: normal;
+}
+#user-list-form .ui-datatable table tbody tr td {
+    color: black;
+}
+#user-list-form .ui-datatable table tbody tr td.column-user-actions{
+    text-align: center;
+
+}
+#user-list-form .ui-datatable table tbody tr td.column-user-actions span.ui-button-text.ui-c{
+    padding: 2px !important;
+}
+
+#user-list-form span.ui-column-title{
+    color: white;
+}
+#user-list-form input.ui-column-filter.ui-inputfield.ui-inputtext{
+    width: 125px;
+}
+
+#user-form table tbody tr td{
+    vertical-align: top;
+    padding: 5px 10px 5px 0px;
+}
+
+/* LISTADO DE Contribuyentes */
+th.column-user-actions,td.column-user-actions{
+    width: 80px;
+}
+#contribuyente-list-form div.ui-datatable-header {
+    background-color: transparent;
+    text-align: right;
+    color: black;
+    font-size: 12px;
+    font-weight: normal;
+}
+#contribuyente-list-form .ui-datatable table thead tr th {
+    padding: 3px;
+    font-size: 13px;
+    color: black;
+    font-weight: normal;
+}
+#contribuyente-list-form .ui-datatable table tbody tr td {
+    color: black;
+}
+#contribuyente-list-form .ui-datatable table tbody tr td.column-user-actions{
+    text-align: center;
+
+}
+#contribuyente-list-form .ui-datatable table tbody tr td.column-user-actions span.ui-button-text.ui-c{
+    padding: 2px !important;
+}
+
+#contribuyente-list-form span.ui-column-title{
+    color: white;
+}
+#contribuyente-list-form input.ui-column-filter.ui-inputfield.ui-inputtext{
+    width: 125px;
+}
+
+#contribuyente-list-form table tbody tr td{
+    vertical-align: top;
+    padding: 5px 10px 5px 0px;
+}
+
+/* LISTADO DE USUARIOS */
+th.column-actions,td.column-actions{
+    width: 80px;
+}
+#listado-form div.ui-datatable-header {
+    background-color: transparent;
+    text-align: right;
+    color: black;
+    font-size: 12px;
+    font-weight: normal;
+}
+#listado-form .ui-datatable table thead tr th {
+    padding: 10px;
+    font-size: 13px;
+    color: black;
+    font-weight: normal;
+}
+#listado-form .ui-datatable table tbody tr td {
+    color: black;
+}
+#listado-form .ui-datatable table tbody tr td.column-actions{
+    text-align: center;
+
+}
+#listado-form .ui-datatable table tbody tr td.column-actions span.ui-button-text.ui-c{
+    padding: 2px !important;
+}
+
+#listado-form span.ui-column-title{
+    color: white;
+}
+#listado-form input.ui-column-filter.ui-inputfield.ui-inputtext{
+    width: 125px;
+}
+
+#user-form table tbody tr td{
+    vertical-align: top;
+    padding: 5px 10px 5px 0px;
+}
+
+.ui-datatable table thead tr th {
+    padding: 10px;
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+}
+
+/* LISTADO DE Predios */
+th.column-user-actions,td.column-user-actions{
+    width: 80px;
+}
+#predio-list-form div.ui-datatable-header {
+    background-color: transparent;
+    text-align: right;
+    color: black;
+    font-size: 12px;
+    font-weight: normal;
+}
+#predio-list-form .ui-datatable table thead tr th {
+    padding: 3px;
+    font-size: 13px;
+    color: black;
+    font-weight: bold;
+}
+
+#predio-list-form .ui-datatable table tbody tr td {
+    color: black;
+    text-align: center;
+}
+#predio-list-form .Datos .ui-datatable table tbody tr td {
+    color: black;
+    text-align: left;
+}
+#predio-list-form .ui-datatable table tbody tr td.column-user-actions{
+    text-align: center;
+
+}
+#predio-list-form .ui-datatable table tbody tr td.column-user-actions span.ui-button-text.ui-c{
+    padding: 2px !important;
+}
+
+#predio-list-form span.ui-column-title{
+    color: white;
+}
+#predio-list-form input.ui-column-filter.ui-inputfield.ui-inputtext{
+    width: 550px;
+}
+
+#predio-list-form .predio-buscar input.ui-column-filter.ui-inputfield.ui-inputtext{
+    width: 30px;
+}
+#predio-list-form .predio-edificio input.ui-column-filter.ui-inputfield.ui-inputtext{
+    width: 80px;
+}
+ui-column-filter ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all
+
+#predio-form table tbody tr td{
+    vertical-align: top;
+    padding: 5px 10px 5px 0px;
+    text-align: center;
+}
+
+
+
+/* LISTADO DE ROLES */
+th.column-rol-actions,td.column-rol-actions{
+    width: 80px;
+}
+#rol-list-form div.ui-datatable-header {
+    background-color: transparent;
+    text-align: right;
+    color: black;
+    font-size: 12px;
+    font-weight: normal;
+}
+#rol-list-form .ui-datatable table thead tr th {
+    padding: 3px;
+    font-size: 13px;
+    color: black;
+    font-weight: normal;
+}
+#rol-list-form .ui-datatable table tbody tr td {
+    color: black;
+}
+#rol-list-form .ui-datatable table tbody tr td.column-user-actions{
+    text-align: center;
+
+}
+#rol-list-form .ui-datatable table tbody tr td.column-user-actions span.ui-button-text.ui-c{
+    padding: 2px !important;
+}
+
+#rol-list-form span.ui-column-title{
+    color: white;
+}
+#rol-list-form input.ui-column-filter.ui-inputfield.ui-inputtext{
+    width: 180px;
+}
+
+#rol-form table tbody tr td{
+    vertical-align: top;
+}
+
+
+
+table.ui-panelgrid.ui-widget{
+    border: none;
+}
+table.ui-panelgrid.ui-widget tbody tr td{
+    border: none !important;
+}
+
+
+/* LISTADO DE PERMISOS */
+th.column-user-actions,td.column-user-actions{
+    width: 80px;
+}
+#permiso-list-form div.ui-datatable-header {
+    background-color: transparent;
+    text-align: right;
+    color: black;
+    font-size: 12px;
+    font-weight: normal;
+}
+#permiso-list-form .ui-datatable table thead tr th {
+    padding: 3px;
+    font-size: 13px;
+    color: black;
+    font-weight: normal;
+}
+#permiso-list-form .ui-datatable table tbody tr td {
+    color: black;
+}
+#permiso-list-form .ui-datatable table tbody tr td.column-user-actions{
+    text-align: center;
+
+}
+#permiso-list-form .ui-datatable table tbody tr td.column-user-actions span.ui-button-text.ui-c{
+    padding: 2px !important;
+}
+
+#permiso-list-form span.ui-column-title{
+    color: white;
+}
+#permiso-list-form input.ui-column-filter.ui-inputfield.ui-inputtext{
+    width: 125px;
+}
+
+#permiso-form table tbody tr td{
+    vertical-align: top;
+    padding: 5px 10px 5px 0px;
+}
+
+
+/*Input, textarea, select --> Style*/
+
+input.input_150{ width: 150px !important;  }
+input.input_125{ width: 125px !important;  }
+input.input_140{ width: 140px !important;  }
+input.input_15{ width: 15px !important;  }
+input.input_300{ width: 300px !important;  }
+input.input_200{ width: 200px !important;  }
+input.input_250{ width: 250px !important;  }
+input.input_160{ width: 160px !important;  }
+input.input_115{ width: 115px !important;  }
+input.input_180{ width: 178px !important;  }
+
+div.ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all.select_150 { width: 116px !important; }
+div.ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all.select_125 { width: 128px !important; }
+div.ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all.select_100 { width: 103px !important; }
+div.ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all.select_180 { width: 140px !important; }
+
+input.input_150, input.input_125, input.input_140, input.input_15, input.input_300, input.input_200
+div.ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all.select_150,
+div.ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all.select_125,
+div.ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all.select_100{
+    margin-bottom: 5px;
+}
+
+span > input{ width: 125px !important;  }
+
+fieldset.inf_datos > div.ui-selectonemenu.ui-widget.ui-state-default.ui-corner-all{
+    width: 128px !important;
+}
+
+ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all ui-state-disabled
+{
+    color: black !important;
+    background-color: #efe3e3 !important;
+
+}
+
+.ui-outputlabel .ui-outputlabel-rfi{
+    font-size: 10px;
+    color: red;
+    font-weight: bold;
+    font-family: serif;
+}
+
+#admin-index #admin-menu ul li{
+    display: block;
+    float: left;
+    height: 100px;
+    width: 130px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+
+#admin-index .home-index-menu ul li a{
+    color: red !important;
+    /*font-size: 0;
+    color: transparent;*/
+}
+#admin-index .home-index-menu ul li a i:hover{
+    color: black !important;
+    /*font-size: 0;
+    color: transparent;*/
+}
+
+#admin-index #admin-menu a i{
+    font-size: 96px;
+    line-height: 96px;
+    height:96px;
+    min-width: 96px;
+    text-align: center;
+    display: inline-block!important;
+}
+#admin-index #admin-menu a p{
+    text-align: center;
+}
+
+.iconMenu1{
+
+    color:#900020 !important;
+
+}
+.iconMenu2{
+
+    color:#900020 !important;
+
+}
+.iconMenu3{
+
+    color:#900020 !important;
+
+}
+.iconMenu4{
+
+    color:#900020 !important;
+
+}
+.iconMenu5{
+
+    color:#900020 !important;
+
+}
+
+.textMenu{
+    color: #000000 !important;
+}
+
+.cat-user-menu {
+    margin-top: 35px;
+    display: block !important;
+    background-color: rgba(255,255,255,0.82);
+    padding: 0 10px 0 10px !important;
+    height: 37px !important;
+    border-radius: 15px;
+}
+.cat-user-menu a {
+    color: #333 !important;
+}
+
+.confirm-dialog .ui-dialog-content {
+
+    padding: 0px !important;
+}
+
+.tabla-resumen-pago td {
+    border: none !important;
+    text-align: right;
+}
+.celda-resumen-columna {
+    text-align: center !important;
+}
+.celda-resumen-fila {
+    text-align: left !important;
+}
+.tabla-resumen-fila-pago td {
+    background-color: #761c19;
+    color: white;
+    font-weight: bold;
+}
+
+.liquidacion-column{
+    font-weight: bold !important;
+    font-size: 15px !important;
+    text-align: right !important;
+    padding-right: 5px !important;
+}
+.liquidacion-column-value{
+    font-size: 15px !important;
+    text-align: left !important;
+
+}
+.fila-a-pagar {
+    background-color: #22b14c !important;
+    color: white !important;
+}
+.cheque-usado {
+    color: silver !important;
+    background-color: white !important;
+}
+.cheque-sin-usar {
+    color: black !important;
+    background-color: #E4CACA !important;
+}
+
+.info-liquidacion {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-bottom: 1px #E3C6C5 solid !important;
+}
+
+
+.ui-datatable tbody td.wrap {
+    white-space: pre-line !important;
+}
+
+.singleLine
+{
+    text-wrap:none !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+}
+
+.ui-datatable table{
+    table-layout: auto !important;
+
+}
+#predio-list-form #exenciones-list .ui-datatable table tbody tr td{
+
+    text-align: left !important;
+}
+
+table.linderoEscritura td{
+    text-align: right !important;
+}
+
+.ui-inputfield, ui-inputfield :hover , ui-inputfield :visited{
+    background-color: #ECECEC !important;
+    border-bottom: solid 1px #666f77 !important;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger, .ui-selectcheckboxmenu .ui-selectcheckboxmenu-trigger{
+
+    height: 34px !important;
+    background-color: #ECECEC !important;
+    border-bottom: solid 1px #666f77 !important;
+}
+
+.ui-selectonemenu, .ui-selectcheckboxmenu{
+    border-bottom: none !important;
+}
+
+.ui-outputlabel{
+    color: #5A5A5D !important;
+}
+.ui-fieldset-legend{
+    padding: 5px 20px !important;
+}
+
+.ui-button{
+    background-color: #900020 !important;
+}
+
+.ui-datatable table thead tr th, .ui-datatable table tfoot tr td, .ui-datatable table thead tr th{
+    
+    background-color: #0288D1 !important;
+    color: white !important;
+}
+.ui-datatable table tbody .ui-state-highlight > td{
+    background-color: #22b14c !important;
+}
+hr{
+    margin-top: 3px !important;
+    margin-bottom: 10px !important;
+}
+
+.ui-calendar input[type="text"]{
+    width: 180px !important;
+}
+
+th.FiltroContribuyente input[type="text"]{
+    width: 180px !important;
+}
+
+input { text-transform: uppercase !important; }
+
+.ui-datatable table tbody tr td{
+    
+    text-transform: uppercase !important;
+}
+
+.lowercase input[type="text"]{
+    width: 180px !important;
+}
+table.jqplot-table-legend {
+    
+    top: -40px !important;
+}
+
+.CardMenu {
+  padding: 8px;
+  display: block;
+  background-color: #ffffff;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  font-family: 'latoregular', sans-serif;
+  color: #666f77;
+  border: solid 1px #e0e0e0;
+}
+
+td.TDGrayBackground{
+    background: #eef2f7 !important; 
+    color: #546e7a !important;
+}

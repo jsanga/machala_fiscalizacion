@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite">
+
+    <cc:interface>
+        <cc:attribute name="opcionesBusqueda" required="true"/>
+        <cc:attribute name="mostrarZona" required="true"/>
+        <cc:attribute name="mostrarSector" required="true"/>
+        <cc:attribute name="mostrarManzana" required="true"/>
+        <cc:attribute name="mostrarPredio" required="true"/>
+        <cc:attribute name="ajax" required="false" default="true"/>
+        <cc:attribute name="mostrarPH" required="true"/>
+        <cc:attribute name="accionBuscar" required="true" method-signature="void metodo()"/>
+        <cc:attribute name="actualizarLuegoDeBusqueda" required="true"/>
+    </cc:interface>
+    <cc:implementation>
+        <c:set var="campos" value="0" scope="request" />
+        <c:if test="#{not empty cc.attrs.mostrarZona and cc.attrs.mostrarZona=='true'}">
+            <c:set var="campos" value="${campos + 1}" scope="request"/>
+        </c:if>
+        <c:if test="#{not empty cc.attrs.mostrarSector and cc.attrs.mostrarSector=='true'}">
+            <c:set var="campos" value="${campos + 1}" scope="request"/>
+        </c:if>
+        <c:if test="#{not empty cc.attrs.mostrarManzana and cc.attrs.mostrarManzana=='true'}">
+            <c:set var="campos" value="${campos + 1}" scope="request"/>
+        </c:if>
+        <c:if test="#{not empty cc.attrs.mostrarPredio and cc.attrs.mostrarPredio=='true'}">
+            <c:set var="campos" value="${campos + 1}" scope="request"/>
+        </c:if>
+        <c:if test="#{not empty cc.attrs.mostrarPH and cc.attrs.mostrarPH =='true'}">
+            <c:set var="campos" value="${campos + 1}" scope="request"/>
+        </c:if>
+
+
+
+        <h:form id="buscar-predio-form" prependId="false" class="Container">
+            <c:set var="contador" value="1" scope="request" />
+            <h:panelGrid columns="#{campos+2}">
+                <c:if test="#{not empty cc.attrs.mostrarZona and cc.attrs.mostrarZona=='true'}">
+                    <h:panelGroup layout="block">
+                        <c:set var="varZona" value="${contador}" scope="request"/>
+                        <p:outputLabel for="buscar-predio-input-#{varZona}" value="Zona:" class="DispBlock Wid100"/>
+                        <p:inputText id="buscar-predio-input-#{varZona}" disabled="#{cc.attrs.opcionesBusqueda.buscando}" class="Wid50" 
+                                     value="#{cc.attrs.opcionesBusqueda.zonaAnterior}" onkeypress="focusNextOnEnter(event, '#{cc.attrs.id}:buscar-predio-input-#{varZona+1}')"/>
+
+                    </h:panelGroup>
+                    <c:set var="contador" value="${contador + 1}" scope="request"/>
+                </c:if>
+                <c:if test="#{not empty cc.attrs.mostrarSector and cc.attrs.mostrarSector=='true'}">
+                    <h:panelGroup layout="block">
+                        <c:set var="varSector" value="${contador}" scope="request"/>
+                        <p:outputLabel for="buscar-predio-input-#{varSector}" value="Sector:" class="DispBlock Wid100"/>
+                        <p:inputText id="buscar-predio-input-#{varSector}" disabled="#{cc.attrs.opcionesBusqueda.buscando}" class="Wid50"
+                                     value="#{cc.attrs.opcionesBusqueda.sectorAnterior}" onkeypress="focusNextOnEnter(event, '#{cc.attrs.id}:buscar-predio-input-#{varSector+1}')"/>
+
+                    </h:panelGroup>
+                    <c:set var="contador" value="${contador + 1}" scope="request"/>
+                </c:if>
+                <c:if test="#{not empty cc.attrs.mostrarManzana and cc.attrs.mostrarManzana=='true'}">
+                    <h:panelGroup layout="block">
+                        <c:set var="varManzana" value="${contador}" scope="request"/>
+                        <p:outputLabel for="buscar-predio-input-#{varManzana}" value="Manzana:" class="DispBlock Wid100"/>
+                        <p:inputText id="buscar-predio-input-#{varManzana}" disabled="#{cc.attrs.opcionesBusqueda.buscando}"
+                                     class="Wid50"
+                                     value="#{cc.attrs.opcionesBusqueda.manzanaAnterior}" onkeypress="focusNextOnEnter(event, '#{cc.attrs.id}:buscar-predio-input-#{varManzana+1}')"/>
+
+                    </h:panelGroup>
+                    <c:set var="contador" value="${contador + 1}" scope="request"/>
+                </c:if>
+                <c:if test="#{not empty cc.attrs.mostrarPredio and cc.attrs.mostrarPredio=='true'}">
+                    <h:panelGroup layout="block">
+                        <c:set var="varPredio" value="${contador}" scope="request"/>
+                        <p:outputLabel for="buscar-predio-input-#{varPredio}" value="Predio:" class="DispBlock Wid100"/>
+                        <p:inputText id="buscar-predio-input-#{varPredio}" disabled="#{cc.attrs.opcionesBusqueda.buscando}" class="Wid50"
+                                     value="#{cc.attrs.opcionesBusqueda.solarAnterior}" onkeypress="focusNextOnEnter(event, '#{cc.attrs.id}:buscar-predio-input-#{varPredio+1}')"/>
+                    </h:panelGroup>
+                    <c:set var="contador" value="${contador + 1}" scope="request"/>
+                </c:if>
+
+                <c:if test="#{not empty cc.attrs.mostrarPH and cc.attrs.mostrarPH=='true'}">
+                    <h:panelGroup layout="block">
+                        <c:set var="varPH" value="${contador}" scope="request"/>
+                        <p:outputLabel for="buscar-predio-input-#{varPH}" value="PH:" class="DispBlock Wid100"/>
+                        <p:inputText id="buscar-predio-input-#{varPH}" disabled="#{cc.attrs.opcionesBusqueda.buscando}" class="Wid50"
+                                     value="#{cc.attrs.opcionesBusqueda.phCod}" onkeypress="focusNextOnEnter(event, '#{cc.attrs.id}:buscar-predio-input-#{varPH+1}')"/>
+                    </h:panelGroup>
+                    <c:set var="contador" value="${contador + 1}" scope="request"/>
+                </c:if>
+                <h:panelGroup layout="block">
+                    <c:set var="varBtn" value="${contador}" scope="request"/>
+                    <p:outputLabel value="&nbsp;" class="DispBlock Wid100"/>
+                    <c:choose>
+                        <c:when test="#{not empty cc.attrs.actualizarLuegoDeBusqueda}">
+                            <p:commandButton disabled="#{cc.attrs.opcionesBusqueda.buscando}"
+                                             value="Buscar" id="buscar-predio-input-#{varBtn}"
+                                             update="#{cc.attrs.actualizarLuegoDeBusqueda}"
+                                             icon="fa fa-search white" actionListener="#{cc.attrs.accionBuscar}"
+                                             styleClass="Fs16" ajax="#{cc.attrs.ajax}"/>
+                        </c:when>
+                        <c:otherwise>
+                            <p:commandButton disabled="#{cc.attrs.opcionesBusqueda.buscando}"
+                                             value="Buscar" id="buscar-predio-input-#{varBtn}"
+                                             icon="fa fa-search white" actionListener="#{cc.attrs.accionBuscar}"
+                                             styleClass="Fs16" ajax="#{cc.attrs.ajax}"/>
+                        </c:otherwise>
+                    </c:choose>
+                </h:panelGroup>
+                
+            </h:panelGrid>
+        </h:form>
+
+    </cc:implementation>
+
+
+</html>

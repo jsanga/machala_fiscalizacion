@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AdicionarVariableDlg" widgetVar="AdicionarVariableDialog" modal="true" resizable="false" appendTo="@(body)" header="Adicionar variable">
+            <h:form id="AdicionarVariableForm" style="width: 300px" prependId="false" >
+
+                <p:messages id="mensajesCrearVariable" showDetail="true" autoUpdate="false" closable="true" />            
+                <p:panelGrid columns="2" rendered="#{crearVariableView.variableSeleccionada != null}">
+                    <p:outputLabel value="Tabla:" for="tabla" />
+                    <p:inputText id="tabla" value="#{crearVariableView.variableSeleccionada.tabla}" title="Tabla de la base de datos" required="true" requiredMessage="El nombre de la tabla es requerido"/>
+                    <p:outputLabel value="Columna:" for="columna" />
+                    <p:inputText id="columna" value="#{crearVariableView.variableSeleccionada.columna}" title="Columna de la tabla" required="true" requiredMessage="El nombre de la columna es requerido"/>
+                    <p:outputLabel for="tipo" value="Tipo:"/>
+                    <p:selectOneMenu id="tipo" value="#{crearVariableView.variableSeleccionada.tipo}" style="width:125px">
+                        <f:selectItem itemLabel="Entera" itemValue="E" />
+                        <f:selectItem itemLabel="Logica" itemValue="B" />
+                    </p:selectOneMenu>
+                </p:panelGrid>
+
+                <p:commandButton actionListener="#{crearVariableView.crearVariable}" value="Salvar" update=":variableList,valoresForm,:growl" oncomplete="handleSubmit(args,'AdicionarVariableDialog');"/>
+                <p:commandButton value="Cancelar" onclick="PF('AdicionarVariableDialog').hide()"/>
+
+                <f:facet name="footer">
+                    <div class="button-bar formdialog">
+                    </div>
+                </f:facet></h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

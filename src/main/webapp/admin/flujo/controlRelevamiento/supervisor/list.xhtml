@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pretty="http://ocpsoft.com/prettyfaces"
+      xmlns:predio="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition template="../../../../WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Administraci&oacute;n de manzanas"></h:outputText>
+        </ui:define>
+
+        <ui:define name="content">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <div class="Card whiteback">
+                        <h1 class="BigTopic Fs16">Ingreso de Manzanas</h1>
+                        <hr></hr>
+
+                        <h:panelGroup layout="block" class="Container100">
+                            <h:form id="listado-form" prependId="false">
+                                <h:panelGrid>
+                                    <p:commandButton id="crear-predio-btn"
+                                                     icon="fa fa-plus" styleClass="white Fright" value="Agregar Manzana"
+                                                     actionListener="#{fWManzanaController.prepararCrear()}"
+                                                     update="listado-form:table-list :form-form"
+                                                     oncomplete="PF('addDialog').show()"/>
+                                </h:panelGrid>
+
+                                <p:dataTable var="mz" value="#{fWManzanaController.listado}" widgetVar="listadoTable"  id="table-list"                           
+                                             emptyMessage="Manzanas no encontradas con esos términos de búsqueda."
+                                             paginator="true"
+                                             rows="20"
+                                             lazy="true"
+                                             rowKey="#{mz.manzanaPK}"
+                                             paginatorPosition="bottom"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15,20">
+
+                                    <p:column headerText="Parroquia" filterBy="#{mz.manzanaPK.codParroquia}">
+                                        <h:outputText value="#{mz.manzanaPK.codParroquia}" />
+                                    </p:column>
+                                    <p:column headerText="Zona" filterBy="#{mz.manzanaPK.codZona}" >
+                                        <h:outputText value="#{mz.manzanaPK.codZona}" />
+                                    </p:column>
+                                    <p:column headerText="Sector" filterBy="#{mz.manzanaPK.codSector}">
+                                        <h:outputText value="#{mz.manzanaPK.codSector}"/>
+                                    </p:column>
+                                    <p:column headerText="Manzana" filterBy="#{mz.manzanaPK.codManzana}">
+                                        <h:outputText value="#{mz.manzanaPK.codManzana}" />
+                                    </p:column>
+                                    <p:column headerText="Cod. VSAM" filterBy="#{mz.codigoVsam}">
+                                        <h:outputText value="#{mz.codigoVsam}" />
+                                    </p:column>
+                                    <p:column headerText="Cant. Predios VSAM"  >
+                                        <h:outputText value="#{mz.cantPredioVsam}" />
+                                    </p:column>
+                                    <p:column headerText="Cant. Predios Relevados" >
+                                        <h:outputText value="#{mz.cantPredioReal eq null?0:mz.cantPredioReal}" />
+                                    </p:column>
+                                    <p:column headerText="Estado Actual">
+                                        <h:outputText value="#{mz.ultimoEstado.estado}" />
+                                    </p:column>
+
+                                    <p:column class="column-actions">                      
+                                        <p:commandButton icon="fa fa-pencil white" 
+                                                         update=":form-form" 
+                                                         title="Editar"
+                                                         actionListener="#{fWManzanaController.prepararEditar()}"
+                                                         oncomplete="PF('addDialog').show();$('.ui-state-error').removeClass('ui-state-error');">
+                                            <f:setPropertyActionListener value="#{mz}" target="#{fWManzanaController.entidadSeleccionada}"/>
+                                        </p:commandButton>
+
+                                        <!--    <p:commandButton icon="fa fa-times white" title="Eliminar" actionListener="{manzanaView.eliminar(mz.manzanaPK.toString())}" update="listado-form,messages">
+                                             <p:confirm header="Confirmación" message="Seguro que desea eliminar la manzana {mz.manzanaPK.toString()}" icon="ui-icon-alert" />
+                                         </p:commandButton>
+                                         
+                                         <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                             <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check white" />
+                                             <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times white" />
+                                         </p:confirmDialog>-->
+                                    </p:column>
+
+                                </p:dataTable>
+
+                                <p:dialog header="Mensaje de Sistema" widgetVar="dlgMensaje" appendTo="@(body)">
+                                    <h3>El codigo de Parroquia ingresada no existe</h3>
+                                    <h3>¿Desea Agregar una nueva Parroquia</h3>
+                                    <div class="Separator"></div>
+                                    <p:commandButton value="Aceptar"  onclick="PF('addParroquiaDialog').show();PF('dlgMensaje').hide();" />
+                                    <p:button value="Cancelar" onclick="PF('dlgMensaje').hide()" />
+                                </p:dialog>
+
+                            </h:form>
+                        </h:panelGroup>
+                    </div>
+                </div>
+            </div>
+
+
+            <ui:include src="_add.xhtml"/>
+            <ui:include src="_addParroquia.xhtml"/>
+
+        </ui:define>
+
+        <ui:define name="end_javascripts">
+
+        </ui:define>
+    </ui:composition>
+
+</html>

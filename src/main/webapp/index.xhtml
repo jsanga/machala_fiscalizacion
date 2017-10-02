@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Inicio"></h:outputText>
+        </ui:define>
+
+        <ui:define name="content">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <div class="Card whiteback">
+
+                        <div class="Container100 Responsive100">
+                            <div class="ContainerIndent">
+                                <h2 style="clear: both; margin-bottom: 30px;">Operaciones Predio Urbano</h2>
+                                <hr></hr>
+                                <div class="Wid100 MarAuto">
+                                    <div class="ContainerIndent">
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('CREAR_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/ingresar-predio">
+                                                    <div class="CardMenu RedBack WhiteBold TexAlCenter HoverEffect" >
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-home Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs13 White DispBlock ClearBoth ">Registrar predio</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('CREAR_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/ingresar-ficha-resumen">
+                                                    <div class="CardMenu OrangeBack WhiteBold TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-building-o Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs13 WhiteBold DispBlock ClearBoth">Registrar PH Madre</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('UNIFICAR_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/unificar-predios">
+                                                    <div class="CardMenu GrayDarkBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="icon-ipad Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Unificar Predio</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('FRACCIONAR_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/fraccionar-predios">
+                                                    <div class="CardMenu BlueBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="icon-layers Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Fraccionar Predio</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('CATASTRO_ESCRITURA')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/catastro-escritura">
+                                                    <div class="CardMenu YellowBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-paste Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Catastrar Escrituras</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('EXPROPIAR_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/registro-expropiacion">
+                                                    <div class="CardMenu GreenBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-bank Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Expropiar Predio</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('REGISTRO_ARRENDAMIENTO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/registro-arrendamiento">
+                                                    <div class="CardMenu PurpleBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-th-large Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Arrendar Predio</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('REGISTRO_EXCENCION_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/exencion-rebaja">
+                                                    <div class="CardMenu BorgonaBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-money Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Registrar Exenciones</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('REGISTRO_INSPECCION')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/registro-inspeccion">
+                                                    <div class="CardMenu PinkBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-book Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Registrar Inspecci&oacute;n</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('CERTIFICADO_INQUILINATO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/cat/certificado-inquilinato">
+                                                    <div class="CardMenu TurquoiseBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-file-text Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Tr&aacute;mite Inquilinato</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Container100 Responsive100">
+                            <div class="ContainerIndent">
+                                <h2 style="clear: both; margin-bottom: 30px;">Operaciones Predio Rural</h2>
+                                <hr></hr>
+                                <div class="Wid100 MarAuto">
+                                    <div class="ContainerIndent">
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('CREAR_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/ingresar-predio-rural">
+                                                    <div class="CardMenu RedBack WhiteBold TexAlCenter HoverEffect" >
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-home Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs13 White DispBlock ClearBoth ">Registrar predio</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('CREAR_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/actualizar/predio/rural/completo">
+                                                    <div class="CardMenu BorgonaBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-bank Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Actualizar Completo</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Container100 Responsive100">
+                            <div class="ContainerIndent">
+                                <h2 style="clear: both; margin-bottom: 30px;">Actualizaci&oacute;n datos del predio</h2>
+                                <hr></hr>
+                                <div class="Wid100 MarAuto">
+                                    <div class="ContainerIndent">
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_GENERALES_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/actualizar/predio/urbano/clave-localizacion">
+                                                    <div class="CardMenu PurpleBack White TexAlCenter HoverEffect" >
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-credit-card Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Clave y localizaci&oacute;n</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_GENERALES_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/actualizar/predio/urbano/titulo-dominio">
+                                                    <div class="CardMenu GreenBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-list-alt Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">T&iacute;tulo de dominio</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_TERRENO_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/actualizar/predio/urbano/terreno">
+                                                    <div class="CardMenu BlueBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-inbox Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Terreno y v&iacute;as</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_CONSTRUCCION_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/actualizar/predio/urbano/edificaciones">
+                                                    <div class="CardMenu RedBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-cubes Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Datos de Construc.:</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_CONSTRUCCION_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/actualizar/predio/urbano/integrantes-actualizacion">
+                                                    <div class="CardMenu OrangeBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-users Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Datos de Integrantes</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_GENERALES_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/actualizar/predio/urbano/completo">
+                                                    <div class="CardMenu BorgonaBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-bank Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Actualizar Completo</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_GENERALES_PREDIO')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/actualizar/predio/urbano/completo2">
+                                                    <div class="CardMenu BorgonaBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-bank Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Control de Calidad</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="Container100 Responsive100">
+                            <div class="ContainerIndent">
+                                <h2 style="clear: both; margin-bottom: 30px;">Consultas</h2>
+                                <hr></hr>
+                                <div class="Wid100 MarAuto">
+                                    <div class="ContainerIndent">
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('AUDITORIA')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/admin/aud-auditoria">
+                                                    <div class="CardMenu PinkBack White TexAlCenter HoverEffect" >
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-user-secret Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Datos de Auditor&iacute;a</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('CONSULTA')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/catastro/consulta-predio">
+                                                    <div class="CardMenu GrayDarkBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-trello Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Consultar Predio</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('CONSULTA')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/digitacion/reportes">
+                                                    <div class="CardMenu GreenBack White TexAlCenter HoverEffect">
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-book Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Reportes Digitación</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="Container100 Responsive100">
+                            <div class="ContainerIndent">
+                                <h2 style="clear: both; margin-bottom: 30px;">Contribuyentes</h2>
+                                <hr></hr>
+                                <div class="Wid100 MarAuto">
+                                    <div class="ContainerIndent">
+                                        <h:panelGroup layout="block" class="Container10 Responsive50" rendered="#{securityBean.hasAnyPermision('ADICIONAR_CONTRIBUYENTE')}">
+                                            <div class="ContainerIndent">
+                                                <a href="#{request.contextPath}/admin/admin-contribuyente">
+                                                    <div class="CardMenu GreenBack White TexAlCenter HoverEffect" >
+                                                        <div class="EmptyBox5"></div>
+                                                        <i class="fa fa-users Fs40"></i>
+                                                        <div class="EmptyBox5"></div>
+                                                        <div class="FontRobotoLight Fs14 White DispBlock ClearBoth">Listado Contrib.:</div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </h:panelGroup>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="admin-index">
+                            <h:panelGrid style="width: 100%" columns="1">
+
+                                <h:panelGroup>
+                                    <h2 style="clear: both; margin-bottom: 30px;">Operaciones sobre el solar</h2>
+                                    <hr></hr>
+                                    <ul class="home-index-menu">
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('CREAR_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/ingresar-predio"><i class="fa fa-home Fs50 iconMenu1"></i><p class="textMenu">Ingreso de</p><p class="textMenu">Predio Urbano</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('CREAR_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/ingresar-ficha-resumen"><i class="fa fa-building-o Fs50 iconMenu1"></i><p class="textMenu">Ingreso de</p><p class="textMenu">Ficha Resumen</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('CREAR_INCIDENCIA')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/incidencias"><i class="fa fa-file-text Fs50 iconMenu1"></i><p class="textMenu">Incidencia</p></a></li>
+                                        </h:panelGroup>
+<!--                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('CREAR_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/crear-ph"><i class="fa fa-renren Fs50 iconMenu1"></i><p class="textMenu">Adicionar PH</p></a></li>
+                                        </h:panelGroup>
+                                     <h:panelGroup rendered="#{securityBean.hasAnyPermision('ELIMINAR_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/eliminar-predio"><i class="fa fa-trash Fs50 iconMenu1"></i><p class="textMenu">Eliminar</p></a></li>
+                                        </h:panelGroup>-->
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('UNIFICAR_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/unificar-predios"><i class="fa fa-cube Fs50 iconMenu1"></i><p class="textMenu">Unificar</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('FRACCIONAR_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/fraccionar-predios"><i class="fa fa-delicious Fs50 iconMenu1"></i><p class="textMenu">Fraccionar</p></a></li>
+                                        </h:panelGroup>
+                               <!--         <h:panelGroup rendered="#{securityBean.hasAnyPermision('CATASTRO_ESCRITURA')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/catastro-escritura"><i class="fa fa-paste Fs50 iconMenu1"></i><p class="textMenu">Catastrar</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('REGISTRO_ARRENDAMIENTO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/registro-arrendamiento"><i class="fa fa-th-large Fs50 iconMenu1"></i><p class="textMenu">Arrendamientos</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('REGISTRO_EXCENCION_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/exencion-rebaja"><i class="fa fa-money Fs50 iconMenu1"></i><p class="textMenu">Exenciones</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('EXPROPIAR_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/registro-expropiacion"><i class="fa fa-bank Fs50 iconMenu1"></i><p class="textMenu">Expropiaciones</p></a></li>
+                                        </h:panelGroup>-->
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('REGISTRO_INSPECCION')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/registro-inspeccion"><i class="fa fa-book Fs50 iconMenu1"></i><p class="textMenu">Inspecciones</p></a></li>
+                                        </h:panelGroup>
+
+                                    </ul>
+                                </h:panelGroup>
+                                <br></br>
+                                <h:panelGroup>
+                                    <h2 style="clear: both">Actualizaci&oacute;n datos del predio</h2>
+                                    <hr></hr>
+                                    <ul class="home-index-menu">
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_GENERALES_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/actualizar/predio/urbano/clave-localizacion"><i class="fa fa-credit-card Fs50 iconMenu2"></i><p class="textMenu">Clave y localizaci&oacute;n</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_GENERALES_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/actualizar/predio/urbano/titulo-dominio"><i class="fa fa-list-alt Fs50 iconMenu2"></i><p class="textMenu">T&iacute;tulo de dominio</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_TERRENO_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/actualizar/predio/urbano/terreno"><i class="fa fa-inbox Fs50 iconMenu2"></i><p class="textMenu">Terreno y v&iacute;as</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_CONSTRUCCION_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/actualizar/predio/urbano/edificaciones"><i class="fa fa-cubes Fs50 iconMenu2"></i><p class="textMenu">Construcciones</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_CONSTRUCCION_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/actualizar/predio/urbano/integrantes-actualizacion"><i class="fa fa-users Fs50 iconMenu2"></i><p class="textMenu">Integrantes</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('ACTUALIZAR_DATOS_GENERALES_PREDIO')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/actualizar/predio/urbano/completo"><i class="fa fa-home Fs50 iconMenu2"></i><p class="textMenu">Actualizaci&oacute;n completa</p></a></li>
+                                        </h:panelGroup>
+                                    </ul>
+                                </h:panelGroup>
+                                <br></br>
+                                <h:panelGroup>
+                                    <h2 style="clear: both">Consultas</h2>
+                                    <hr></hr>
+                                    <ul class="home-index-menu">
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('AUDITORIA')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/admin/aud-auditoria"><i class="fa fa-user-secret Fs50 iconMenu5"></i><p class="textMenu">Auditor&iacute;a</p></a></li>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('CONSULTA')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/catastro/consulta-predio"><i class="fa fa-trello Fs50 iconMenu5"></i><p class="textMenu">Predio</p></a></li>
+                                        </h:panelGroup>
+                                    </ul>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h2 style="clear: both">Contribuyentes</h2>
+                                    <hr></hr>
+                                    <ul class="home-index-menu">
+
+                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('ADICIONAR_CONTRIBUYENTE')}">
+                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/admin/admin-contribuyente"><i class="fa fa-group Fs50 iconMenu5"></i><p class="textMenu">Listado</p></a></li>
+                                        </h:panelGroup>
+                                    </ul>
+                                </h:panelGroup>
+                                <!--                                <br></br>
+                                                                <h:panelGroup>
+                                                                    <h2 style="clear: both">Solicitudes</h2>
+                                                                    <hr></hr>
+                                                                    <ul class="home-index-menu">
+                                                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('FICHA_PREDIAL')}">
+                                                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/generar/ficha-catastral"><i class="fa fa-life-bouy Fs50 iconMenu4"></i><p class="textMenu">Ficha predial</p></a></li>
+                                                                        </h:panelGroup>
+                                                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('CERTIFICADO_AVALUO')}">
+                                                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/cat/certificado-avaluo"><i class="fa fa-file-text Fs50 iconMenu4"></i><p class="textMenu">Certificado de aval&uacute;o</p></a></li>
+                                                                        </h:panelGroup>
+                                                                        <h:panelGroup rendered="#{securityBean.hasAnyPermision('LIQUIDACION_ANUAL')}">
+                                                                            <li class="Fleft TexAlCenter MarRight20"><a href="#{request.contextPath}/avaluos/generar-masivo"><i class="fa fa-file-text Fs50 iconMenu4"></i><p class="textMenu">Liquidaci&oacute;n anual</p></a></li>
+                                                                        </h:panelGroup>
+                                                                    </ul>
+                                                                </h:panelGroup>-->
+                                <br></br>
+                            </h:panelGrid>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+
+
+
+    </ui:composition>
+
+</html>

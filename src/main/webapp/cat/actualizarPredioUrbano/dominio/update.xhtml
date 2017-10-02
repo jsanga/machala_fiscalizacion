@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:predio="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition template="../../../WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Actualizar t&iacute;tulo de dominio"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <div class="Card whiteback">
+                        <h1 class="BigTopic Fs16">Actualizar t&iacute;tulo de dominio</h1>
+                        <hr></hr>
+                        <predio:buscarPredio opcionesBusqueda="#{updateDominioView.opcionesBusqueda}"
+                                             mostrarParroquia="true"
+                                             mostrarZona="true"
+                                             mostrarSector="true"
+                                             mostrarManzana="true"
+                                             mostrarPredio="true"
+                                             mostrarBloque="true"
+                                             mostrarPHV="true"
+                                             mostrarPHH="true"
+                                             accionBuscar="#{updateDominioView.buscar()}"
+                                             accionCancelar="#{updateDominioView.cancelar()}"
+                                             actualizarLuegoDeBusqueda="messages, buscar-predio-form,crearPredioWizardContainer"/>
+                    </div>
+                </div>
+            </div>
+            <div class="EmptyBox20"></div>
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <div class="Card whiteback">
+                        <h:form id="crearPredioForm" prependId="false">
+                            <h:panelGroup layout="block" id="crearPredioWizardContainer">
+                                <p:wizard id="wiz" rendered="#{updateDominioView.opcionesBusqueda.ejecutandoAccion}" flowListener="#{updateDominioView.onFlowProcess}" nextLabel="Siguiente" backLabel="Anterior">
+
+                                    <p:tab id="step-datos-legales" title="Datos de escritura" rendered="#{updateDominioView.predio.tipoPropiedad != 2}">
+                                        <ui:include src="_datosLegales.xhtml" />
+                                    </p:tab>
+                                    <p:tab id="step-datos-titulo" title="Datos de escritura" rendered="#{updateDominioView.predio.tipoPropiedad == 2}">
+                                        <ui:include src="_tituloDominio.xhtml" />
+                                    </p:tab>
+                                    <p:tab id="step-confirmacion" title="Confirmaci&oacute;n">
+
+                                        <ui:include src="_createConfirm.xhtml"/>
+                                        <h:panelGroup layout="block" class="Wid100">
+                                            <p:commandButton id="guardar-predio-btn"
+                                                             rendered="#{updateDominioView.opcionesBusqueda.ejecutandoAccion}"
+                                                             update="messages, crearPredioForm,crearPredioWizardContainer"
+                                                             icon="fa fa-save" action="#{updateDominioView.actualizar()}"
+                                                             value="Guardar"
+                                                             class="white Fright"/>
+                                        </h:panelGroup>
+                                    </p:tab>
+                                </p:wizard>
+                                <script type="text/javascript">
+                                    transformarTitulosWizard();
+                                </script>
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <ui:include src="_buscarContribuyente.xhtml"/>
+            <ui:include src="_addPosesionario.xhtml"/>
+            <p:dialog header="Propietarios segun C&oacute;digo Anterior." widgetVar="dlgResultadoConsulta" 
+                      resizable="false" position="top" width="840" height="450" minimizable="true">
+                <h:form id="resultBusquedaCA-form"  >
+                    <h:panelGroup layout="block" >
+                        <div class="ContainerIndent Container100" >
+                            <p:dataTable id="resultBusquedaCA" value="#{consultaRegistroView.resultado}" var="registro" 
+                                         rows="1" paginator="true" 
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="1,5,10,15">
+                                <f:facet name="header">
+                                    Propietarios
+                                </f:facet>
+                                <p:column headerText="C&oacute;digo Anterior" width="80">
+                                    <p:outputLabel value="#{registro.codAnterior}"/>
+                                </p:column>
+                                <p:column headerText="Linderos Orientaci&oacute;n" width="150">
+                                    <p:inputTextarea cols="35" disabled="true" value="#{registro.linderosOrientacion}"/>
+                                </p:column>
+                                <p:column headerText="Superfice"  width="80">
+                                    <p:outputLabel value="#{registro.superficie}"/>
+                                </p:column>  
+                                <p:column headerText="Descripci&oacute;n Registral" width="150">
+                                    <p:inputTextarea cols="35" disabled="true" value="#{registro.desRegistral}"/>
+                                </p:column>
+                                <p:column headerText="C&eacute;dula/Ruc" width="80">
+                                    <p:outputLabel value="#{registro.cedRuc}" />
+                                </p:column>
+                                <p:column headerText="#Ficha"  width="50">
+                                    <p:outputLabel value="#{registro.numFicha}" />
+                                </p:column>
+                                <p:column headerText="Juzgado/Notaria" width="50">
+                                    <p:outputLabel value="#{registro.juzgadoNotaria}"/>
+                                </p:column>
+                                <p:column headerText="Canton"  width="80">
+                                    <p:outputLabel value="#{registro.canton}"/>
+                                </p:column>
+                                <p:column headerText="F. Otorgamiento"  width="80">
+                                    <p:outputLabel value="#{registro.fechaOtorgamiento}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                </p:column>
+                                <p:column headerText="#Rep."  width="50">
+                                    <p:outputLabel value="#{registro.numRepertorio}"/>
+                                </p:column>
+                                <p:column headerText="Folio Inicial"  width="50">
+                                    <p:outputLabel value="#{registro.folioIni}"/>
+                                </p:column>
+                                <p:column headerText="Folio Final"  width="50">
+                                    <p:outputLabel value="#{registro.folioFin}"/>
+                                </p:column>
+                                <p:column headerText="#Reg."  width="50">
+                                    <p:outputLabel value="#{registro.numRegistro}"/>
+                                </p:column>
+                                <p:column headerText="F. Inscripci&oacute;n"  width="80">
+                                    <p:outputLabel value="#{registro.fechaInscripcion}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </p:outputLabel>
+                                </p:column>
+                                <p:column headerText="Observaciones" width="200">
+                                    <p:outputLabel value="#{(registro.observaciones==null)?'':registro.observaciones}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <p:commandButton value="Cancelar" icon="fa fa-ban" styleClass="white" onclick="PF('dlgResultadoConsulta').hide();"/>    
+                    </h:panelGroup>     
+                </h:form> 
+            </p:dialog>
+        </ui:define>
+
+    </ui:composition>
+
+</html>

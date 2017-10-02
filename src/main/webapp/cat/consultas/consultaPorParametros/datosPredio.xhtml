@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition template="../../../WEB-INF/map-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Consultar predios"></h:outputText>
+        </ui:define>
+        <ui:define name="content">
+            <h:form id="frm-datos-predio">
+                <h:panelGroup layout="block" class="Container Wid100" id="datos-tab">                                       
+                    <p:panelGrid layout="grid" columns="2" >
+                        <h1 class="BigTopic Fs16">Clave Catastral: #{consultasView.predioSeleccionado.claveCatastral}</h1>
+                        <f:facet name="footer">
+                            <div align="right">
+                                <p:commandButton id="btnImprimir" value="Imprimir" icon="ui-icon-print" actionListener="#{consultasView.imprimirFichaPredial(null)}"/>
+                            </div>
+                        </f:facet>
+                    </p:panelGrid>
+                    <p:tabView>
+                        <p:tab title="Clave catastral y Localizaci&oacute;n">
+                            <ui:include src="../predio_urbano/_datosGenerales.xhtml"/>
+                        </p:tab>
+                        <p:tab title="T&iacute;tulo de dominio" rendered="#{consultasView.predioSeleccionado.tipoPropiedad != 2}">
+                            <ui:include src="../predio_urbano/_datosLegales.xhtml"/>
+                        </p:tab>
+                        <p:tab title="T&iacute;tulo de dominio" rendered="#{consultasView.predioSeleccionado.tipoPropiedad == 2}">
+                            <ui:include src="../predio_urbano/_tituloDominio.xhtml"/>
+                        </p:tab>
+                        <p:tab title="Terreno y V&iacute;as">
+                            <ui:include src="../predio_urbano/_datosTerreno.xhtml"/>
+                        </p:tab>
+                        <p:tab title="Construcci&oacute;n">
+                            <ui:include src="../predio_urbano/_datosConstruccion.xhtml"/>
+                        </p:tab>
+                        <p:tab title="Liquidaci&oacute;n">
+                            <ui:include src="../predio_urbano/_datosLiquidacion.xhtml"/>
+                        </p:tab>
+                    </p:tabView>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

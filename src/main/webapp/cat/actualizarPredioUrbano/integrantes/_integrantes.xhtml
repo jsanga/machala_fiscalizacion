@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" style="margin-bottom: 10px;">
+            <h1 class="BigTopic Fs16">Inegrantes de la actualizaci&oacute;n catastral</h1>
+            <hr></hr>
+            
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Nombre de quien proporciona la informaci&oacute;n" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="relevamiento" value="T&eacute;cnico:"  class="DispBlock Wid100"/>
+                                <p:selectOneMenu id="relevamiento" value="#{updatePredioUrbanoIntegrantesView.relevamientoSeleccionado}"
+                                                 class="select_180" converter="integranteConverter" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="SIN DATO" itemValue="#{null}"/>
+                                    <f:selectItems  value="#{updatePredioUrbanoIntegrantesView.relevamientos}" var="relevamiento" itemLabel="#{relevamiento.apellidos} #{relevamiento.nombre}" itemValue="#{relevamiento}"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_relevamiento" value="Fecha relevamiento:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_relevamiento" value="#{updatePredioUrbanoIntegrantesView.predio.fechaRelevamiento}" 
+                                            class="input_150" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'fecha_validacion_input')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="supervision" value="Supervisor t&eacute;cnico:"  class="DispBlock Wid100"/>
+                                <p:selectOneMenu id="supervision" value="#{updatePredioUrbanoIntegrantesView.supervisorSeleccionado}"
+                                                 class="select_180" converter="integranteConverter" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="SIN DATO" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems  value="#{updatePredioUrbanoIntegrantesView.supervisores}" var="supervisor" itemLabel="#{supervisor.apellidos} #{supervisor.nombre}" itemValue="#{supervisor}"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_validacion" value="Fecha supervici&oacute;n:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_validacion" value="#{updatePredioUrbanoIntegrantesView.predio.fechaValidacion}" 
+                                            class="input_150" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'fecha_supervision_input')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="validacion" value="Control de calidad:"  class="DispBlock Wid100"/>
+                                <p:selectOneMenu id="validacion" value="#{updatePredioUrbanoIntegrantesView.validadorSeleccionado}"
+                                                 class="select_180" converter="integranteConverter" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="SIN DATO" itemValue="#{null}" noSelectionOption="false" />
+                                    <f:selectItems  value="#{updatePredioUrbanoIntegrantesView.validadores}" var="validador" itemLabel="#{validador.apellidos} #{validador.nombre}" itemValue="#{validador}"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_supervision" value="Fecha control calidad:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_supervision" value="#{updatePredioUrbanoIntegrantesView.predio.fechaSupervicion}" 
+                                            class="input_150" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'digitacion')"/>
+                            </h:panelGroup> 
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="digitacion" value="Digitaci&oacute;n:"  class="DispBlock Wid100"/>
+                                <p:selectOneMenu id="digitacion" value="#{updatePredioUrbanoIntegrantesView.digitadorSeleccionado}"
+                                                 class="select_180" converter="integranteConverter" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="SIN DATO" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems  value="#{updatePredioUrbanoIntegrantesView.digitadores}" var="digitador" itemLabel="#{digitador.apellidos} #{digitador.nombre}" itemValue="#{digitador}"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_digitador" value="Fecha digitac&iacute;on:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_digitador" value="#{updatePredioUrbanoIntegrantesView.predio.fechaDigitacion}" 
+                                            class="input_150"  mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'fecha_supervisionDigitacion_input')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="supervisionDigitacion" value="Supervisor Digitaci&oacute;n:"  class="DispBlock Wid100"/>
+                                <p:selectOneMenu id="supervisionDigitacion" value="#{updatePredioUrbanoIntegrantesView.supervisorDigtadorSeleccionado}"
+                                                 class="select_180" converter="integranteConverter" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="SIN DATO" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems  value="#{updatePredioUrbanoIntegrantesView.supervisoresDigitadores}" var="supervisorDigitacion" itemLabel="#{supervisorDigitacion.apellidos} #{supervisorDigitacion.nombre}" itemValue="#{supervisorDigitacion}"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_supervisionDigitacion" value="Fecha sup. digitaci&oacute;n:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_supervisionDigitacion" value="#{updatePredioUrbanoIntegrantesView.predio.fechaSupervicionDigitacion}" 
+                                            class="input_150" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'fecha_cartografia_input')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel  for="cartografia" value="Cartograf&iacute;a:"  class="DispBlock Wid100"/>
+                                <p:selectOneMenu id="cartografia" value="#{updatePredioUrbanoIntegrantesView.cartografoSeleccionado}"
+                                                 class="select_180" converter="integranteConverter" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="SIN DATO" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems  value="#{updatePredioUrbanoIntegrantesView.cartografos}" var="cartografo" itemLabel="#{cartografo.apellidos} #{cartografo.nombre}" itemValue="#{cartografo}"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_cartografia" value="Fecha cartograf&iacute;a:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_cartografia" value="#{updatePredioUrbanoIntegrantesView.predio.fechaCartografia}" 
+                                            class="input_150" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'wiz_next')"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+</html>

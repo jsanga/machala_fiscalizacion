@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:pass="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <p:dialog id="usos-dlg" widgetVar="usosDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Datos del uso del suelo" style="width: 700px;"> 
+            <p:ajax event="close" update="usos-form,datos-usos-messages" listener="#{regPredioRuralView.cancelarCrearUso()}" />
+            <h:panelGroup layout="block" class="Container Container100">
+                <p:panel class="sentinel-panel">
+                    <h:form id="usos-form" prependId="false">
+                        <p:messages id="datos-usos-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+
+                        <h:panelGroup layout="block" class="Wid100" style="width: 500px !important;">
+                            <h:panelGrid columns="1" class="Wid100">
+
+                                <h:panelGroup layout="block" styleClass="varDisContainerUSO"> 
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <p:outputLabel for="uso_suelo-input" value="Uso del suelo:" class="DispBlock" style="width: 213px;"/>
+                                            </td>
+
+                                            <td>
+                                                <p:outputLabel for="grupo_suelo-input" value="Grupo:" class="DispBlock Wid80" style="width: 200px;"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:175px;">
+                                                <h:panelGroup layout="block">
+                                                    <p:inputText id="uso_suelo-input"  value="#{regPredioRuralView.usoSeleccionado.cod}"
+                                                                 style="width: 23px; display: block; margin-right: 5px; margin-bottom: 5px;float:left;"
+                                                                 pass:data-field="uso_suelo"
+                                                                 pass:data-default-value="#{regPredioRuralView.codeUsoDefault}"
+                                                                 pass:data-all-values="#{regPredioRuralView.PH ? regPredioRuralView.codigosVariablesuUsosPH() : regPredioRuralView.codigosVariablesuUsos()}"
+                                                                 onkeypress="validateIntegerValueAndFocusNext(event, 'crear-uso-btn')">
+                                                        <p:ajax event="change" update="usos-form" listener="#{regPredioRuralView.changeUso()}"/>
+                                                    </p:inputText>
+
+                                                    <p:selectOneMenu id="uso_suelo-select" value="#{regPredioRuralView.valorDiscreto}" disabled="false"
+                                                                     pass:data-field="uso_suelo" styleClass="varDisSelectContainer" converter="valorDiscretoConverter"
+                                                                     pass:data-default-value="#{regPredioRuralView.codeUsoDefault}"
+                                                                     pass:data-all-values="#{regPredioRuralView.PH ? regPredioRuralView.codigosVariablesuUsosPH() : regPredioRuralView.codigosVariablesuUsos()}"
+                                                                     style="display: block; margin-right: 5px; width: 100px;float:left;">
+                                                        <p:ajax update="usos-form" listener="#{regPredioRuralView.changeUsoSelect()}"/>
+                                                        <f:selectItems value="#{regPredioRuralView.valorDiscretos}" />
+                                                    </p:selectOneMenu>
+                                                </h:panelGroup>
+                                            </td>
+
+                                            <td style="width:175px;">
+                                                <h:panelGroup layout="block" id="grupo_uso_seleccionado">
+                                                    <p:inputText id="grupo_suelo-input"  value="#{regPredioRuralView.valorDiscreto.variable.nombre}"
+                                                                 disabled="true" 
+                                                                 style="width: 180px; display: block; margin-right: 5px; margin-bottom: 5px;float:left;"
+                                                                 onkeypress="validateIntegerValueAndFocusNext(event, 'crear-uso-btn')"/>
+
+                                                </h:panelGroup>
+                                            </td>
+
+                                        </tr>
+                                    </table>
+
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" class="MarTop20">
+                                    <p:commandButton id="crear-uso-btn" 
+                                                     icon="fa fa-save" styleClass="white Fright" value="Adicionar"  
+                                                     process="@this,uso_suelo-input,uso_suelo-select"
+                                                     actionListener="#{regPredioRuralView.crearNuevoUso(true)}"
+                                                     update="usos-form,datos-usos-messages"
+
+                                                     />
+
+                                    <p:commandButton id="cancelar-uso-btn" 
+                                                     icon="fa fa-ban" styleClass="white" value="Cancelar" actionListener="#{regPredioRuralView.cancelarCrearUso()}"                                        
+                                                     onclick="PF('usosDialog').hide();"
+                                                     />
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </h:form>
+                </p:panel>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

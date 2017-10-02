@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_digitadoras_subreport2" language="groovy" pageWidth="470" pageHeight="20" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="470" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" isIgnorePagination="true" uuid="5a37cbf8-7890-47e5-a4ec-81fd660904e4">
+	<property name="ireport.zoom" value="5.054470284992944"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="ID_PREDIO" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT string_agg(A.tipo_otra_construccion, '') FROM (
+SELECT id_predio, CASE WHEN p.tipo_predio = true THEN
+	CASE WHEN numero_variable = 100 THEN 'OBRAS COMPLEMENTARIAS' || CASE WHEN tipo_construccion = 1 THEN ' - PISCINA'
+			WHEN tipo_construccion = 2 THEN ' - CISTERNA'
+			WHEN tipo_construccion = 3 THEN ' - CANCHAS'
+			WHEN tipo_construccion = 4 THEN ' - AREA LIBRE PAVIMENTADA'
+			WHEN tipo_construccion = 5 THEN ' - AREA LIBRE ADOQUINADA'
+			WHEN tipo_construccion = 6 THEN ' - AREA LIBRE EMPEDRADA'
+			WHEN tipo_construccion = 7 THEN ' - MUELLE'
+			WHEN tipo_construccion = 8 THEN ' - AREA CUBIERTA'
+			WHEN tipo_construccion = 9 THEN ' - EDIFICACION COMPLEMENTARIA'
+			WHEN tipo_construccion = 10 THEN ' - TANQUE ELEVADO' END
+	WHEN numero_variable = 101 THEN 'INSTALACIONES ESPECIALES' || CASE WHEN tipo_construccion = 1 THEN ' - PLANTA ELECTRICA DE EMERGENCIA'
+			WHEN tipo_construccion = 2 THEN ' - SISTEMA DE CLIMATIZACION'
+			WHEN tipo_construccion = 3 THEN ' - GAS CENTRALIZADO'
+			WHEN tipo_construccion = 4 THEN ' - BOMBA HIDRONEUMATICA'
+			WHEN tipo_construccion = 5 THEN ' - SISTEMA DE SEGURIDAD CONTRA INCENDIO'
+			WHEN tipo_construccion = 6 THEN ' - SISTEMA DE VIGILANCIA'
+			WHEN tipo_construccion = 7 THEN ' - CENTRAL TELEFONICA Y COMUNICACION'
+			WHEN tipo_construccion = 8 THEN ' - COMUNICACION SATELITAL'
+			WHEN tipo_construccion = 9 THEN ' - SISTEMA DE MUSICA AMBIENTAL'
+			WHEN tipo_construccion = 10 THEN ' - SISTEMA DE ILUMINACION FOTOCELULA'
+			WHEN tipo_construccion = 11 THEN ' - ASCENSOR'
+			WHEN tipo_construccion = 12 THEN ' - ESCALERA ELECTRICA'
+			WHEN tipo_construccion = 13 THEN ' - CERCO ELECTRICO'
+			WHEN tipo_construccion = 14 THEN ' - SISTEMA CENTRAL DE AIRE ACONDICIONADO' END
+	WHEN numero_variable = 102 THEN 'MURO' || CASE WHEN tipo_construccion = 0 THEN ' - NO TIENE'
+			WHEN tipo_construccion = 1 THEN ' - HORMIGÓN ARMADO'
+			WHEN tipo_construccion = 2 THEN ' - HORMIGON CICLÓPIO'
+			WHEN tipo_construccion = 3 THEN ' - INCLINADO PIEDRA'
+			WHEN tipo_construccion = 4 THEN ' - MURO GAVIONES' END
+	WHEN numero_variable = 103 THEN 'CERRAMIENTO' || CASE WHEN tipo_construccion = 0 THEN ' - NO TIENE'
+			WHEN tipo_construccion = 1 THEN ' - LADRILLO/BLOQUE SIN ACABADO'
+			WHEN tipo_construccion = 2 THEN ' - LADRILLO/BLOQUE ENLUCIDO Y PINTADO'
+			WHEN tipo_construccion = 3 THEN ' - MALLA SOBRE MANPOSTERIA'
+			WHEN tipo_construccion = 4 THEN ' - HIERRO SOBRE MANPOSTERIA'
+			WHEN tipo_construccion = 5 THEN ' - PIEDRA'
+			WHEN tipo_construccion = 6 THEN ' - HIERRO'
+			WHEN tipo_construccion = 7 THEN ' - CERCO DE CAÑA'
+			WHEN tipo_construccion = 8 THEN ' - ENMALLADO'
+			WHEN tipo_construccion = 9 THEN ' - ALAMBRE PÚA'
+			WHEN tipo_construccion = 10 THEN ' - CERCO VIVO' END END
+WHEN p.tipo_predio = false THEN
+	CASE WHEN numero_variable = 164 THEN 'OTRAS MEJORAS DE OBRA' || CASE WHEN tipo_construccion = 0 THEN ' - SIN DATO'
+			WHEN tipo_construccion = 1 THEN ' - NO TIENE'
+			WHEN tipo_construccion = 2 THEN ' - ESTABLO'
+			WHEN tipo_construccion = 3 THEN ' - ESTANQUE/RESERVORIO'
+			WHEN tipo_construccion = 4 THEN ' - GALPÓN AVÍCOLA'
+			WHEN tipo_construccion = 5 THEN ' - INVERNADERO'
+			WHEN tipo_construccion = 6 THEN ' - PARQUES Y JARDINES'
+			WHEN tipo_construccion = 7 THEN ' - PISCINA CAMARONERA'
+			WHEN tipo_construccion = 8 THEN ' - PISCINA PISICOLA'
+			WHEN tipo_construccion = 9 THEN ' - PISCINA DE NATACIÓN'
+			WHEN tipo_construccion = 10 THEN ' - PISTA DE ATERRIZAJE'
+			WHEN tipo_construccion = 11 THEN ' - TINA'
+			WHEN tipo_construccion = 12 THEN ' - OTROS' END
+	WHEN numero_variable = 165 THEN 'MUROS' || CASE WHEN tipo_construccion = 1 THEN ' - HORMIGON ARMADO'
+			WHEN tipo_construccion = 2 THEN ' - HORMIGON CICLOPEO'
+			WHEN tipo_construccion = 3 THEN ' - MURO DE ESCOLLERA'
+			WHEN tipo_construccion = 4 THEN ' - MURO DE GAVIONES'
+			WHEN tipo_construccion = 5 THEN ' - MURO DE CONTENCION' END
+	WHEN numero_variable = 166 THEN 'CERRAMIENTOS' || CASE WHEN tipo_construccion = 1 THEN ' - LADRILLO/BLOQUE SIN ACABADO'
+			WHEN tipo_construccion = 2 THEN ' - LADRILLO/BLOQUE ENLUCIDO Y PINTADO'
+			WHEN tipo_construccion = 3 THEN ' - MALLA SOBRE MAMPOSTERIA'
+			WHEN tipo_construccion = 4 THEN ' - PIEDRA'
+			WHEN tipo_construccion = 5 THEN ' - HIERRO'
+			WHEN tipo_construccion = 6 THEN ' - CERCO DE CAÑA'
+			WHEN tipo_construccion = 7 THEN ' - ENMALLADO'
+			WHEN tipo_construccion = 8 THEN ' - ALAMBRE DE PÚA' END
+	WHEN numero_variable = 167 THEN 'OBRAS COMPLEMENTARIAS E INSTALACIONES' || CASE WHEN tipo_construccion = 1 THEN ' - PISCINA PARA LAVADO'
+			WHEN tipo_construccion = 2 THEN ' - CISTERNA'
+			WHEN tipo_construccion = 3 THEN ' - CANCHAS'
+			WHEN tipo_construccion = 4 THEN ' - ÁREA LIBRE PAVIMENTADA'
+			WHEN tipo_construccion = 5 THEN ' - ÁREA LIBRE ADOQUINADA'
+			WHEN tipo_construccion = 6 THEN ' - MUELLE'
+			WHEN tipo_construccion = 7 THEN ' - EMPACADORA'
+			WHEN tipo_construccion = 8 THEN ' - ÁREA CUBIERTA' END
+	WHEN numero_variable = 168 THEN 'INSTALACIONES ESPECIALES' || CASE WHEN tipo_construccion = 1 THEN ' - PLANTA ELÉCTRICA DE EMERGENCIA'
+			 WHEN tipo_construccion = 2 THEN ' - SISTEMA DE CLIMATIZACIÓN'
+			 WHEN tipo_construccion = 3 THEN ' - GAS CENTRALIZADO'
+			 WHEN tipo_construccion = 4 THEN ' - BOMBA HIDRONEUMÁTICA'
+			 WHEN tipo_construccion = 5 THEN ' - SISTEMA DE SEGURIDAD CONTRAINCENDIOS'
+			 WHEN tipo_construccion = 6 THEN ' - SISTEMA DE VIGILANCIA'
+			 WHEN tipo_construccion = 7 THEN ' - CENTRAL TELEFÓNICA Y COMUNICACIÓN'
+			 WHEN tipo_construccion = 8 THEN ' - COMUNICACIÓN SATELITAL'
+			 WHEN tipo_construccion = 9 THEN ' - SISTEMA DE ILUMINACIÓN FOTOCÉLULA'
+			 WHEN tipo_construccion = 10 THEN ' - CERCO ELÉTRICO'
+			 WHEN tipo_construccion = 11 THEN ' - AIRE ACONDICIONADO' END END END || ' - AREA: ' || round(area::numeric, 2)::varchar || chr(10) AS tipo_otra_construccion
+FROM cat_otros_tipos_construccion ot
+INNER JOIN cat_predio p
+ON ot.id_predio = p.id
+WHERE id_predio = $P{ID_PREDIO}) AS A]]>
+	</queryString>
+	<field name="string_agg" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="470" height="20" uuid="fa528763-f39d-47a0-823e-954728c08be7"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="4"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{string_agg}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

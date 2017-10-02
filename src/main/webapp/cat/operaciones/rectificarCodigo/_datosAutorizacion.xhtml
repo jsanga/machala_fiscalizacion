@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="datosAutorizacionContainer" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">Datos de Autorizaci&oacute;n</h1>
+                <h:panelGroup layout="block" class="Responsive100 Container100">                     
+                    <h:panelGrid columns="4" style="width: 100%">
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="tipo_documento" value="Tipo de documento:" class="DispBlock Wid100"/>
+                            <p:selectOneMenu id="tipo_documento"  value="#{rectificarClaveView.idTipoDocumento}" onchange="focusNextOnEnter(event, 'referencia_datos')">                              
+                                <f:selectItems  value="#{rectificarClaveView.tiposDocumentos}" var="tipoDoc" itemLabel="#{tipoDoc.label}" itemValue="#{tipoDoc.value}"/>
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="referencia_datos" value="Referencia:" class="DispBlock Wid100"/>
+                            <p:inputText id="referencia_datos" value="#{rectificarClaveView.datosAutorizacion.referencia}"
+                                         class="input_125" onkeypress="focusNextOnEnter(event, 'fecha_datos_input')"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="fecha_datos" value="Fecha:"  class="DispBlock Wid100"/>
+                            <p:calendar id="fecha_datos" value="#{rectificarClaveView.datosAutorizacion.fecha}"
+                                        mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'observacion_datos')"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="responsable" value="Responsable:"  class="DispBlock Wid100" />
+                            <p:inputText id="responsable" value="#{rectificarClaveView.datosAutorizacion.responsable}" class="input_125" readonly="true"/>
+                        </h:panelGroup>
+                    </h:panelGrid>                      
+                    <h:panelGrid columns="1" style="width: 90%">
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="observacion_datos" value="Observaciones:" class="DispBlock Wid100"/>
+                            <p:inputTextarea id="observacion_datos" style="width: 90%" value="#{rectificarClaveView.datosAutorizacion.observaciones}"
+                                             onkeypress="focusNextOnEnter(event, 'wiz_next')"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+
+</html>

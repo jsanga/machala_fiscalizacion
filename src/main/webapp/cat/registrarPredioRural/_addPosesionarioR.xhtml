@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition >
+
+        <p:dialog id="CreateContribuyenteDlg" widgetVar="CreateContribuyenteDialog" appendTo="@(body)"
+                  modal="true" resizable="false" header="Datos del nuevo contribuyente">
+            <h:form id="adicionarContribuyenteForm">
+                <p:messages id="datos-messages" globalOnly="true" showSummary="false" autoUpdate="false" closable="true" />
+                <f:event listener="#{regPredioRuralView.validarFormularioPosesionario}" type="postValidate"/>
+                <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+                    <fieldset>
+                        <legend>Datos generales</legend>
+                        <p:panelGrid>
+                            
+                            
+                            <p:row rendered="#{regPredioRuralView.estadoEscritura == 1}">
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="tipo_contribuyente_cat" value="Tipo de contribuyente:" class="form-field-label"/>
+                                        <p:selectOneMenu id="tipo_contribuyente_cat" value="#{regPredioRuralView.nuevoPosesionario.tipo}">
+                                            <f:selectItem itemLabel="NATURAL" itemValue="N" />
+                                            <f:selectItem itemLabel="JURIDICO" itemValue="J" />
+                                            <p:ajax update="adicionarContribuyenteForm"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column rendered="#{regPredioRuralView.nuevoPosesionario.tipo.contains('J')}">
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="tipo_contribuyente_jur"  value="Personería jurídica:" class="form-field-label"/>
+                                        <p:selectOneMenu id="tipo_contribuyente_jur" value="#{regPredioRuralView.nuevoPosesionario.tipo}">
+                                            <f:selectItem itemLabel="PÚBLICO" itemValue="J-PU" />
+                                            <f:selectItem itemLabel="PRIVADO" itemValue="J-PR" />
+                                            <f:selectItem itemLabel="MUNICIPAL" itemValue="J-MU" />
+                                            <p:ajax update="tipo_contribuyente_jur" />
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column>
+                                    <p:panelGrid columns="1">
+                                        <h:outputText value="Número de habitantes"/>
+                                        <p:inputText id="nro_habitantes" value="#{regPredioRuralView.predio.nroPersonasHabitan}" type="number"
+                                            class="input_180"/>
+                                    </p:panelGrid>
+                                </p:column>
+                            </p:row>
+                            
+                            <p:row rendered="#{regPredioRuralView.estadoEscritura == 2}">
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="tipo_contribuyente_cat2" value="Tipo de contribuyente:" class="form-field-label"/>
+                                        <p:selectOneMenu id="tipo_contribuyente_cat2" value="#{regPredioRuralView.nuevoPosesionario.tipo}"
+                                                         required="true" requiredMessage="Tipo de Contribuyente Requerido">
+                                            <f:selectItem itemLabel="POSESIONARIO" itemValue="#{regPredioRuralView.nuevoPosesionario.tipo}-P" />
+                                            <f:selectItem itemLabel="ARRENDATARIO" itemValue="#{regPredioRuralView.nuevoPosesionario.tipo}-A" />
+                                            <f:selectItem itemLabel="USUFRUCTUARIO" itemValue="#{regPredioRuralView.nuevoPosesionario.tipo}-U" />
+                                            <p:ajax update="tipo_contribuyente_cat2"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+                                </p:column>
+                                
+                            </p:row>
+                            
+                            <p:row rendered="#{regPredioRuralView.estadoEscritura == 3}">
+                                <p:column>
+                                    
+                                </p:column>
+                            </p:row>
+                            
+                            <h:panelGroup rendered="#{regPredioRuralView.nuevoPosesionario.tipo == 'N'}" id="panelNatural">
+                                <p:row>
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="tipo_identificacion" value="Tipo de identificaci&oacute;n:" class="form-field-label"/>
+                                            <p:selectOneMenu id="tipo_identificacion" value="#{regPredioRuralView.nuevoPosesionario.tipoIdentificacion}" 
+                                                             style="width:125px" required="true" requiredMessage="Tipo de Identificaci&oacute;n Requerido">
+                                                <f:selectItem itemLabel="Cedula" itemValue="C" />
+                                                <f:selectItem itemLabel="RUC" itemValue="R" />
+                                                <f:selectItem itemLabel="Pasaporte" itemValue="P" />
+                                                <p:ajax update="numero_identificacion" listener="#{regPredioRuralView.changeNumIdent()}"/>
+                                            </p:selectOneMenu>
+                                        </h:panelGroup>
+                                    </p:column> 
+
+
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="numero_identificacion" value="N&uacute;mero de identificaci&oacute;n:" class="form-field-label" />
+                                            <p:inputText type="number" id="numero_identificacion" value="#{regPredioRuralView.nuevoPosesionario.identificacion}" maxlength="#{regPredioRuralView.nuevoPosesionario.tipoIdentificacion == 'R' ? 13 : 10}"
+                                                         required="true" requiredMessage="Debe ingresar el número de identificación"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'nombre_contribuyente')">
+                                                <p:ajax update="numero_identificacion"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="nombre_contribuyente" value="Nombres:" class="form-field-label"/>
+                                            <p:inputText id="nombre_contribuyente" value="#{regPredioRuralView.nuevoPosesionario.nombre}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'apellido_paterno')" required="true" 
+                                                         requiredMessage="Nombre Requerido">
+                                                <p:ajax update="nombre_contribuyente"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="apellido_paterno" value="Apellido paterno:" class="form-field-label"/>
+                                            <p:inputText id="apellido_paterno" value="#{regPredioRuralView.nuevoPosesionario.apellidoPaterno}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'apellido_materno')">
+                                                <p:ajax update="apellido_paterno"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="apellido_materno" value="Apellido materno:" class="form-field-label"/>
+                                            <p:inputText id="apellido_materno" value="#{regPredioRuralView.nuevoPosesionario.apellidoMaterno}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'fecha_nacimiento')">
+                                                <p:ajax update="apellido_materno"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+                                </p:row>
+
+
+                                <p:row>
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="email" value="Email:" class="form-field-label"/>
+                                            <p:inputText id="email" value="#{regPredioRuralView.nuevoPosesionario.email}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'celular')">
+                                                <p:ajax update="email"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="celular" value="Celular:" class="form-field-label"/>
+                                            <p:inputText id="celular" value="#{regPredioRuralView.nuevoPosesionario.celular}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'telefono')">
+                                                <p:ajax update="celular"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="estado_civil" value="Estado Civil:" class="form-field-label"/>
+
+                                            <p:selectOneMenu id="estado_civil" value="#{regPredioRuralView.nuevoPosesionario.estadoCivil}" style="width:125px">
+                                                <f:selectItem itemLabel="Casado/a" itemValue="0" />
+                                                <f:selectItem itemLabel="Soltero/a" itemValue="1" />
+                                                <f:selectItem itemLabel="Divorciado/a" itemValue="2" />
+                                                <f:selectItem itemLabel="Viudo/a" itemValue="3"/>
+                                                <f:selectItem itemLabel="Unión de hecho" itemValue="4"/>
+                                                <p:ajax update="estado_civil"/>
+                                            </p:selectOneMenu>
+
+                                        </h:panelGroup>
+                                    </p:column>
+                                    
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="nombres_conyuge" value="Nombre del conyuge:" class="form-field-label"/>
+                                            <p:inputText id="nombres_conyuge" value="#{regPredioRuralView.nuevoPosesionario.nombresConyuge}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'telefono')">
+                                                <p:ajax update="nombres_conyuge"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+                                </p:row>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup rendered="#{regPredioRuralView.nuevoPosesionario.tipo.contains('J')}" id="panelJuridico">
+                                <p:row>
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="numero_identificacion_j" value="N&uacute;mero de identificaci&oacute;n:" class="form-field-label" />
+                                            <p:inputText type="number" id="numero_identificacion_j" value="#{regPredioRuralView.nuevoPosesionario.identificacion}" maxlength="13" class="input_125" >
+                                                <p:ajax update="numero_identificacion_j"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+                                    
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="razon_social" value="Razón social:" class="form-field-label"/>
+                                            <p:inputText id="razon_social" value="#{regPredioRuralView.nuevoPosesionario.nombre}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'apellido_paterno')" required="true" 
+                                                         requiredMessage="Razón social Requerido">
+                                                <p:ajax update="razon_social"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+                                    
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="email_j" value="Email:" class="form-field-label"/>
+                                            <p:inputText id="email_j" value="#{regPredioRuralView.nuevoPosesionario.email}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'celular')">
+                                                <p:ajax update="email_j"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="celular_j" value="Celular:" class="form-field-label"/>
+                                            <p:inputText id="celular_j" value="#{regPredioRuralView.nuevoPosesionario.celular}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'telefono')">
+                                                <p:ajax update="celular_j"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+                                </p:row>
+                                
+                                <p:row>                                    
+                                    
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="representante_legal" value="Representante legal:" class="form-field-label"/>
+                                            <p:inputText id="representante_legal" value="#{regPredioRuralView.nuevoPosesionario.representanteLegal}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'apellido_paterno')" required="true" 
+                                                         >
+                                                <p:ajax update="representante_legal"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+                                    
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="representante_legal_id" value="N. identificación r. legal:" class="form-field-label"/>
+                                            <p:inputText id="representante_legal_id" value="#{regPredioRuralView.nuevoPosesionario.representanteLegalCedula}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'apellido_paterno')" 
+                                                         >
+                                                <p:ajax update="representante_legal_id"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+                                    
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="inscripcion_propietario_juridico" value="Inscripción propietario jurídico:" class="form-field-label"/>
+
+                                            <p:selectOneMenu id="inscripcion_propietario_juridico" value="#{regPredioRuralView.nuevoPosesionario.inscripcionPropietarioJuridico}" style="width:125px">
+                                                <f:selectItem itemLabel="Ministerio" itemValue="1" />
+                                                <f:selectItem itemLabel="Superintendencia" itemValue="2" />
+                                                <p:ajax update="inscripcion_propietario_juridico"/>
+                                            </p:selectOneMenu>
+                                        </h:panelGroup>
+                                    </p:column>
+                                    
+                                    <p:column>
+                                        <h:panelGroup layout="block">
+                                            <p:outputLabel for="direccion_razon_social" value="Dirección razón social:" class="form-field-label"/>
+                                            <p:inputText id="direccion_razon_social" value="#{regPredioRuralView.nuevoPosesionario.direccionRazonSocial}"
+                                                         class="input_125" onkeypress="focusNextOnEnter(event, 'apellido_paterno')" 
+                                                         >
+                                                <p:ajax update="direccion_razon_social"/>
+                                            </p:inputText>
+                                        </h:panelGroup>
+                                    </p:column>
+                                </p:row>
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    </fieldset>
+                </h:panelGroup>
+                <p:panelGrid columns="2">
+                    <p:row>
+                        <p:column>
+                            <h:panelGrid></h:panelGrid>
+                        </p:column>
+                        <p:column>
+                            <h:panelGrid></h:panelGrid>
+                        </p:column>
+                        <p:column style="margin-right: 20px;">
+                            <p:commandButton value="Cancelar" id="cancelar"  icon="fa fa-ban"
+                                             onclick="PF('CreateContribuyenteDialog').hide();"
+                                             class="white"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton id="add-contribuyente" style="margin-left: 50px;"
+                                             icon="fa fa-save" styleClass="white Fright" value="Guardar"
+                                             process="@this"
+                                             update="propietarioListDelete,propietarioListDelete-update"
+                                             actionListener="#{regPredioRuralView.crearContribuyente()}"/>
+
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+
+
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

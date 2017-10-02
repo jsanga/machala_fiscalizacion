@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <p:dialog id="official-dlg" widgetVar="officialDialog"
+                  modal="true" resizable="false" appendTo="@(body)"
+                  header="Datos de la Tasa" style="width: 600px;">
+             <p:messages id="datos-messages" autoUpdate="false" closable="true" />
+            <p:ajax event="close" update="official-list-form,official-dlg" listener="#{tasaInteresAdminView.cancelarCreacion}" />
+            <h:panelGroup layout="block" rendered="#{tasaInteresAdminView.creando or tasaInteresAdminView.editando}" class="Container Container60">
+                <h:form id="new-official-form" prependId="false">
+                    
+                    <f:event listener="#{tasaInteresAdminView.validarFormulario}" type="postValidate" />
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="2">
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="official_name" value="A&ntilde;o:" class="DispBlock Wid100"/>
+                                    <p:inputText id="official_name" value="#{tasaInteresAdminView.tasaSeleccionada.tasaInteresPK.anio}" class="input_200"
+                                                 required="true" requiredMessage="Se requiere el nombre del integrante." onkeypress="focusNextOnEnter(event, 'official_lastname')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="official_lastname" value="Mes:" class="DispBlock Wid100"/>
+                                    <p:inputText id="official_lastname" value="#{tasaInteresAdminView.tasaSeleccionada.tasaInteresPK.mes}" class="input_200"
+                                                 required="true" requiredMessage="Se requieren los apellidos del integrante." onkeypress="focusNextOnEnter(event, 'official_id')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="official_id" value="Tasa:" class="DispBlock Wid100"/>
+                                    <p:inputText id="official_id" value="#{tasaInteresAdminView.tasaSeleccionada.tasa}" class="input_200"
+                                                 required="true" requiredMessage="Se requiere la identificaci&oacute;n del integrante." onkeypress="focusNextOnEnter(event, 'official_telefono')"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                            <h:panelGroup layout="block">
+                                <p:commandButton id="crear-official-btn"
+                                                 rendered="#{tasaInteresAdminView.creando}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Guardar"
+                                                 actionListener="#{tasaInteresAdminView.crear()}"
+                                                 process="new-official-form"
+                                                 update="official-list-form,official-list,official_name,official_lastname,official_id,datos-messages"/>
+                                <p:commandButton id="actualizar-official-btn"
+                                                 rendered="#{tasaInteresAdminView.editando}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                                 actionListener="#{tasaInteresAdminView.edit()}"
+                                                 process="new-official-form"
+                                                 update="official-list-form,official-list,official_name,official_lastname,official_id,datos-messages"/>
+                                <p:commandButton id="cancelar-official-btn"
+                                                 icon="fa fa-times-circle-o" styleClass="white" value="Cancelar" actionListener="#{tasaInteresAdminView.inicializarNuevo()}"
+                                                 onclick="PF('officialDialog').hide();"
+                                                 />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

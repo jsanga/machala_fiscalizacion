@@ -1,0 +1,1203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="permiso_contruccion" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14c98410-e861-42cf-ba4e-0b2d6b3103b7">
+	<property name="ireport.zoom" value="1.2100000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="528"/>
+	<parameter name="ID_TRAMITE" class="java.lang.Long"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\JoaoIsrael\\Documents\\NetBeansProjects\\machalasistema\\src\\main\\webapp\\reportes\\permiso_construccion\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select substring('00'||terreno.cod_provincia FROM (character_length('00'||terreno.cod_provincia)-1)) ||--lpad(cast(predio.cod_provincia as varchar),2, '0')--
+substring('00'||terreno.cod_canton FROM (character_length('00'||terreno.cod_canton)-1)) ||
+substring('00'||terreno.cod_parroquia FROM (character_length('00'||terreno.cod_parroquia)-1)) ||
+substring('00'||terreno.cod_zona FROM (character_length('00'||terreno.cod_zona)-1)) ||
+substring('00'||terreno.cod_sector FROM (character_length('00'||terreno.cod_sector)-1)) ||
+substring('000'||terreno.cod_manzana FROM (character_length('000'||terreno.cod_manzana)-2))  ||
+substring('000'||terreno.cod_solar FROM (character_length('000'||terreno.cod_solar)-2))   AS codigo_predial, predio.id as id_predio, * FROM flow.tr_permiso_construccion pc
+INNER JOIN flow.ht_tramite tramite ON pc.tramite = tramite.id
+LEFT OUTER JOIN cat_predio predio ON tramite.predio = predio.id
+LEFT OUTER JOIN cat_terreno terreno ON predio.cod_parroquia = terreno.cod_parroquia AND
+predio.cod_zona = terreno.cod_zona AND
+predio.cod_sector = terreno.cod_sector AND
+predio.cod_manzana = terreno.cod_manzana AND
+predio.cod_solar = terreno.cod_solar
+LEFT OUTER JOIN sector as sector ON sector.cod_sector = terreno.cod_sector
+AND sector.cod_zona = terreno.cod_zona AND sector.cod_parroquia = terreno.cod_parroquia
+LEFT OUTER JOIN parroquia as parroquia ON parroquia.cod_parroquia = terreno.cod_parroquia
+AND tramite.id = $P{ID_TRAMITE} ]]>
+	</queryString>
+	<field name="codigo_predial" class="java.lang.String"/>
+	<field name="id_predio" class="java.lang.Integer"/>
+	<field name="id" class="java.lang.Long"/>
+	<field name="predio_tr" class="java.lang.Long"/>
+	<field name="num_frentes" class="java.lang.Integer"/>
+	<field name="num_retiros_edificacion" class="java.lang.Integer"/>
+	<field name="num_bloques_edificacados" class="java.lang.Integer"/>
+	<field name="cos" class="java.math.BigDecimal"/>
+	<field name="cus" class="java.math.BigDecimal"/>
+	<field name="volados" class="java.math.BigDecimal"/>
+	<field name="anio" class="java.lang.Integer"/>
+	<field name="num_reporte" class="java.lang.Integer"/>
+	<field name="fecha_emision" class="java.sql.Timestamp"/>
+	<field name="fecha_caducidad" class="java.sql.Timestamp"/>
+	<field name="director_urbanismo" class="java.lang.String"/>
+	<field name="responsable_tecnico" class="java.lang.String"/>
+	<field name="sub_director_regulacion_urbana" class="java.lang.String"/>
+	<field name="disenio_arquitectonico" class="java.lang.String"/>
+	<field name="disenio_estructural" class="java.lang.String"/>
+	<field name="disenio_hidrosanitario" class="java.lang.String"/>
+	<field name="disenio_electrico" class="java.lang.String"/>
+	<field name="disenio_voz_datos" class="java.lang.String"/>
+	<field name="disenio_contraincendios" class="java.lang.String"/>
+	<field name="estudio_suelo" class="java.lang.String"/>
+	<field name="estudio_ambiental" class="java.lang.String"/>
+	<field name="tramite" class="java.lang.Long"/>
+	<field name="tipo_permiso_construccion" class="java.lang.String"/>
+	<field name="tipo_edificacion" class="java.lang.String"/>
+	<field name="tipo_implantacion_edificacion" class="java.lang.String"/>
+	<field name="ent_comp_1" class="java.lang.String"/>
+	<field name="ent_comp_2" class="java.lang.String"/>
+	<field name="ent_comp_3" class="java.lang.String"/>
+	<field name="ent_comp_4" class="java.lang.String"/>
+	<field name="ent_comp_5" class="java.lang.String"/>
+	<field name="ent_comp_6" class="java.lang.String"/>
+	<field name="ent_comp_7" class="java.lang.String"/>
+	<field name="ent_comp_8" class="java.lang.String"/>
+	<field name="nota" class="java.lang.String"/>
+	<field name="num_adhesivo" class="java.lang.String"/>
+	<field name="solicitante" class="java.lang.Long"/>
+	<field name="predio" class="java.lang.Long"/>
+	<field name="tipo_tramite" class="java.lang.Long"/>
+	<field name="fecha_ingreso" class="java.sql.Timestamp"/>
+	<field name="usuario_ingreso" class="java.lang.String"/>
+	<field name="total_pago" class="java.math.BigDecimal"/>
+	<field name="estado" class="java.lang.Long"/>
+	<field name="avaluo_municipal" class="java.math.BigDecimal"/>
+	<field name="id_process_init" class="java.lang.String"/>
+	<field name="id_main_process" class="java.lang.String"/>
+	<field name="carpeta" class="java.lang.String"/>
+	<field name="area_solar" class="java.math.BigDecimal"/>
+	<field name="codigo" class="java.lang.String"/>
+	<field name="corregir_docs" class="java.lang.Boolean"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="cod_provincia" class="java.lang.Integer"/>
+	<field name="cod_canton" class="java.lang.Integer"/>
+	<field name="cod_parroquia" class="java.lang.Integer"/>
+	<field name="cod_zona" class="java.lang.Integer"/>
+	<field name="cod_sector" class="java.lang.Integer"/>
+	<field name="cod_manzana" class="java.lang.Integer"/>
+	<field name="cod_solar" class="java.lang.Integer"/>
+	<field name="cod_bloque" class="java.lang.Integer"/>
+	<field name="cod_phv" class="java.lang.Integer"/>
+	<field name="cod_phh" class="java.lang.Integer"/>
+	<field name="clave_catastral" class="java.lang.String"/>
+	<field name="clave_anterior" class="java.lang.String"/>
+	<field name="manzana" class="java.lang.String"/>
+	<field name="nro_predio" class="java.lang.String"/>
+	<field name="nro_departamento" class="java.lang.String"/>
+	<field name="nro_piso" class="java.lang.String"/>
+	<field name="nro_bloque" class="java.lang.Integer"/>
+	<field name="nombre_edificio" class="java.lang.String"/>
+	<field name="permitieron_ingreso" class="java.lang.Integer"/>
+	<field name="nro_personas_habitan" class="java.lang.Integer"/>
+	<field name="dominio" class="java.lang.Integer"/>
+	<field name="origen" class="java.lang.Integer"/>
+	<field name="tipo_propiedad" class="java.lang.Integer"/>
+	<field name="alicuota_ph" class="java.lang.Double"/>
+	<field name="fecha_creacion" class="java.sql.Timestamp"/>
+	<field name="fecha_modificacion" class="java.sql.Timestamp"/>
+	<field name="usuario_modifica" class="java.lang.String"/>
+	<field name="id_contrato_arrendamiento" class="java.lang.Integer"/>
+	<field name="id_plano" class="java.lang.Integer"/>
+	<field name="id_ficha" class="java.lang.Integer"/>
+	<field name="id_relevamiento" class="java.lang.Integer"/>
+	<field name="id_validador" class="java.lang.Integer"/>
+	<field name="id_supervisor" class="java.lang.Integer"/>
+	<field name="id_supervisor_digitador" class="java.lang.Integer"/>
+	<field name="id_cartografo" class="java.lang.Integer"/>
+	<field name="fecha_relevamiento" class="java.sql.Date"/>
+	<field name="fecha_validacion" class="java.sql.Date"/>
+	<field name="fecha_supervicion" class="java.sql.Date"/>
+	<field name="fecha_digitacion" class="java.sql.Date"/>
+	<field name="fecha_supervicion_digitacion" class="java.sql.Date"/>
+	<field name="fecha_cartografia" class="java.sql.Date"/>
+	<field name="observacion" class="java.lang.String"/>
+	<field name="numero_ficha" class="java.lang.String"/>
+	<field name="id_digitador" class="java.lang.Integer"/>
+	<field name="administrador_promotor" class="java.lang.String"/>
+	<field name="administrador_promotor_cedula" class="java.lang.String"/>
+	<field name="administrador_promotor_celular" class="java.lang.String"/>
+	<field name="administrador_promotor_telefono" class="java.lang.String"/>
+	<field name="estado_legal_predio" class="java.lang.Integer"/>
+	<field name="text_dominio" class="java.lang.String"/>
+	<field name="text_tipo_propiedad" class="java.lang.String"/>
+	<field name="text_origen" class="java.lang.String"/>
+	<field name="tipo_predio" class="java.lang.Boolean"/>
+	<field name="nombre_predio" class="java.lang.String"/>
+	<field name="registro_catastral_rural" class="java.lang.String"/>
+	<field name="posee_titulo" class="java.lang.Integer"/>
+	<field name="en_venta" class="java.lang.Integer"/>
+	<field name="venta_valor_terreno" class="java.lang.Float"/>
+	<field name="venta_valor_construccion" class="java.lang.Float"/>
+	<field name="venta_telefono" class="java.lang.String"/>
+	<field name="venta_nombre_informante" class="java.lang.String"/>
+	<field name="en_alquiler" class="java.lang.Integer"/>
+	<field name="valor_alquiler" class="java.lang.Float"/>
+	<field name="fecha_transaccion" class="java.sql.Date"/>
+	<field name="estudio_observaciones" class="java.lang.String"/>
+	<field name="anios_en_psoesion" class="java.lang.Integer"/>
+	<field name="anios_sin_perfeccionamiento" class="java.lang.Integer"/>
+	<field name="nombre_del_pueblo_o_etnia" class="java.lang.String"/>
+	<field name="requiere_perfeccionamiento_del_titulo" class="java.lang.Boolean"/>
+	<field name="escritura_en_perfeccionamiento" class="java.lang.Boolean"/>
+	<field name="modo_adquisicion" class="java.lang.Integer"/>
+	<field name="id_predial_rural" class="java.lang.String"/>
+	<field name="dir_calle1" class="java.lang.String"/>
+	<field name="dir_calle2" class="java.lang.String"/>
+	<field name="dir_calle3" class="java.lang.String"/>
+	<field name="dir_calle4" class="java.lang.String"/>
+	<field name="dir_nomenclatura1" class="java.lang.String"/>
+	<field name="dir_nomenclatura2" class="java.lang.String"/>
+	<field name="dir_nomenclatura3" class="java.lang.String"/>
+	<field name="dir_nomenclatura4" class="java.lang.String"/>
+	<field name="area_levantamiento" class="java.lang.Double"/>
+	<field name="perimetro_levantamiento" class="java.lang.Double"/>
+	<field name="lin_norte_longitud" class="java.lang.String"/>
+	<field name="lin_sur_longitud" class="java.lang.String"/>
+	<field name="lin_este_longitud" class="java.lang.String"/>
+	<field name="lin_oeste_longitud" class="java.lang.String"/>
+	<field name="lin_norte_ref" class="java.lang.String"/>
+	<field name="lin_sur_ref" class="java.lang.String"/>
+	<field name="lin_este_ref" class="java.lang.String"/>
+	<field name="lin_oeste_ref" class="java.lang.String"/>
+	<field name="cord_x" class="java.lang.String"/>
+	<field name="cord_y" class="java.lang.String"/>
+	<field name="ubicacion" class="java.lang.Integer"/>
+	<field name="topografia" class="java.lang.Integer"/>
+	<field name="geometria" class="java.lang.Integer"/>
+	<field name="nro_frentes" class="java.lang.Integer"/>
+	<field name="caracteristicas_suelo" class="java.lang.Integer"/>
+	<field name="red_energia_electrica" class="java.lang.Integer"/>
+	<field name="red_agua_potable" class="java.lang.Integer"/>
+	<field name="red_alcantarillado" class="java.lang.Integer"/>
+	<field name="red_telefonica" class="java.lang.Integer"/>
+	<field name="alumbrado" class="java.lang.Integer"/>
+	<field name="recoleccion_basura" class="java.lang.Integer"/>
+	<field name="aseo_calles" class="java.lang.Integer"/>
+	<field name="transporte_publico" class="java.lang.Integer"/>
+	<field name="tipo_vias" class="java.lang.Integer"/>
+	<field name="tipo_capa_rodadura" class="java.lang.Integer"/>
+	<field name="aceras" class="java.lang.Integer"/>
+	<field name="bordillos" class="java.lang.Integer"/>
+	<field name="estado_conservacion" class="java.lang.Integer"/>
+	<field name="via_topografia" class="java.lang.Integer"/>
+	<field name="area_qgis" class="java.lang.Double"/>
+	<field name="area_siscat" class="java.lang.Double"/>
+	<field name="perimetro_qgis" class="java.lang.Double"/>
+	<field name="perimetro_siscat" class="java.lang.Double"/>
+	<field name="barrio" class="java.lang.String"/>
+	<field name="cable_satelital" class="java.lang.Integer"/>
+	<field name="internet" class="java.lang.Integer"/>
+	<field name="otros_servicio" class="java.lang.String"/>
+	<field name="ancho_via_publica" class="java.lang.Double"/>
+	<field name="ancho_acera" class="java.lang.Double"/>
+	<field name="pisos_terminados" class="java.lang.Integer"/>
+	<field name="medidor_luz" class="java.lang.Integer"/>
+	<field name="medidor_agua" class="java.lang.Integer"/>
+	<field name="uso_suelo" class="java.lang.Integer"/>
+	<field name="estado_edificacion" class="java.lang.Integer"/>
+	<field name="text_estado" class="java.lang.String"/>
+	<field name="text_estado_edificacion" class="java.lang.String"/>
+	<field name="text_ubicacion" class="java.lang.String"/>
+	<field name="text_topografia" class="java.lang.String"/>
+	<field name="text_geometria" class="java.lang.String"/>
+	<field name="text_caracteristicas_suelo" class="java.lang.String"/>
+	<field name="text_energia_electrica" class="java.lang.String"/>
+	<field name="text_agua_potable" class="java.lang.String"/>
+	<field name="text_alcantarillado" class="java.lang.String"/>
+	<field name="text_telefono" class="java.lang.String"/>
+	<field name="text_recoleccion_basura" class="java.lang.String"/>
+	<field name="text_estado_construccion" class="java.lang.String"/>
+	<field name="text_aseo_calle" class="java.lang.String"/>
+	<field name="text_transporte" class="java.lang.String"/>
+	<field name="text_cable_satelital" class="java.lang.String"/>
+	<field name="text_internet" class="java.lang.String"/>
+	<field name="text_tipo_via" class="java.lang.String"/>
+	<field name="text_capa_rodadura" class="java.lang.String"/>
+	<field name="text_aceras" class="java.lang.String"/>
+	<field name="text_bordillos" class="java.lang.String"/>
+	<field name="text_estado_conservacion" class="java.lang.String"/>
+	<field name="text_topografia_via" class="java.lang.String"/>
+	<field name="text_uso_suelo" class="java.lang.String"/>
+	<field name="eje_principal_rural" class="java.lang.String"/>
+	<field name="eje_secundario_rural" class="java.lang.String"/>
+	<field name="placa_predial_rural" class="java.lang.String"/>
+	<field name="poblacion_cercana1" class="java.lang.String"/>
+	<field name="poblacion_cercana2" class="java.lang.String"/>
+	<field name="distancia_poblacion1" class="java.lang.Float"/>
+	<field name="distancia_poblacion2" class="java.lang.Float"/>
+	<field name="via_principal_acceso1" class="java.lang.String"/>
+	<field name="via_principal_acceso2" class="java.lang.String"/>
+	<field name="distancia_via_principal1" class="java.lang.Float"/>
+	<field name="distancia_via_principal2" class="java.lang.Float"/>
+	<field name="relacion_rasante" class="java.lang.Integer"/>
+	<field name="clasificacion_suelo" class="java.lang.Integer"/>
+	<field name="ecosistema_relevante" class="java.lang.Integer"/>
+	<field name="cobertura_predominante" class="java.lang.Integer"/>
+	<field name="rodadura" class="java.lang.Integer"/>
+	<field name="otras_vias_acceso" class="java.lang.Integer"/>
+	<field name="uso_via" class="java.lang.Integer"/>
+	<field name="parterre" class="java.lang.Integer"/>
+	<field name="n_medidores_luz" class="java.lang.Integer"/>
+	<field name="n_medidores_agua" class="java.lang.Integer"/>
+	<field name="disponibilidad_riego" class="java.lang.Integer"/>
+	<field name="eliminacion_excretas" class="java.lang.Integer"/>
+	<field name="metodo_riego" class="java.lang.Integer"/>
+	<field name="transporte_privado" class="java.lang.Integer"/>
+	<field name="tipo_vivienda_rural" class="java.lang.Integer"/>
+	<field name="uso_construccion_rural" class="java.lang.Integer"/>
+	<field name="requiere_perfeccionamiento" class="java.lang.Integer"/>
+	<field name="nombre_etnia" class="java.lang.String"/>
+	<field name="anios_en_posesion" class="java.lang.Integer"/>
+	<field name="descripcion" class="java.lang.String"/>
+	<field name="cem" class="java.lang.Float"/>
+	<field name="code" class="java.lang.String"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="banda_impositiva" class="java.lang.Float"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="106" y="18" width="315" height="20" uuid="43638e72-dc1c-4f39-a4fb-ea2d9198ae1d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[G.A.D. MUNICIPAL DE MACHALA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="38" width="315" height="20" uuid="7e2d53b8-e7f4-4dee-8b16-bdd248353937"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN DE URBANISMO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="106" y="58" width="315" height="20" uuid="d62c35db-e6de-41a5-a205-6eb82a66ad48"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PERMISO DE CONSTRUCCIÓN Nro."+$F{num_reporte}+" - "+$F{anio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="658">
+			<staticText>
+				<reportElement x="273" y="314" width="36" height="20" uuid="5cec07da-c6ea-4943-87fd-14e1c50beed6">
+					<printWhenExpression><![CDATA[$F{ubicacion} == 1]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[x]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="244" width="310" height="20" uuid="be8f24e2-861a-4e3d-83aa-a6598cd8a26f"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lin_oeste_ref}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="322" y="357" width="193" height="20" uuid="af453ec0-0253-464e-a3b3-30cb2af89628"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nro_frentes}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="314" width="100" height="20" uuid="df9775c7-0a3e-462f-8f4b-5c31b4d8edbd"/>
+				<text><![CDATA[Medianero:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="183" y="91" width="75" height="20" uuid="eeeffb1e-9961-425e-ac24-f48cbe87ea04"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Cantón:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="224" width="100" height="20" uuid="4362cfc6-a9f4-466c-b662-e3fdfc5570ab"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Este:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="131" width="75" height="20" uuid="7e26c57f-f41a-4735-a74d-c6bbdcb1bdb9"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Parroquia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="173" y="334" width="100" height="20" uuid="359ccb51-2116-49e7-b5ab-e6d835f36d58"/>
+				<text><![CDATA[Interior:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="334" width="30" height="20" uuid="d52a6065-5948-4c52-90f4-a34d36b0e391">
+					<printWhenExpression><![CDATA[$F{ubicacion} == 6]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[x]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="224" width="310" height="20" uuid="57c0259f-40c9-4aa6-91c3-f09d2b798db3"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lin_este_ref}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="204" width="310" height="20" uuid="456431b4-061b-4e00-8a48-3764cd8e37ae"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lin_sur_ref}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="31" width="212" height="20" uuid="0432053f-87c9-4ee1-9a79-600796d1dfb0"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[1.- DATOS DEL PREDIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="314" width="100" height="20" uuid="b6b88998-c82e-4ed7-ae27-86ca68845fa4"/>
+				<text><![CDATA[En Cabecera:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="437" width="257" height="20" uuid="b103feba-4b78-464a-8b36-b16748731f14"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[8.- RETIROS DE LA EDIFICACIÓN]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="264" width="310" height="20" uuid="07bfad6e-594a-4205-899c-1f2bd3795dc2"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{area_levantamiento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="417" width="257" height="20" uuid="75bc7a3e-43c0-4bc2-860e-7c118189d426"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[7.- TIPO DE IMPLANTACIÓN DE LA EDIFICACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="264" width="100" height="20" uuid="39fab304-42cc-4582-96a0-f618ff261d21"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Área:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="71" width="75" height="20" uuid="7c1be43f-8c5f-431e-8851-6754c4c75d95"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Solar:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="294" width="212" height="20" uuid="36837e1a-33c2-4b95-81d4-615697e1728f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[3.- DISPOSICIÓN EN LA MANZANA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="357" width="257" height="20" uuid="666e02f8-148b-49e0-9401-912708d40bf9"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[4.- NÚMERO DE FRENTES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="244" width="100" height="20" uuid="0bf470c3-c6b3-4a6d-8864-36979d624ba6"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Oeste:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="51" width="75" height="20" uuid="ac06e185-0179-4584-8f15-2332435aa907"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Propietario:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="322" y="397" width="193" height="20" uuid="a506ac80-3b6b-4fb6-ac84-c134e80de75e"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_edificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="111" width="75" height="20" uuid="189069c7-7e57-4bda-82de-1a43f25685e6"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Dirección:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="322" y="377" width="193" height="20" uuid="b51e80ca-0d24-4656-94ec-ae88a161d1e4"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_permiso_construccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="164" width="212" height="20" uuid="cc32827d-13be-449e-9a81-43d443a622da"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[2.- LINDEROS Y DIMENSIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="314" width="23" height="20" uuid="b27948dd-daf9-4dd6-8e06-7234000f5913">
+					<printWhenExpression><![CDATA[$F{ubicacion} == 4]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[x]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="107" y="11" width="133" height="20" uuid="c0c42c36-7eee-4beb-b4a8-82ae4b26696f"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_emision}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="73" y="613" width="100" height="20" uuid="82fbb094-a82a-4e8d-893e-3ff6343963ac"/>
+				<text><![CDATA[C.O.S (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="334" width="100" height="20" uuid="9075aacc-9629-4f6a-97d6-8baee8f05762"/>
+				<text><![CDATA[Manzanero:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="FixRelativeToBottom" x="374" y="613" width="75" height="20" uuid="2e773275-fd6f-4887-b43d-1e47531d7ed2"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{cus}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="258" y="91" width="100" height="20" uuid="1dda2344-cdbc-4cde-a241-4801fe5055a0"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[MACHALA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="204" width="100" height="20" uuid="8118cf12-ac22-4920-a4bf-d2cc59b9a814"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Sur:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="397" width="257" height="20" uuid="a3d4b335-d43e-47dd-ad7c-75649d5f9621"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[6.- TIPO DE EDIFICACIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="314" width="30" height="20" uuid="1ec1a2e6-3657-4d6a-9715-91188ddd3f93">
+					<printWhenExpression><![CDATA[$F{ubicacion} == 2]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[x]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="76" y="71" width="107" height="20" uuid="e4d6ab95-52cc-4d76-a94b-2a72984d82fd"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cod_solar}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="184" width="100" height="20" uuid="faa65ffc-eaa8-4b38-afd5-1d2e9e400463"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Norte:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="101" y="184" width="310" height="20" uuid="35a65f91-5ac2-4437-8af5-5b377790a721"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{lin_norte_ref}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="322" y="417" width="193" height="20" uuid="59d37af6-dec9-48cd-817e-5bc8c9fba285"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_implantacion_edificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="183" y="71" width="75" height="20" uuid="3227787e-0d66-48f8-bd1b-6ce3836f022f"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Manzana:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="334" width="36" height="20" uuid="e0ddb5d8-aecf-4ec5-98c2-d5381a8f50d6">
+					<printWhenExpression><![CDATA[$F{ubicacion} == 3]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[x]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="358" y="91" width="75" height="20" uuid="a917aec9-0a98-4f21-b246-b469c23cfb3b"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Provincia:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="11" width="116" height="20" uuid="efc8716a-7394-4726-bc88-57b5efbf13f0"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Expedición:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="273" y="11" width="100" height="20" uuid="efaecb41-267e-405b-bf28-41367e5811c0"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº de Adhesivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="377" width="257" height="20" uuid="5d9aec01-84f0-4a1d-97e1-6cc88146456f"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[5.- DESCRIPCION DEL PROYECTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="273" y="613" width="100" height="20" uuid="74cf4f1f-d6e9-4c0f-a999-480b5f1d0fae"/>
+				<text><![CDATA[C.U.S (%)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="522" width="257" height="20" uuid="886dfee9-99ff-4cc1-ba23-58cac1261152"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[9.- NÚMEROS DE BLOQUES EDIFICADOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="258" y="71" width="100" height="20" uuid="7207b346-e395-465b-8495-a47c4e2b199f"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{cod_manzana}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="358" y="71" width="75" height="20" uuid="c562c747-2f51-4506-a250-98473454114c"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Cod. Catastral:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="322" y="437" width="193" height="20" uuid="202048ba-1f6b-4e00-8c6e-e9594c521ec5"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{num_retiros_edificacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="433" y="91" width="100" height="20" uuid="24db4a8e-2c5b-4de2-856d-a3966d1a8424"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[EL ORO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="173" y="314" width="100" height="20" uuid="32ae6ee7-842c-48e4-be27-65e304df8e4a"/>
+				<text><![CDATA[Esquinero:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="91" width="75" height="20" uuid="796f9b7b-ab3a-4d90-b558-4c9121945805"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Sector:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="1" y="464" width="514" height="58" uuid="a43655b6-3fd6-41ee-9660-75a36f049bb3"/>
+				<subreportParameter name="id_pc">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "permiso_contruccion_retiros.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement x="0" y="542" width="515" height="59" uuid="20953c31-3ca0-41e2-a2f4-9ac8af46fc8e"/>
+				<subreportParameter name="id_pc">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "permiso_contruccion_bloques.jasper"]]></subreportExpression>
+			</subreport>
+			<textField>
+				<reportElement x="73" y="91" width="110" height="20" uuid="0dd75523-9c8a-49f8-95a3-62dd9cdb5caa"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="76" y="131" width="127" height="20" uuid="cbbd06c5-c34e-405f-bdbd-105990d769a4"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="71" width="100" height="20" uuid="93970d7e-da4f-427e-b38c-c8ba5d12a2d3"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{codigo_predial}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="76" y="51" width="457" height="20" uuid="a64b4db5-2c22-4d1d-920b-a4c111297d32"/>
+				<subreportParameter name="ID_PREDIO">
+					<subreportParameterExpression><![CDATA[$F{id_predio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "permiso_contruccion_nombres_propietarios.jasper"]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="276" y="111" width="90" height="20" uuid="d35c3605-2fb3-4461-a28e-d3dd10175afc"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Sección de Acera:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="173" y="613" width="40" height="20" uuid="a0342072-f90a-426c-b7aa-c8fbe943bc76"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{cos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="213" y="613" width="35" height="20" uuid="2b7ea6f8-c649-497b-ae7a-a1968c9174de"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[%]]></text>
+			</staticText>
+		</band>
+		<band height="802">
+			<staticText>
+				<reportElement x="1" y="464" width="555" height="74" uuid="d45cc2ed-94da-449d-9994-76a592cde61f"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[En caso de generar daños a los bienes de uso úblico tales como aceras, calzadas, bordillos, parterres u otros espacios públicos, el propietario de la edificación deberá efecturar la reposición de las obras destruidas, dentro de un plazo no mayor a 15 días de ser notificado. En caso de incumplir con la reposición de las obras indicadas, se paralizará la Construcción y notificará a la Dirección de Obras Públicas Municipales para que proceda a la ejecución de las mismas y grave como deuda del bien los valores de las reparaciones mas un recargo del dos por ciento (2%).]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="225" width="160" height="20" uuid="70edf90c-d2fb-4352-aba0-376ca9a4f110"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[Estudio Ambiental]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="105" width="160" height="20" uuid="2e9f2273-7380-4c8d-a5ca-51e797301d1b"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[Diseño Estructural]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="183" y="85" width="160" height="20" uuid="849f7677-90e9-4953-848d-6ad0583b6116"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{disenio_arquitectonico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="379" width="555" height="20" uuid="fe14557d-0c27-4843-a15d-22327f424015"/>
+				<text><![CDATA[La edificación deberá apegarse estrictamentea los planos aprobados.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="183" y="65" width="160" height="20" uuid="5a153e50-a936-4aaf-9c35-b173b11ae11b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profesional]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="183" y="185" width="160" height="20" uuid="bca77715-ddfc-490b-b2fd-af092913d44e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{disenio_contraincendios}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="343" y="65" width="160" height="20" uuid="775e85b2-cc6a-4e44-b5ac-cd3b2d254cf2"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Entidad competente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="404" width="100" height="20" uuid="a6174652-934c-41fa-83f8-dd34d3c29a00"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[13.- SANCIONES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="359" width="555" height="20" uuid="3d8799cd-0dee-4750-adca-42f15e0b00d3"/>
+				<text><![CDATA[El cerramiento provisional deberá garantizar 1.20 m. de acera libre para la circulación peatonal.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="183" y="165" width="160" height="20" uuid="69354c95-4086-49ba-9273-e59e9fd39789"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{disenio_voz_datos}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="205" width="160" height="20" uuid="d7b2a0d7-6d49-47ff-9ea7-908c8874d3e1"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ent_comp_7}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="376" y="669" width="150" height="31" uuid="7269304e-0979-4faf-ba4a-f5086ac1bab6"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUB-DIRECTOR DE REGULACIÓN URBANA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="339" width="555" height="20" uuid="58441d8b-9d99-470c-8133-94422d9c1666"/>
+				<text><![CDATA[Colocar en el Letrero de la Dirección Técnica el número de Permiso de Construcción.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="183" y="205" width="160" height="20" uuid="daf90b60-b56a-497c-9d39-d4854b54bcf5"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{estudio_suelo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="14" width="373" height="20" uuid="7e69bfeb-7d67-4cdc-b205-5ff864b1fe8d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[10.- VOLADOS CON RESPECTO A LA LÍNEA DE CONSTRUCCIÓN O PORTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="165" width="160" height="20" uuid="e1c4fb84-7581-4ea1-854a-d26e7ce49d3a"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[Diseño de Voz y Datos]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="145" width="160" height="20" uuid="b0e76fb8-dc74-4e4a-b079-1f1b0c7f6960"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ent_comp_4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="538" width="182" height="20" uuid="ad68bac5-dcba-4022-8df5-a4793f6c6fb7"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[14.- VIGENCIA DEL PERMISO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="424" width="555" height="40" uuid="3601e743-263c-4f94-bc21-698096371642"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[En caso de ejecutarse obras que no esten completadas en los planos aprobados se procederá con Paralización inmediata de la construccióin y se aplicará las sanciones económicas de acuerdo a la ley.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="183" y="125" width="160" height="20" uuid="4cb9c0b1-ff8b-46da-895c-c48289526eae"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{disenio_hidrosanitario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="761" width="555" height="20" uuid="fdb63b64-9be6-4a23-abab-d3bc8c395e75"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[El presente Documento es válido únicamente con sellos y firmas completas]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="259" width="372" height="20" uuid="db74763a-e16c-41e4-9829-40b84b2a0995"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[12.- OBLIGACIONESDEL CONSTRUCTOR Y PROPIETARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="185" width="160" height="20" uuid="3ed433f6-f3ac-4a12-b765-a15b10429b1b"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[Diseño Contraincendios]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="105" width="160" height="20" uuid="0e067dcb-7612-44fd-932e-6ffbf66f29f8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ent_comp_2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="85" width="160" height="20" uuid="c0a7dfef-2bb9-4391-b652-b81fb9cbde12"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ent_comp_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="319" width="555" height="20" uuid="387a97dd-f606-4a23-904a-b17d38d0eb9e"/>
+				<text><![CDATA[Colocar el Letrero de la Dirección Técnica en el cerramiento frontal del predio.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="669" width="150" height="20" uuid="dc3a490f-fcab-4d49-89a4-f79a0e863468"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECTOR DE URBANISMO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="125" width="160" height="20" uuid="1f684569-d99e-469b-978c-e0bc9f9f1078"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ent_comp_3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="23" y="145" width="160" height="20" uuid="a58764f1-19e1-4985-a360-a42eb3692a71"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[Diseño Eléctrico]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="400" y="14" width="100" height="20" uuid="c5c8f79f-4819-497a-ad57-f872aea7b127"/>
+				<box>
+					<bottomPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{volados}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="183" y="105" width="160" height="20" uuid="09b8d4ca-cd8f-41b7-817c-1da5c509096a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{disenio_estructural}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="185" width="160" height="20" uuid="f041ec9a-be9d-48c9-b646-e11226a19b82"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ent_comp_6}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="299" width="555" height="20" uuid="cc674b78-55ed-416c-b0e8-6e7ce416e984"/>
+				<text><![CDATA[Mantener en Obra el Permiso de Construcción, Planos Aprobados y Letrero de la Dirección Técnica.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="225" width="160" height="20" uuid="0908bfc8-04f3-466d-8c35-fa1e2017531f"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ent_comp_8}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="569" width="82" height="20" uuid="8cacd847-d626-46cb-9084-db588b16adcf"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[15.- NOTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="34" width="373" height="20" uuid="c4493f66-69ae-44a7-b26d-9a4d6e82ec83"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[11.- DISEÑOS Y ESTUDIOS COMPLEMETNTARIOS]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="165" width="160" height="20" uuid="2222c339-f1aa-430e-a415-b41ee6697cf8"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{ent_comp_5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="83" y="569" width="473" height="40" uuid="c7df6944-3b14-41a9-bcd3-e1e1ceed0f40"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Justified"/>
+				<textFieldExpression><![CDATA[$F{nota}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="23" y="125" width="160" height="20" uuid="1c574139-879d-45a0-8be2-efe30e7b819e"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[Diseño Hidrosantario]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="183" y="225" width="160" height="20" uuid="4b019426-de10-4a53-9f29-22a568565cd4"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{estudio_ambiental}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="203" y="669" width="150" height="20" uuid="a1c49a5d-9201-457e-9732-9aaf3b0e6255"/>
+				<box>
+					<topPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESPONSABLE TÉCNICO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="85" width="160" height="20" uuid="8c67d008-853c-4953-9e45-5ed6bdb6ae9a"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[Diseño Arquitectónico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="205" width="160" height="20" uuid="32f8990d-d5f5-4894-bcd6-e2aa5e8038cc"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<text><![CDATA[Estudio de Suelo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="741" width="555" height="20" uuid="1750e459-43d5-4cd6-a295-68f0cae7338c"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[SELLO ÚNICO DE LA DIRECCIÓN DE URBANISMO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="65" width="160" height="20" uuid="126f8db2-fbac-459e-a370-3f1ef97c2ba6"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="279" width="555" height="20" uuid="94392dc1-4d86-4faa-8c0f-74a02e9b855f"/>
+				<text><![CDATA[Para el inicio de la obra deberá contar copn el Permiso de Vía Pública.]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="183" y="145" width="160" height="20" uuid="ef91afaf-438f-4e69-90c4-f239792929e0"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{disenio_electrico}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

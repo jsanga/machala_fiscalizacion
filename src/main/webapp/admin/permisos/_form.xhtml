@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="permiso-dlg" widgetVar="permisoDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Definición de permiso">   
+            <p:ajax event="close" update="permiso-list-form" listener="#{permisoAdminView.cancelarCreacionPermiso()}" />
+            <h:panelGroup layout="block" rendered="#{permisoAdminView.creandoPermiso or permisoAdminView.editandoPermiso}">
+                <h:form id="permiso-form" prependId="false">
+                    <p:messages id="datos-permiso-messages" showDetail="true" autoUpdate="false" closable="true" />
+                    <f:event listener="#{permisoAdminView.validarFormulario}" type="postValidate" />
+                    <h:panelGrid columns="2">
+                        <h:panelGroup>                               
+                            <p:outputLabel for="permiso_nombre" value="Nombre permiso:" class="DispBlock Wid100"/> 
+                            <p:inputText id="permiso_nombre" value="#{permisoAdminView.permisoSeleccionado.permiso}" required="true"
+                                         onkeypress="focusNextOnEnter(event, 'permiso_descripcion')" requiredMessage="Nombre requerido"/>
+                        </h:panelGroup>
+                        <h:panelGroup>       
+                            <p:outputLabel for="permiso_descripcion" value="Descripci&oacute;n" class="DispBlock Wid100"/> 
+                            <p:inputText id="permiso_descripcion" value="#{permisoAdminView.permisoSeleccionado.descripcion}" required="true" class="input_200"
+                                         onkeypress="focusNextOnEnter(event, 'crear-permiso-btn')" requiredMessage="Descripci&oacute;n requerido" />      
+                        </h:panelGroup>                       
+                    </h:panelGrid>
+
+                    <h:panelGroup layout="block">
+                        <p:commandButton id="crear-permiso-btn"  rendered="#{permisoAdminView.creandoPermiso}"
+                                         icon="fa fa-save" styleClass="white Fright" value="Guardar"                                         
+                                         actionListener="#{permisoAdminView.crearPermiso()}"
+                                         update="permiso-list-form,permiso-form"/>
+                        <p:commandButton id="editar-permiso-btn"  rendered="#{permisoAdminView.editandoPermiso}"
+                                         icon="fa fa-pencil white" styleClass="white Fright" value="Actualizar"                                         
+                                         actionListener="#{permisoAdminView.editarPermiso()}"
+                                         update="permiso-list-form,permiso-form"/>
+                        <p:commandButton id="cancelar-permiso-btn" 
+                                         icon="fa fa-ban white" styleClass="white" value="Cancelar"                                         
+                                         process="@this"
+                                         oncomplete="PF('permisoDialog').hide();"/>
+                    </h:panelGroup>
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

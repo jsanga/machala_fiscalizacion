@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="escritura_unificar" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">Datos de la exoneraci&oacute;n</h1>
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent">
+                        <fieldset>
+                            <legend>Datos informativos</legend>
+                            <h:panelGrid columns="4" style="width: 100%">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="avaluo_terreno" value="Aval&uacute;o terreno:" class="DispBlock Wid100"/>
+                                    <p:inputText id="avaluo_terreno" value="#{consultasView.avaluoTerreno}"
+                                                 class="input_115" disabled="true"/>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="avaluo_construccion" value="Aval&uacute;o construcci&oacute;n:"  class="DispBlock Wid100"/>
+                                        <p:inputText id ="avaluo_construccion" value="#{consultasView.avaluoConstruccion}"
+                                                     class="input_115" disabled="true"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="avaluo_complementarias" value="Aval&uacute;o complementarias:"  class="DispBlock Wid100"/>
+                                        <p:inputText id ="avaluo_complementarias" value="#{consultasView.avaluoComplementarias}"
+                                                     class="input_115" disabled="true"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="avaluo_comercial" value="Aval&uacute;o predial:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="avaluo_comercial" value="#{consultasView.avaluoPredial}"
+                                                     class="input_115" disabled="true"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </fieldset>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup  layout="block" class="Container100 Wid100">
+                <h1 class="BigTopic Fs16">Listado de Exenciones</h1>
+                <p:dataTable var="prop" id="exenciones-list" value="#{consultasView.predioSeleccionado.exencionList}" selection="#{consultasView.exencion}" rowKey="#{prop.id}" style="margin-bottom:0"
+                             rows="5" paginator="true" emptyMessage="No tiene exenciones registradas"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15"
+                             paginatorPosition="bottom">
+
+                    <p:column style="width:16px">
+                        <p:rowToggler />
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{prop.razonExencion.tipoExencion.tipoExencion}" />
+                    </p:column>
+                    <p:column headerText="Razón">
+                        <h:outputText value="#{prop.razonExencion.razonExencion}" />
+                    </p:column>
+                    <p:column headerText="Requisito">
+                        <h:outputText value="#{prop.razonExencion.requisito}" />
+                    </p:column>
+                    <p:rowExpansion>
+                        <h:panelGrid columns="6" style="width: 100%">
+
+                            <p:outputLabel value="Porciento:" class="DispBlock Wid100"/>
+                            <p:outputLabel value="#{prop.porcentaje}" class="DispBlock Wid100"/>
+
+                            <p:outputLabel value="Valor:" class="DispBlock Wid100"/>
+                            <p:outputLabel value="#{prop.valor}" class="DispBlock Wid100"/>
+
+                            <p:outputLabel value="Desde:" class="DispBlock Wid100"/>
+                            <p:outputLabel value="#{prop.desde}" class="DispBlock Wid100"/>
+
+                            <p:outputLabel value="Hasta:" class="DispBlock Wid100"/>
+                            <p:outputLabel value="#{prop.hasta}" class="DispBlock Wid100"/>
+
+                            <p:outputLabel value="Fecha ingreso:"  class="DispBlock Wid100"/>
+                            <p:outputLabel value="#{prop.fechaIngreso}"  class="DispBlock Wid100"/>
+
+                            <p:outputLabel value="Permanente:" class="DispBlock Wid100"/>
+                            <p:outputLabel value="#{prop.razonExencion.valorPermanente()}" class="DispBlock Wid100"/>
+
+                            <p:outputLabel value="Activo:" class="DispBlock Wid100"/>
+                            <p:outputLabel value="#{prop.razonExencion.valorActivo()}" class="DispBlock Wid100"/>
+
+                            <p:outputLabel value="Valor tope:" class="DispBlock Wid100"/>
+                            <p:outputLabel value="#{prop.razonExencion.valorMaximo}" class="DispBlock Wid100"/>
+
+                            <p:outputLabel value="Usuario ingresa:"  class="DispBlock Wid100"/>
+                            <p:outputLabel value="#{prop.usuarioIngreso}"  class="DispBlock Wid100"/>
+
+                        </h:panelGrid>
+
+                        <h:panelGrid style="width: 100%" columns="2">
+                            <p:row>
+                                <p:column class="Wid25">
+                                    <p:outputLabel value="Observaciones:" class="DispBlock Wid100"/>
+                                </p:column>
+                                <p:column class="Wid75">
+                                    <p:outputLabel value="#{prop.razonExencion.observaciones}" class="DispBlock Wid100"/>
+                                </p:column>
+                            </p:row>
+                        </h:panelGrid>
+                        <h:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column class="Wid25">
+                                    <p:outputLabel value="Observaciones:" class="DispBlock Wid100"/>
+                                </p:column>
+                                <p:column class="Wid75">
+                                    <p:outputLabel value="#{prop.razonExencion.observaciones}" class="DispBlock Wid100"/>
+                                </p:column>
+                            </p:row>
+                        </h:panelGrid>
+
+                        <h:panelGrid style="width: 100%">
+                            <p:row>
+                                <p:column class="Wid25">
+                                    <p:outputLabel value="Notas/Observaciones/Documentos" class="DispBlock Wid100"/>
+                                </p:column>
+                                <p:column class="Wid75">
+                                    <p:outputLabel value="#{prop.notas}" class="DispBlock Wid100"/>
+                                </p:column>
+                            </p:row>
+                        </h:panelGrid>
+
+                    </p:rowExpansion>
+                </p:dataTable>
+
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,1348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_predial" language="groovy" pageWidth="5000" pageHeight="9000" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="4960" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="38a56e38-2b9b-40c6-85c7-4d62f0db95d3">
+	<property name="ireport.zoom" value="1.366026910730142"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="BUSQUEDA" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Dairon Freddy\\Documents\\machala_sistema_repositorio\\src\\main\\webapp\\reportes\\digitacion\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="COD_PARROQUIA" class="java.lang.String"/>
+	<parameter name="COD_ZONA" class="java.lang.String"/>
+	<parameter name="COD_SECTOR" class="java.lang.String"/>
+	<parameter name="COD_MANZANA" class="java.lang.String"/>
+	<parameter name="COD_SOLAR" class="java.lang.String"/>
+	<parameter name="CLAVE_ANTERIOR" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT * FROM(SELECT *, cp.id as id_predio,
+CASE WHEN terreno.uso_suelo = 0 THEN 'SIN DATO'
+WHEN terreno.uso_suelo = 1 THEN 'HABITACIONAL'
+WHEN terreno.uso_suelo = 2 THEN 'INDUSTRIAL'
+WHEN terreno.uso_suelo = 3 THEN 'ADMINISTRATIVO'
+WHEN terreno.uso_suelo = 4 THEN 'COMERCIO'
+WHEN terreno.uso_suelo = 5 THEN 'FINANCIERO'
+WHEN terreno.uso_suelo = 6 THEN 'SERVICIOS DE TURISMO'
+WHEN terreno.uso_suelo = 7 THEN 'EDUCACIÓN'
+WHEN terreno.uso_suelo = 8 THEN 'SALUD'
+WHEN terreno.uso_suelo = 9 THEN 'RECREACIÓN Y DEPORTE'
+WHEN terreno.uso_suelo = 10 THEN 'SERVICIOS ESPECIALES'
+WHEN terreno.uso_suelo = 11 THEN 'SERVICIOS DE SEGURIDAD'
+WHEN terreno.uso_suelo = 12 THEN 'SERVICIOS FUNERARIOS'
+WHEN terreno.uso_suelo = 13 THEN 'CULTO  RELIGIOSO'
+WHEN terreno.uso_suelo = 14 THEN 'TRANSPORTE'
+WHEN terreno.uso_suelo = 15 THEN 'SERVICIOS GENERALES'
+WHEN terreno.uso_suelo = 16 THEN 'AGROPECUARIA'
+WHEN terreno.uso_suelo = 17 THEN 'SERVICIOS PROFESIONALES'
+WHEN terreno.uso_suelo = 18 THEN 'SIN USO'
+WHEN terreno.uso_suelo = 19 THEN 'HABITACIONAL Y COMERCIAL'
+WHEN terreno.uso_suelo = 20 THEN 'COMERCIAL Y DE SERVICIOS'
+WHEN terreno.uso_suelo = 21 THEN 'HABITACIONAL, COMERCIAL Y DE SERVICIOS' END as uso_suelo_new,
+
+CASE WHEN terreno.estado = 0 THEN 'SIN DATO'
+WHEN terreno.estado = 1 THEN 'CON EDIFICACION'
+WHEN terreno.estado = 2 THEN 'SIN EDIFICACION'
+WHEN terreno.estado = 3 THEN 'BLOQ. TERMINADO'
+WHEN terreno.estado = 4 THEN 'BLOQ. EN CONSTRUCCION'
+WHEN terreno.estado = 5 THEN 'PISOS TERMINADOS' END as estado_terreno_new,
+
+CASE WHEN terreno.geometria = 0 THEN 'SIN DATO'
+WHEN terreno.geometria = 1 THEN 'REGULAR'
+WHEN terreno.geometria = 2 THEN 'IRREGULAR' END as geom_new,
+
+CASE WHEN cp.dominio = 0 THEN 'SIN DATO'
+WHEN cp.dominio = 1 THEN 'PRIVADO'
+WHEN cp.dominio = 2 THEN 'MUNICIPAL'
+WHEN cp.dominio = 3 THEN 'ESTADO'
+WHEN cp.dominio = 4 THEN 'FUNDACION' END as dominio_new, int1.apellidos|| ' '||int1.nombre as nombre_relevamiento, int2.apellidos|| ' '||int2.nombre as nombre_validador
+, int3.apellidos|| ' '||int3.nombre as nombre_supervisor
+, int4.apellidos|| ' '||int4.nombre as nombre_supervisor_dig
+, int5.apellidos|| ' '||int5.nombre as nombre_cartografo
+, int6.apellidos|| ' '||int6.nombre as nombre_digitador
+
+
+FROM cat_predio cp
+INNER JOIN cat_terreno terreno
+ON cp.cod_parroquia = terreno.cod_parroquia AND
+cp.cod_zona = terreno.cod_zona AND
+cp.cod_sector = terreno.cod_sector AND
+cp.cod_manzana = terreno.cod_manzana AND
+cp.cod_solar = terreno.cod_solar
+LEFT OUTER JOIN cat_integrante int1
+ON int1.id = cp.id_relevamiento
+LEFT OUTER JOIN cat_integrante int2
+ON int2.id = cp.id_validador
+LEFT OUTER JOIN cat_integrante int3
+ON int3.id = cp.id_supervisor
+LEFT OUTER JOIN cat_integrante int4
+ON int4.id = cp.id_supervisor_digitador
+LEFT OUTER JOIN cat_integrante int5
+ON int5.id = cp.id_cartografo
+LEFT OUTER JOIN cat_integrante int6
+ON int6.id = cp.id_digitador
+WHERE clave_anterior ilike '%$P!{BUSQUEDA}%'
+
+
+UNION
+
+
+SELECT *, cp.id as id_predio,
+CASE WHEN terreno.uso_suelo = 0 THEN 'SIN DATO'
+WHEN terreno.uso_suelo = 1 THEN 'HABITACIONAL'
+WHEN terreno.uso_suelo = 2 THEN 'INDUSTRIAL'
+WHEN terreno.uso_suelo = 3 THEN 'ADMINISTRATIVO'
+WHEN terreno.uso_suelo = 4 THEN 'COMERCIO'
+WHEN terreno.uso_suelo = 5 THEN 'FINANCIERO'
+WHEN terreno.uso_suelo = 6 THEN 'SERVICIOS DE TURISMO'
+WHEN terreno.uso_suelo = 7 THEN 'EDUCACIÓN'
+WHEN terreno.uso_suelo = 8 THEN 'SALUD'
+WHEN terreno.uso_suelo = 9 THEN 'RECREACIÓN Y DEPORTE'
+WHEN terreno.uso_suelo = 10 THEN 'SERVICIOS ESPECIALES'
+WHEN terreno.uso_suelo = 11 THEN 'SERVICIOS DE SEGURIDAD'
+WHEN terreno.uso_suelo = 12 THEN 'SERVICIOS FUNERARIOS'
+WHEN terreno.uso_suelo = 13 THEN 'CULTO  RELIGIOSO'
+WHEN terreno.uso_suelo = 14 THEN 'TRANSPORTE'
+WHEN terreno.uso_suelo = 15 THEN 'SERVICIOS GENERALES'
+WHEN terreno.uso_suelo = 16 THEN 'AGROPECUARIA'
+WHEN terreno.uso_suelo = 17 THEN 'SERVICIOS PROFESIONALES'
+WHEN terreno.uso_suelo = 18 THEN 'SIN USO'
+WHEN terreno.uso_suelo = 19 THEN 'HABITACIONAL Y COMERCIAL'
+WHEN terreno.uso_suelo = 20 THEN 'COMERCIAL Y DE SERVICIOS'
+WHEN terreno.uso_suelo = 21 THEN 'HABITACIONAL, COMERCIAL Y DE SERVICIOS' end as uso_suelo_new,
+
+CASE WHEN terreno.estado = 0 THEN 'SIN DATO'
+WHEN terreno.estado = 1 THEN 'CON EDIFICACION'
+WHEN terreno.estado = 2 THEN 'SIN EDIFICACION'
+WHEN terreno.estado = 3 THEN 'BLOQ. TERMINADO'
+WHEN terreno.estado = 4 THEN 'BLOQ. EN CONSTRUCCION'
+WHEN terreno.estado = 5 THEN 'PISOS TERMINADOS' END as estado_terreno_new,
+
+CASE WHEN terreno.geometria = 0 THEN 'SIN DATO'
+WHEN terreno.geometria = 1 THEN 'REGULAR'
+WHEN terreno.geometria = 2 THEN 'IRREGULAR' END as geom_new,
+
+CASE WHEN cp.dominio = 0 THEN 'SIN DATO'
+WHEN cp.dominio = 1 THEN 'PRIVADO'
+WHEN cp.dominio = 2 THEN 'MUNICIPAL'
+WHEN cp.dominio = 3 THEN 'ESTADO'
+WHEN cp.dominio = 4 THEN 'FUNDACION' END as dominio_new, int1.apellidos|| ' '||int1.nombre as nombre_relevamiento, int2.apellidos|| ' '||int2.nombre as nombre_validador
+, int3.apellidos|| ' '||int3.nombre as nombre_supervisor
+, int4.apellidos|| ' '||int4.nombre as nombre_supervisor_dig
+, int5.apellidos|| ' '||int5.nombre as nombre_cartografo
+, int6.apellidos|| ' '||int6.nombre as nombre_digitador
+
+FROM cat_predio cp
+INNER JOIN cat_terreno terreno
+ON cp.cod_parroquia = terreno.cod_parroquia AND
+cp.cod_zona = terreno.cod_zona AND
+cp.cod_sector = terreno.cod_sector AND
+cp.cod_manzana = terreno.cod_manzana AND
+cp.cod_solar = terreno.cod_solar
+LEFT OUTER JOIN cat_integrante int1
+ON int1.id = cp.id_relevamiento
+LEFT OUTER JOIN cat_integrante int2
+ON int2.id = cp.id_validador
+LEFT OUTER JOIN cat_integrante int3
+ON int3.id = cp.id_supervisor
+LEFT OUTER JOIN cat_integrante int4
+ON int4.id = cp.id_supervisor_digitador
+LEFT OUTER JOIN cat_integrante int5
+ON int5.id = cp.id_cartografo
+LEFT OUTER JOIN cat_integrante int6
+ON int6.id = cp.id_digitador
+WHERE clave_catastral ilike '%$P!{BUSQUEDA}%'
+
+
+UNION
+
+
+SELECT *, cp.id as id_predio,
+CASE WHEN terreno.uso_suelo = 0 THEN 'SIN DATO'
+WHEN terreno.uso_suelo = 1 THEN 'HABITACIONAL'
+WHEN terreno.uso_suelo = 2 THEN 'INDUSTRIAL'
+WHEN terreno.uso_suelo = 3 THEN 'ADMINISTRATIVO'
+WHEN terreno.uso_suelo = 4 THEN 'COMERCIO'
+WHEN terreno.uso_suelo = 5 THEN 'FINANCIERO'
+WHEN terreno.uso_suelo = 6 THEN 'SERVICIOS DE TURISMO'
+WHEN terreno.uso_suelo = 7 THEN 'EDUCACIÓN'
+WHEN terreno.uso_suelo = 8 THEN 'SALUD'
+WHEN terreno.uso_suelo = 9 THEN 'RECREACIÓN Y DEPORTE'
+WHEN terreno.uso_suelo = 10 THEN 'SERVICIOS ESPECIALES'
+WHEN terreno.uso_suelo = 11 THEN 'SERVICIOS DE SEGURIDAD'
+WHEN terreno.uso_suelo = 12 THEN 'SERVICIOS FUNERARIOS'
+WHEN terreno.uso_suelo = 13 THEN 'CULTO  RELIGIOSO'
+WHEN terreno.uso_suelo = 14 THEN 'TRANSPORTE'
+WHEN terreno.uso_suelo = 15 THEN 'SERVICIOS GENERALES'
+WHEN terreno.uso_suelo = 16 THEN 'AGROPECUARIA'
+WHEN terreno.uso_suelo = 17 THEN 'SERVICIOS PROFESIONALES'
+WHEN terreno.uso_suelo = 18 THEN 'SIN USO'
+WHEN terreno.uso_suelo = 19 THEN 'HABITACIONAL Y COMERCIAL'
+WHEN terreno.uso_suelo = 20 THEN 'COMERCIAL Y DE SERVICIOS'
+WHEN terreno.uso_suelo = 21 THEN 'HABITACIONAL, COMERCIAL Y DE SERVICIOS' end as uso_suelo_new,
+
+CASE WHEN terreno.estado = 0 THEN 'SIN DATO'
+WHEN terreno.estado = 1 THEN 'CON EDIFICACION'
+WHEN terreno.estado = 2 THEN 'SIN EDIFICACION'
+WHEN terreno.estado = 3 THEN 'BLOQ. TERMINADO'
+WHEN terreno.estado = 4 THEN 'BLOQ. EN CONSTRUCCION'
+WHEN terreno.estado = 5 THEN 'PISOS TERMINADOS' END as estado_terreno_new,
+
+CASE WHEN terreno.geometria = 0 THEN 'SIN DATO'
+WHEN terreno.geometria = 1 THEN 'REGULAR'
+WHEN terreno.geometria = 2 THEN 'IRREGULAR' END as geom_new,
+
+CASE WHEN cp.dominio = 0 THEN 'SIN DATO'
+WHEN cp.dominio = 1 THEN 'PRIVADO'
+WHEN cp.dominio = 2 THEN 'MUNICIPAL'
+WHEN cp.dominio = 3 THEN 'ESTADO'
+WHEN cp.dominio = 4 THEN 'FUNDACION' END as dominio_new, int1.apellidos|| ' '||int1.nombre as nombre_relevamiento, int2.apellidos|| ' '||int2.nombre as nombre_validador
+, int3.apellidos|| ' '||int3.nombre as nombre_supervisor
+, int4.apellidos|| ' '||int4.nombre as nombre_supervisor_dig
+, int5.apellidos|| ' '||int5.nombre as nombre_cartografo
+, int6.apellidos|| ' '||int6.nombre as nombre_digitador
+
+FROM cat_predio cp
+INNER JOIN cat_terreno terreno
+ON cp.cod_parroquia = terreno.cod_parroquia AND
+cp.cod_zona = terreno.cod_zona AND
+cp.cod_sector = terreno.cod_sector AND
+cp.cod_manzana = terreno.cod_manzana AND
+cp.cod_solar = terreno.cod_solar
+LEFT OUTER JOIN cat_integrante int1
+ON int1.id = cp.id_relevamiento
+LEFT OUTER JOIN cat_integrante int2
+ON int2.id = cp.id_validador
+LEFT OUTER JOIN cat_integrante int3
+ON int3.id = cp.id_supervisor
+LEFT OUTER JOIN cat_integrante int4
+ON int4.id = cp.id_supervisor_digitador
+LEFT OUTER JOIN cat_integrante int5
+ON int5.id = cp.id_cartografo
+LEFT OUTER JOIN cat_integrante int6
+ON int6.id = cp.id_digitador
+WHERE CASE WHEN $P{CLAVE_ANTERIOR} <> null THEN clave_catastral ilike '%$P!{CLAVE_ANTERIOR}%' WHEN $P{CLAVE_ANTERIOR} = null THEN true END
+AND CASE WHEN $P{COD_PARROQUIA} <> null THEN cp.cod_manzana ilike '%$P!{COD_PARROQUIA}%' WHEN $P{COD_PARROQUIA} = null THEN true END
+AND CASE WHEN $P{COD_ZONA} <> null THEN cp.cod_manzana ilike '%$P!{COD_ZONA}%' WHEN $P{COD_ZONA} = null THEN true END
+AND CASE WHEN $P{COD_SECTOR} <> null THEN cp.cod_manzana ilike '%$P!{COD_SECTOR}%' WHEN $P{COD_SECTOR} = null THEN true END
+AND CASE WHEN $P{COD_MANZANA} <> null THEN cp.cod_manzana ilike '%$P!{COD_MANZANA}%' WHEN $P{COD_MANZANA} = null THEN true END
+AND CASE WHEN $P{COD_SOLAR} <> null THEN cp.cod_manzana ilike '%$P!{COD_SOLAR}%' WHEN $P{COD_SOLAR} = null THEN true END
+
+
+) AS A
+ORDER BY fecha_creacion]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="clave_catastral" class="java.lang.String"/>
+	<field name="clave_anterior" class="java.lang.String"/>
+	<field name="manzana" class="java.lang.String"/>
+	<field name="nro_predio" class="java.lang.String"/>
+	<field name="nro_departamento" class="java.lang.String"/>
+	<field name="nro_piso" class="java.lang.String"/>
+	<field name="nro_bloque" class="java.lang.Integer"/>
+	<field name="nombre_edificio" class="java.lang.String"/>
+	<field name="permitieron_ingreso" class="java.lang.Integer"/>
+	<field name="nro_personas_habitan" class="java.lang.Integer"/>
+	<field name="dominio" class="java.lang.Integer"/>
+	<field name="origen" class="java.lang.Integer"/>
+	<field name="tipo_propiedad" class="java.lang.Integer"/>
+	<field name="alicuota_ph" class="java.lang.Double"/>
+	<field name="fecha_creacion" class="java.sql.Timestamp"/>
+	<field name="fecha_modificacion" class="java.sql.Timestamp"/>
+	<field name="usuario_modifica" class="java.lang.String"/>
+	<field name="id_contrato_arrendamiento" class="java.lang.Integer"/>
+	<field name="id_plano" class="java.lang.Integer"/>
+	<field name="id_ficha" class="java.lang.Integer"/>
+	<field name="id_relevamiento" class="java.lang.Integer"/>
+	<field name="id_validador" class="java.lang.Integer"/>
+	<field name="id_supervisor" class="java.lang.Integer"/>
+	<field name="id_supervisor_digitador" class="java.lang.Integer"/>
+	<field name="id_cartografo" class="java.lang.Integer"/>
+	<field name="fecha_relevamiento" class="java.sql.Date"/>
+	<field name="fecha_validacion" class="java.sql.Date"/>
+	<field name="fecha_supervicion" class="java.sql.Date"/>
+	<field name="fecha_digitacion" class="java.sql.Date"/>
+	<field name="fecha_supervicion_digitacion" class="java.sql.Date"/>
+	<field name="fecha_cartografia" class="java.sql.Date"/>
+	<field name="observacion" class="java.lang.String"/>
+	<field name="numero_ficha" class="java.lang.String"/>
+	<field name="id_digitador" class="java.lang.Integer"/>
+	<field name="administrador_promotor" class="java.lang.String"/>
+	<field name="administrador_promotor_cedula" class="java.lang.String"/>
+	<field name="administrador_promotor_celular" class="java.lang.String"/>
+	<field name="administrador_promotor_telefono" class="java.lang.String"/>
+	<field name="estado_legal_predio" class="java.lang.Integer"/>
+	<field name="text_dominio" class="java.lang.String"/>
+	<field name="text_tipo_propiedad" class="java.lang.String"/>
+	<field name="text_origen" class="java.lang.String"/>
+	<field name="nombre_predio_rural" class="java.lang.String"/>
+	<field name="registro_catastral_rural" class="java.lang.String"/>
+	<field name="posee_titulo" class="java.lang.Integer"/>
+	<field name="en_venta" class="java.lang.Integer"/>
+	<field name="venta_valor_terreno" class="java.lang.Float"/>
+	<field name="venta_valor_construccion" class="java.lang.Float"/>
+	<field name="venta_telefono" class="java.lang.String"/>
+	<field name="venta_nombre_informante" class="java.lang.String"/>
+	<field name="en_alquiler" class="java.lang.Integer"/>
+	<field name="valor_alquiler" class="java.lang.Float"/>
+	<field name="fecha_transaccion" class="java.sql.Date"/>
+	<field name="estudio_observaciones" class="java.lang.String"/>
+	<field name="anios_en_psoesion" class="java.lang.Integer"/>
+	<field name="anios_sin_perfeccionamiento" class="java.lang.Integer"/>
+	<field name="nombre_del_pueblo_o_etnia" class="java.lang.String"/>
+	<field name="requiere_perfeccionamiento_del_titulo" class="java.lang.Boolean"/>
+	<field name="escritura_en_perfeccionamiento" class="java.lang.Boolean"/>
+	<field name="modo_adquisicion" class="java.lang.Integer"/>
+	<field name="id_predial_rural" class="java.lang.String"/>
+	<field name="cod_provincia" class="java.lang.String"/>
+	<field name="cod_canton" class="java.lang.String"/>
+	<field name="cod_parroquia" class="java.lang.String"/>
+	<field name="cod_zona" class="java.lang.String"/>
+	<field name="cod_sector" class="java.lang.String"/>
+	<field name="cod_manzana" class="java.lang.String"/>
+	<field name="cod_solar" class="java.lang.String"/>
+	<field name="cod_bloque" class="java.lang.String"/>
+	<field name="cod_phv" class="java.lang.String"/>
+	<field name="cod_phh" class="java.lang.String"/>
+	<field name="regimen_tenencia" class="java.lang.Boolean"/>
+	<field name="tipo_predio" class="java.lang.Boolean"/>
+	<field name="nombre_predio" class="java.lang.String"/>
+	<field name="estado" class="java.lang.Integer"/>
+	<field name="hubo_atencion" class="java.lang.Integer"/>
+	<field name="dir_calle1" class="java.lang.String"/>
+	<field name="dir_calle2" class="java.lang.String"/>
+	<field name="dir_calle3" class="java.lang.String"/>
+	<field name="dir_calle4" class="java.lang.String"/>
+	<field name="dir_nomenclatura1" class="java.lang.String"/>
+	<field name="dir_nomenclatura2" class="java.lang.String"/>
+	<field name="dir_nomenclatura3" class="java.lang.String"/>
+	<field name="dir_nomenclatura4" class="java.lang.String"/>
+	<field name="area_levantamiento" class="java.lang.Double"/>
+	<field name="perimetro_levantamiento" class="java.lang.Double"/>
+	<field name="lin_norte_longitud" class="java.lang.String"/>
+	<field name="lin_sur_longitud" class="java.lang.String"/>
+	<field name="lin_este_longitud" class="java.lang.String"/>
+	<field name="lin_oeste_longitud" class="java.lang.String"/>
+	<field name="lin_norte_ref" class="java.lang.String"/>
+	<field name="lin_sur_ref" class="java.lang.String"/>
+	<field name="lin_este_ref" class="java.lang.String"/>
+	<field name="lin_oeste_ref" class="java.lang.String"/>
+	<field name="cord_x" class="java.lang.String"/>
+	<field name="cord_y" class="java.lang.String"/>
+	<field name="ubicacion" class="java.lang.Integer"/>
+	<field name="topografia" class="java.lang.Integer"/>
+	<field name="geometria" class="java.lang.Integer"/>
+	<field name="nro_frentes" class="java.lang.Integer"/>
+	<field name="caracteristicas_suelo" class="java.lang.Integer"/>
+	<field name="red_energia_electrica" class="java.lang.Integer"/>
+	<field name="red_agua_potable" class="java.lang.Integer"/>
+	<field name="red_alcantarillado" class="java.lang.Integer"/>
+	<field name="red_telefonica" class="java.lang.Integer"/>
+	<field name="alumbrado" class="java.lang.Integer"/>
+	<field name="recoleccion_basura" class="java.lang.Integer"/>
+	<field name="aseo_calles" class="java.lang.Integer"/>
+	<field name="transporte_publico" class="java.lang.Integer"/>
+	<field name="tipo_vias" class="java.lang.Integer"/>
+	<field name="tipo_capa_rodadura" class="java.lang.Integer"/>
+	<field name="aceras" class="java.lang.Integer"/>
+	<field name="bordillos" class="java.lang.Integer"/>
+	<field name="estado_conservacion" class="java.lang.Integer"/>
+	<field name="via_topografia" class="java.lang.Integer"/>
+	<field name="area_qgis" class="java.lang.Double"/>
+	<field name="area_siscat" class="java.lang.Double"/>
+	<field name="perimetro_qgis" class="java.lang.Double"/>
+	<field name="perimetro_siscat" class="java.lang.Double"/>
+	<field name="barrio" class="java.lang.String"/>
+	<field name="cable_satelital" class="java.lang.Integer"/>
+	<field name="internet" class="java.lang.Integer"/>
+	<field name="otros_servicio" class="java.lang.String"/>
+	<field name="ancho_via_publica" class="java.lang.Double"/>
+	<field name="ancho_acera" class="java.lang.Double"/>
+	<field name="pisos_terminados" class="java.lang.Integer"/>
+	<field name="medidor_luz" class="java.lang.Integer"/>
+	<field name="medidor_agua" class="java.lang.Integer"/>
+	<field name="uso_suelo" class="java.lang.Integer"/>
+	<field name="estado_edificacion" class="java.lang.Integer"/>
+	<field name="text_estado" class="java.lang.String"/>
+	<field name="text_estado_edificacion" class="java.lang.String"/>
+	<field name="text_ubicacion" class="java.lang.String"/>
+	<field name="text_topografia" class="java.lang.String"/>
+	<field name="text_geometria" class="java.lang.String"/>
+	<field name="text_caracteristicas_suelo" class="java.lang.String"/>
+	<field name="text_energia_electrica" class="java.lang.String"/>
+	<field name="text_agua_potable" class="java.lang.String"/>
+	<field name="text_alcantarillado" class="java.lang.String"/>
+	<field name="text_telefono" class="java.lang.String"/>
+	<field name="text_recoleccion_basura" class="java.lang.String"/>
+	<field name="text_estado_construccion" class="java.lang.String"/>
+	<field name="text_aseo_calle" class="java.lang.String"/>
+	<field name="text_transporte" class="java.lang.String"/>
+	<field name="text_cable_satelital" class="java.lang.String"/>
+	<field name="text_internet" class="java.lang.String"/>
+	<field name="text_tipo_via" class="java.lang.String"/>
+	<field name="text_capa_rodadura" class="java.lang.String"/>
+	<field name="text_aceras" class="java.lang.String"/>
+	<field name="text_bordillos" class="java.lang.String"/>
+	<field name="text_estado_conservacion" class="java.lang.String"/>
+	<field name="text_topografia_via" class="java.lang.String"/>
+	<field name="text_uso_suelo" class="java.lang.String"/>
+	<field name="eje_principal" class="java.lang.String"/>
+	<field name="eje_secundario" class="java.lang.String"/>
+	<field name="placa_predial" class="java.lang.String"/>
+	<field name="poblacion_cercana1" class="java.lang.String"/>
+	<field name="poblacion_cercana2" class="java.lang.String"/>
+	<field name="distancia_poblacion1" class="java.lang.Float"/>
+	<field name="distancia_poblacion2" class="java.lang.Float"/>
+	<field name="via_principal_acceso1" class="java.lang.String"/>
+	<field name="via_principal_acceso2" class="java.lang.String"/>
+	<field name="distancia_via_principal1" class="java.lang.Float"/>
+	<field name="distancia_via_principal2" class="java.lang.Float"/>
+	<field name="relacion_rasante" class="java.lang.Integer"/>
+	<field name="clasificacion_suelo" class="java.lang.Integer"/>
+	<field name="ecosistema_relevante" class="java.lang.Integer"/>
+	<field name="cobertura_predominante" class="java.lang.Integer"/>
+	<field name="rodadura" class="java.lang.Integer"/>
+	<field name="otras_vias_acceso" class="java.lang.Integer"/>
+	<field name="uso_via" class="java.lang.Integer"/>
+	<field name="parterre" class="java.lang.Integer"/>
+	<field name="n_medidores_luz" class="java.lang.Integer"/>
+	<field name="n_medidores_agua" class="java.lang.Integer"/>
+	<field name="disponibilidad_riego" class="java.lang.Integer"/>
+	<field name="eliminacion_excretas" class="java.lang.Integer"/>
+	<field name="metodo_riego" class="java.lang.Integer"/>
+	<field name="transporte_privado" class="java.lang.Integer"/>
+	<field name="tipo_vivienda_rural" class="java.lang.Integer"/>
+	<field name="uso_construccion_rural" class="java.lang.Integer"/>
+	<field name="requiere_perfeccionamiento" class="java.lang.Integer"/>
+	<field name="anios_en_posesion" class="java.lang.Integer"/>
+	<field name="nombre_etnia" class="java.lang.String"/>
+	<field name="frente_propiedad" class="java.math.BigDecimal"/>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="apellidos" class="java.lang.String"/>
+	<field name="telefono" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="habilitado" class="java.lang.Boolean"/>
+	<field name="tipo" class="java.lang.Integer"/>
+	<field name="identificacion" class="java.lang.String"/>
+	<field name="fecha_ingreso" class="java.sql.Date"/>
+	<field name="id_padre" class="java.lang.Integer"/>
+	<field name="id_equipo" class="java.lang.Integer"/>
+	<field name="id_predio" class="java.lang.Integer"/>
+	<field name="uso_suelo_new" class="java.lang.String"/>
+	<field name="estado_terreno_new" class="java.lang.String"/>
+	<field name="geom_new" class="java.lang.String"/>
+	<field name="dominio_new" class="java.lang.String"/>
+	<field name="nombre_relevamiento" class="java.lang.String"/>
+	<field name="nombre_validador" class="java.lang.String"/>
+	<field name="nombre_supervisor" class="java.lang.String"/>
+	<field name="nombre_supervisor_dig" class="java.lang.String"/>
+	<field name="nombre_cartografo" class="java.lang.String"/>
+	<field name="nombre_digitador" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="-2" y="0" width="802" height="20" uuid="7f8c78a3-5a70-45c1-9f8a-005e05bc1189"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE PREDIAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="500" y="20" width="300" height="20" uuid="37ced4c0-2d1d-44c6-a8ca-c6ea55f76291"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd 'de' MMMM 'del' yyyy", new Locale("es", "ES")).format(new Date())]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="41" width="100" height="20" uuid="6bad98d5-34eb-4c62-8632-b60a27fd6abd"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. Ingreso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="41" width="100" height="20" uuid="71f22005-abcd-4048-840c-4c46419aa28d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[F. Actualización]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="500" y="41" width="100" height="20" uuid="979d4e21-472f-4787-936e-2c17ec2aab09"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Anterior]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="600" y="41" width="200" height="20" uuid="52de1374-cc07-42e9-8ebb-4d560e63763a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Catastral]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="800" y="41" width="100" height="20" uuid="69fd01f6-5163-4305-b53c-b8e1063c9039"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Manzana]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="900" y="41" width="100" height="20" uuid="480e3e2c-8dd2-45aa-a4de-dd298e884e95"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Área de Const.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1000" y="41" width="100" height="20" uuid="4927b69f-6b97-4c89-9713-918864ddec1a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Uso de Suelo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1100" y="41" width="100" height="20" uuid="d027b1e5-4fa2-4430-9558-fdadea5db97d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[A. Const. OC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1200" y="41" width="100" height="20" uuid="15ce833f-b3c4-496a-b55f-f23443a42b09"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1300" y="41" width="100" height="20" uuid="34e576b2-5921-41c0-ac84-0b0ff64a50cd"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dominio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1400" y="41" width="100" height="20" uuid="be9cb094-c67f-4af2-b6dd-bd947f6ea005"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sitio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1600" y="41" width="100" height="20" uuid="bbd69815-e3b3-4640-9d28-0dd5b73e63b6"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Geometría]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1900" y="41" width="100" height="20" uuid="72619aa3-89b4-4aba-a2c9-f980a0528756"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Longitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2200" y="41" width="100" height="20" uuid="886b3b36-210b-49fa-90c8-2bef105cb4d3"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Longitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2500" y="41" width="100" height="20" uuid="b5f2f311-80a1-4eab-836c-26374cd948da"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Longitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2800" y="41" width="100" height="20" uuid="5c4e3409-93cc-404d-b06f-dcad6609be02"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Longitud]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2900" y="41" width="100" height="20" uuid="32d2c590-4775-42db-b499-2fd0a3a58dd0"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Superficie]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3200" y="41" width="100" height="20" uuid="4f6950db-e4e1-48a7-aa1d-e9b041f8caf9"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ancho Acera]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3300" y="41" width="200" height="20" uuid="2bf17ab0-ad33-4d22-b04d-23acd83c1b78"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relevamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3700" y="41" width="200" height="20" uuid="59f749a2-d596-469f-97d6-d3511bad0afb"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[C. Calidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3900" y="41" width="200" height="20" uuid="7a7c2fc8-a1ba-44e3-99be-4677a25857ea"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Digitalización]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="41" width="300" height="20" uuid="833c0052-b508-474f-8c37-19ca047a5e6c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Propietarios]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1500" y="41" width="100" height="20" uuid="1cda9359-56a2-4de9-9edc-ec65bba48b04"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nro. Predio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1700" y="41" width="200" height="20" uuid="714a6108-d3d5-4b2a-bab4-db62c9873679"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lindero Norte]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2000" y="41" width="200" height="20" uuid="a58d83e3-698c-49d2-9212-ea5a6c3d8be6"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lindero Sur]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2300" y="41" width="200" height="20" uuid="7f7794c4-fd4e-4f4f-a30c-7dda0a7a87f5"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lindero Este]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2600" y="41" width="200" height="20" uuid="7366bde9-9ee7-42f6-b313-0784f0496e24"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lindero Oeste]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3000" y="41" width="100" height="20" uuid="ad2adcce-7101-4ec7-a1c9-73ec2fc187ee"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Perímetro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3100" y="41" width="100" height="20" uuid="4db5319e-0c6f-42b7-9652-9362dc5e2075"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ancho Vía P.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3500" y="41" width="200" height="20" uuid="5f10defd-c92d-4ef4-bce2-9a916408aac7"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sup. Relev.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4100" y="41" width="200" height="20" uuid="22b6f848-8fc7-422a-b4c9-cba7190708b3"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Digitación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4300" y="41" width="200" height="20" uuid="d41d2ace-bbea-4900-8079-dfefc424d9de"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sup. Digitación]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4500" y="41" width="200" height="20" uuid="a9db0eee-dcaf-4da6-abb3-6248fcdb2865"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Usuario que modificó]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="4700" y="41" width="200" height="20" uuid="f5153458-e275-4de7-8fac-c8de28d535ba"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha modificación]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="100" height="20" uuid="bc82a19b-793a-423c-b1af-a4616ade686c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha_creacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="100" y="0" width="100" height="20" uuid="f642c5b2-6fe7-4261-8678-bdc142956155"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha_modificacion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="500" y="0" width="100" height="20" uuid="5730163c-c58b-4c48-8e9a-4b7d181dca19"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{clave_anterior}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="600" y="0" width="200" height="20" uuid="4df4a8d9-6b1b-4063-afa2-9e84ca899da1"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{clave_catastral}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="800" y="0" width="100" height="20" uuid="268acf9e-db9a-47df-a938-1a8448b96fa4"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{manzana}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1000" y="0" width="100" height="20" uuid="c3e01b16-ff4e-4e70-9f31-d1abd72d7389"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{uso_suelo_new}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1200" y="0" width="100" height="20" uuid="bd258213-74df-49bb-89ab-8b1575493cd6"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estado_terreno_new}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1600" y="0" width="100" height="20" uuid="896f0d53-3f9e-41f3-b654-7c54970b28e5"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{geom_new}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1300" y="0" width="100" height="20" uuid="1e51c386-bd5f-4e16-bd27-0db8220f3012"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{dominio_new}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1400" y="0" width="100" height="20" uuid="32f8cfb8-5e4e-4857-a9f6-a8033bdb5d87"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{barrio}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1700" y="0" width="200" height="20" uuid="0bcbf6b9-731c-4239-a617-c62217616977"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{lin_norte_ref}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="2000" y="0" width="200" height="20" uuid="ff0d806c-f885-4d87-a76a-704c90790333"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{lin_sur_ref}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="2300" y="0" width="200" height="20" uuid="94fcab16-d87c-4a24-9a53-d16c75185939"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{lin_este_ref}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="2600" y="0" width="200" height="20" uuid="919bc819-9360-432e-874e-7f49a79ba751"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{lin_oeste_ref}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1900" y="0" width="100" height="20" uuid="86866e2c-c739-4d5d-9241-8954c8f86dbd"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{lin_norte_longitud}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="2200" y="0" width="100" height="20" uuid="72703f81-dfa6-49a2-9faf-b32a232d2e05"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{lin_sur_longitud}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="2900" y="0" width="100" height="20" uuid="a93cb908-1d7f-42b9-b8ca-de25e6bcad1c"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{area_levantamiento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="3200" y="0" width="100" height="20" uuid="0c6aa458-ce22-4889-a07d-6081304991fb"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ancho_acera}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="3300" y="0" width="200" height="20" uuid="e1424bab-5b8f-48d7-8eae-50c79ea44c7e"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_relevamiento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="3500" y="0" width="200" height="20" uuid="abc3c10c-e89f-4e42-a331-9217521044da"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_supervisor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="1500" y="0" width="100" height="20" uuid="cd581151-33d8-4f60-b0e5-3751edb4e64b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nro_predio}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="2500" y="0" width="100" height="20" uuid="0078b9ea-7893-4a32-b67c-91c26960a565"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{lin_este_longitud}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="3000" y="0" width="100" height="20" uuid="f1048dad-bfeb-4a81-917a-7a05f85ffa6a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{perimetro_levantamiento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="3100" y="0" width="100" height="20" uuid="af8ccfdf-d8a2-4396-87c1-37ebea2fb458"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ancho_via_publica}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="3900" y="0" width="200" height="20" uuid="5b0dc146-05f6-46fb-9880-d1d41725aba3"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_cartografo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="4100" y="0" width="200" height="20" uuid="de401a3c-4910-48ec-a0c8-9ee43a7833ff"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_digitador}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="4300" y="0" width="200" height="20" uuid="9c0a3a35-005d-4404-b1d2-46a8ca52fbfc"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_supervisor_dig}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="2800" y="0" width="100" height="20" uuid="a4206837-a04d-4239-8d69-c0eeed4ea461"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{lin_oeste_longitud}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="1100" y="0" width="100" height="20" uuid="24537f27-7c19-420c-b69d-5029d960ff90"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "area_construccion_obras_complementarias_by_id_predio.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement stretchType="RelativeToTallestObject" x="200" y="0" width="300" height="20" uuid="43828d0a-04f5-457c-91cc-5ab21d91aa9a"/>
+				<subreportParameter name="ID_PREDIO">
+					<subreportParameterExpression><![CDATA[$F{id_predio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "propietarios_predio.jasper"]]></subreportExpression>
+			</subreport>
+			<subreport>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="900" y="0" width="100" height="20" uuid="b9468799-93c0-4353-88ac-9fe71d19787e"/>
+				<subreportParameter name="ID_PREDIO">
+					<subreportParameterExpression><![CDATA[$F{id_predio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "area_construccion_by_id_predio.jasper"]]></subreportExpression>
+			</subreport>
+			<textField isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="3700" y="0" width="200" height="20" uuid="e94efc2f-905d-492a-8ce0-2604fc172916"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{nombre_validador}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4500" y="0" width="200" height="20" uuid="f90c8d40-83fb-440b-b876-c570eeceadc1"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{usuario_modifica}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="4700" y="0" width="200" height="20" uuid="26d26ceb-9633-4d98-8d23-067950ee9119"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fecha_modificacion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

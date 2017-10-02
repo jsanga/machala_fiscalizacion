@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" style="margin-bottom: 10px;">
+            <h1 class="BigTopic Fs16">Clave catastral y localizaci&oacute;n</h1>
+            <hr></hr>            
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Clave catastral" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_ficha" value="No. ficha:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_ficha" value="#{regPredioRuralView.predio.numeroFicha}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'cat_predio_reg_cat')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_reg_cat" value="Registro catastral:" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_predio_reg_cat" value="#{regPredioRuralView.predio.registroCatastral}"
+                                             class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'cat_predio_id_predial')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_id_predial" value="Identificación predial:" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_predio_id_predial" value="#{regPredioRuralView.predio.identificacionPredialR}"
+                                             class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'nombre_predio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nombre_predio" value="Nombre del predio:" class="DispBlock Wid100"/>
+                                <p:inputText id="nombre_predio" value="#{regPredioRuralView.predio.nombrePredio}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'barrio')"/>
+                            </h:panelGroup>
+                            
+                            <!--<h:panelGroup layout="block">
+                                <p:outputLabel for="clave_anterior" value="Clave catastral anterior:" class="DispBlock Wid100"/>
+                                <p:inputText id="clave_anterior" value="# {regPredioRuralView.predio.claveAnterior}" required="true" maxlength="# {regPredioRuralView.PH ? '14':'11'}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'barrio')"/>
+                                <p:commandButton icon="fa fa-search" action="# {consultaRegistroView.ejecutarConsulta(regPredioRuralView.predio.claveAnterior)}" 
+                                                 oncomplete="PF('dlgResultadoConsulta').show();" title="Busqueda de Propietario por Clave Anterior." 
+                                                 update="resultBusquedaCA-form,messages"/>
+                            
+                            </h:panelGroup>-->
+                            
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_clave_catastral" value="Clave catastral:" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_clave_catastral" value="#{regPredioRuralView.predio.claveCatastral}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nombre_predio')" disabled="true"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Localizaci&oacute;n" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4"> 
+                            
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="provincia" value="Provincia:" class="DispBlock Wid100"/>
+                                <p:inputText id="provincia" value="0#{regPredioRuralView.terreno.manzana.sector.zona.parroquia.canton.provincia.codProvincia}-#{regPredioRuralView.terreno.manzana.sector.zona.parroquia.canton.provincia.nombre}"
+                                             class="input_180" disabled="true"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_canton" value="Cant&oacute;n:" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_canton" value="0#{regPredioRuralView.terreno.manzana.sector.zona.parroquia.canton.cantonPK.codCanton}-#{regPredioRuralView.terreno.manzana.sector.zona.parroquia.canton.nombre}"
+                                             class="input_180" disabled="true"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel value="Parroquia:" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_parroquia" value="0#{regPredioRuralView.terreno.manzana.sector.zona.parroquia.parroquiaPK.codParroquia}-#{regPredioRuralView.terreno.manzana.sector.zona.parroquia.nombre}"
+                                             class="input_180" disabled="true"/>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="barrio" value="Sitio/Barrio/Comuna:" class="DispBlock Wid100"/>
+                                <p:inputText id="barrio" value="#{regPredioRuralView.terreno.barrio}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'calle1')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle1" value="Nombre eje principal:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle1" value="#{regPredioRuralView.terreno.ejePrincipal}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'calle3')"/>
+                            </h:panelGroup>
+                            <!--<h:panelGroup layout="block">
+                                <p:outputLabel for="calle2" value="Placa predial:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle2" value="#{regPredioRuralView.terreno.placaPredial}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'calle3')"/>
+                            </h:panelGroup>-->
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle3" value="Nombre eje secundario:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle3" value="#{regPredioRuralView.terreno.ejeSecundario}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'poblacion_cercana1')"/>
+                            </h:panelGroup>                          
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Referencias para la localizaci&oacute;n" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4"> 
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="poblacion_cercana1" value="Poblaci&oacute;n cercana:" class="DispBlock Wid100"/>
+                                <p:inputText id="poblacion_cercana1" value="#{regPredioRuralView.terreno.poblacionCercana1}"
+                                             class="input_300 " onkeypress="focusNextOnEnter(event, 'distancia1')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="distancia1" value="Distancia:" class="DispBlock Wid100"/>
+                                <p:panelGrid columns="2">
+                                    <p:inputText id="distancia1" value="#{regPredioRuralView.terreno.distanciaPoblacion1}"
+                                                 class="input_115" onkeypress="validateFloatValueAndFocusNext(event, 'via_acceso1')"/>
+                                    <p:outputLabel value="Km(s)." class="DispBlock Wid100" style="margin-left: -15px; margin-top: 10px;"/>
+                                </p:panelGrid>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="via_acceso1" value="V&iacute;a principal de acceso:" class="DispBlock Wid100"/>
+                                <p:inputText id="via_acceso1" value="#{regPredioRuralView.terreno.viaPrincipalAcceso1}"
+                                             class="input_300" onkeypress="focusNextOnEnter(event, 'distancia2')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="distancia2" value="Distancia:" class="DispBlock Wid100"/>
+                                <p:panelGrid columns="2">
+                                    <p:inputText id="distancia2" value="#{regPredioRuralView.terreno.distanciaViaPrincipal1}"
+                                                 class="input_115" onkeypress="validateFloatValueAndFocusNext(event, 'permitieron_ingreso:comun-si_no-input')"/>
+                                    <p:outputLabel value="Km(s)." class="DispBlock Wid100" style="margin-left: -15px; margin-top: 10px;"/>
+                                </p:panelGrid>
+                            </h:panelGroup>
+                            <!--
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="poblacion_cercana2" value="Poblaci&oacute;n cercana:" class="DispBlock Wid100"/>
+                                <p:inputText id="poblacion_cercana2" value="#{regPredioRuralView.terreno.poblacionCercana2}"
+                                             class="input_300" onkeypress="focusNextOnEnter(event, 'distancia3')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="distancia3" value="Distancia:" class="DispBlock Wid100"/>
+                                <p:inputText id="distancia3" value="#{regPredioRuralView.terreno.distanciaPoblacion2}"
+                                             class="input_115" onkeypress="focusNextOnEnter(event, 'via_acceso2')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="via_acceso2" value="V&iacute;a principal de acceso:" class="DispBlock Wid100"/>
+                                <p:inputText id="via_acceso2" value="#{regPredioRuralView.terreno.viaPrincipalAcceso2}"
+                                             class="input_300" onkeypress="focusNextOnEnter(event, 'distancia4')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="distancia4" value="Distancia:" class="DispBlock Wid100"/>
+                                <p:inputText id="distancia4" value="#{regPredioRuralView.terreno.distanciaViaPrincipal2}"
+                                             class="input_115" onkeypress="focusNextOnEnter(event, 'calle2')"/>
+                            </h:panelGroup>
+                            -->
+                        </h:panelGrid>
+                    </p:fieldset>
+                    
+                    <!-- -->
+                    
+                    <p:fieldset legend="Ingreso" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="2"> 
+                            <h:panelGroup layout="block">
+                                <var:varDisInputText id="permitieron_ingreso" label="Permitieron el ingreso:"
+                                                    table="comun" column="si_no"
+                                                    bind="#{regPredioRuralView.predio.permitieronIngreso}"
+                                                    showlabel="true"
+                                                    changeOnEnter="true"
+                                                    defaultValue="2"
+                                                    next="hubo_atencion:comun-si_no-input"
+                                                    labelPosition="top"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <var:varDisInputText id="hubo_atencion" label="Hubo atención:"
+                                                    table="comun" column="si_no"
+                                                    bind="#{regPredioRuralView.predio.huboAtencion}"
+                                                    showlabel="true"
+                                                    changeOnEnter="true"
+                                                    defaultValue="1"
+                                                    next="wiz_next"
+                                                    labelPosition="top"/>
+                            </h:panelGroup>
+                            <!-- 
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="hubo_atencion" value="Hubo atención:" class="DispBlock Wid100"/>
+                                <p:selectBooleanCheckbox id="hubo_atencion" value="#{regPredioRuralView.predio.huboAtencion}" style=" margin-left: 15px;">
+                                </p:selectBooleanCheckbox>
+                            </h:panelGroup>-->
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            
+            <h:panelGroup layout="block" class="Container100 Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Im&aacute;genes del predio" toggleable="true" toggleSpeed="500" >
+                        <p:panelGrid columns="2" style="width: 100%">
+                            <h:panelGroup layout="block" class="Responsive Container100">
+                                <div class="ContainerIndent">
+                                    <h1 class="BigTopic Fs16">Cargar im&aacute;genes</h1>
+                                    <hr></hr>
+                                    <p:fileUpload fileUploadListener="#{regPredioRuralView.handlePhotoUpload}" mode="advanced" dragDropSupport="false"
+                                                  multiple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                  cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="image-upload-view,image-preview"/>
+                                    <h:panelGroup layout="block" id="image-upload-view">
+                                        <table>
+                                            <tbody>
+                                                <c:forEach var="foto" items="#{regPredioRuralView.fotosPredio}" varStatus="loop">
+                                                    <c:if test="#{not empty regPredioRuralView.fotosPredio}">
+                                                        <tr>
+                                                            <td>
+                                                                <p:outputLabel value="#{loop.index +1}" class="Fs14" style="font-weight: bold;"/>
+                                                            </td>
+                                                            <td>
+                                                                <h:graphicImage  width="95" height="95" url="#{foto.pathToFile}"/>
+                                                            </td>
+                                                            <td>
+                                                                <p:inputText maxlength="255" value="#{foto.description}"/>
+                                                            </td>
+                                                            <td class="column-photo-actions">
+                                                                <p:commandButton icon="fa fa-trash-o white" actionListener="#{regPredioRuralView.eliminarFotoPredio(index)}" update="image-upload-view,image-preview" process="@this">
+                                                                    <p:confirm header="Confirmac&iacute;on" message="Est&aacute; seguro de eliminar la Foto Nro #{loop.index +1}?" icon="ui-icon-alert" />
+                                                                </p:commandButton>
+                                                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                                </p:confirmDialog>
+                                                            </td>
+                                                        </tr>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </h:panelGroup>
+                                </div>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" class="Responsive Container50">
+                                <h:panelGroup layout="block" id="image-actual-view">
+                                    <div class="ContainerIndent">
+                                        <h1 class="BigTopic Fs16">Eliminar fotos actuales</h1>
+                                        <hr/>
+                                        <h:panelGrid columns="8" width="100%">
+                                            <c:forEach var="actual" items="#{regPredioRuralView.fotosPreview}" varStatus="loop">
+                                                <h:panelGroup layout="block" style="vertical-align: middle; text-align: center;">
+                                                    <h:graphicImage  width="90" height="90" url="#{actual.ruta}"/>
+                                                    <div style="clear: both"></div>
+                                                    <p:selectBooleanCheckbox value="#{actual.eliminado}">
+                                                        <p:ajax update="image-preview,image-actual-view" />
+                                                    </p:selectBooleanCheckbox>
+                                                </h:panelGroup>.
+                                            </c:forEach>
+                                        </h:panelGrid>
+
+                                    </div>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </p:panelGrid>
+                        <h:panelGroup layout="block" class="Responsive Container100" rendered="#{!regPredioRuralView.isEditing}">
+                            <div class="ContainerIndent">
+                                <h1 class="BigTopic Fs16">Clic para ampliar la imagen</h1>
+                                <hr></hr>
+                                <h:panelGroup layout="block" id="images-new">
+                                    <p:outputLabel style="margin-left: 30px;" value="No se han registrado fotos al predio." rendered="#{empty regPredioRuralView.fotosPredio}"/>
+                                    <p:lightBox styleClass="imagebox" >
+                                        <c:forEach var="foto" items="#{regPredioRuralView.fotosPredio}" varStatus="loop">
+                                            <c:if test="#{not empty regPredioRuralView.fotosPredio}">
+                                                <h:outputLink value="#{foto.pathToFile}" class="MarRight10 Fleft" >
+                                                    <h:graphicImage url="#{foto.pathToFile}" width="150" height="150" title="Fotos del predio"/>
+                                                </h:outputLink>
+                                            </c:if>
+                                        </c:forEach>
+                                    </p:lightBox>
+
+                                </h:panelGroup>
+                            </div>
+                        </h:panelGroup>
+                        
+                        <!-- EDITAR AQUI COMO LO HACE LA CONSULTA DEL PREDIO URBANO -->
+                        
+                        <h:panelGroup layout="block" class="Responsive Container100" rendered="#{regPredioRuralView.isEditing}">
+                            <div class="ContainerIndent">
+                                <h1 class="BigTopic Fs16">Clic para ampliar la imagen</h1>
+                                <hr></hr>
+                                <h:panelGroup layout="block" id="image-preview">
+                                    <p:outputLabel style="margin-left: 30px;" value="No se han registrado fotos al predio." rendered="#{empty regPredioRuralView.fotosPreview}"/>
+                                    <p:lightBox styleClass="imagebox" >
+                                        <c:forEach var="foto" items="#{regPredioRuralView.fotosPreview}" varStatus="loop">
+                                            <c:if test="#{not empty regPredioRuralView.fotosPreview}">
+                                                <h:outputLink value="#{foto.ruta}" class="MarRight10 Fleft" >
+                                                    <h:graphicImage url="#{foto.ruta}" width="150" height="150" title="Fotos del predio"/>
+                                                </h:outputLink>
+                                            </c:if>
+                                        </c:forEach>
+                                        
+                                        <c:forEach var="foto" items="#{regPredioRuralView.fotosPredio}" varStatus="loop">
+                                            <c:if test="#{not empty regPredioRuralView.fotosPredio}">
+                                                <h:outputLink value="#{foto.pathToFile}" class="MarRight20 Fleft" >
+                                                    <h:graphicImage url="#{foto.pathToFile}" width="150" height="150" title="Fotos del predio"/>
+                                                </h:outputLink>
+                                            </c:if>
+                                        </c:forEach>    
+                                    </p:lightBox>
+
+                                </h:panelGroup>
+                            </div>
+                        </h:panelGroup>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+      
+    </ui:composition>
+</html>

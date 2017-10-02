@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="planos_aprobados" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4e01c11a-1fb8-455f-b279-eb9985311cea">
+	<property name="ireport.zoom" value="1.3310000000000004"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="691"/>
+	<parameter name="id" class="java.lang.Long"/>
+	<queryString>
+		<![CDATA[SELECT * FROM flow.tr_aprobacion_planos
+WHERE id = $P{id}]]>
+	</queryString>
+	<field name="id" class="java.lang.Long"/>
+	<field name="solicitante" class="java.lang.Long"/>
+	<field name="predio" class="java.lang.Long"/>
+	<field name="num_oficio" class="java.lang.String"/>
+	<field name="fecha_aprobacion" class="java.sql.Timestamp"/>
+	<field name="fecha_negacion" class="java.sql.Timestamp"/>
+	<field name="director" class="java.lang.String"/>
+	<field name="responsable_tecnico" class="java.lang.String"/>
+	<field name="fecha_elaboracion" class="java.sql.Timestamp"/>
+	<field name="tramite" class="java.lang.Long"/>
+	<field name="detalle" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="802" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="77" width="519" height="20" uuid="01b10482-d247-46be-8476-1c52397f3721"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Oficio nro. "+$F{num_oficio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="97" width="519" height="20" uuid="6f62016b-c9ab-4710-bfaf-7a0ed8a2a35d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Machala, "+new java.text.SimpleDateFormat("MMMM dd 'del' yyyy", new Locale("es", "ES")).format($F{fecha_aprobacion})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="51" y="762" width="468" height="30" uuid="8bed97ec-3d4a-48eb-91e4-04434c487a74"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[VALIDO POR 1 AÑO A PARTIR DE LA PRESENTE FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="51" y="742" width="95" height="20" uuid="33edcdad-3b3d-4a3f-8a59-f86ec566ce0a"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aprobado por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="742" width="115" height="20" uuid="82e6b934-cbee-47c1-a15b-132d2067b813"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de elaboración:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="392" y="742" width="127" height="20" uuid="5482cb4c-d577-405a-95ef-f4e6b247c6e4"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("MMMM dd 'del' yyyy", new Locale("es", "ES")).format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="146" y="742" width="131" height="20" uuid="d187f7eb-859d-491b-bb98-1e1fedd15e33"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["Arq. "+$F{responsable_tecnico}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="51" y="722" width="166" height="20" uuid="4363adcb-d497-4bda-aaa7-86a32cb7eb3a"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Sub-Director de Regulación Urbana]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="51" y="702" width="166" height="20" uuid="7c45c8f6-32f4-40eb-93c8-4383dea3953c"/>
+				<textFieldExpression><![CDATA[$F{director}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="51" y="222" width="468" height="384" uuid="1648aab3-c131-4f3a-b1d4-58f1007be008"/>
+				<textElement textAlignment="Justified" markup="html"/>
+				<textFieldExpression><![CDATA[$F{detalle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="../../templates/layout.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Adicionar contribuyente"></h:outputText>
+        </ui:define>
+
+        <ui:define name="content">
+            <h:form id="adicionarContribuyenteForm">
+                <p:panel header="Informacion del Contribuyente" widgetVar="contribuyentePanel">
+
+                    
+                        <p:panelGrid columns="2" columnClasses="ui-grid-col-8,ui-grid-col-4" layout="grid">
+                            
+                            <p:panelGrid columns="2" columnClasses="ui-grid-col-5,ui-grid-col-7" layout="grid">
+                                <p:outputLabel for="tipo_identificacion" value="Tipo de identificacion:" />
+                                 <p:selectOneMenu id="tipo_identificacion" value="#{contribuyenteController.contribuyente.tipoIdentificacion}" style="width:125px">
+                                    <f:selectItem itemLabel="Cedula" itemValue="C" />
+                                    <f:selectItem itemLabel="RUC" itemValue="R" />
+                                    <f:selectItem itemLabel="Pasaporte" itemValue="P" />
+                                </p:selectOneMenu>
+                            </p:panelGrid>
+                           
+                            
+                            <h:panelGroup layout="block">
+                                <p:fieldset legend="Tipo de persona">
+                                    <p:selectOneRadio id="tipo_persona" value="#{contribuyenteController.contribuyente.tipo}">
+                                        <f:selectItem itemLabel="Natural" itemValue="N" />
+                                        <f:selectItem itemLabel="Juridico" itemValue="J" />
+                                        <f:selectItem itemLabel="Institucion" itemValue="I" />
+                                    </p:selectOneRadio>
+                                </p:fieldset>
+                                <p:fieldset legend="Sexo">
+                                    <p:selectOneRadio id="sexo" value="#{contribuyenteController.contribuyente.sexo}">
+                                        <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                        <f:selectItem itemLabel="Femenino" itemValue="F" />
+                                    </p:selectOneRadio>
+                                </p:fieldset>
+                            </h:panelGroup>
+                        </p:panelGrid>
+                    
+
+                    <p:panelGrid columns="2">
+                        <p:panelGrid>  
+                            <p:row>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        
+                                    </h:panelGroup>
+                                </p:column>
+                                <p:column>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="numero_identificacion" value="Numero de identificacion:" />
+                                        <p:inputText id="numero_identificacion" value="#{contribuyenteController.contribuyente.identificacion}" required="true"/>
+                                    </h:panelGroup>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="2">
+                                    <h:panelGroup>
+                                        <p:outputLabel for="nombre_contribuyente" value="Nombre:" />
+                                        <p:inputText id="nombre_contribuyente" value="#{contribuyenteController.contribuyente.nombre}" required="true"/>
+                                    </h:panelGroup>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:panelGroup>
+                                        <p:outputLabel for="apellido_paterno" value="Apellido paterno:" />
+                                        <p:inputText id="apellido_paterno" value="#{contribuyenteController.contribuyente.apellidoPaterno}" required="true"/>                                    
+                                    </h:panelGroup>                                    
+                                </p:column>
+                                <p:column>
+                                    <h:panelGroup>
+                                        <p:outputLabel for="apellido_materno" value="Apellido materno:" />
+                                        <p:inputText id="apellido_materno" value="#{contribuyenteController.contribuyente.apellidoMaterno}" required="true"/>                                    
+                                    </h:panelGroup>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column colspan="2">
+                                    <h:panelGroup>
+                                        <p:outputLabel for="direccion" value="Direccion:" />
+                                        <p:inputTextarea id="direccion" value="#{contribuyenteController.contribuyente.direccion}" required="true"/>                                    
+                                    </h:panelGroup>
+                                </p:column>                                                              
+                            </p:row>
+                            <p:row>
+                                <p:column>
+                                    <h:panelGroup>
+                                        <p:outputLabel for="fecha_nacimiento" value="Fecha Nac./Const.:" />
+                                        <p:calendar id="fecha_nacimiento" value="#{contribuyenteController.contribuyente.fechaNacimiento}" showOn="button" required="true"/>                                    
+                                    </h:panelGroup>
+                                </p:column>                               
+                                <p:column>
+                                    <h:panelGroup>
+                                        <p:outputLabel for="estado_civil" value="Estado Civil:" />
+                                        <p:inputText id="estado_civil" value="#{contribuyenteController.contribuyente.estadoCivil}" required="true"/>                                    
+                                    </h:panelGroup>
+
+                                </p:column>                                
+                            </p:row>
+                        </p:panelGrid>
+                        <h:panelGroup>
+                            
+                        </h:panelGroup>
+
+                    </p:panelGrid>
+                    <p:fieldset legend="Informacion Adicional">
+                        <p:panelGrid columns="2">
+                            <p:panelGrid columns="4">
+                                <h:outputText value="Discapacidad:" />
+                                <p:selectBooleanCheckbox  value="#{contribuyenteController.discapacitado}">
+                                    <p:ajax update="extra"/>
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value="Artesano:" />
+                                <p:selectBooleanCheckbox  value="#{contribuyenteController.artesano}">
+                                    <p:ajax update="extra"/>
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value="Contribuyenye especial:" />
+                                <p:selectBooleanCheckbox  value="#{contribuyenteController.contribuyenteEspecial}">
+                                    <p:ajax update="extra"/>
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value="Lleva contabilidad:" />
+                                <p:selectBooleanCheckbox  value="#{contribuyenteController.llevaContabilidad}">
+                                    <p:ajax update="extra"/>
+                                </p:selectBooleanCheckbox>
+                                <h:outputText value="Sin fines de lucro:" />
+                                <p:selectBooleanCheckbox  value="#{contribuyenteController.sinFinesLucro}">
+                                    <p:ajax update="extra"/>
+                                </p:selectBooleanCheckbox>
+                            </p:panelGrid>
+                            <p:panelGrid id="extra" columns="2">
+                                <h:outputText value="Numero:" rendered="#{contribuyenteController.discapacitado}"/>
+                                <p:inputText id="numero_registro_discapacitado" value="#{contribuyenteController.contribuyente.numeroRegistroDiscapacitado}" required="true" rendered="#{contribuyenteController.discapacitado}"/>                                    
+                                <h:outputText value="Porcentaje:" rendered="#{contribuyenteController.discapacitado}"/>
+                                <p:inputText id="porcentaje_discapacitado" value="#{contribuyenteController.contribuyente.porcentajeDiscapacitado}" required="true" rendered="#{contribuyenteController.discapacitado}"/>                                    
+                                <h:outputText value="Numero:" rendered="#{contribuyenteController.artesano}"/>
+                                <p:inputText id="numero_registro_artesano" value="#{contribuyenteController.contribuyente.numeroRegistroArtesano}" required="true" rendered="#{contribuyenteController.artesano}"/>                                    
+                            </p:panelGrid>
+                        </p:panelGrid>
+                    </p:fieldset>
+                    <p:fieldset legend="Representante legal">
+                        <p:panelGrid columns="2">
+                            <p:outputLabel for="representante_legal_cedula" value="C&eacute;dula:" />
+                            <p:inputText id="representante_legal_cedula" value="#{contribuyenteController.contribuyente.representanteLegalCedula}" required="true"/>                                    
+                            <p:outputLabel for="representante_legal_nombre" value="Nombre y apellidos:" />
+                            <p:inputText id="representante_legal_nombre" value="#{contribuyenteController.contribuyente.representanteLegal}" required="true"/>                                    
+
+                        </p:panelGrid>
+                    </p:fieldset>
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+
+</html>

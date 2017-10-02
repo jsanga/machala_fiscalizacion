@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <p:dialog id="official-dlg" widgetVar="officialDialog"
+                  modal="true" resizable="false" appendTo="@(body)"
+                  header="Datos de la Tasa" style="width: 600px;">
+             <p:messages id="datos-messages" autoUpdate="false" closable="true" />
+            <p:ajax event="close" update="official-list-form,official-dlg" listener="#{cemAdminView.cancelarCreacion}" />
+            <h:panelGroup layout="block" rendered="#{cemAdminView.creando or cemAdminView.editando}" class="Container Container60">
+                <h:form id="new-official-form" prependId="false">
+                    
+                    <f:event listener="#{cemAdminView.validarFormulario}" type="postValidate" />
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="2">
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="nombre" value="Nombre:" class="DispBlock Wid100"/>
+                                    <p:inputText id="nombre" value="#{cemAdminView.contribucionSeleccionada.nombre}" class="input_160"
+                                                 onkeypress="focusNextOnEnter(event, 'presupuesto')" required="true"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="presupuesto" value="Presupuesto:" class="DispBlock Wid100"/>
+                                    <p:inputText id="presupuesto" value="#{cemAdminView.contribucionSeleccionada.presupuesto}" class="input_160"
+                                                 required="true" requiredMessage="Presupuesto requerido." onkeypress="focusNextOnEnter(event, 'fecha_inicio_input')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="fecha_inicio" value="Fecha inicio obra:" class="DispBlock Wid100" />
+                                    <p:calendar id="fecha_inicio" value="#{cemAdminView.contribucionSeleccionada.fechaCreacion}" 
+                                                onkeypress="focusNextOnEnter(event, 'fecha_final_input')"/>
+                                    
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="fecha_final" value="Fecha final obra:" class="DispBlock Wid100"/>
+                                    <p:calendar id="fecha_final" value="#{cemAdminView.contribucionSeleccionada.fechaTerminacion}" 
+                                                onkeypress="focusNextOnEnter(event, 'fecha_inicio_c_input')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="fecha_inicio_c" value="Fecha inicio cobro:" class="DispBlock Wid100" />
+                                    <p:calendar id="fecha_inicio_c" value="#{cemAdminView.contribucionSeleccionada.fechaInicioCobro}" 
+                                                onkeypress="focusNextOnEnter(event, 'fecha_final_c_input')"/>
+                                    
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="fecha_final_c" value="Fecha final cobro:" class="DispBlock Wid100"/>
+                                    <p:calendar id="fecha_final_c" value="#{cemAdminView.contribucionSeleccionada.fechaFinalCobro}" 
+                                                onkeypress="focusNextOnEnter(event, #{cemAdminView.creando ? 'crear-official-btn':'actualizar-official-btn'})"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                            <h:panelGroup layout="block">
+                                <p:commandButton id="crear-official-btn"
+                                                 rendered="#{cemAdminView.creando}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Guardar"
+                                                 actionListener="#{cemAdminView.crear()}"
+                                                 process="new-official-form"
+                                                 update="official-list-form,official-list,nombre,presupuesto,fecha_inicio,fecha_final,fecha_inicio_c,fecha_final_c,datos-messages"/>
+                                <p:commandButton id="actualizar-official-btn"
+                                                 rendered="#{cemAdminView.editando}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                                 actionListener="#{cemAdminView.edit()}"
+                                                 process="new-official-form"
+                                                 update="official-list-form,official-list,nombre,presupuesto,fecha_inicio,fecha_final,fecha_inicio_c,fecha_final_c,datos-messages"/>
+                                <p:commandButton id="cancelar-official-btn"
+                                                 icon="fa fa-times-circle-o" styleClass="white" value="Cancelar" actionListener="#{cemAdminView.inicializarNuevo()}"
+                                                 onclick="PF('officialDialog').hide();"
+                                                 />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

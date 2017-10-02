@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:predio="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+
+    <ui:composition>
+
+        <h:panelGroup  layout="block" class="Container Wid100 MarTop10">
+            <h:panelGroup  layout="block" class="Container Wid100 MarBot10">
+                <h1 class="BigTopic Fs16">Datos de avaluos</h1>
+                <hr/>
+                <h:panelGroup layout="block" class="Responsive Container100 MarBot10">
+                    <p:panelGrid style="border: 2px #761c19 solid; width: 600px; float: left; padding: 15px; border-radius: 20px; margin-top: 15px; margin-right: 60px">
+                        <p:row>
+                            <p:column class="FontBold">Datos de construcci&oacute;n:</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>&nbsp;</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:panelGrid class="ui-datatable Wid100">
+                                    <p:row class="FontBold TexAlCenter ui-datatable-odd">
+                                        <p:column style="width: 35px;border-bottom: 1px #E3C6C5 solid !important;">Bloque</p:column>
+                                        <p:column style="width: 45px;border-bottom: 1px #E3C6C5 solid !important;">Pisos</p:column>
+                                        <p:column style="width: 85px;border-bottom: 1px #E3C6C5 solid !important;">Tipolog&iacute;a</p:column>
+                                        <p:column style="width: 55px;border-bottom: 1px #E3C6C5 solid !important;">&Aacute;rea</p:column>
+                                        <p:column style="width: 70px;border-bottom: 1px #E3C6C5 solid !important;">USD/m&sup2;</p:column>
+                                        <p:column style="width: 65px;border-bottom: 1px #E3C6C5 solid !important;">Construc.</p:column>
+                                        <!--<p:column style="width: 65px;border-bottom: 1px #E3C6C5 solid !important;">Conserv.</p:column>-->
+                                        <p:column style="width: 80px;border-bottom: 1px #E3C6C5 solid !important;">Aval&uacute;o</p:column>
+                                    </p:row>
+
+                                    <ui:repeat value="#{registroInpView.creaListaBloques()}" var="bloque">
+
+                                        <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                            <td class="TexAlCenter">#{bloque.numeroBloque}</td>
+                                            <td class="TexAlCenter">#{bloque.numeroPisos}</td>
+                                            <td class="TexAlCenter">#{bloque.tipologia}</td>
+                                            <td class="TexAlRight">
+                                                <h:outputText value="#{bloque.areaTotal}">
+                                                    <f:convertNumber type="currency" currencySymbol="" />
+                                                </h:outputText>
+                                            </td>
+                                            <td class="TexAlCenter">
+                                                <h:outputText value="#{bloque.valorMetro}">
+                                                    <f:convertNumber type="currency" currencySymbol="" />
+                                                </h:outputText>
+                                            </td>
+                                            <td class="TexAlCenter">
+                                                <h:outputText value="#{bloque.porcientoConstruccion} %">
+                                                    <f:convertNumber type="number" integerOnly="true"/>
+                                                </h:outputText>
+                                            </td>
+                                            <td class="TexAlRight">
+                                                <h:outputText value="#{bloque.avaluo}">
+                                                    <f:convertNumber type="currency" currencySymbol="" />
+                                                </h:outputText>
+                                            </td>
+                                        </tr>
+
+                                    </ui:repeat>
+
+                                </p:panelGrid>
+
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+
+                    <p:panelGrid style="border: 2px #761c19 solid; width: 200px; float: left; padding: 15px; border-radius: 20px; margin-top: 15px;">
+                        <p:row>
+                            <p:column class="FontBold">Aval&uacute;os:</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>&nbsp;</p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:panelGrid class="ui-datatable Wid100">
+                                    <p:row class="FontBold TexAlCenter ui-datatable-odd">
+                                        <p:column style="width: 50px;border-bottom: 1px #E3C6C5 solid !important;">Aval&uacute;o</p:column>
+                                        <p:column style="width: 70px;border-bottom: 1px #E3C6C5 solid !important;">Valor</p:column>
+                                    </p:row>
+
+                                    <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                        <td class="TexAlRight FontBold">Terreno:</td>
+                                        <td class="TexAlRight">#{registroInpView.avaluoTerreno}</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                        <td class="TexAlRight FontBold">Construcci&oacute;n:</td>
+                                        <td class="TexAlRight">#{registroInpView.avaluoConstruccion} </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px #E3C6C5 solid !important;">
+                                        <td class="TexAlRight FontBold">Comercial:</td>
+                                        <td class="TexAlRight">#{registroInpView.avaluoComercial} </td>
+                                    </tr>
+                                </p:panelGrid>
+
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+
+                    <div style="width: 1px;height: 1px;clear: both;"></div>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="Responsive Container100 MarTop20">
+                    <h1 class="BigTopic Fs16">Detalles t&eacute;cnicos de la inspecci&oacute;n</h1>
+                    <hr/>
+                    <h:panelGrid columns="1" style="width: 100%;">
+                        <h:panelGroup layout="block" class="Container100 Responsive">
+
+
+                            <p:editor class="TexAlCenter" id="detalle_inspeccion" widgetVar="editorWidget" value="#{registroInpView.datoInspeccion.detallesInspeccion}" width="900"
+                                      />
+                        </h:panelGroup>
+                    </h:panelGrid>
+
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:form id="form">
+                <p:confirmDialog id="users"  widgetVar="UsersWidget" severity="info" closable="true" header="Datos del predio: #{registroInpView.claveOnclic}" message="Linderos y mesuras segun SISCAT" style="width: 650px;">
+
+                    <div class="ContainerIndent">
+
+                        <fieldset style="margin-right: 20px; margin-bottom: 20px;">
+
+                           
+                        </fieldset>
+                    </div>
+
+                </p:confirmDialog>
+
+                <p:commandButton id="link" style="display: none;" value="aqui" ajax="true" process="@this"
+                                 actionListener="#{registroInpView.doSomething()}" update="users">
+
+                </p:commandButton>
+                <p:inputText id="input" style="display: none;" value="No hay value"></p:inputText>
+            </h:form>
+            <h:panelGroup layout="block" class="Container100 MarBot10" style="margin-bottom: 10px;">
+                <h1 class="BigTopic Fs16">Ubicaci&oacute;n del predio</h1>
+                <hr/>
+                <div class="ContainerIndent">
+
+                    <div class="ContainerIndent">
+
+                        <div id="map" style="width: 90%; height: 350px; margin: 0 auto;">
+
+                        </div>
+                    </div>
+                    <h:outputStylesheet library="js" name="leaflet/leaflet.css" />
+                    <h:outputStylesheet library="js" name="leaflet/L.Control.Locate.css" />
+                    <h:outputStylesheet library="js" name="leaflet/leaflet-groupedlayercontrol/leaflet.groupedlayercontrol.css" />
+                    <h:outputStylesheet library="js" name="leaflet/leaflet-draw/leaflet.draw.css" />
+                    <h:outputStylesheet library="js" name="leaflet/leaflet-measurecontrol/leaflet.measurecontrol.css" />
+                    <h:outputStylesheet library="js" name="leaflet/leaflet-fullscreen/Control.FullScreen.css" />
+                    <h:outputStylesheet library="js" name="leaflet/leaflet.awesome-markers/leaflet.awesome-markers.css" />
+                    <h:outputStylesheet library="font-awesome-4.3" name="css/font-awesome.css" />
+
+
+                    <h:outputScript library="js" name="leaflet/leaflet.js" />
+                    <h:outputScript library="js" name="leaflet/proj4Leaflet/proj4.js" />
+                    <h:outputScript library="js" name="leaflet/proj4Leaflet/proj4leaflet.js" />
+                    <h:outputScript library="js" name="leaflet/leaflet.awesome-markers/leaflet.awesome-markers.min.js" />
+
+                    <h:outputScript library="js" name="spin.min.js" />
+                    <h:outputScript library="js" name="constants.js" />
+                    <h:outputScript library="js" name="mapManager.js" />
+
+
+
+                    <script>
+                        $(document).ready(function () {
+
+                            var map = new L.Map('map', {
+                                center: [#{registroInpView.coord_Y}, #{registroInpView.coord_X}],
+                                zoom: 18
+                            });
+
+                            var defaultLoadParameters = {
+                                service: 'WFS',
+                                version: '1.1.0',
+                                request: 'getFeature',
+                                srsname: Constants.map.srsname,
+                                outputFormat: 'text/javascript'
+                            };
+
+
+
+
+                            var bounds = map.getBounds();
+                            var bbox = '' + bounds.getSouth() + ',' + bounds.getWest() + ',' + bounds.getNorth() + ',' + bounds.getEast();
+
+                            var ortofoto = L.tileLayer.wms(Constants.geoserver.url + Constants.geoserver.workspace + '/wms', {
+                                layers: 'Salinas:last',
+                                format: 'image/png',
+                                transparent: true,
+                                version: '1.1.1',
+                                attribution: "Ortofoto Salinas",
+                                maxZoom: 20,
+                                maxNativeZoom: 18
+                            });
+                            ortofoto.setZIndex(0);
+                            ortofoto.addTo(map);
+
+                            var defaultStyle = {color: "#ff0202", weight: 2, opacity: 1, fillOpacity: 0.1, fillColor: "#ff0202"};
+                            var highlightStyle = {color: '#ff0202', weight: 3, opacity: 0.6, fillOpacity: 0.65, fillColor: '#ff0202'};
+                            var selectStyle = {color: "#45f909", weight: 2, opacity: 1, fillOpacity: 0.1, fillColor: "#45f909"};
+                            var overSelectStyle = {color: '#45f909', weight: 3, opacity: 0.6, fillOpacity: 0.65, fillColor: '#45f909'};
+
+                            var clave = '#{registroInpView.claveGeoreferenciada}';
+
+                            var predios = new L.geoJson(null, {
+                                onEachFeature: function (feature, layer) {
+                                    // Create a self-invoking function that passes in the layer
+                                    // and the properties associated with this particular record.
+
+                                    layer.on('click', function (e) {
+
+                                        var jsfCommandLink = document.getElementById("form:link");
+                                        var input = document.getElementById("form:input");
+                                        input.value = feature.properties.cod_catast;
+                                        jsfCommandLink.click();
+
+                                    });
+                                    (function (layer, properties) {
+                                        // Create a mouseover event
+                                        layer.on("mouseover", function (e) {
+                                            // Change the style to the highlighted version
+                                            if (clave === feature.properties.cod_catast)
+                                                layer.setStyle(selectStyle);
+                                            else
+                                                layer.setStyle(highlightStyle);
+                                        });
+                                        // Create a mouseout event that undoes the mouseover changes
+                                        layer.on("mouseout", function (e) {
+                                            // Start by reverting the style back
+                                            if (clave === feature.properties.cod_catast)
+                                                layer.setStyle(overSelectStyle);
+                                            else
+                                                layer.setStyle(defaultStyle);
+                                        });
+                                    })(layer, feature.properties);
+                                },
+                                style: function (feature) {
+
+                                    if (clave === feature.properties.cod_catast)
+                                        return overSelectStyle;
+                                    else
+                                        return defaultStyle;
+                                }
+                            });
+
+                            function cargarPredios(data) {
+                                predios.addData(data);
+                            }
+
+                            var defaultP = $.extend({}, defaultLoadParameters);
+
+                            var parameters = $.extend(defaultP, {
+                                typeName: Constants.geoserver.workspace + ':predios',
+                                format_options: 'callback:getJson',
+                                bbox: bbox
+
+                            });
+
+                            $.ajax({
+                                url: Constants.geoserver.url + 'wfs' + L.Util.getParamString(parameters),
+                                dataType: 'jsonp',
+                                jsonp: false,
+                                timeout: 5000,
+                                success: cargarPredios,
+                                jsonpCallback: 'getJson',
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    if (jqXHR.readyState != 4) {
+                                        alert("Error al cargar la capa de los predios.");
+                                    }
+
+                                }
+                            });
+                            predios.setZIndex(3);
+                            predios.addTo(map);
+                            map.addLayer(predios);
+
+                        });
+
+
+                    </script>
+                </div>
+            </h:panelGroup>
+
+        </h:panelGroup>
+
+    </ui:composition>
+</html>

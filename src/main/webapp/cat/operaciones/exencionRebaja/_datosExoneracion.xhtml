@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="escritura_unificar" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">Datos de la exoneraci&oacute;n</h1>
+                <hr/>
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent">
+                        <p:fieldset legend="Datos informativos" toggleable="true" toggleSpeed="500" >
+                            <h:panelGrid columns="4" style="width: 100%">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="avaluo_terreno" value="Aval&uacute;o terreno:" class="DispBlock Wid100"/>
+                                    <p:inputText id="avaluo_terreno" value="#{exencionView.avaluoTerreno}"
+                                                 class="input_115" disabled="true"/>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="avaluo_construccion" value="Aval&uacute;o construcci&oacute;n:"  class="DispBlock Wid100"/>
+                                        <p:inputText id ="avaluo_construccion" value="#{exencionView.avaluoConstruccion}"
+                                                     class="input_115" disabled="true"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="avaluo_complementarias" value="Aval&uacute;o complementarias:"  class="DispBlock Wid100"/>
+                                        <p:inputText id ="avaluo_complementarias" value="#{exencionView.avaluoComplementarias}"
+                                                     class="input_115" disabled="true"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="avaluo_comercial" value="Aval&uacute;o predial:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="avaluo_comercial" value="#{exencionView.avaluoPredial}"
+                                                     class="input_115" disabled="true"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="Responsive Container100" >
+                    <div class="ContainerIndent">
+                        <p:fieldset legend="Datos de registro" toggleable="true" toggleSpeed="500" >
+                            <h:panelGrid columns="1" style="width: 100%" id="container-datos-exencion">
+                                <h:panelGrid columns="3" style="width: 100%">
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="tipo_exencion" value="Tipo de exenci&oacute;n:" class="DispBlock Wid100"/>
+                                        <p:selectOneMenu id="tipo_exencion"  value="#{exencionView.idTipoExencion}">
+                                            <p:ajax listener="#{exencionView.onTipoExencionChange()}" update="tipo_exencion,razon_exencion,permanente,valor_tope,razon_requisito,activo,razon_observacion"/>
+                                            <f:selectItems  value="#{exencionView.tiposExencion}" var="tipoExc" itemLabel="#{tipoExc.label}" itemValue="#{tipoExc.value}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="razon_exencion" value="Raz&oacute;n:" class="DispBlock Wid100"/>
+                                        <p:selectOneMenu id="razon_exencion"  value="#{exencionView.idRazonExencion}" style="width: 500px;">
+                                            <p:ajax listener="#{exencionView.onRazonExencionChange()}" update="permanente,valor_tope,razon_requisito,activo,razon_observacion,valo_,porciento_" />
+                                            <f:selectItems  value="#{exencionView.razonesExencion}" var="razon" itemLabel="#{razon.label}" itemValue="#{razon.value}"/>
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="permanente" value="Permanente:" class="DispBlock Wid100"/>
+                                        <p:selectOneRadio id="permanente" value="#{exencionView.razonExencionSeleccionada.permanente}" disabled="true">
+                                            <f:selectItem itemLabel="No" itemValue="true" />
+                                            <f:selectItem itemLabel="Si" itemValue="false" />
+                                        </p:selectOneRadio>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="valor_tope" value="Valor tope:" class="DispBlock Wid100"/>
+                                        <p:inputText id="valor_tope" value="#{exencionView.razonExencionSeleccionada.valorMaximo}"
+                                                     class="input_125" disabled="true"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="razon_requisito" value="Requisito:" class="DispBlock Wid100"/>
+                                        <p:inputText id="razon_requisito" value="#{exencionView.razonExencionSeleccionada.requisito}"
+                                                     disabled="true" style="width: 500px;"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="activo" value="Activo:" class="DispBlock Wid100"/>
+                                        <p:selectOneRadio id="activo" value="#{exencionView.razonExencionSeleccionada.activo}" disabled="true">
+                                            <f:selectItem itemLabel="No" itemValue="true" />
+                                            <f:selectItem itemLabel="Si" itemValue="false" />
+                                        </p:selectOneRadio>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="usuario_ingresa" value="Usuario ingresa:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="usuario_ingresa" value="#{exencionView.exencion.usuarioIngreso}"
+                                                     class="input_125" disabled="true"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="razon_observacion" value="Observaciones:" class="DispBlock Wid100"/>
+                                        <p:inputText id="razon_observacion" value="#{exencionView.razonExencionSeleccionada.observaciones}"
+                                                     disabled="true" style="width: 500px;"/>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                                <h:panelGrid columns="5" style="width: 100%">
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="porciento_" value="Porciento:" class="DispBlock Wid100"/>
+                                        <p:inputText id="porciento_" value="#{exencionView.exencion.porcentaje}" disabled="#{!exencionView.razonExencionSeleccionada.usaPorciento}"
+                                                     class="input_125" onkeypress="focusNextOnEnter(event, 'valo_')"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="valo_" value="Valor:" class="DispBlock Wid100"/>
+                                        <p:inputText id="valo_" value="#{exencionView.exencion.valor}" disabled="#{exencionView.razonExencionSeleccionada.usaPorciento}"
+                                                     class="input_125" onkeypress="focusNextOnEnter(event, 'desde_')"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="desde_" value="Desde:" class="DispBlock Wid100"/>
+                                        <p:inputText id="desde_" value="#{exencionView.exencion.desde}"
+                                                     class="input_125 app-input-integer" onkeypress="focusNextOnEnter(event, 'hasta_')"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="hasta_" value="Hasta" class="DispBlock Wid100"/>
+                                        <p:inputText id="hasta_" value="#{exencionView.exencion.hasta}"
+                                                     class="input_125 app-input-integer" onkeypress="focusNextOnEnter(event, 'fecha_ingreso_input')"/>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="fecha_ingreso" value="Fecha ingreso:"  class="DispBlock Wid100"/>
+                                        <p:calendar id="fecha_ingreso" value="#{exencionView.exencion.fechaIngreso}"
+                                                    mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'notas_')"/>
+                                    </h:panelGroup>
+                                </h:panelGrid>
+                                <h:panelGrid columns="1" style="width: 100%">
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="notas_" value="Notas/Observaciones/Documentos" class="DispBlock Wid100"/>
+                                        <p:inputText id="notas_" value="#{exencionView.exencion.notas}"
+                                                     style="width: 96%" onkeypress="focusNextOnEnter(event, 'wiz_next')"/>
+                                    </h:panelGroup>
+
+                                </h:panelGrid>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </div>
+                </h:panelGroup>
+
+            </h:panelGroup>
+
+        </h:panelGroup>
+    </ui:composition>
+
+</html>

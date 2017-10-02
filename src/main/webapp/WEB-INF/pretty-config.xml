@@ -1,0 +1,533 @@
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+    <url-mapping id="inicio">
+        <pattern value="/inicio" />
+        <view-id value="/index.xhtml" />
+    </url-mapping>
+
+
+    <!--///////////////// Catastro Registo y Actualizacion///////////////////////// -->
+    <url-mapping id="ingresar-predio">
+        <pattern value="/catastro/ingresar-predio" />
+        <view-id value="/cat/registrarPredioUrbano/registrar.xhtml" />
+    </url-mapping>
+    <url-mapping id="ingresar-predio-rural">
+        <pattern value="/catastro/ingresar-predio-rural" />
+        <view-id value="/cat/registrarPredioRural/registrar.xhtml" />
+    </url-mapping>
+    <url-mapping id="ingresar-ficha-resumen">
+        <pattern value="/catastro/ingresar-ficha-resumen" />
+        <view-id value="/cat/registrarPredioUrbanoPH/registrar.xhtml" />
+    </url-mapping>
+    <url-mapping id="actualizar-predio-clave-catastral">
+        <pattern value="/catastro/actualizar/predio/urbano/clave-localizacion" />
+        <view-id value="/cat/actualizarPredioUrbano/claveLocalizacion/update.xhtml" />
+    </url-mapping>
+    <url-mapping id="actualizar-predio-dominio">
+        <pattern value="/catastro/actualizar/predio/urbano/titulo-dominio" />
+        <view-id value="/cat/actualizarPredioUrbano/dominio/update.xhtml" />
+    </url-mapping>
+    <url-mapping id="actualizar-predio-construccion">
+        <pattern value="/catastro/actualizar/predio/urbano/edificaciones" />
+        <view-id value="/cat/actualizarPredioUrbano/construccion/update.xhtml" />
+    </url-mapping>
+    <url-mapping id="actualizar-predio-terreno">
+        <pattern value="/catastro/actualizar/predio/urbano/terreno" />
+        <view-id value="/cat/actualizarPredioUrbano/terreno/update.xhtml" />
+    </url-mapping>
+    <url-mapping id="actualizar-predio-integrantes">
+        <pattern value="/catastro/actualizar/predio/urbano/integrantes-actualizacion" />
+        <view-id value="/cat/actualizarPredioUrbano/integrantes/update.xhtml" />
+    </url-mapping>
+    <url-mapping id="actualizar-predio-completo">
+        <pattern value="/catastro/actualizar/predio/urbano/completo" />
+        <view-id value="/cat/actualizarPredioUrbano/predioCompleto/update.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="actualizar-predio-completo2">
+        <pattern value="/catastro/actualizar/predio/urbano/completo2" />
+        <view-id value="/cat/actualizar_nuevo/predioCompleto/update.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="historico-predios">
+        <pattern value="/catastro/historico-predios" />
+        <view-id value="/audit/historico.xhtml" />
+    </url-mapping>
+    
+    <!-- ACTUALIZACION DE PREDIO RURAL -->
+    
+    <url-mapping id="actualizar-predio-rural-completo">
+        <pattern value="/catastro/actualizar/predio/rural/completo" />
+        <view-id value="/cat/actualizarPredioRural/update.xhtml" />
+    </url-mapping>
+
+    <!--///////////OPERACIONES SOBRE EL PREDIO URBANO /////////////// -->
+
+    <!-- URL de crear un nuevo predio -->
+
+    <!-- URL de unificar predios -->
+    <url-mapping id="cat-unificar-predio">
+        <pattern value="/catastro/unificar-predios" />
+        <view-id value="/cat/operaciones/unificarPredios/unificar.xhtml" />
+    </url-mapping>
+
+    <!-- URL de fracionar predios -->
+    <url-mapping id="cat-fraccionar-predio">
+        <pattern value="/catastro/fraccionar-predios" />
+        <view-id value="/cat/operaciones/fracionarPredios/fraccionar.xhtml" />
+    </url-mapping>
+    <!-- URL de replanificacio de manzana -->
+    <url-mapping id="cat-replanificar-manzana">
+        <pattern value="/catastro/replanificar-manzana" />
+        <view-id value="/cat/operaciones/replanificarManzana/replanificar.xhtml" />
+    </url-mapping>
+    <!-- URL de Catastro de escritura -->
+    <url-mapping id="cat-catastro-escritura">
+        <pattern value="/catastro/catastro-escritura" />
+        <view-id value="/cat/operaciones/catastroEscrituras/catastrar.xhtml" />
+    </url-mapping>
+    <!-- URL de Registro de arrendamiento -->
+    <url-mapping id="cat-registro-arrendamiento">
+        <pattern value="/catastro/registro-arrendamiento" />
+        <view-id value="/cat/operaciones/registroArrendamiento/arrendamiento.xhtml" />
+    </url-mapping>
+    <!-- URL de Registro de Exencion rebajas -->
+    <url-mapping id="cat-exencion-rebaja">
+        <pattern value="/catastro/exencion-rebaja" />
+        <view-id value="/cat/operaciones/exencionRebaja/exencion.xhtml" />
+    </url-mapping>
+    <!-- URL de Registro de Expropiaciones -->
+    <url-mapping id="cat-expropiaciones">
+        <pattern value="/catastro/registro-expropiacion" />
+        <view-id value="/cat/operaciones/expropiaciones/expropiacion.xhtml" />
+    </url-mapping>
+    <!-- URL de Raplanificacion de predios municipales -->
+    <url-mapping id="cat-replanificar-predio">
+        <pattern value="/catastro/replanificacion-predio" />
+        <view-id value="/cat/operaciones/replanificarPredio/replanificar.xhtml" />
+    </url-mapping>
+    <!-- URL de Registro de Inspeccion -->
+    <url-mapping id="cat-registro-inspeccion">
+        <pattern value="/catastro/registro-inspeccion" />
+        <view-id value="/cat/operaciones/inspecciones/inspeccion.xhtml" />
+    </url-mapping>
+    <!-- URL de Eliminar Predio -->
+    <url-mapping id="cat-eliminar-predio">
+        <pattern value="/catastro/eliminar-predio" />
+        <view-id value="/cat/operaciones/eliminarPredio/eliminar.xhtml" />
+    </url-mapping>
+
+    <!-- URL Reportes -->
+    <url-mapping id="generar-ficha-catastral">
+        <pattern value="/generar/ficha-catastral" />
+        <view-id value="/cat/reportes/ficha.xhtml" />
+    </url-mapping>
+
+    <!-- Pruebas de calculo -->
+    <url-mapping id="prueba-calculo">
+        <pattern value="/probar/calculos" />
+        <view-id value="/cat/pruebas/calculo.xhtml" />
+    </url-mapping>
+
+
+    <!--///////////////// Pagos ///////////////////////// -->
+
+
+    <!-- URL pago impuesto predial -->
+    <url-mapping id="pago-impuesto-predial">
+        <pattern value="/pagos/impuesto-predial" />
+        <view-id value="/caja/pagos/impuesto-predial.xhtml" />
+    </url-mapping>
+
+    <!-- URL registro de cheques -->
+    <url-mapping id="pago-registro-cheques">
+        <pattern value="/pagos/registro-cheques" />
+        <view-id value="/caja/pagos/registro-cheques.xhtml" />
+    </url-mapping>
+
+    <!-- URL registro de cheques -->
+    <url-mapping id="pago-registro-depositos">
+        <pattern value="/pagos/registro-depositos" />
+        <view-id value="/caja/pagos/registro-depositos.xhtml" />
+    </url-mapping>
+
+    <!-- URL desbloqueo de deudas -->
+    <url-mapping id="pago-desbloqueo-deuda">
+        <pattern value="/pagos/desbloqueo-deuda" />
+        <view-id value="/caja/pagos/desbloqueo-deuda.xhtml" />
+    </url-mapping>
+
+
+    <!--///////////////// Administracion ///////////////////////// -->
+
+
+    <!-- URL administracion de perisos -->
+    <url-mapping id="admin-permisos">
+        <pattern value="/admin/permisos-list" />
+        <view-id value="/admin/permisos/list.xhtml" />
+    </url-mapping>
+
+    <!-- URL administracion de roles -->
+    <url-mapping id="admin-roles">
+        <pattern value="/admin/roles-list" />
+        <view-id value="/admin/roles/list.xhtml" />
+    </url-mapping>
+
+    <!-- URL administracion de usuarios -->
+    <url-mapping id="admin-usuarios-edit">
+        <pattern value="/admin/usuario-edit" />
+        <view-id value="/admin/usuarios/editarUsuario.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="admin-usuarios">
+        <pattern value="/admin/usuarios-list" />
+        <view-id value="/admin/usuarios/list.xhtml" />
+    </url-mapping>
+
+    <!-- URL administracion de Contribuyentes -->
+    <url-mapping id="admin-contribuyente">
+        <pattern value="/admin/admin-contribuyente" />
+        <view-id value="/admin/contribuyente/list.xhtml" />
+    </url-mapping>
+    <!-- URL administracion de Integrantes -->
+    <url-mapping id="admin-integrantes">
+        <pattern value="/admin/admin-integrantes" />
+        <view-id value="/admin/integrantes/list.xhtml" />
+    </url-mapping>
+
+    <!-- URL Parámetros de Configuración -->
+    <url-mapping id="config-avaluos">
+        <pattern value="/admin/config-avaluos" />
+        <view-id value="/admin/config/config-avaluos.xhtml" />
+    </url-mapping>
+
+    <!-- URL Mantenimiento Flujos -->
+    <url-mapping id="config-flujo">
+        <pattern value="/admin/config-flujo" />
+        <view-id value="/admin/flujo/flujo.xhtml" />
+    </url-mapping>
+    
+    <!-- URL Mantenimiento Actividad -->
+    <url-mapping id="config-actividad">
+        <pattern value="/admin/config-actividad" />
+        <view-id value="/admin/flujo/actividad.xhtml" />
+    </url-mapping>
+    
+    <!-- URL Tramite de Incidencias Recibidas-->
+    <url-mapping id="tramite-incidencias-recib">
+        <pattern value="/admin/tramite-incidencias-recibidas" />
+        <view-id value="/admin/flujo/tramiteIncidencia.xhtml" />
+    </url-mapping>
+    
+    <!-- URL Tramite de Incidencias Enviadas-->
+    <url-mapping id="tramite-incidencias-env">
+        <pattern value="/admin/tramite-incidencias-enviadas" />
+        <view-id value="/admin/flujo/tramiteIncidenciaEnv.xhtml" />
+    </url-mapping>
+
+
+    <!-- URL administracion Division Administrativa -->
+    <url-mapping id="admin-manzanas">
+        <pattern value="/manzanas/list" />
+        <view-id value="/admin/divisionAdministrativa/manzanas/list.xhtml" />
+    </url-mapping>
+    <url-mapping id="admin-sectores">
+        <pattern value="/sectores/list" />
+        <view-id value="/admin/divisionAdministrativa/sectores/list.xhtml" />
+    </url-mapping>
+    <url-mapping id="admin-zonas">
+        <pattern value="/zonas/list" />
+        <view-id value="/admin/divisionAdministrativa/zonas/list.xhtml" />
+    </url-mapping>
+    <url-mapping id="admin-zonas-homogeneas">
+        <pattern value="/admin/zonas-homogeneas/list" />
+        <view-id value="/admin/divisionAdministrativa/zonasHomo/list.xhtml" />
+    </url-mapping>
+    <url-mapping id="admin-factor-aumento-reduccion">
+        <pattern value="/admin/factor-aumento-reduccion/list" />
+        <view-id value="/admin/divisionAdministrativa/factorAumentoReduccion/list.xhtml" />
+    </url-mapping>
+
+
+    <!-- URL Consultas -->
+
+    <url-mapping id="consulta-predio">
+        <pattern value="/catastro/consulta-predio" />
+        <view-id value="/cat/consultas/predios.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="consulta-historia-dominio">
+        <pattern value="/catastro/consulta-historia-dominio" />
+        <view-id value="/cat/historiaDominio/predios.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="consulta-contribuyente">
+        <pattern value="/catastro/consulta-contribuyente" />
+        <view-id value="/cat/consultas/consulta-contribuyente.xhtml" />
+    </url-mapping>
+
+    <url-mapping id="auditoria">
+        <pattern value="/admin/aud-auditoria" />
+        <view-id value="/admin/auditoria/list.xhtml" />
+    </url-mapping>
+
+
+    <!--///////////////// Generacion de Avaluos e Impuestos ///////////////////////// -->
+    <url-mapping id="calculo_avaluos">
+        <pattern value="/renta/avaluos" />
+        <view-id value="/ren/avaluos/calculo_avaluos.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="emision-masiva">
+        <pattern value="/renta/avaluos/generar-emision-masiva" />
+        <view-id value="/ren/liquidacion/anual.xhtml" />
+    </url-mapping>
+    <url-mapping id="liquidacion-individual">
+        <pattern value="/renta/avaluos/generar-emision-masiva" />
+        <view-id value="/ren/liquidacion/individual.xhtml" />
+    </url-mapping>
+    <url-mapping id="reemision-impuesto">
+        <pattern value="/renta/avaluos/reemitir-impuesto" />
+        <view-id value="/ren/liquidacion/reemitir.xhtml" />
+    </url-mapping>
+
+
+    <!--///////////////// Certificado de avaluos ///////////////////////// -->
+    <url-mapping id="cat-certificado-avaluo">
+        <pattern value="/cat/certificado-avaluo" />
+        <view-id value="/cat/certificado/buscar.xhtml" />
+    </url-mapping>
+
+    <!--///////////////// Certificado de Inquilinato ///////////////////////// -->
+    <url-mapping id="cat-certificado-inquilinato">
+        <pattern value="/cat/certificado-inquilinato" />
+        <view-id value="/cat/operaciones/tramiteInquilinato/buscar.xhtml" />
+    </url-mapping>
+
+
+    <!--///////////////// Recodificacion ///////////////////////// -->
+
+    <url-mapping id="cat-clave-parroquia">
+        <pattern value="/recodificar/clave-parroquia" />
+        <view-id value="/cat/rectificarCodigo/buscarSolarParroquia.xhtml" />
+    </url-mapping>
+    <url-mapping id="cat-clave-zona">
+        <pattern value="/recodificar/clave-zona" />
+        <view-id value="/cat/rectificarCodigo/buscarZona.xhtml" />
+    </url-mapping>
+    <url-mapping id="cat-clave-sector">
+        <pattern value="/recodificar/clave-sector" />
+        <view-id value="/cat/rectificarCodigo/buscarSector.xhtml" />
+    </url-mapping>
+    <url-mapping id="cat-clave-manzana">
+        <pattern value="/recodificar/clave-manzana" />
+        <view-id value="/cat/rectificarCodigo/buscarManzana.xhtml" />
+    </url-mapping>
+    <url-mapping id="cat-clave-catastral-solar">
+        <pattern value="/recodificar/clave-catastral-solar" />
+        <view-id value="/cat/rectificarCodigo/buscarSolar.xhtml" />
+    </url-mapping>
+    <url-mapping id="cat-clave-catastral-ph">
+        <pattern value="/recodificar/clave-catastral-ph" />
+        <view-id value="/cat/rectificarCodigo/buscarPH.xhtml" />
+    </url-mapping>
+
+
+
+    <!-- URL de crear un nuevo predio -->
+    <url-mapping id="cat-crear-predio-propio">
+        <pattern value="/catastro/crear-predio-propio" />
+        <view-id value="/cat/crearPredioPropio/create.xhtml" />
+    </url-mapping>
+
+    <!-- URL de crear un nuevo predio -->
+    <url-mapping id="cat-crear-predio-eliminado">
+        <pattern value="/catastro/crear-predio-eliminado" />
+        <view-id value="/cat/crearPredioEliminado/create.xhtml" />
+    </url-mapping>
+    
+    
+    <!-- ************* Coeficientes *******************-->
+    <url-mapping id="coef-avaluos-valores-simples">
+        <pattern value="/admin/coef-avaluos-individuales" />
+        <view-id value="/admin/avaluos/coeficientesSimple/list.xhtml" />
+    </url-mapping>
+    <url-mapping id="coef-avaluos-generales">
+        <pattern value="/admin/coef-avaluos-generales" />
+        <view-id value="/admin/avaluos/coeficientesGenerales/list.xhtml" />
+    </url-mapping>
+    <url-mapping id="coef-edad-estado">
+        <pattern value="/admin/coef-edad-estado" />
+        <view-id value="/admin/avaluos/coeficientesCompuestos/edadEstado/list.xhtml" />
+    </url-mapping>
+    <url-mapping id="coef-estructura-niveles">
+        <pattern value="/admin/estructura-niveles" />
+        <view-id value="/admin/avaluos/coeficientesCompuestos/estructuraNiveles/list.xhtml" />
+    </url-mapping>
+    <url-mapping id="coef-estructura-acabados">
+        <pattern value="/admin/coef-estructura-acabados" />
+        <view-id value="/admin/avaluos/coeficientesCompuestos/estructuraAcabados/list.xhtml" />
+    </url-mapping>
+    <url-mapping id="coef-variacion-area">
+        <pattern value="/admin/coef-variacion-area" />
+        <view-id value="/admin/avaluos/coeficientesCompuestos/factorVariacionAreaTerreno/list.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="categoria-estructura-nivel">
+        <pattern value="/admin/categoria-estructura-nivel" />
+        <view-id value="/admin/avaluos/coeficientesCompuestos/categoriaEstructuraNivel/list.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="tasa-interes">
+        <pattern value="/admin/tasa-interes" />
+        <view-id value="/admin/avaluos/tasaInteres/list.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="admin-contribucion-especial">
+        <pattern value="/admin/contribucion-especial-mejoras" />
+        <view-id value="/admin/avaluos/cem/list.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="admin-generar-fichas">
+        <pattern value="/catastro/generar-fichas" />
+        <view-id value="/admin/catastro/generarFichas.xhtml" />
+    </url-mapping>
+    
+    
+
+    
+    <!-- URL de crear una nueva incidencia -->
+    <url-mapping id="cat-incidencias">
+        <pattern value="/catastro/incidencias" />
+        <view-id value="/cat/incidencias/incidencias.xhtml" />
+    </url-mapping>
+    <!-- URL para el reporete de incidencias -->
+    <url-mapping id="rep-incidencias">
+        <pattern value="/reporte/incidencias" />
+        <view-id value="/admin/reportes/reporte-incidencias.xhtml" />
+    </url-mapping>
+    <!-- URL para el reporete de predios -->
+    <url-mapping id="rep-predios">
+        <pattern value="/reporte/predios" />
+        <view-id value="/cat/consultas/consulta-predial.xhtml" />
+    </url-mapping>
+    
+    <!-- URL para el reporete de predios segun parametro de busqueda -->
+    <url-mapping id="rep-predios-parametro">
+        <pattern value="/reporte/prediosSinEdificacion" />
+        <view-id value="/cat/consultas/consultaPorParametros/consultaPredial.xhtml" />
+    </url-mapping>
+   
+    <url-mapping id="frame-predio">
+        <pattern value="/external/datosPredio" />
+        <view-id value="/cat/consultas/consultaPorParametros/datosPredio.xhtml" />
+    </url-mapping>
+                  
+    <!-- URL administracion Flujo -->
+    <url-mapping id="flujo-control-calidad-validador">
+        <pattern value="/flujo/control/calidad/validacion" />
+        <view-id value="/admin/flujo/controlCalidad/validador/list.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="flujo-control-relevamiento-supervisor">
+        <pattern value="/flujo/control/relevamiento/supervisor" />
+        <view-id value="/admin/flujo/controlRelevamiento/supervisor/list.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="flujo-control-relevamiento-inspector">
+        <pattern value="/flujo/control/relevamiento/inspector" />
+        <view-id value="/admin/flujo/controlRelevamiento/inspector/list.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="flujo-manzanas">
+        <pattern value="/flujo/manzanas" />
+        <view-id value="/admin/flujo/manzanas/list.xhtml" />
+    </url-mapping> 
+    <url-mapping id="flujo-add-predio">
+        <pattern value="/flujo/predio/add" />
+        <view-id value="/admin/flujo/predios/add.xhtml" />
+    </url-mapping> 
+    <url-mapping id="flujo-list-predio">
+        <pattern value="/flujo/predio/list" />
+        <view-id value="/admin/flujo/predios/list.xhtml" />
+    </url-mapping> 
+    <!-- ********** MIGRACION DATOS-->
+    <url-mapping id="migracion-informacion">
+        <pattern value="/migracion/informacion/sirp-vsam" />
+        <view-id value="/admin/migracion/migracion.xhtml" />
+    </url-mapping>  
+    
+    <!-- PRUEBAS -->
+    <url-mapping id="start-process">
+        <pattern value="/start_process" />
+        <view-id value="/prueba_flow_deploy.xhtml" />
+    </url-mapping>
+    
+    <!-- DIGITACION -->
+    
+    <url-mapping id="digitacion-reportes">
+        <pattern value="/digitacion/reportes" />
+        <view-id value="/cat/operaciones/digitacion/reportes_digitacion.xhtml" />
+    </url-mapping>
+    
+    <!-- BPM -->
+    <url-mapping id="iniciar_tramite">
+        <pattern value="/usuario_externo/iniciar_tramite" />
+        <view-id value="/bpm/iniciar_tramite/iniciar_tramite.xhtml" />
+    </url-mapping>             
+    
+    <url-mapping id="aprobar_docs_tramite">
+        <pattern value="/bpm/aprobar_docs" />
+        <view-id value="/bpm/iniciar_tramite/aprobar_docs.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="revisar_docs_flow">
+        <pattern value="/bpm/revisar_docs" />
+        <view-id value="/bpm/iniciar_tramite/revisar_docs.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="pc_liq">
+        <pattern value="/bpm/pc/liq"/>
+        <view-id value="/bpm/permiso_construccion/liquidacion.xhtml"/>
+    </url-mapping>
+
+    <url-mapping id="estado_tramite">
+        <pattern value="/bpm/estado_tramite" />
+        <view-id value="/bpm/estado_tramite.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="dashboard">
+        <pattern value="/bpm/dashboard" />
+        <view-id value="/bpm/dashboard.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="desplegarProcesos">
+        <pattern value="/bpm/desplegarProcesos" />
+        <view-id value="/bpm/mantenimiento/desplegarProcesos.xhtml" />
+    </url-mapping>
+    
+    <!-- RENTAS JS-->
+        
+    <url-mapping id="mantenimientoTiposLiquidacion">
+        <pattern value="/rentas/tipoLiquidacion" />
+        <view-id value="/ren/titulosDeCredito/tipos_liquidacion.xhtml" />
+    </url-mapping>
+    
+    <url-mapping id="ingresoLiquidacion">
+        <pattern value="/rentas/ingreso_tc" />
+        <view-id value="/ren/titulosDeCredito/emision_titulos.xhtml" />
+    </url-mapping>
+    
+    <!-- Permiso de Construcción-->
+    
+    <!--  Tipologias -->
+    
+    <url-mapping id="tipologias">
+        <pattern value="/tipologias/mantenimiento" />
+        <view-id value="/cat/tipologias/mantenimiento.xhtml" />
+    </url-mapping>
+    
+</pretty-config>

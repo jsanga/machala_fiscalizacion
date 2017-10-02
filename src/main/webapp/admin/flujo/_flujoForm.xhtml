@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="flujo-dlg" widgetVar="flujoDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Datos del Flujo">
+            <p:ajax event="close" update="flujo-list-form" listener="#{flujoView.cancelarCreacionFlujo()}" />
+            <h:panelGroup layout="block" rendered="#{flujoView.creandoFlujo or flujoView.editandoFlujo}">
+                <h:form id="flujo-form" prependId="false">
+                    <!--<p:messages id="datos-usuario-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />-->
+                    <p:messages id="datos-flujo-messages" showDetail="true" autoUpdate="false" closable="true" />
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="2">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="nombre_flujo" value="Nombre:"  class="DispBlock Wid100"/>
+                                    <p:inputText id="nombre_flujo" required="true" value="#{flujoView.flujoSeleccionado.nombre}"
+                                                 onkeypress="focusNextOnEnter(event, 'flujo_descripcion')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel value="Descripci&oacute;n:"  class="DispBlock Wid100"/>
+                                    <p:inputText id="flujo_descripcion" value="#{flujoView.flujoSeleccionado.descripcion}"
+                                                 onkeypress="focusNextOnEnter(event, 'actividad')"/>
+                                </h:panelGroup>
+                                
+                                <h:panelGroup layout="block">
+                                     <p:outputLabel for="actividad" value="Actividades"  class="DispBlock Wid100" />
+                                     <p:pickList id="actividad" value="#{flujoView.actividades}" var="actividad" itemLabel="#{actividad.nombre}" itemValue="#{actividad}" converter="actividadConverter"/>
+                                     
+                                </h:panelGroup>
+                                 
+                                <h:panelGroup layout="block" rendered="#{flujoView.editandoFlujo}">
+                                  <p:outputLabel value="Estado" />
+                                  <p:selectBooleanCheckbox id="estado" value="#{flujoView.flujoSeleccionado.estado}"/>
+                                </h:panelGroup>
+                                
+                            </h:panelGrid>                         
+
+                            <h:panelGroup layout="block">
+                                <p:commandButton id="crear-flujo-btn" 
+                                                 rendered="#{flujoView.creandoFlujo}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Guardar"                                         
+                                                 actionListener="#{flujoView.crearFlujo()}" 
+                                                 update="flujo-list-form,flujo-form"/>
+                                <p:commandButton id="actualizar-flujo-btn" 
+                                                 rendered="#{flujoView.editandoFlujo}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Actualizar"                                         
+                                                 actionListener="#{flujoView.editarFlujo()}" 
+                                                 update="flujo-list-form,flujo-form" />
+                                <p:commandButton id="cancelar-flujo-btn" 
+                                                 icon="fa fa-times" styleClass="white" value="Cancelar" actionListener="#{flujoView.inicializarNuevoFlujo()}"                                        
+                                                 onclick="PF('flujoDialog').hide();" update="flujo-list-form"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+
+                </h:form>
+            </h:panelGroup>    
+        </p:dialog>   
+    </ui:composition>     
+</html>

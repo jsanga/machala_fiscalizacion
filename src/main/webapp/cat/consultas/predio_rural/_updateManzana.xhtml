@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:dialog id="addDlg" widgetVar="addDialog"
+                  modal="true" resizable="false"
+                  header="Datos de la Manzana" style="width: 600px;" appendTo="@(body)">
+            <p:ajax event="close" update="predios-list,addDlg" listener="#{consultasView.cancelarEdicionManzanaPredial()}" />
+            <h:panelGroup layout="block" class="Container Container100">
+                <h:form id="form-form" prependId="false">
+                    <p:messages id="datos-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                    <f:event listener="#{consultasView.validarFormulario}" type="postValidate"/>
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1" class="Wid100">
+                            <h:panelGrid columns="3">
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="parroquia-select" value="Parroquia:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="parroquia-select" value="#{consultasView.parroquiaCod}" styleClass="varDisSelectContainer" 
+                                                     class="DispBlock Wid100" style="width: 160px; margin-right: 50px;" required="true">
+                                        <f:selectItem itemLabel="-Parroquia-" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems  value="#{consultasView.parroquias}" var="p" itemLabel="#{p.label}" itemValue="#{p.value}"/>
+                                        <p:ajax listener="#{consultasView.listaZonasPorParroquia(consultasView.parroquiaCod)}" update="zona-select,sector-select,manzana-select" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="zona-select" value="Zona:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="zona-select" value="#{consultasView.zonaCod}" styleClass="varDisSelectContainer" 
+                                                     class="DispBlock Wid100" style="width: 160px; margin-right: 50px;" required="true">
+                                        <f:selectItem itemLabel="-Zona-" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems  value="#{consultasView.zonas}" var="z" itemLabel="#{z.label}" itemValue="#{z.value}"/>
+                                        <p:ajax listener="#{consultasView.listaSectoresPorZona(consultasView.zonaCod)}" update="sector-select,manzana-select" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="sector-select" value="Sector:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="sector-select" value="#{consultasView.sectorCod}" styleClass="varDisSelectContainer" 
+                                                     class="DispBlock Wid100" style="width: 160px; margin-right: 50px;" required="true">
+                                        <f:selectItem itemLabel="-Sector-" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems  value="#{consultasView.sectores}" var="s" itemLabel="#{s.label}" itemValue="#{s.value}"/>
+                                        <p:ajax listener="#{consultasView.listaManzanasPorSector(consultasView.sectorCod)}" update="manzana-select" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="manzana-select" value="Manzana:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="manzana-select" value="#{consultasView.manzanaCod}" styleClass="varDisSelectContainer" 
+                                                     class="DispBlock Wid100" style="width: 160px; margin-right: 50px;" required="true">
+                                        <f:selectItem itemLabel="-Manzana-" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems  value="#{consultasView.manzanas}" var="m" itemLabel="#{m.label}" itemValue="#{m.value}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" rendered="#{consultasView.manzanaEdit}">
+                                    <p:outputLabel for="nombre_manzana" value="Nombre de la Manzana:" class="DispBlock Wid100" />
+                                    <p:inputText id="nombre_manzana" value="#{consultasView.nombreManzana}"
+                                                 class="input_125" />
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" rendered="#{consultasView.sitioEdit}">
+                                    <p:outputLabel for="nombre_sitio" value="Nombre del Sitio:" class="DispBlock Wid100" />
+                                    <p:inputText id="nombre_sitio" value="#{consultasView.nombreSitio}"
+                                                 class="input_125" />
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" rendered="#{consultasView.claveCatastralEdit}">
+                                    <p:outputLabel for="cod_solar" value="Solar:" class="DispBlock Wid100" />
+                                    <p:inputText id="cod_solar" value="#{consultasView.solarCod}" maxlength="3" required="true" requiredMessage="Ingrese el C&oacute;digo de Solar"
+                                                 class="input_125" onkeypress="validateIntegerValueAndFocusNext(event, 'actualizar-claveC-btn')" />
+                                </h:panelGroup>
+
+                            </h:panelGrid>
+
+                        </h:panelGrid>
+
+                        <h:panelGroup layout="block" >
+                            <p:commandButton id="actualizar-manzana-btn" rendered="#{consultasView.manzanaEdit}"
+                                             icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                             actionListener="#{consultasView.editManzana()}"
+                                             process="@this,datos-messages,parroquia-select,zona-select,sector-select,manzana-select,nombre_manzana"
+                                             update="predios-list,datos-messages"/>
+                            <p:commandButton id="actualizar-sitio-btn" rendered="#{consultasView.sitioEdit}"
+                                             icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                             actionListener="#{consultasView.editSitio()}"
+                                             process="@this,datos-messages,parroquia-select,zona-select,sector-select,manzana-select,nombre_sitio"
+                                             update="predios-list,datos-messages"/>
+                            <p:commandButton id="actualizar-claveC-btn" rendered="#{consultasView.claveCatastralEdit}"
+                                             icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                             actionListener="#{consultasView.editClaveCatastral()}"
+                                             process="@this,datos-messages,parroquia-select,zona-select,sector-select,manzana-select,cod_solar"
+                                             update="predios-list,datos-messages"/>
+                            <p:commandButton id="cancelar-manzana-btn"
+                                             process="@this"
+                                             icon="fa fa-remove" styleClass="white" value="Cancelar" actionListener="#{consultasView.cancelarEdicionManzanaPredial()}"
+                                             onclick="PF('addDialog').hide();" update="predios-list" />
+
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

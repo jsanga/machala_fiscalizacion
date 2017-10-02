@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:messages id="datosConstruccionMessages" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+
+        <h:panelGroup layout="block" class="Responsive Container100 MarTop20">
+            <h1 class="BigTopic Fs16">Otros tipos de construcci&oacute;n</h1>
+                <hr></hr>
+            <div class="Container100">
+                <p:fieldset legend="Otros tipos de construcci&oacute;n" toggleable="true" toggleSpeed="500" >
+                    <h:panelGroup layout="block" class="Responsive Container100">
+                        <div class="ContainerIndent Container100 MarBot10" id="obras-complementarias">
+                            <h:panelGroup layout="block" class="actions" id="obras-complementarias-list">
+                                <p:dataTable id="obras-dataTable" var="obra" value="#{consultasView.predioSeleccionado.otrosConstruccion}" style="margin-bottom:0"
+                                             rows="5" paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15"
+                                             paginatorPosition="bottom"
+                                             emptyMessage="No existen obras complementarias de &aacute;reas cubiertas registradas.">
+
+                                    <p:column headerText="Tipo de construcci&oacute;n">
+                                        <h:outputText value="#{consultasView.nombreVariable(obra.variable)}"  />
+                                    </p:column>
+                                    <p:column headerText="Material/Construcci&oacute;n">
+                                        <h:outputText value="#{consultasView.nombreValorDiscreto(obra.variable, obra.tipoConstruccion, obra.estructura, obra.cubierta)}"  />
+                                    </p:column>
+                                    <p:column headerText="Medida">
+                                        <h:outputText value="#{obra.medida()}" escape="false"  />
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+                        </div>
+                    </h:panelGroup>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20" rendered="#{consultasView.predioSeleccionado.terreno.estado != 2}" >
+            <h:panelGroup layout="block" id="datosConstruccion"> 
+                <h1 class="BigTopic Fs16">Caracter&iacute;sticas de las edificaciones</h1>
+                <hr></hr>
+                <div class="Responsive Container50">
+                    <h:panelGroup id="bloque-list-form" layout="block" class="Container MarRight20">
+                        <p:fieldset legend="Bloques" toggleable="false" toggleSpeed="500" >
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: left;">
+                                            <p:selectOneMenu id="bloqueSelect" value="#{consultasView.bloqueSeleccionadoIndex}" style="width: 85%"> 
+                                                <p:ajax listener="#{consultasView.cambiarBloque}" update="bloque-list-form,piso-list-form,bloque-form" process="@this"/>
+                                                <c:forEach items="#{consultasView.bloques}" var="bloque" varStatus="loop">
+                                                    <f:selectItem itemValue="#{loop.index}" itemLabel="Bloque #{bloque.numeroBloque}" />
+                                                </c:forEach>
+                                            </p:selectOneMenu> 
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </p:fieldset>
+                    </h:panelGroup>
+                </div>
+                <div class="Responsive Container50">
+                    <h:panelGroup id="piso-list-form" layout="block" class="Container">
+                        <h:panelGroup layout="block">
+                            <p:fieldset legend="Pisos" toggleable="false" toggleSpeed="500" >
+                                <table style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align: right;">
+                                                <p:selectOneMenu id="pisoSelect" value="#{consultasView.pisoSeleccionadoIndex}"
+                                                                 disabled="#{(consultasView.creandoPiso or consultasView.editandoPiso)}"
+                                                                 style="width: 90%">   
+                                                    <p:ajax listener="#{consultasView.cambiarPiso}" process="@this,pisoSelect"/>
+
+                                                    <c:forEach items="#{consultasView.pisos}" var="piso" varStatus="loop">
+                                                        <f:selectItem itemValue="#{loop.index}" itemLabel="Piso-#{piso.numeroPiso} (#{piso.area} m&sup2;)" />
+                                                    </c:forEach>
+                                                </p:selectOneMenu>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </p:fieldset>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <h:panelGroup class="Container Wid100 MarTop20" layout="block" id="bloque-form" style="margin-bottom: 30px;" rendered="#{consultasView.predioSeleccionado.terreno.estado != 2}">
+            <h:panelGroup layout="block" >
+                <ui:include src="_caracteristicasBloque.xhtml"/>
+            </h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup class="Container Wid100 MarTop20" layout="block" style="margin-bottom: 30px;" rendered="#{consultasView.predioSeleccionado.terreno.estado == 2}">
+            <h:panelGroup layout="block" >
+                <p:outputLabel  value="TERRENO ESTA MARCADO SIN EDIFICACI&Oacute;N, ES UN SOLAR VACIO" class="DispBlock Wid100 Fright"/>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+</html>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:mensura="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition template="../../WEB-INF/dadoco-template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Reporte de Incidencias"></h:outputText>
+        </ui:define>
+
+        <ui:define name="content">
+           <div class="Container100">
+                <div class="ContainerIndent">
+                    <div class="Card whiteback">
+                        <h:panelGroup layout="block" id="all-update">
+                         <h:panelGroup layout="block" class="Container Wid100 Responsive100">
+                                <h:panelGroup layout="block" class="Container100 Responsive Fright" id="busqueda-opcion">
+                                    <h1 class="BigTopic Fs15">Reporte de Incidencias</h1>
+                                    <hr/>
+                                    <h:panelGroup layout="block" class="Wid100" rendered="false">
+                                        <mensura:buscarFiltro opcionesBusqueda="#{reporteincidenciasView.opcionesBusqueda}"
+                                                              mostrarPalabraClave="false"
+                                                              accionBuscar="#{reporteincidenciasView.buscarPredio()}"
+                                                              actualizarLuegoDeBusqueda="datosConsultas,incidencias-list"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="datosConsultas" style="margin-bottom: 20px;">
+                                <h:form id="incidencia-list-form" prependId="false">
+                                    <h:panelGroup layout="block" class="Container Wid100 MarTop10">
+                                        <p:outputPanel class="HeaderTbl">
+                                            <h:commandLink actionListener="#{reporteincidenciasView.excelExport()}" class="Fleft btn">
+                                                <i class="fa fa-file-excel-o Fs30 red" title="Exportar a Excel" style="color: #800020 !important;"><span style="font-size: 15px !important; padding-left: 5px !important">Exportar</span></i>
+                                            </h:commandLink>
+                                        </p:outputPanel>
+                                    </h:panelGroup>
+                                    <h:panelGroup layout="block" class="Container Wid100 MarTop10">
+                                        <p:dataTable var="incidencia" value="#{reporteincidenciasView.listIncidencias}" widgetVar="logTable" style="margin-top: 10px;" id="incidencias-list"
+                                                     emptyMessage="No hay predios encontrados."
+                                                     paginator="true"
+                                                     rows="5"
+                                                     paginatorPosition="bottom"
+                                                     rowsPerPageTemplate="5,10,25,50"
+                                                     currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords}"
+                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     >
+                                            
+                                            <p:column style="width: 100px;"  headerText="Fecha" filterMatchMode="exact" class="predio-buscar" sortBy="#{incidencia.fechaIncidencia}">
+                                                <h:outputText value="#{incidencia.fechaIncidencia}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                </h:outputText>
+                                            </p:column>
+                                            <p:column style="width: 150px;"  headerText="Predio" filterMatchMode="exact" class="predio-buscar" sortBy="#{incidencia.predio.claveCatastral}">
+                                                <h:outputText value="#{incidencia.predio.claveCatastral}" />
+                                            </p:column>
+                                            
+                                            <p:column headerText="Propietarios"  style="width: 320px;" class="Datos">
+                                                <p:selectOneMenu style="width: 320px;">
+                                                    <f:selectItems value="#{consultasView.propietariosAsCombo(incidencia.predio.id)}" />
+                                                </p:selectOneMenu>
+                                            </p:column>
+                                            <p:column  headerText="Observación" filterMatchMode="exact" class="predio-buscar" sortBy="#{incidencia.observacionIncidencia}">
+                                                <h:outputText value="#{incidencia.observacionIncidencia}" />
+                                            </p:column>
+                                            <p:column  class="column-user-actions" style="width: 15px;">
+                                                <p:commandButton icon="fa fa-list-alt white" title="Visualizar"  oncomplete="PF('dlgInci').show()" update="fotos" >
+                                                    <p:ajax listener="#{reporteincidenciasView.listFotos(incidencia)}"/>
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:dataTable>
+                                        <p:dialog header="Fotos Incidencia" widgetVar="dlgInci" modal="true"
+                                            appendTo="" draggable="false" resizable="false">
+                                            <h:panelGroup id="fotos" layout="block" class="Container Wid100 MarBot10">
+                                              <h:panelGroup layout="block" class="Responsive Container100">
+                                                  <div class="ContainerIndent">
+                                                     <h1 class="BigTopic Fs16">Clic sobre la foto para visualizarla a tamaño original</h1>
+
+                                                 <h:panelGroup layout="block" id="image-preview">
+                                                    <p:outputLabel rendered="#{empty reporteincidenciasView.inciFotos}" style="margin-left: 30px;" value="No se han registrado fotos al predio." />
+                                                   <p:lightBox styleClass="imagebox" id="lighbox4">
+                                                     <c:forEach var="foto1" items="#{reporteincidenciasView.inciFotos}" varStatus="loop">
+                                                       <h:outputLink value="#{foto1}" class="MarRight20 Fleft" >
+                                                        <h:graphicImage url="#{foto1}" width="150" height="150" title="Fotos del predio"/>
+                                                       </h:outputLink>
+                                                      </c:forEach>                          
+                                                    </p:lightBox>
+
+                                                  </h:panelGroup>
+                                                 </div>
+                                               </h:panelGroup>
+                                             </h:panelGroup>
+                                        </p:dialog>
+                                    </h:panelGroup>
+                                </h:form>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </div>
+                </div>
+           </div>
+          
+        </ui:define>
+    </ui:composition>     
+</html>

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+
+        <p:dialog id="official-dlg" widgetVar="officialDialog"
+                  modal="true" resizable="false" appendTo="@(body)"
+                  header="Datos del funcionario" style="width: 600px;">
+             <p:messages id="datos-integrante-messages" autoUpdate="false" closable="true" />
+            <p:ajax event="close" update="official-list-form,official-dlg" listener="#{integranteAdminView.cancelarCreacion}" />
+            <h:panelGroup layout="block" rendered="#{integranteAdminView.creando or integranteAdminView.editando}" class="Container Container60">
+                <h:form id="new-official-form" prependId="false">
+                    
+                    <f:event listener="#{integranteAdminView.validarFormulario}" type="postValidate" />
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="2">
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="type-select" value="Funci&oacute;n:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="type-select" value="#{integranteAdminView.integranteSeleccionado.tipo}" styleClass="varDisSelectContainer"
+                                                     class="DispBlock" style="width: 160px; " required="true" requiredMessage="Funci&oacute;n Requerida">
+                                        <f:selectItems value="#{integranteAdminView.integranteService.rol()}" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="official_name" value="Nombre:" class="DispBlock Wid100"/>
+                                    <p:inputText id="official_name" value="#{integranteAdminView.integranteSeleccionado.nombre}" class="input_200"
+                                                 required="true" requiredMessage="Se requiere el nombre del integrante." onkeypress="focusNextOnEnter(event, 'official_lastname')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="official_lastname" value="Apellidos:" class="DispBlock Wid100"/>
+                                    <p:inputText id="official_lastname" value="#{integranteAdminView.integranteSeleccionado.apellidos}" class="input_200"
+                                                 required="true" requiredMessage="Se requieren los apellidos del integrante." onkeypress="focusNextOnEnter(event, 'official_id')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="official_id" value="Identificación:" class="DispBlock Wid100"/>
+                                    <p:inputText id="official_id" value="#{integranteAdminView.integranteSeleccionado.identificacion}" class="input_200"
+                                                 required="true" requiredMessage="Se requiere la identificaci&oacute;n del integrante." onkeypress="focusNextOnEnter(event, 'official_telefono')"/>
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="official_telefono" value="Tel&eacute;fono:" class="DispBlock Wid100"/>
+                                    <p:inputText id="official_telefono" value="#{integranteAdminView.integranteSeleccionado.telefono}"
+                                                 class="input_200" onkeypress="focusNextOnEnter(event, 'official_email')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="official_email" value="Correo:" class="DispBlock Wid100"/>
+                                    <p:inputText id="official_email" value="#{integranteAdminView.integranteSeleccionado.email}"
+                                                  class="input_200" onkeypress="focusNextOnEnter(event, 'crear-official-btn')"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                            <h:panelGroup layout="block">
+                                <p:commandButton id="crear-official-btn"
+                                                 rendered="#{integranteAdminView.creando}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Guardar"
+                                                 actionListener="#{integranteAdminView.crear()}"
+                                                 process="new-official-form"
+                                                 update="official-list-form,official-list,type-select,official_name,
+                                                 official_lastname,official_id,official_telefono,official_email,datos-integrante-messages"/>
+                                <p:commandButton id="actualizar-official-btn"
+                                                 rendered="#{integranteAdminView.editando}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                                 actionListener="#{integranteAdminView.edit()}"
+                                                 process="new-official-form"
+                                                 update="official-list-form,official-list,type-select,official_name,
+                                                 official_lastname,official_id,official_telefono,official_email,datos-integrante-messages"/>
+                                <p:commandButton id="cancelar-official-btn"
+                                                 icon="fa fa-times-circle-o" styleClass="white" value="Cancelar" actionListener="#{integranteAdminView.inicializarNuevo()}"
+                                                 onclick="PF('officialDialog').hide();"
+                                                 />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

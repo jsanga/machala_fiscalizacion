@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="arriendoContainer" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">Contrato de arriendo</h1>
+                <hr/>
+                <h:panelGroup layout="block" class="Responsive Container100 MarBot10">
+                    <div class="ContainerIndent">
+                        <p:fieldset legend="Datos del contrato" toggleable="true" toggleSpeed="500" >
+                            <h:panelGrid columns="5" style="width: 100%">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="nro_contrato" value="Nro. contrato" class="DispBlock Wid100"/>
+                                    <p:inputText id="nro_contrato" value="#{registroArrendamientoView.contratoArrendamiento.numero}" required="true"
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'fecha_inicio_contrato_input')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="fecha_inicio_contrato" value="Fecha inicio:"  class="DispBlock Wid100"/>
+                                    <p:calendar id="fecha_inicio_contrato" value="#{registroArrendamientoView.contratoArrendamiento.fechaInicio}" required="true"
+                                                mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'fecha_vencimiento_contrato_input')" style="width: 153px !important;"/>
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="fecha_vencimiento_contrato" value="Fecha vencimiento"  class="DispBlock Wid100"/>
+                                    <p:calendar id="fecha_vencimiento_contrato" value="#{registroArrendamientoView.contratoArrendamiento.fechaVencimiento}" required="true"
+                                                mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'fecha_documento_input')" style="width: 153px !important;"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="fecha_documento" value="Fecha documento"  class="DispBlock Wid100"/>
+                                    <p:calendar id="fecha_documento" value="#{registroArrendamientoView.contratoArrendamiento.fechaDocumento}" required="true"
+                                                mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'resolucion_nro')" style="width: 153px !important;"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="resolucion_nro" value="Folio:"  class="DispBlock Wid100"/>
+                                    <p:inputText id="resolucion_nro" value="#{registroArrendamientoView.contratoArrendamiento.numeroResolucion}"
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'observaciones_contrato')" required="true"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="Responsive Container100 MarBot10">
+                    <div class="ContainerIndent">
+                        <p:fieldset legend="Observaciones" toggleable="true" toggleSpeed="500" >
+                            <h:panelGrid columns="5" style="width: 100%">
+                                <h:panelGroup layout="block">
+                                    <p:inputTextarea id="observaciones_contrato" value="#{registroArrendamientoView.contratoArrendamiento.observaciones}"
+                                                     rows="3" style="width: 95%;"
+                                                     />
+                                </h:panelGroup>                               
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="Responsive Container100 MarRight20 MarTop20">
+                    <h1 class="BigTopic Fs16">Arrendatarios</h1>
+                    <hr></hr>
+                    <div class="ContainerIndent Container100">
+                        <h:panelGroup layout="block" class="actions" id="propietarioListDelete-update">
+                            <p:commandButton title="Nuevo propietario"
+                                             id="buscar-propietario-btn"  styleClass="Fs16" update=":BuscarContribuyenteForm"
+                                             icon="fa fa-user-plus white" actionListener="#{registroArrendamientoView.inicializarBusquedaContribuyente()}"
+                                             process="@this,propietarioListDelete-update"
+                                             value="Adicionar"
+                                             oncomplete="PF('BuscarContribuyenteDialog').show();"
+                                             style="margin-right: 10px; margin-bottom: 5px;"/>
+                            <p:commandButton title="Eliminar"
+                                             id="eliminar-propietario-btn" styleClass="Fs16" update="propietarioListDelete,propietarioListDelete-update"
+                                             icon="fa fa-user-times white" actionListener="#{registroArrendamientoView.eliminarPropietario}"
+                                             process="@this"
+                                             disabled="#{registroArrendamientoView.propietarios.size() == 0}"
+                                             value="Eliminar">
+                                <p:confirm header="Confirmación" message="Está seguro de eliminar el propietario #{registroArrendamientoView.propietarioSeleccionado.nombreCompleto} ?" icon="ui-icon-alert" />
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
+                        </h:panelGroup>
+                    </div>
+                    <div class="ContainerIndent Container100 MarBot10" id="propietarios">
+                        <div class="ContainerIndent Container96">
+                            <p:dataTable id="propietarioListDelete" var="prop" value="#{registroArrendamientoView.propietarios}" selection="#{registroArrendamientoView.propietarioSeleccionado}" rowKey="#{prop.id}" style="margin-bottom:0"
+                                         rows="5" paginator="true"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15"
+                                         paginatorPosition="bottom" selectionMode="single">
+                                <p:ajax event="rowSelect" listener="#{registroArrendamientoView.onRowSelect}" update="propietarioListDelete-update,propietarioListDelete" />
+                                <p:ajax event="rowUnselect" listener="#{registroArrendamientoView.onRowUnselect}" update="propietarioListDelete-update,propietarioListDelete" />
+
+                                <p:column headerText="Propietario">
+                                    <h:outputText value="#{prop.nombreCompleto}"  />
+                                </p:column>
+                                <p:column headerText="Tipo identificaci&oacute;n">
+                                    <h:outputText value="#{prop.valorIdentificacion()}" />
+                                </p:column>
+                                <p:column headerText="Identificaci&oacute;n">
+                                    <h:outputText value="#{prop.identificacion}" />
+                                </p:column>
+
+                            </p:dataTable>
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+        <ui:include src="_buscarContribuyente.xhtml"/>
+    </ui:composition>
+
+</html>

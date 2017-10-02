@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+
+            <div class="Container100">
+                <p:fieldset legend="Caraster&iacute;sticas f&iacute;sicas del terreno" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="Wid100">
+                        <var:varDisInputText id="terreno_estado" label="Estado:"
+                                             table="cat_terreno" column="estado"
+                                             bind="#{updateFullView.terreno.estado}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             accionListenerUpdate="#{updateFullView.updateEstadoTerreno()}"
+                                             update="terreno_estado_edificacion:cat_terreno-estado_edificacion-container,pisos_termiando-container"
+                                             changeOnEnter="true"
+                                             next="terreno_estado_edificacion:cat_terreno-estado_edificacion-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_estado_edificacion" label="Estado edificaci&oacute;n:"
+                                             table="cat_terreno" column="estado_edificacion"
+                                             bind="#{updateFullView.terreno.estadoEdificacion}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             disabled="#{updateFullView.terreno.estado != 1}"
+                                             changeOnEnter="true"
+                                             next="terreno_pisos_terminados"
+                                             labelPosition="top"/>
+                        <h:panelGroup layout="block" style="width: 160px !important;" id="pisos_termiando-container">
+                            <p:outputLabel for="terreno_pisos_terminados" value="Pisos terminados:" class="DispBlock Wid100" />
+                            <p:inputText id="terreno_pisos_terminados" value="#{updateFullView.terreno.pisosTerminados}" 
+                                         required="#{updateFullView.terreno.estado == 1}" disabled="#{updateFullView.terreno.estado != 1}"
+                                         class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'terreno_ubicacion:cat_terreno-ubicacion-input')"/>
+                        </h:panelGroup>
+                        <var:varDisInputText id="terreno_ubicacion" label="Ubicaci&oacute;n:"
+                                             table="cat_terreno" column="ubicacion"
+                                             bind="#{updateFullView.terreno.ubicacion}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_topografia:cat_terreno-topografia-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_topografia" label="Topograf&iacute;a:"
+                                             table="cat_terreno" column="topografia"
+                                             bind="#{updateFullView.terreno.topografia}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="terreno_geometria:cat_terreno-geometria-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_geometria" label="Geometr&iacute;a:"
+                                             table="cat_terreno" column="geometria"
+                                             bind="#{updateFullView.terreno.geometria}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="terreno_nro_frentes"
+                                             labelPosition="top"/>
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="terreno_nro_frentes" value="Nro. frentes:" class="DispBlock Wid100" />
+                            <p:inputText id="terreno_nro_frentes" value="#{updateFullView.terreno.nroFrentes}"
+                                         class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'terreno_caract:cat_terreno-caracteristicas_suelo-input')"/>
+                        </h:panelGroup>
+                        <var:varDisInputText id="terreno_caract" label="Caract. del suelo:"
+                                             table="cat_terreno" column="caracteristicas_suelo"
+                                             bind="#{updateFullView.terreno.caracteristicasSuelo}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="terreno_uso:cat_terreno-us-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_uso" label="Uso del terreno:"
+                                             table="cat_terreno" column="us"
+                                             bind="#{updateFullView.terreno.usoSuelo}"
+                                             showlabel="true"
+                                             defaultValue="0"
+                                             accionListenerUpdate="#{updateFullView.initNuevoUso()}"
+                                             changeOnEnter="true"
+                                             next="terreno_energia_electrica:cat_terreno-red_energia_electrica-input"
+                                             labelPosition="top"/>
+                    </h:panelGrid>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Container100">
+                <p:fieldset legend="Servicios en v&iacute;as" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="Wid100">
+                        <var:varDisInputText id="terreno_energia_electrica" label="Red energ&iacute;a el&eacute;ctrica:"
+                                             table="cat_terreno" column="red_energia_electrica"
+                                             bind="#{updateFullView.terreno.redEnergiaElectrica}"
+                                             showlabel="true"
+                                             defaultValue="3"
+                                             changeOnEnter="true"
+                                             next="terreno_energia_electrica_medidor:comun-si_no_sin_dato-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_energia_electrica_medidor" label="Medidor de luz:"
+                                             table="comun" column="si_no_sin_dato"
+                                             bind="#{updateFullView.terreno.medidorLuz}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             update="terreno_energia_electrica_medidor"
+                                             next="terreno_agua_potable:cat_terreno-red_agua_potable-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_agua_potable" label="Red agua potable:"
+                                             table="#{updateFullView.predio.tipoPropiedad != 2 ? 'cat_terreno':'cat_terreno_ph'}" column="red_agua_potable"
+                                             bind="#{updateFullView.terreno.redAguaPotable}"
+                                             showlabel="true"
+                                             defaultValue="#{updateFullView.predio.tipoPropiedad != 2 ? '3':'2'}"
+                                             changeOnEnter="true"
+                                             next="terreno_agua_potable_medidor:comun-si_no_sin_dato-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_agua_potable_medidor" label="Medidor de agua"
+                                             table="comun" column="si_no_sin_dato"
+                                             bind="#{updateFullView.terreno.medidorAgua}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             update="terreno_agua_potable_medidor"
+                                             changeOnEnter="true"
+                                             next="terreno_alcantarillado:cat_terreno-red_alcantarillado-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_alcantarillado" label="Red alcantarillado:"
+                                             table="cat_terreno" column="red_alcantarillado"
+                                             bind="#{updateFullView.terreno.redAlcantarillado}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="terreno_telefono:cat_terreno-red_telefonica-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_telefono" label="Red telef&oacute;nica:"
+                                             table="cat_terreno" column="red_telefonica"
+                                             bind="#{updateFullView.terreno.redTelefonica}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="terreno_alumbrado:comun-tiene-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_alumbrado" label="Alumbrado público:"
+                                             table="comun" column="tiene"
+                                             bind="#{updateFullView.terreno.alumbrado}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_recoleccion_basura:comun-tiene-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_recoleccion_basura" label="Recolecci&oacute;n basura:"
+                                             table="comun" column="tiene"
+                                             bind="#{updateFullView.terreno.recoleccionBasura}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_aseo_calle:comun-tiene-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_aseo_calle" label="Aseo de calles:"
+                                             table="comun" column="tiene"
+                                             bind="#{updateFullView.terreno.aseoCalles}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_transporte:comun-tiene-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_transporte" label="Transporte público:"
+                                             table="comun" column="tiene"
+                                             bind="#{updateFullView.terreno.transportePublico}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_cable:comun-tiene-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_cable" label="Cable satelital:"
+                                             table="comun" column="tiene"
+                                             bind="#{updateFullView.terreno.cableSatelital}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_internet:comun-tiene-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_internet" label="Internet:"
+                                             table="comun" column="tiene"
+                                             bind="#{updateFullView.terreno.internet}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_otros_servicio"
+                                             labelPosition="top"/>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="terreno_otros_servicio" value="Otros servicios:" class="DispBlock Wid100"/>
+                            <p:inputText id="terreno_otros_servicio" value="#{updateFullView.terreno.otrosServicio}"
+                                         class="input_150" onkeypress="focusNextOnEnter(event, 'terreno_tipo_via:cat_terreno-tipo_via-input')"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Container100">
+                <p:fieldset legend="Infraestructura vial" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="Wid100">
+                        <var:varDisInputText id="terreno_tipo_via" label="Tipo de vía:"
+                                             table="cat_terreno" column="tipo_via"
+                                             bind="#{updateFullView.terreno.tipoVias}"
+                                             showlabel="true"
+                                             defaultValue="4"
+                                             changeOnEnter="true"
+                                             next="terreno_tipo_capa_rodadura:cat_terreno-tipo_capa_rodadura-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_tipo_capa_rodadura" label="Tipo capa rodadura:"
+                                             table="cat_terreno" column="tipo_capa_rodadura"
+                                             bind="#{updateFullView.terreno.tipoCapaRodadura}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="terreno_aceras:comun-tiene-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_aceras" label="Aceras:"
+                                             table="comun" column="tiene"
+                                             bind="#{updateFullView.terreno.aceras}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_bordillos:comun-tiene-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_bordillos" label="Bordillos:"
+                                             table="comun" column="tiene"
+                                             bind="#{updateFullView.terreno.bordillos}"
+                                             showlabel="true"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="terreno_estado_conservacion:cat_terreno-estado_conservacion-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_estado_conservacion" label="Estado conservaci&oacute;n:"
+                                             table="cat_terreno" column="estado_conservacion"
+                                             bind="#{updateFullView.terreno.estadoConservacion}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="terreno_via_topografia:cat_terreno-via_topografia-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="terreno_via_topografia" label="Topograf&iacute;a:"
+                                             table="cat_terreno" column="via_topografia"
+                                             bind="#{updateFullView.terreno.viaTopografia}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="obra_piscina"
+                                             labelPosition="top"/>
+                    </h:panelGrid>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container100 Wid100 MarTop20" >
+            <div class="Container100">
+                <p:fieldset legend="Linderos y mensuras seg&uacute;n levantamiento en campo" toggleable="true" toggleSpeed="500" >
+                    <div class="Responsive Container50">
+                        <div class="ContainerIndent MarRight20">
+                            <h:panelGrid columns="4" class="linderoEscritura">
+                                <p:outputLabel for="terreno_norte_ref" value="Norte:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_norte_ref" value="#{updateFullView.terreno.linNorteRef}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_norte_long')"
+                                             class="input_200 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_norte_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_norte_long" value="#{updateFullView.terreno.linNorteLongitud}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_sur_ref')"
+                                             class="input_160" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_sur_ref" value="Sur:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_sur_ref" value="#{updateFullView.terreno.linSurRef}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_sur_long')"
+                                             class="input_200 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_sur_long" value="Con:" class="DispBlock Wid100"/>
+                                <p:inputText id="terreno_sur_long" value="#{updateFullView.terreno.linSurLongitud}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_este_ref')"
+                                             class="input_160" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_este_ref" value="Este:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_este_ref" value="#{updateFullView.terreno.linEsteRef}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_este_long')"
+                                             class="input_200 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_este_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_este_long" value="#{updateFullView.terreno.linEsteLongitud}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_oeste_ref')"
+                                             class="input_160" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_oeste_ref" value="Oeste:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_oeste_ref" value="#{updateFullView.terreno.linOesteRef}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_oeste_long')"
+                                             class="input_200 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_oeste_long" value="Con:" class="DispBlock Wid100"/>
+                                <p:inputText id="terreno_oeste_long" value="#{updateFullView.terreno.linOesteLongitud}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_superficie')"
+                                             class="input_160" style="margin-bottom: 8px;"/>
+
+
+                            </h:panelGrid>
+                        </div>
+                    </div>
+                    <div class="Responsive Container50">
+                        <div class="ContainerIndent">
+                            <h:panelGrid columns="3" class="linderoEscritura">
+                                <p:outputLabel for="terreno_superficie" value="Superficie:" class="DispBlock Wid100" />
+                                <p:inputText id="terreno_superficie" value="#{updateFullView.terreno.areaLevantamiento}"
+                                             onkeypress="validateFloatValueAndFocusNext(event, 'terreno_perimetro')" required="true"
+                                             class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel value="m&sup2;."/>
+                                <p:outputLabel for="terreno_perimetro" value="Per&iacute;metro:&nbsp;" class="DispBlock Wid100" />
+                                <p:inputText id="terreno_perimetro" value="#{updateFullView.terreno.perimetroLevantamiento}"
+                                             onkeypress="validateFloatValueAndFocusNext(event, 'ancho_via_publica')"
+                                             class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel value="mts." />
+                                <p:outputLabel for="ancho_via_publica" value="Ancho v&iacute;a p&uacute;blica:&nbsp;" class="DispBlock Wid100" />
+                                <p:inputText id="ancho_via_publica" value="#{updateFullView.terreno.anchoViaPuplica}"
+                                             onkeypress="validateFloatValueAndFocusNext(event, 'ancho_acera')"
+                                             class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel value="mts." />
+                                <p:outputLabel for="ancho_acera" value="Ancho acera:&nbsp;" class="DispBlock Wid100" />
+                                <p:inputText id="ancho_acera" value="#{updateFullView.terreno.anchoAcera}"
+                                             onkeypress="validateFloatValueAndFocusNext(event, 'cat_terreno-observacion')"
+                                             class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel value="mts." />
+
+                            </h:panelGrid>
+                        </div>
+                    </div>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container100 Wid100 MarTop20" style="margin-bottom: 20px;">
+            <div class="Container100">
+                <p:fieldset legend="Sistema de coordenadas proyecci&oacute;n UTM DATUM WGS-84" toggleable="true" toggleSpeed="500" >
+                    <div class="Responsive Container100">
+                        <h1 class="BigTopic Fs15">Coordenada centroide del predio</h1>
+                        <hr></hr>
+                        <div class="ContainerIndent MarRight20">
+                            <h:panelGrid columns="4" class="linderoEscritura">
+                                <p:outputLabel for="x_este" value="X (Este):" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="x_este" value="#{updateFullView.terreno.cordX}"
+                                             onkeypress="focusNextOnEnter(event, 'y_norte')"
+                                             class="input_300 MarRight10" style="margin-bottom: 8px; margin-right: 30px;"/>
+                                <p:outputLabel for="y_norte" value="Y (Norte):" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="y_norte" value="#{updateFullView.terreno.cordY}"
+                                             onkeypress="focusNextOnEnter(event, 'cat_terreno-observacion')"
+                                             class="input_300" style="margin-bottom: 8px;"/>
+                            </h:panelGrid>
+                        </div>
+                    </div>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        
+<!--        <h:panelGroup layout="block" class="Container100 Wid100 MarTop20" style="margin-bottom: 20px;">
+            <div class="Container100">
+                <p:fieldset legend="Observaciones generales del terreno" toggleable="true" toggleSpeed="500" >
+                    <p:inputTextarea id="cat_terreno-observacion" style="width: 97%" value="#{updateFullView.terreno.observacion}"
+                                     onkeypress="focusNextOnEnter(event, 'wiz_next')"/>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>-->
+    </ui:composition>
+</html>

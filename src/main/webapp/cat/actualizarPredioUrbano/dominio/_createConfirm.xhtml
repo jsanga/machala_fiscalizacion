@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop20">
+            <h1 class="BigTopic Fs16">Datos del predio Urbano</h1>
+            <hr></hr>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Wid100 MarTop10">
+            <p:fieldset legend="Datos generales del nuevo predio" toggleable="true" toggleSpeed="500" >
+                <p:panelGrid columns="4">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Clave catastral: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.predio.claveCatastral}" />
+                    </h:panelGroup>
+                   <h:panelGroup layout="block">
+                         <p:outputLabel value="Tipo de propiedad: " class="show-detail" />
+                        <p:outputLabel value="#{updateDominioView.variablesService.obtenerValor('cat_predio', 'tipo_propiedad', updateDominioView.predio.tipoPropiedad, updateDominioView.anioActual)}"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Ficha madre: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.predio.terreno.alumbrado== 0 ? 'NO' : 'SI'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Cantidad de edificaciones: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.predio.bloques.size()}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Manzana: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.predio.manzana}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="&Aacute;rea terreno: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.predio.terreno.areaLevantamiento} m&sup2;." />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Localizaci&oacute;n: " class="show-detail" />
+                        <p:outputLabel value="#{updateDominioView.variablesService.obtenerValor('cat_terreno', 'ubicacion', updateDominioView.predio.terreno.ubicacion, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Topograf&iacute;a: " class="show-detail" />
+                        <p:outputLabel value="#{updateDominioView.variablesService.obtenerValor('cat_terreno', 'topografia', updateDominioView.predio.terreno.topografia, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                </p:panelGrid>
+            </p:fieldset>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop20">
+            <p:fieldset legend="Obras de Infraestructura" toggleable="true" toggleSpeed="500" >
+                <p:panelGrid columns="4">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Agua potable: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.variablesService.obtenerValor('cat_terreno', 'red_agua_potable', updateDominioView.predio.terreno.redAguaPotable, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Energ&iacute;a el&eacute;ctrica: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.variablesService.obtenerValor('cat_terreno', 'red_energia_electrica', updateDominioView.predio.terreno.redEnergiaElectrica, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Alcantarillado sanitario: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.variablesService.obtenerValor('cat_terreno', 'red_alcantarillado', updateDominioView.predio.terreno.redAlcantarillado, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Trasporte p&uacute;blico: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.variablesService.obtenerValor('comun', 'tiene', updateDominioView.predio.terreno.transportePublico, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Tel&eacute;fono: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.variablesService.obtenerValor('cat_terreno', 'red_telefonica', updateDominioView.predio.terreno.redTelefonica, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Recolecci&oacute;n de basura: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.variablesService.obtenerValor('comun', 'tiene', updateDominioView.predio.terreno.recoleccionBasura, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Aseo de calles: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.variablesService.obtenerValor('comun', 'tiene', updateDominioView.predio.terreno.aseoCalles, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Aceras: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.variablesService.obtenerValor('comun', 'tiene', updateDominioView.predio.terreno.aceras, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Bordillos: " class="show-detail" />
+                        <p:outputLabel  value="#{updateDominioView.variablesService.obtenerValor('comun', 'tiene', updateDominioView.predio.terreno.bordillos, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="V&iacute;as: " class="show-detail" />
+                        <p:outputLabel value="#{updateDominioView.variablesService.obtenerValor('cat_terreno', 'tipo_via', updateDominioView.predio.terreno.tipoVias, updateDominioView.anioActual)}" />
+                    </h:panelGroup>
+                </p:panelGrid>
+
+            </p:fieldset>
+        </h:panelGroup>
+        
+        <h:panelGroup layout="block" class="Responsive Container100 MarRight20 MarTop20 MarBot10">
+                <p:fieldset legend="Propietarios" toggleable="true" toggleSpeed="500" >
+                <div class="ContainerIndent Container100 MarBot10">
+                    <div class="ContainerIndent Container96">
+                        <p:dataTable var="prop" value="#{updateDominioView.propietarios}" selection="#{updateDominioView.propietarioSeleccionado}" rowKey="#{prop.id}" style="margin-bottom:0"
+                                     rows="5" paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15"
+                                     paginatorPosition="bottom" selectionMode="single">
+                            <p:column headerText="Propietario">
+                                <h:outputText value="#{prop.nombreCompleto}"  />
+                            </p:column>
+                            <p:column headerText="Tipo identificaci&oacute;n">
+                                <h:outputText value="#{prop.valorIdentificacion()}" />
+                            </p:column>
+                            <p:column headerText="Identificaci&oacute;n">
+                                <h:outputText value="#{prop.identificacion}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </div>
+                </div>
+                </p:fieldset>
+            </h:panelGroup>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" style="margin-bottom: 10px;">
+            <h1 class="BigTopic Fs16">Datos generales del predio</h1>
+            <hr></hr>
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Datos del predio" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="clave_anterior" value="Clave anterior:" class="DispBlock Wid100"/>
+                                <p:inputText id="clave_anterior" value="#{unificarPredioView.predio.claveAnterior}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'barrio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="barrio" value="Sitio/Barrio/Cooperativa/Urb.:" class="DispBlock Wid100"/>
+                                <p:inputText id="barrio" value="#{unificarPredioView.terreno.barrio}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'cat_predio_manzana')"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cat_predio_manzana" value="Manzana:" class="DispBlock Wid100"/>
+                                <p:inputText id="cat_predio_manzana" value="#{unificarPredioView.predio.manzana}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nro_personas')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_personas" value="Nro personas habitan:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_personas" value="#{unificarPredioView.predio.nroPersonasHabitan}"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'tipo_propiedad:cat_predio-tipo_propiedad-input')"/>
+                            </h:panelGroup>
+                            <var:varDisInputText id="tipo_propiedad" label="Tipo propiedad:"
+                                                 table="cat_predio" column="tipo_propiedad"
+                                                 bind="#{unificarPredioView.predio.tipoPropiedad}"
+                                                 showlabel="true"
+                                                 changeOnEnter="true"
+                                                 defaultValue="3"
+                                                 next="origen:cat_predio-origen-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="origen" label="Origen:"
+                                                 table="cat_predio" column="origen"
+                                                 bind="#{unificarPredioView.predio.origen}"
+                                                 showlabel="true"
+                                                 defaultValue="1"
+                                                 changeOnEnter="true"
+                                                 next="dominio:cat_predio-dominio-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="dominio" label="Dominio:"
+                                                 table="cat_predio" column="dominio"
+                                                 bind="#{unificarPredioView.predio.dominio}"
+                                                 showlabel="true"
+                                                 defaultValue="1"
+                                                 changeOnEnter="true"
+                                                 next="permitieron_ingreso:comun-si_no-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="permitieron_ingreso" label="Permitieron ingreso:"
+                                                 table="comun" column="si_no"
+                                                 bind="#{unificarPredioView.predio.permitieronIngreso}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                 changeOnEnter="true"
+                                                 next="calle1"
+                                                 labelPosition="top"/>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Responsive Wid100">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Datos de localizaci&oacute;n" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid style="width: 100%" columns="4">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle1" value="Calle 1:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle1" value="#{unificarPredioView.terreno.dirCalle1}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'calle2')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle2" value="Calle 2:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle2" value="#{unificarPredioView.terreno.dirCalle2}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'calle3')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle3" value="Calle 3:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle3" value="#{unificarPredioView.terreno.dirCalle3}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'calle4')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="calle4" value="Calle 4:" class="DispBlock Wid100"/>
+                                <p:inputText id="calle4" value="#{unificarPredioView.terreno.dirCalle4}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nomenclatura1')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura1" value="Nomenclatura calle 1:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura1" value="#{unificarPredioView.terreno.dirNomenclatura1}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nomenclatura2')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura2" value="Nomenclatura calle 2:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura2" value="#{unificarPredioView.terreno.dirNomenclatura2}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nomenclatura3')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura3" value="Nomenclatura calle 3:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura3" value="#{unificarPredioView.terreno.dirNomenclatura3}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nomenclatura4')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nomenclatura4" value="Nomenclatura calle 4:" class="DispBlock Wid100"/>
+                                <p:inputText id="nomenclatura4" value="#{unificarPredioView.terreno.dirNomenclatura4}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nro_predio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_predio" value="Nro predio:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_predio" value="#{unificarPredioView.predio.nroPredio}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nro_dpto')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_dpto" value="Nro departamento:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_dpto" value="#{unificarPredioView.predio.nroDepartamento}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nro_piso')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_piso" value="Nro piso:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_piso" value="#{unificarPredioView.predio.nroPiso}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nro_bloque')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_bloque" value="Nro bloque:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_bloque" value="#{unificarPredioView.predio.nroBloque}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'nombre_edificio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nombre_edificio" value="Nombre edificio:" class="DispBlock Wid100"/>
+                                <p:inputText id="nombre_edificio" value="#{unificarPredioView.predio.nombreEdificio}"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'cat_predio-observacion')"/>
+                            </h:panelGroup>
+
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container100 Wid100" style="margin-bottom: 20px;">
+                <div class="ContainerIndent">
+                    <p:fieldset legend="Observaciones" toggleable="true" toggleSpeed="500" >
+                        <p:inputTextarea id="cat_predio-observacion" style="width: 97%" value="#{unificarPredioView.predio.observacion}"
+                                         onkeypress="focusNextOnEnter(event, 'wiz_next')"/>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+
+
+        </h:panelGroup>
+    </ui:composition>
+</html>

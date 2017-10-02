@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="escriturasContainer" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">Protocolizaci&oacute;n de documentos</h1>
+                <h:panelGroup layout="block" class="Responsive Container100 MarBot10">
+                    <div class="ContainerIndent">
+                        <fieldset>
+                            <legend>Datos Notaria</legend>
+                            <h:panelGrid columns="5" style="width: 100%">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="eProtNotariaNombre" value="Notaria:" class="DispBlock Wid100"/>
+                                    <p:inputText id="eProtNotariaNombre" value="#{registroArrendamientoView.escritura.notaria}" required="true"
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'eProtNotariaFecha_input')"/>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="eProtNotariaFecha" value="Fecha:"  class="DispBlock Wid100"/>
+                                        <p:calendar id="eProtNotariaFecha" value="#{registroArrendamientoView.escritura.fechaNotaria}" required="true"
+                                                    mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'eProtNotariaLibro')" style="width: 153px !important;"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="eProtNotariaLibro" value="Libro:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="eProtNotariaLibro" value="#{registroArrendamientoView.escritura.libroNotaria}"
+                                                     class="input_150" onkeypress="focusNextOnEnter(event, 'eProtNotariaFolio')" required="true"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="eProtNotariaFolio" value="Folio:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="eProtNotariaFolio" value="#{registroArrendamientoView.escritura.folioNotaria}"
+                                                     class="input_150" onkeypress="focusNextOnEnter(event, 'eProtNotariaCuantia')" required="true"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="eProtNotariaCuantia" value="Cuant&iacute;a:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="eProtNotariaCuantia" value="#{registroArrendamientoView.escritura.cuantia}"
+                                                     class="input_140" onkeypress="focusNextOnEnter(event, 'eProtRegistradorFecha_input')" required="true"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </fieldset>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="Responsive Container50 MarBot10">
+                    <div class="ContainerIndent">
+                        <fieldset>
+                            <legend>Datos Registrador de la propiedad</legend>
+                            <h:panelGrid columns="2" style="width: 100%">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="eProtRegistradorFecha" value="Fecha:" class="DispBlock Wid100"/>
+                                    <p:calendar id="eProtRegistradorFecha" value="#{registroArrendamientoView.escritura.fechaInscripcion}" required="true"
+                                                mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'eProtRegistradorFolio')" style="width: 153px !important;"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="eProtRegistradorFolio" value="Folio:" class="DispBlock Wid100"/>
+                                    <p:inputText id="eProtRegistradorFolio" value="#{registroArrendamientoView.escritura.folioRegistrador}" required="true"
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'eProtRegistradorRepertorio')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="eProtRegistradorRepertorio" value="Repertorio:" class="DispBlock Wid100"/>
+                                    <p:inputText id="eProtRegistradorRepertorio" value="#{registroArrendamientoView.escritura.repertorioRegistrador}" required="true"
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'eProtRegistradorNumero')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="eProtRegistradorNumero" value="N&uacute;mero:" class="DispBlock Wid100"/>
+                                    <p:inputText id="eProtRegistradorNumero" value="#{registroArrendamientoView.escritura.numeroRegistroPropiedad}" required="true"
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'eProtOtroResolucion')"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </fieldset>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="Responsive Container50 MarBot10">
+                    <div class="ContainerIndent">
+                        <fieldset>
+                            <legend>Datos de catastro</legend>
+                            <h:panelGrid columns="2" style="width: 100%">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="eProtOtroResolucion" value="Resoluci&oacute;n:" class="DispBlock Wid100"/>
+                                    <p:inputText id="eProtOtroResolucion" value="#{registroArrendamientoView.escritura.numeroRes}" required="true"
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'eProtOtroLamina')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="eProtOtroLamina" value="L&aacute;mina:" class="DispBlock Wid100"/>
+                                    <p:inputText id="eProtOtroLamina" value="#{registroArrendamientoView.escritura.lamina}" required="true"
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'observacion')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="eProtOtroNumero" value="N&uacute;mero:" class="DispBlock Wid100"/>
+                                    <p:inputText id="eProtOtroNumero" value="#{registroArrendamientoView.escritura.numeroCatastro}" required="false"
+                                                 class="input_150"  readonly="true"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="eProtOtroFecha" value="Fecha:" class="DispBlock Wid100"/>
+                                    <p:calendar id="eProtOtroFecha" value="#{registroArrendamientoView.escritura.fechaCatastro}" required="false"
+                                                pattern="dd/MM/yyyy" readonly="true" style="width: 153px !important;"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </fieldset>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h:panelGroup layout="block" class="Responsive100 Container100">
+                    <div class="ContainerIndent">
+                        <fieldset>
+                            <legend>Datos de la escritura</legend>
+                            <h:panelGrid columns="1" style="width: 100%">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="tipo_escritura" value="Tipo de escritura:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="tipo_escritura"  value="#{registroArrendamientoView.idTipoEscritura}">
+                                        <f:selectItems  value="#{registroArrendamientoView.tiposEscrituras}" var="tipoEsc" itemLabel="#{tipoEsc.label}" itemValue="#{tipoEsc.value}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="observacion" value="Observaci&oacute;n:" class="DispBlock Wid100"/>
+                                    <p:inputTextarea id="observacion" value="#{registroArrendamientoView.escritura.observacion}" required="false"
+                                                     style="width: 99%;"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                        </fieldset>
+                    </div>
+                </h:panelGroup>
+
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+
+</html>

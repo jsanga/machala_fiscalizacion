@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition>
+
+        <h:panelGroup layout="block" class="Container Wid100">
+            <h:panelGroup layout="block" class="Container Wid100 MarTop10">
+
+                <p:tabView >
+                    <p:tab title="Escritura">
+                        <p:tabView orientation="left">
+                            <c:forEach items="#{consultasView.docs}" var="doc" varStatus="loop">
+                                <p:tab title="Documento #{loop.index +1}">
+                                    <object type="application/pdf" data="#{doc}?pfdrid_c=true" height="700px" width="100%" internalinstanceid="4">
+                                        Su navegador no puede mostrar PDF, <a href="#{doc}">click</a> para descargar.
+                                    </object>
+                                </p:tab>
+                            </c:forEach>
+                        </p:tabView>
+                    </p:tab>
+                    <!--
+                    <p:tab title="Datos de autorizacion">
+                        <object type="application/pdf" data="#{consultasView.docUltimoDatoAutorizacion}?pfdrid_c=true" height="700px" width="100%" internalinstanceid="4">
+                            Su navegador no puede mostrar PDF, <a href="#{consultasView.docUltimoDatoAutorizacion}">click</a> para descargar.
+                        </object>
+                    </p:tab>
+                    -->
+                </p:tabView>
+
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+</html>

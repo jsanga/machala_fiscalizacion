@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:dialog id="addDlgPaqrroquia" widgetVar="addParroquiaDialog"
+                  modal="true" resizable="false"
+                  header="Agregar Nueva Parroquia" style="width: 600px;" appendTo="@(body)">
+            <h:panelGroup layout="block" class="Container Container100">
+                <h:form id="form-parr" prependId="false">
+                    <h:panelGrid columns="4" styleClass="Wid100">
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Parroquia"/>
+                            <p:inputText value="#{fWManzanaController.parroquia.parroquiaPK.codParroquia}" styleClass="Wid40" required="true"/>
+                        </h:panelGrid>
+                        <h:panelGrid columns="1">
+                            <p:outputLabel value="Nombre"/>
+                            <p:inputText value="#{fWManzanaController.parroquia.nombre}" styleClass="Wid40" required="true"/>
+                        </h:panelGrid>
+                    </h:panelGrid>
+                 
+                    <div class="Separator"></div>
+                    
+                    <h:panelGrid id="panel-botones-parr" columns="2">
+                        <p:commandButton id="crear-parroquia-btn"
+                                         icon="fa fa-save" styleClass="white Fright" value="Guardar Parroquia"
+                                         actionListener="#{fWManzanaController.guardarParroquia()}"
+                                         update=":listado-form,:form-parr,table-list,messages" oncomplete="PF('addDialog').show();PF('addParroquiaDialog').hide();"/>
+                        <p:commandButton id="cancelar-parroquia-btn"
+                                         icon="fa fa-cancel" styleClass="white" value="Cancelar"
+                                         onclick="PF('addParroquiaDialog').hide();" />
+                    </h:panelGrid>
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:dialog id="addDlg" widgetVar="addDialog"
+                  modal="true" resizable="false"
+                  header="Datos del sector" appendTo="@(body)">
+            <p:ajax event="close" update="listado-form,addDlg" listener="#{sectorView.cancelarCreacion()}" />
+            <h:panelGroup layout="block" class="Container Container100">
+                <h:form id="form-form" prependId="false">
+                    <p:messages id="datos-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                    <f:event listener="#{sectorView.validarFormulario}" type="postValidate"/>
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="3">
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="parroquia-select" value="Parroquia:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="parroquia-select" value="#{sectorView.parroquiaCod}" styleClass="varDisSelectContainer" disabled="#{sectorView.editando}"
+                                                     class="DispBlock Wid100" style="width: 160px; margin-right: 50px;" required="true">
+                                        <f:selectItem itemLabel="-Parroquia-" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems  value="#{sectorView.parroquias}" var="p" itemLabel="#{p.label}" itemValue="#{p.value}"/>
+                                        <p:ajax listener="#{sectorView.listaZonasPorParroquia(sectorView.parroquiaCod)}" update="zona-select" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="zona-select" value="Zona:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="zona-select" value="#{sectorView.zonaCod}" styleClass="varDisSelectContainer" disabled="#{sectorView.editando}"
+                                                     class="DispBlock Wid100" style="width: 160px; margin-right: 50px;" required="true">
+                                        <f:selectItem itemLabel="-Zona-" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems  value="#{sectorView.zonas}" var="z" itemLabel="#{z.label}" itemValue="#{z.value}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="cod_sector" value="Códido sector:" class="DispBlock Wid100"/>
+                                    <p:inputText id="cod_sector" value="#{sectorView.sectorCod}" disabled="#{sectorView.editando}" maxlength="2"
+                                                 class="input_125" required="true" onkeypress="validateIntegerValueAndFocusNextComponent(event, 'descripcion')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="nombre" value="Nombre:" class="DispBlock Wid100"/>
+                                    <p:inputText id="nombre" value="#{sectorView.sectorSeleccionado.nombre}"
+                                                 class="input_125" onkeypress="focusNextOnEnter(event, 'cem')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="cem" value="CEM:" class="DispBlock Wid100"/>
+                                    <p:inputText id="cem" value="#{sectorView.sectorSeleccionado.cem}" required="true"
+                                                 class="input_125" onkeypress="validateFloatValueAndFocusNext(event, 'crear-usuario-btn')"/>
+                                </h:panelGroup>
+
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+                        <h:panelGroup layout="block" class="MarTop20">
+                            <p:commandButton id="crear-usuario-btn"
+                                             rendered="#{sectorView.creando}"
+                                             icon="fa fa-save" styleClass="white Fright" value="Guardar"
+                                             actionListener="#{sectorView.crear()}"
+                                             process="@this,datos-messages,parroquia-select,zona-select,cod_sector,cem"
+                                             update="listado-form,datos-messages,form-form,table-list,messages"/>
+                            <p:commandButton id="actualizar-usuario-btn"
+                                             rendered="#{sectorView.editando}"
+                                             icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                             actionListener="#{sectorView.editar()}"
+                                             process="@this,datos-messages,parroquia-select,zona-select,cod_sector,cem"
+                                             update="listado-form,datos-messages,form-form,table-list,messages"
+                                             oncomplete="PF('listadoTable').clearFilters()"/>
+                            <p:commandButton id="cancelar-usuario-btn"
+                                             process="@this"
+                                             icon="fa fa-save" styleClass="white" value="Cancelar" actionListener="#{sectorView.inicializarNuevo()}"
+                                             onclick="PF('addDialog').hide();"
+                                             />
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

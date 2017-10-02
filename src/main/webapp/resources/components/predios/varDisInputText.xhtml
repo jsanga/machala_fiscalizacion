@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:pass="http://xmlns.jcp.org/jsf/passthrough">
+
+
+    <cc:interface name="varDisInputText">       
+        <cc:attribute name="table" required="true"/>
+        <cc:attribute name="column" required="true"/>
+        <cc:attribute name="label" required="true"/>
+        <cc:attribute name="showlabel" required="false" default="true"/> 
+        <cc:attribute name="disabled" required="false" default="false"/> 
+        <cc:attribute name="required" required="false" default="true"/>
+        <cc:attribute name="update" required="false" default="@this"/>
+        <cc:attribute name="accionListenerUpdate" required="false" method-signature="void metodo()" default="#{variableAdmin.updateComponente()}"/>
+        <cc:attribute name="defaultValue" required="true"/>
+        <cc:attribute name="labelPosition" required="false" default="top"/>         
+        <cc:attribute name="changeOnEnter" required="false" default="true"/>
+        <cc:attribute name="next" required="false" default="true"/> 
+        <cc:attribute name="bind" required="true"/>
+    </cc:interface>
+    <cc:implementation>
+        <h:panelGroup layout="block" styleClass="varDisContainer" id="#{cc.attrs.table}-#{cc.attrs.column}-container" style="width: 160px !important;">            
+            <c:choose>
+                <c:when test="#{not empty cc.attrs.labelPosition and cc.attrs.labelPosition=='top'}">
+
+
+                    <table>
+                        <tr>
+                            <td colspan="2">
+                                <c:if test="#{not empty cc.attrs.showlabel and cc.attrs.showlabel=='true'}">
+                                    <p:outputLabel for="#{cc.attrs.table}-#{cc.attrs.column}-input" value="#{cc.attrs.label}" class="DispBlock Wid100"/>
+                                </c:if>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <p:inputText id="#{cc.attrs.table}-#{cc.attrs.column}-input" required="#{cc.attrs.required}" value="#{cc.attrs.bind}"
+                                             disabled="#{cc.attrs.disabled}"
+                                             style="width: 15px; display: block; margin-top: -5px;"
+                                             pass:data-field="#{cc.attrs.table}-#{cc.attrs.column}"
+                                             pass:data-default-value="#{cc.attrs.defaultValue}"
+                                             pass:data-all-values="#{variableAdmin.codigosVariable(cc.attrs.table,cc.attrs.column, variableAdmin.anioActual)}"
+                                             pass:data-min-value="#{variableAdmin.getMinValue(cc.attrs.table,cc.attrs.column)}"
+                                             pass:data-max-value="#{variableAdmin.getMaxValue(cc.attrs.table,cc.attrs.column)}"
+                                             title="#{variableAdmin.codigosVariable(cc.attrs.table,cc.attrs.column, variableAdmin.anioActual)}"
+                                             >                                    
+                                    <p:ajax event="change" listener="#{cc.attrs.accionListenerUpdate}" update="#{cc.attrs.update}"/>
+                                    <c:choose>                                        
+                                        <c:when test="#{not empty cc.attrs.changeOnEnter and cc.attrs.changeOnEnter=='true'}">
+                                            <c:choose>
+                                                <c:when test="#{not empty cc.attrs.next}">
+                                                    <f:attribute name="onkeypress" value="validateIntegerValueAndFocusNext(event,'#{cc.attrs.next}')" />
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <f:attribute name="onkeypress" value="validateIntegerValueAndFocusNext(event)" />
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <f:attribute name="onkeypress" value="validateIntegerKeyPress(event)" />
+                                        </c:otherwise>                                        
+                                    </c:choose>
+
+                                </p:inputText>
+                            </td>
+                            <td>
+                                <p:selectOneMenu id="#{cc.attrs.table}-#{cc.attrs.column}-select" value="#{cc.attrs.bind}" disabled="#{cc.attrs.disabled}"
+                                                 pass:data-field="#{cc.attrs.table}-#{cc.attrs.column}" styleClass="varDisSelectContainer"
+                                                 style="display: block; width: 100px; margin-top: -5px;" filter="true" filterMatchMode="contains">
+                                    <f:selectItems value="#{variableAdmin.valoresVariables(cc.attrs.table,cc.attrs.column, variableAdmin.anioActual)}" />
+
+                                    <c:if test="#{cc.attrs.update != '@this'}">
+                                        <p:ajax listener="#{cc.attrs.accionListenerUpdate}" update="#{cc.attrs.update}" />
+                                    </c:if>
+                                    <c:if test="#{cc.attrs.update == '@this'}">
+                                        <p:ajax listener="#{cc.attrs.accionListenerUpdate}" />
+                                    </c:if>                                    
+                                </p:selectOneMenu>
+                            </td>
+                        </tr>
+                    </table>
+                </c:when>
+                <c:otherwise>
+
+                </c:otherwise>
+            </c:choose>
+        </h:panelGroup>
+    </cc:implementation>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+    <ui:composition> 
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            
+            <h3 style="margin-top:0">Basic</h3>
+                    <p:tabView>
+                        <p:tab title="Godfather Part I">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:graphicImage name="images/escudo.png" />
+                                <h:outputText
+                                    value="The story begins as Don Vito Corleone..." />
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Godfather Part II">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:graphicImage name="images/escudo.png" />
+                                <h:outputText value="Francis Ford Coppola's legendary..." />
+                            </h:panelGrid>
+                        </p:tab>
+                        <p:tab title="Godfather Part III">
+                            <h:panelGrid columns="2" cellpadding="10">
+                                <p:graphicImage name="images/escudo.png" />
+                                <h:outputText value="After a break of more than 15 years..." />
+                            </h:panelGrid>
+                        </p:tab>
+                    </p:tabView>                                
+        </h:panelGroup>
+
+    </ui:composition>
+</html>

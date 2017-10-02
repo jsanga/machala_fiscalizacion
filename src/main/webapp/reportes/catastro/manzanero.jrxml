@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="plano" language="groovy" pageWidth="595" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="add2803e-5076-410d-ba49-925d5d5fb439">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="155"/>
+	<parameter name="code" class="java.lang.String"/>
+	<parameter name="manzanero" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Ing. Carlos Loor\\Documents\\NetBeansProjects\\machala\\src\\main\\webapp\\reportes\\catastro\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="url" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+ST_XMin(ST_Expand(ST_Envelope(gp1.geom),50)) AS xmin, ST_XMin(ST_Expand(ST_Envelope(gp1.geom),0)) AS xminb,
+ST_YMin(ST_Expand(ST_Envelope(gp1.geom),50)) AS ymin, ST_YMin(ST_Expand(ST_Envelope(gp1.geom),0)) AS yminb,
+ST_XMax(ST_Expand(ST_Envelope(gp1.geom),50)) AS xmax, ST_XMax(ST_Expand(ST_Envelope(gp1.geom),0)) AS xmaxb,
+ST_YMax(ST_Expand(ST_Envelope(gp1.geom),50)) AS ymax, ST_YMax(ST_Expand(ST_Envelope(gp1.geom),0)) AS ymaxb
+FROM map.predios_gis gp1 WHERE gp1.clave_catastral = $P{code}]]>
+	</queryString>
+	<field name="xmin" class="java.lang.Double"/>
+	<field name="xminb" class="java.lang.Double"/>
+	<field name="ymin" class="java.lang.Double"/>
+	<field name="yminb" class="java.lang.Double"/>
+	<field name="xmax" class="java.lang.Double"/>
+	<field name="xmaxb" class="java.lang.Double"/>
+	<field name="ymax" class="java.lang.Double"/>
+	<field name="ymaxb" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="3" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="728">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="3" width="588" height="20" backcolor="#CCCCCC" uuid="3e493cd4-d733-4a0a-8027-b568d9207242"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CROQUIS / MANZANERO]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="18" y="43" width="556" height="351" uuid="965f72e8-a3df-4a76-8123-9bd35aa079b0"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<imageExpression><![CDATA[$P{url}+"wms?service=WMS&version=1.1.0&request=GetMap&layers=Machala:manzanero_predio_construcciones&styles=&bbox="+$F{xmin}+","+$F{ymin}+","+$F{xmax}+","+$F{ymax}+"&width=550&height=550&srs=EPSG:32717&format=image/png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="124" y="23" width="147" height="20" uuid="802f8c14-17be-4b9e-898f-57d6062aeece"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Clave catastral :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="271" y="23" width="198" height="20" uuid="8bdacebd-847e-4ef5-8aee-34ba6360cf53"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{code}]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="18" y="414" width="556" height="314" uuid="9a5656ec-ccbb-4984-ad02-59d3cab13cce"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<imageExpression><![CDATA[$P{url}+"wms?service=WMS&version=1.1.0&request=GetMap&layers=Machala:predio_construcciones&styles=&bbox="+$F{xminb}+","+$F{yminb}+","+$F{xmaxb}+","+$F{ymaxb}+"&width=400&height=400&srs=EPSG:32717&format=image/png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="394" width="588" height="20" backcolor="#CCCCCC" uuid="b8c7894a-33a2-4a5e-b8f0-0b668113db24"/>
+				<box>
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[IMPLANTACION]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+        </f:facet>
+        <title>GAD Salinas</title>
+        <h:outputScript name="js/layout.js" library="spark-layout" />
+
+        <h:outputText value="&lt;!--[if gte IE 9]&gt;" escape="false" />
+        <style type="text/css">
+            /* styles for IE 9 */
+        </style>
+        <h:outputText value="&lt;![endif]--&gt;" escape="false" />
+
+        <ui:insert name="head" />
+    </h:head>
+
+    <h:body style="background-image: url('#{resource['images/fondo1.jpg']}') ">
+
+        <div id="layout-portlets-cover">
+           <div class="Fleft TexAlCenter" >
+                 <h:graphicImage name="images/alcaldia-salinas.png" styleClass="MarAuto MarTop20 MarBot10" id="logoLoo" style="width: 150px; height: 56px; margin-top: 20px;"/>
+            </div>
+            <div class="other-pages-box Container25 Fright TexAlCenter ShadowGray MarTop10 Fright"
+                 style="margin-top:13%; background-repeat:no-repeat; background-position:center; background-size:cover; float: right !important;">
+                <div class="Container100  MarAuto TexAlCenter">
+                    <h:form prependId="false" style="margin: 0 auto;">
+
+
+
+                        <h:graphicImage name="images/nuevo-inicio.png" styleClass="MarAuto MarTop20 MarBot10" id="logoL" style="width: 250px; height: 132px; margin-top: 20px;"/>
+           
+                        <div class="EmptyBox20 MarAuto TexAlCenter"></div> 
+                        <p:messages id="messages" autoUpdate="true" closable="true" />
+                        <p:inputText id="username" required="true" placeholder="Usuario"
+                                     styleClass="Container80 Fnone MarAuto Fs18"
+                                     value="#{shiroLoginBean.username}"/>
+                        <div class="EmptyBox10"></div>
+
+                        <p:password id="password" required="true" placeholder="Contraseña" value="#{shiroLoginBean.password}"
+                                    styleClass="Container80 Fnone MarAuto Fs18"/>
+                        <div class="EmptyBox20"></div>
+                        <div class="Container85 Fnone MarAuto softgray">
+                            <div class="EmptyBox5 MarAuto"></div>
+                            <p:selectBooleanCheckbox id="rememberMe" value="#{shiroLoginBean.rememberMe}" itemLabel="Recordarme"/>
+                        </div>
+                        <div class="EmptyBox30"></div>
+
+                        <p:commandButton value="Entrar" styleClass="Fs16 MarAuto" action="#{shiroLoginBean.doLogin}" style="margin-bottom: 20px;"/>
+                        <div class="EmptyBox10"></div>                       
+                    </h:form>
+                </div>
+            </div>
+        </div>
+         
+        <h:outputStylesheet name="css/core-layout.css" library="spark-layout" />
+        <h:outputStylesheet name="css/font-awesome.css" library="spark-layout" />
+        <h:outputStylesheet name="css/animate.css" library="spark-layout" />
+        <h:outputStylesheet name="css/spark-layout-blue.css" library="spark-layout" />
+        <h:outputStylesheet name="css/theme-blue.css" library="spark-layout" />
+    </h:body>
+
+</html>

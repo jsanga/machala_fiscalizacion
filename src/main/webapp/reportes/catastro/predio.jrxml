@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="plano" language="groovy" pageWidth="160" pageHeight="802" whenNoDataType="AllSectionsNoDetail" columnWidth="160" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="add2803e-5076-410d-ba49-925d5d5fb439">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="code" class="java.lang.String"/>
+	<parameter name="manzanero" class="java.lang.String"/>
+	<parameter name="url" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT ST_XMax(ST_Expand(ST_Envelope(gp1.geom),25)) AS xmax, ST_XMin(ST_Expand(ST_Envelope(gp1.geom),25)) AS xmin, ST_YMax(ST_Expand(ST_Envelope(gp1.geom),30)) AS ymax, ST_YMin(ST_Expand(ST_Envelope(gp1.geom),50)) AS ymin
+, b.blo_cod
+FROM map.predios_gis gp1
+	LEFT OUTER JOIN map.bloque1 b on b.clave_catastral = gp1.clave_catastral
+ WHERE gp1.clave_catastral = $P{code}]]>
+	</queryString>
+	<field name="xmax" class="java.lang.Double"/>
+	<field name="xmin" class="java.lang.Double"/>
+	<field name="ymax" class="java.lang.Double"/>
+	<field name="ymin" class="java.lang.Double"/>
+	<field name="blo_cod" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="3" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="137" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle" onErrorType="Blank">
+				<reportElement x="0" y="23" width="160" height="114" uuid="965f72e8-a3df-4a76-8123-9bd35aa079b0"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<imageExpression><![CDATA[$P{url}+"wms?service=WMS&version=1.1.0&request=GetMap&layers=Machala:predio_construcciones&PROPERTYNAME=clave_catastral&CQL_FILTER=clave_catastral='"+$P{code}+"'&styles=&bbox="+$F{xmin}+","+$F{ymin}+","+$F{xmax}+","+$F{ymax}+"&width=512&height=400&srs=EPSG:32717&format=image/png"]]></imageExpression>
+			</image>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="0" y="-1" width="160" height="24" isPrintWhenDetailOverflows="true" uuid="9bdfe138-3d3f-4fad-8e57-47fcd02c9047"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["No. "+$F{blo_cod}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="19" splitType="Stretch"/>
+	</columnFooter>
+	<summary>
+		<band height="11" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition>
+
+        <p:dialog id="addDlg" widgetVar="addDialog"
+                  modal="true" resizable="false"
+                  header="#{fWPRedioRelevadoView.opcion eq 0?'Crear Nuevo':'Modificar '} Predio de Relevamiento" style="width: 600px;" appendTo="@(body)">
+            <h:form id="form-form" prependId="false">
+                <p:tabView id="tab-view-predio">
+                    <p:tab id="tab-1" title="Información de Predio">
+                        <h:panelGrid columns="4" styleClass="Wid100">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Parroquia"/>
+                                <p:inputText value="#{fWPRedioRelevadoView.entidadSeleccionada.manzana.manzanaPK.codParroquia}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Zona"/>
+                                <p:inputText value="#{fWPRedioRelevadoView.entidadSeleccionada.manzana.manzanaPK.codZona}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Sector"/>
+                                <p:inputText value="#{fWPRedioRelevadoView.entidadSeleccionada.manzana.manzanaPK.codSector}" styleClass="Wid40" required="true" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Manzana"/>
+                                <p:inputText value="#{fWPRedioRelevadoView.entidadSeleccionada.manzana.manzanaPK.codManzana}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Predio"/>
+                                <p:inputText value="#{fWPRedioRelevadoView.entidadSeleccionada.codSolar}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Bloque"/>
+                                <p:inputText value="#{fWPRedioRelevadoView.entidadSeleccionada.codBloque}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="C. Piso"/>
+                                <p:inputText value="#{fWPRedioRelevadoView.entidadSeleccionada.codPhh}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="C. Unidad"/>
+                                <p:inputText value="#{fWPRedioRelevadoView.entidadSeleccionada.codPhv}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" styleClass="Wid100">
+                                <p:outputLabel value="Número de Ficha"/>
+                                <p:inputText value="#{fWPRedioRelevadoView.entidadSeleccionada.numeroFicha}"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" styleClass="Wid100">
+                                <p:outputLabel value="Clave Anterior"/>
+                                <p:inputText value="#{fWPRedioRelevadoView.entidadSeleccionada.claveAnterior}"/>
+                            </h:panelGrid>
+                            
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="supervision" value="Supervisor t&eacute;cnico:"  class="DispBlock Wid100"/>
+                                <p:selectOneMenu id="supervision" value="#{fWPRedioRelevadoView.integranteTecnico}"
+                                                 class="select_180" converter="integranteConverter" filter="true" filterMatchMode="contains">
+                                    <f:selectItem itemLabel="SIN DATO" itemValue="#{null}" noSelectionOption="true" />
+                                    <f:selectItems  value="#{fWPRedioRelevadoView.integrante.integranteList}" var="supervisor" itemLabel="#{supervisor.apellidos} #{supervisor.nombre}" itemValue="#{supervisor}"/>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+                            <!--
+                            <var:varDisInputText id="flujo_estado" label="Estado:"
+                                                 table="wf_estado" column="estado"
+                                                 bind="{fWPRedioRelevadoView.estado.estado}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                 changeOnEnter="true"
+                                                 next="observacion"
+                                                 labelPosition="top"/>
+                            -->
+                        </h:panelGrid>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="observacion" value="Observación del Predio"  class="DispBlock Wid100"/>
+                            <p:inputTextarea id="observacion" value="#{fWPRedioRelevadoView.estado.estado}" cols="100">
+
+                            </p:inputTextarea>
+                        </h:panelGroup>
+                    </p:tab>
+                    <p:tab id="tab-3" title="Fotos de Predio">
+                        <h:panelGroup layout="block" styleClass="DispBlock Wid100">
+                            <h:panelGrid columns="2">
+                                <p:fileUpload fileUploadListener="#{fWPRedioRelevadoView.cargarImagenes}" mode="advanced" dragDropSupport="true"
+                                              update="messages" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                              style="height: 200px;width: 600px"/>
+                                <p:panel>
+
+                                </p:panel>
+                            </h:panelGrid>
+                            <div class="Separator"></div>
+                            <h:panelGrid id="panel-botones" columns="2">
+                                <p:commandButton id="crear-usuario-btn"
+                                                 icon="fa fa-save" styleClass="white Fright" value="#{fWPRedioRelevadoView.opcion eq '0'?'Crear Nuevo':'Modificar'}"
+                                                 actionListener="#{fWPRedioRelevadoView.guardar}"
+                                                 update=":listado-form,:form-form,table-list,messages"/>
+
+                                <p:commandButton id="cancelar-usuario-btn"
+                                                 icon="fa fa-cancel" styleClass="white" value="Cancelar" actionListener="#{fWPRedioRelevadoView.cancelar()}"
+                                                 onclick="PF('addDialog').hide();"
+                                                 />
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </p:tab>
+                </p:tabView>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

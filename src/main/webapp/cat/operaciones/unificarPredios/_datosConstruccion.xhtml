@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+    <ui:composition>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <h:panelGroup layout="block" class="Container60">
+                <div class="ContainerIndent MarRight10">
+                    <p:dataTable var="predio" value="#{unificarPredioView.prediosSeleccionados}">
+                        <f:facet name="header">
+                            Datos de los predios a unificar
+                        </f:facet>
+
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column headerText="Predios" />
+                                <p:column headerText="&Aacute;rea total" />
+                                <p:column headerText="Cantidad de pisos" />
+                            </p:row>
+                        </p:columnGroup>
+
+                        <p:subTable var="bloque" value="#{predio.bloques}">
+                            <f:facet name="header">
+                                <h:outputText value="Clave catastral: #{predio.claveCatastral}" />
+                            </f:facet>
+                            <p:column>
+                                <h:outputText value="Bloque: #{bloque.numeroBloque}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{bloque.areaTotal}" />
+                            </p:column>
+                            <p:column>
+                                <h:outputText value="#{bloque.pisos.size()}" />
+                            </p:column>
+                            <p:columnGroup type="footer">
+                                <p:row>
+                                    <p:column footerText="Total: " style="text-align:right"/>
+                                    <p:column footerText="#{predio.areaTotalEdificacion()} m&sup2;" />
+                                    <p:column footerText="#{predio.totalPisos()}" />
+                                </p:row>
+                            </p:columnGroup>
+                        </p:subTable>
+                    </p:dataTable>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container40">
+                <div class="ContainerIndent">
+                    <p:panelGrid  columns="2">
+                        <f:facet name="header">
+                            <h:outputText value="Predio #{unificarPredioView.predio.claveCatastral}" />
+                        </f:facet>
+
+                        <h:outputText value="&Aacute;rea inicial Terreno:" />
+                        <h:outputText value="#{unificarPredioView.predio.terreno.areaLevantamiento} m&sup2;" />
+
+                        <h:outputText value="&Aacute;rea nueva Terreno a incorporar:" />
+                        <h:outputText value="#{unificarPredioView.areatotalTerreno(false)} m&sup2;" />
+
+                        <h:outputText value="&Aacute;rea total Terreno:" />
+                        <h:outputText value="#{unificarPredioView.areatotalTerreno(true)} m&sup2;" />
+
+                        <h:outputText value="&Aacute;rea inicial Cosntrucci&oacute;n:" />
+                        <h:outputText value="#{unificarPredioView.predio.areaTotalEdificacion()} m&sup2;" />
+
+                        <h:outputText value="&Aacute;rea nueva Cosntrucci&oacute;n:" />
+                        <h:outputText value="#{unificarPredioView.areatotalBloques(false)}" />
+
+                        <h:outputText value="&Aacute;rea total Cosntrucci&oacute;n" />
+                        <h:outputText value="#{unificarPredioView.areatotalBloques(true)} m&sup2;" />
+
+
+
+                    </p:panelGrid>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+</html>

@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="predioOtrosTiposConst" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="cc729495-c0b6-4960-b3f6-3d49b51577a8">
+	<property name="ireport.zoom" value="2.1435888100000016"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idPredio" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT T.NUMERO, ROUND(T.AREA,2) AS AREA, T.NUMERO_VARIABLE, V.NOMBRE AS TIPO,
+	FLOW.GET_VALOR_VARIABLE_PARAM(T.NUMERO_VARIABLE, T.TIPO_CONSTRUCCION) AS OBRA,
+	T.TIPO_CONSTRUCCION,
+	FLOW.GET_VALOR_VARIABLE('cat_bloque', 'estructura', T.ESTRUCTURA) AS ESTRUCTURA,
+	FLOW.GET_VALOR_VARIABLE('cat_bloque', 'cubierta', T.CUBIERTA) AS CUBIERTA
+FROM CAT_OTROS_TIPOS_CONSTRUCCION T
+	INNER JOIN VARIABLE V ON V.ID = T.NUMERO_VARIABLE
+WHERE T.ID_PREDIO = $P{idPredio}
+ORDER BY 4 ASC;]]>
+	</queryString>
+	<field name="numero" class="java.lang.Integer"/>
+	<field name="area" class="java.math.BigDecimal"/>
+	<field name="numero_variable" class="java.lang.Integer"/>
+	<field name="tipo" class="java.lang.String"/>
+	<field name="obra" class="java.lang.String"/>
+	<field name="tipo_construccion" class="java.lang.Integer"/>
+	<field name="estructura" class="java.lang.String"/>
+	<field name="cubierta" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="554" height="16" forecolor="#FFFFFF" backcolor="#000000" uuid="c1795290-b800-449a-a806-a926c4bbbdc2"/>
+				<box leftPadding="10">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[12.- OTROS TIPOS DE CONSTRUCCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="16" width="129" height="15" backcolor="#CCCCCC" uuid="782ea069-4ee6-4a2e-b672-06ac0089b5a9"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="129" y="16" width="133" height="15" backcolor="#CCCCCC" uuid="0088b25f-770c-4d2c-9127-c3273b0cf8a5"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBRA / DESCRIPCIÓN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="262" y="16" width="86" height="15" backcolor="#CCCCCC" uuid="1403df63-9854-4397-92f9-6694c7e08f57"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD / AREA / m²]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="348" y="16" width="106" height="15" backcolor="#CCCCCC" uuid="cd83a187-ff7e-4795-bee0-6ad247c2fa60"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTRUCTURA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="454" y="16" width="100" height="15" backcolor="#CCCCCC" uuid="4c6e71e8-1927-48c1-a4df-c06047cfe800"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CUBIERTA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="0" width="129" height="23" uuid="fdfdb5b7-1839-4b96-a241-a24f5b4d00b9"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="129" y="0" width="133" height="23" uuid="543d791a-4a74-44ed-a497-b092572e9e30"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{obra}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="262" y="0" width="86" height="23" uuid="5e0cc133-b2de-49cc-94bf-e2b1526982d2"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="348" y="0" width="106" height="23" uuid="38dbcbf4-1d1d-4e98-93ab-c15900e8d1df"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{estructura} == null ? "" : $F{estructura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="454" y="0" width="100" height="23" uuid="dd5cec07-11d3-49fe-a560-b8e052806806"/>
+				<box>
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cubierta} == null ? "" : $F{cubierta}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

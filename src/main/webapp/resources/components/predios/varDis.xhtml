@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:pass="http://xmlns.jcp.org/jsf/passthrough">
+      
+
+    <cc:interface name="varDis">       
+        <cc:attribute name="table" required="true"/>
+        <cc:attribute name="column" required="true"/>
+        <cc:attribute name="label" required="true"/> 
+        <cc:attribute name="showlabel" required="false" default="true"/>
+        
+        <cc:attribute name="bind" required="true"/>
+    </cc:interface>
+    <cc:implementation>
+        <h:panelGroup layout="block" class="varDisContainer" id="#{cc.attrs.table}-#{cc.attrs.column}-container">           
+            <p:outputLabel for="#{cc.attrs.table}-#{cc.attrs.column}-input" rendered="#{cc.attrs.showlabel}" value="#{cc.attrs.label}" class="DispBlock Wid100 MarBot10"/>
+            <p:inputText id="#{cc.attrs.table}-#{cc.attrs.column}-input" value="#{cc.attrs.bind}" 
+                         style="width: 15px; display: inline-table; margin-right: 5px;"
+                         pass:data-field="#{cc.attrs.table}-#{cc.attrs.column}" />
+            <p:selectOneMenu id="#{cc.attrs.table}-#{cc.attrs.column}-select" value="#{cc.attrs.bind}" 
+                             pass:data-field="#{cc.attrs.table}-#{cc.attrs.column}" styleClass="varDisSelectContainer"
+                             style="display: inline-table;" class="select_100">
+                <f:selectItems value="#{variableAdmin.valoresVariables(cc.attrs.table,cc.attrs.column)}" />
+            </p:selectOneMenu>
+        </h:panelGroup>
+    </cc:implementation>
+</html>

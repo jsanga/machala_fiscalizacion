@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+   <ui:composition>
+        <p:dialog id="tramite-dlg" widgetVar="tramiteDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Datos del Tramite">
+            <p:ajax event="close" update="tramite-list-form" listener="#{tramiteView.cancelarCreacionTramite()}" />
+            <h:panelGroup layout="block" rendered="#{tramiteView.creandoTramite or tramiteView.editandoTramite}">
+                <h:form id="tramite-form" prependId="false">
+                      <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="2">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="observacion_Tramite" value="Observacion:"  class="DispBlock Wid100"/>
+                                    <p:inputText id="observacion_Tramite" required="true" value="#{tramiteView.tramiteSelect.observacion}"
+                                                 onkeypress="focusNextOnEnter(event, 'crear-actividad-btn')"/>
+                                </h:panelGroup>
+                            </h:panelGrid>
+                             <h:panelGroup layout="block">
+                                <p:commandButton id="crear-actividad-btn" 
+                                                 rendered="#{tramiteView.editandoTramite}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Guardar"                                         
+                                                 actionListener="#{tramiteView.crearTramite()}"
+                                                 update="tramite-list-form,tramite-form"/>
+                                <p:commandButton id="cancelar-actividad-btn" 
+                                                 icon="fa fa-times" styleClass="white" value="Cancelar" actionListener="#{tramiteView.inicializarTramite()}"                                        
+                                                 onclick="PF('tramiteDialog').hide();" update="tramite-list-form"
+                                                 />
+                             </h:panelGroup> 
+                        </h:panelGrid>
+                      </h:panelGroup>    
+                </h:form>  
+                </h:panelGroup>    
+        </p:dialog>
+   </ui:composition>   
+</html>

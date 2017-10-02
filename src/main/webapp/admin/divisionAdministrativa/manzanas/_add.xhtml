@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:dialog id="addDlg" widgetVar="addDialog"
+                  modal="true" resizable="false"
+                  header="Datos de la manzana" style="width: 600px;" appendTo="@(body)">
+            <p:ajax event="close" update="listado-form,addDlg" listener="#{manzanaView.cancelarCreacion()}" />
+            <h:panelGroup layout="block" class="Container Container100">
+                <h:form id="form-form" prependId="false">
+                    <p:messages id="datos-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                    <f:event listener="#{manzanaView.validarFormulario}" type="postValidate"/>
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1" class="Wid100">
+                            <h:panelGrid columns="3">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="parroquia-select" value="Parroquia:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="parroquia-select" value="#{manzanaView.parroquiaCod}" styleClass="varDisSelectContainer" disabled="#{manzanaView.editandoManzana}"
+                                                     class="DispBlock Wid100" style="width: 160px; margin-right: 50px;" required="true">
+                                        <f:selectItem itemLabel="-Parroquia-" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems  value="#{manzanaView.parroquias}" var="p" itemLabel="#{p.label}" itemValue="#{p.value}"/>
+                                        <p:ajax listener="#{manzanaView.listaZonasPorParroquia(manzanaView.parroquiaCod)}" update="zona-select,sector-select" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="zona-select" value="Zona:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="zona-select" value="#{manzanaView.zonaCod}" styleClass="varDisSelectContainer" disabled="#{manzanaView.editandoManzana}"
+                                                     class="DispBlock Wid100" style="width: 160px; margin-right: 50px;" required="true">
+                                        <f:selectItem itemLabel="-Zona-" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems  value="#{manzanaView.zonas}" var="z" itemLabel="#{z.label}" itemValue="#{z.value}"/>
+                                        <p:ajax listener="#{manzanaView.listaSectoresPorZona(manzanaView.zonaCod)}" update="sector-select" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="sector-select" value="Sector:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="sector-select" value="#{manzanaView.sectorCod}" styleClass="varDisSelectContainer" disabled="#{manzanaView.editandoManzana}"
+                                                     class="DispBlock Wid100" style="width: 160px; margin-right: 50px;" required="true">
+                                        <f:selectItem itemLabel="-Sector-" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems  value="#{manzanaView.sectores}" var="s" itemLabel="#{s.label}" itemValue="#{s.value}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="cod_manzana" value="Códido manzana:" class="DispBlock Wid100"/>
+                                    <p:inputText id="cod_manzana" value="#{manzanaView.manzanaCod}" disabled="#{manzanaView.editandoManzana}" maxlength="3"
+                                                 class="input_125" required="true" onkeypress="validateIntegerValueAndFocusNextComponent(event, 'area')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="area" value="Área:" class="DispBlock Wid100"/>
+                                    <p:inputText id="area" value="#{manzanaView.manzanaSeleccionada.area}"
+                                                 class="input_125" onkeypress="validateFloatValueAndFocusNext(event, 'observacion')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="zona-homo-select" value="Zona homog&eacute;nea:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="zona-homo-select" value="#{manzanaView.manzanaSeleccionada.zonaHomogenea}"
+                                                     class="select_180" converter="zonaHomoConverter" filter="true" filterMatchMode="contains" required="true">
+                                        <f:selectItem itemLabel="Seleccione" itemValue="#{null}" noSelectionOption="true"/>
+                                        <f:selectItems  value="#{manzanaView.zonasHomogeneas}" var="zonaHomo" itemLabel="#{zonaHomo.codigoZona} #{zonaHomo.nombreZona}" itemValue="#{zonaHomo}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                            <h:panelGroup layout="block" class="Container Wid100">
+                                <h:panelGroup layout="block" class="Responsive Container100">
+                                    <div class="ContainerIndent">
+                                        <h1 class="BigTopic Fs15">Plano Manzanero</h1>
+                                        <p:fileUpload fileUploadListener="#{manzanaView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                                      multiple="true" fileLimit="1" allowTypes="/(\.|\/)(gif|jpe?g|png|tif)$/"
+                                                      cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="image-preview"/>
+                                        <h:panelGroup layout="block" id="image-preview">
+                                            <table>
+                                                <tbody>
+                                                    <c:forEach var="foto" items="#{manzanaView.datosFotos}" varStatus="loop">
+                                                        <c:if test="#{not empty manzanaView.datosFotos[loop.index]}">
+                                                            <tr>
+                                                                <td>
+                                                                    <h:graphicImage  width="95" height="95" url="#{manzanaView.datosFotos[loop.index].data}"/>
+                                                                </td>
+                                                                <td>
+                                                                    <p:inputTextarea style="height: 90%" maxlength="255" value="#{manzanaView.datosFotos[loop.index].description}"/>
+                                                                </td>
+                                                                <td class="column-photo-actions">
+
+                                                                    <p:commandButton icon="fa fa-times white" actionListener="#{manzanaView.eliminarFoto(loop.index)}" update="image-preview" process="@this"/>
+
+                                                                </td>
+                                                            </tr>
+                                                        </c:if>
+
+                                                    </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </h:panelGroup>
+                                    </div>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                        <h:panelGroup layout="block">
+                            <p:commandButton id="crear-usuario-btn"
+                                             rendered="#{manzanaView.creandoManzana}"
+                                             icon="fa fa-save" styleClass="white Fright" value="Guardar"
+                                             actionListener="#{manzanaView.crear()}"
+                                             process="@this,datos-messages,parroquia-select,zona-select,sector-select,zona-homo-select,area,cod_manzana"
+                                             update=":listado-form:table-list,datos-messages,form-form,messages"/>
+                            <p:commandButton id="actualizar-usuario-btn"
+                                             rendered="#{manzanaView.editandoManzana}"
+                                             icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                             actionListener="#{manzanaView.editar()}"
+                                             process="@this,datos-messages,parroquia-select,zona-select,sector-select,zona-homo-select,area,cod_manzana"
+                                             update=":listado-form:table-list,datos-messages,form-form,table-list,messages"
+                                             oncomplete="PF('listadoTable').clearFilters()"/>
+                            <p:commandButton id="cancelar-usuario-btn"
+                                             process="@this"
+                                             icon="fa fa-save" styleClass="white" value="Cancelar" actionListener="#{manzanaView.inicializarNuevo()}"
+                                             onclick="PF('addDialog').hide();"
+                                             />
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Responsive50 Container100">                                       
+                <p:fieldset legend="Caraster&iacute;sticas de la edificaci&oacute;n" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="DatosEstructuraTbl">
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="bloq_nro_bloque" value="Nro del bloque:" class="DispBlock Wid100" />
+                            <p:inputText id="bloq_nro_bloque" value="#{regPredioRuralView.bloqueSeleccionado.numeroBloque}"
+                                         class="input_180" disabled="true">
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="bloq_nro_niveles" value="Nro de niveles:" class="DispBlock Wid100" />
+                            <p:inputText id="bloq_nro_niveles" value="#{regPredioRuralView.bloqueSeleccionado.numeroNiveles}"
+                                         class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'uso_construccion:cat_terreno-uso_construccion_rural-input')">
+                                <p:ajax event="keyup" update="bloque-form" />
+                            </p:inputText>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block" style="width: 160px !important;">
+                            <p:outputLabel for="bloq_area_permiso" value="&Aacute;rea total:" class="DispBlock Wid100" />
+                            <p:inputText id="bloq_area_permiso" value="#{regPredioRuralView.bloqueSeleccionado.areaTotal}" disabled="true"
+                                         class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'bloq_etapa_construccion:cat_bloque-etapa_construccion-input')"/>
+                        </h:panelGroup>
+                        <var:varDisInputText id="uso_construccion" label="Uso de la construcción:"
+                                             table="cat_bloque" column="uso_construccion_rural"
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.usoConstruccionRural}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="bloq_etapa_construccion:cat_predio_rural-etapa_construccion-input"
+                                             labelPosition="top"/>
+                        <!-- 
+                        <var:varDisInputText id="uso_construccion_rural" label="Uso de la construcción:"
+                                             table="cat_terreno" column="uso_construccion_rural"
+                                             bind="#{regPredioRuralView.terreno.usoConstruccionRural}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="terreno_norte_ref"
+                                             labelPosition="top"/>
+                        -->
+                        <var:varDisInputText id="bloq_etapa_construccion" label="Etapa de la construcci&oacute;n:" 
+                                             table="cat_predio_rural" column="etapa_construccion" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.etapaConstruccion}"
+                                             showlabel="true"   
+                                             defaultValue="3"
+                                             changeOnEnter="true"
+                                             next="bloq_estado_conservacion:cat_bloque-estado_conservacion-input"
+                                             labelPosition="top"/>
+                        
+                        <var:varDisInputText id="bloq_estado_conservacion" label="Estado de conservaci&oacute;n:" 
+                                             table="cat_bloque" column="estado_conservacion" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.estadoConservacion}"
+                                             showlabel="true"   
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="bloq_edad:cat_predio_rural-edad_edificacion-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_edad" label="Edad de la construcci&oacute;n:" 
+                                             table="cat_predio_rural" column="edad_edificacion" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.edadEdificacion}"
+                                             showlabel="true"   
+                                             defaultValue="3"
+                                             changeOnEnter="true"
+                                             next="bloq_columna:cat_bloque-columna-input"
+                                             labelPosition="top"/>                      
+                        
+                    </h:panelGrid>
+
+                </p:fieldset>                                      
+            </div>                                   
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Responsive50 Container100">     
+                <p:fieldset legend="Estructura" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="DatosEstructuraTbl">
+                        <var:varDisInputText id="bloq_columna" label="Columna:" 
+                                             table="cat_bloque" column="columna" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.columna}"
+                                             showlabel="true"   
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="bloq_vigas:cat_bloque-vigas-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_vigas" label="Vigas:" 
+                                             table="cat_bloque" column="vigas" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.vigas}"
+                                             showlabel="true"   
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="bloq_entrepiso:cat_bloque-entrepiso-input"
+                                             labelPosition="top"/>
+                    </h:panelGrid>
+                </p:fieldset>
+                
+                <p:fieldset>
+                    <var:varDisInputText id="bloq_entrepiso" label="Entrepiso:" 
+                                             table="cat_bloque" column="entrepiso" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.entrepiso}"
+                                             showlabel="true"   
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="bloq_paredes:cat_bloque-paredes_r-input"
+                                             labelPosition="top"/>
+                    <var:varDisInputText id="bloq_paredes" label="Paredes:" 
+                                             table="cat_bloque" column="paredes_r" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.paredes}"
+                                             showlabel="true"   
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="bloq_cubierta:cat_bloque-cubierta_r-input"
+                                             labelPosition="top"/>
+                    <var:varDisInputText id="bloq_cubierta" label="Cubierta:" 
+                                             table="cat_bloque" column="cubierta_r" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.cubierta}"
+                                             showlabel="true"   
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             next="bloq_tumbado:cat_bloque-tumbado_r-input"
+                                             labelPosition="top"/>
+                </p:fieldset>
+                
+                <p:fieldset legend="Acabados" toggleable="true" toggleSpeed="500" >
+                    <h:panelGrid columns="4" class="DatosEstructuraTbl">
+                        <!-- 
+                        <var:varDisInputText id="bloq_revestimiento_cubierta" label="Revestimiento Cubierta:" 
+                                             table="cat_bloque" column="revestimiento_cubierta" 
+                                             bind="# {regPredioRuralView.bloqueSeleccionado.revestimientoCubierta}"
+                                             showlabel="true"   
+                                             defaultValue="5"
+                                             changeOnEnter="true"
+                                             next="bloq_tumbado:cat_bloque-tumbado_r-input"
+                                             labelPosition="top"/>-->
+                        <var:varDisInputText id="bloq_tumbado" label="Tumbado:" 
+                                             table="cat_bloque" column="tumbado_r" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.tumbado}"
+                                             showlabel="true"   
+                                             defaultValue="5"
+                                             changeOnEnter="true"
+                                             next="bloq_piso:cat_bloque-pisos_r-input"
+                                             labelPosition="top"/>
+                        <!-- 
+                        <var:varDisInputText id="bloq_revestimiemto_pared" label="Revestimiento pared:" 
+                                             table="cat_bloque" column="revestimiento_pared" 
+                                             bind="# {regPredioRuralView.bloqueSeleccionado.revestimientoPared}"
+                                             showlabel="true"   
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="bloq_piso:cat_bloque-pisos_r-input"
+                                             labelPosition="top"/>-->
+                        
+                        <var:varDisInputText id="bloq_piso" label="Piso:" 
+                                             table="cat_bloque" column="pisos_r" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.piso}"
+                                             showlabel="true"   
+                                             defaultValue="7"
+                                             changeOnEnter="true"
+                                             next="bloq_ventana:cat_bloque-ventana_r-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_ventana" label="Ventana:" 
+                                             table="cat_bloque" column="ventana_r" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.ventana}"
+                                             showlabel="true"   
+                                             defaultValue="6"
+                                             changeOnEnter="true"
+                                             next="bloq_puerta:cat_bloque-puerta_r-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_puerta" label="Puerta:" 
+                                             table="cat_bloque" column="puerta_r" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.puerta}"
+                                             showlabel="true"   
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             next="bloq_vidrios:cat_bloque-vidrio_r-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="bloq_vidrios" label="Vidrios:" 
+                                             table="cat_bloque" column="vidrio_r" 
+                                             bind="#{regPredioRuralView.bloqueSeleccionado.vidrio}"
+                                             showlabel="true"   
+                                             defaultValue="5"
+                                             changeOnEnter="true"
+                                             next="guardar-bloque-btn"
+                                             labelPosition="top"/>
+
+                    </h:panelGrid>
+
+                </p:fieldset>                                      
+            </div>                                   
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100">
+            <p:panelGrid columns="2" style="width: 100%">
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs16">Fotos del bloque Nro #{regPredioRuralView.bloqueSeleccionado.numeroBloque}</h1>
+                        <hr></hr>
+                        <p:fileUpload fileUploadListener="#{regPredioRuralView.handlePhotoBloqueUpload}" mode="advanced" dragDropSupport="false"
+                                      multiple="true" fileLimit="20" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" id="upload_photo"
+                                      cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="image-upload-bloque,image-preview-bloque"/>
+                        <h:panelGroup layout="block" id="image-upload-bloque">
+                            <table>
+                                <tbody>
+                                    <c:forEach var="foto" items="#{regPredioRuralView.fotosBloque}" varStatus="loop">
+                                        <c:if test="#{not empty regPredioRuralView.fotosBloque}">
+                                            <tr>
+                                                <td>
+                                                    <p:outputLabel value="#{loop.index +1}" class="Fs14" style="font-weight: bold;"/>
+                                                </td>
+                                                <td>
+                                                    <h:graphicImage  width="95" height="95" url="#{foto.pathToFile}"/>
+                                                </td>
+                                                <td>
+                                                    <p:inputText maxlength="255" value="#{foto.description}"/>
+                                                </td>
+                                                <td class="column-photo-actions">
+                                                    <p:commandButton icon="fa fa-trash-o white" actionListener="#{regPredioRuralView.eliminarFotoBloque(loop.index)}" update="image-upload-bloque,image-preview-bloque" process="@this">
+                                                        <p:confirm header="Confirmación" message="Está seguro de eliminar la Foto Nro #{loop.index +1}?" icon="ui-icon-alert" />
+                                                    </p:commandButton>
+                                                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                                    </p:confirmDialog>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="Responsive Container50">
+                    <h:panelGroup layout="block" id="image-actual-view-bloque">
+                        <div class="ContainerIndent">
+                            <h1 class="BigTopic Fs16">Eliminar fotos actuales</h1>
+                            <hr/>
+                            <h:panelGrid columns="8" width="100%">
+                                <c:forEach var="actual" items="#{regPredioRuralView.fotosBloquePreview}" varStatus="loop">
+                                    <h:panelGroup layout="block" style="vertical-align: middle; text-align: center;">
+                                        <h:graphicImage  width="90" height="90" url="#{actual.ruta}"/>
+                                        <div style="clear: both"></div>
+                                        <p:selectBooleanCheckbox value="#{actual.eliminado}">
+                                            <p:ajax update="image-preview,image-actual-view" />
+                                        </p:selectBooleanCheckbox>
+                                    </h:panelGroup>.
+                                </c:forEach>
+                            </h:panelGrid>
+
+                        </div>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </p:panelGrid>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarBot10">
+            <h:panelGroup layout="block" class="Responsive Container100">
+                <div class="ContainerIndent">
+                    <h1 class="BigTopic Fs16">Clic para visualizar la imagen</h1>
+                    <hr></hr>
+                    <h:panelGroup layout="block" id="image-preview-bloque">
+                        <p:outputLabel style="margin-left: 30px;" value="No se han registrado fotos al bloque Nro #{regPredioRuralView.bloqueSeleccionado.numeroBloque}" rendered="#{empty regPredioRuralView.fotosBloque}"/>
+                        <p:lightBox styleClass="imagebox" >
+                            <c:forEach var="foto" items="#{regPredioRuralView.fotosBloque}" varStatus="loop">
+                                <c:if test="#{not empty regPredioRuralView.fotosBloque}">
+                                    <h:outputLink value="#{foto.pathToFile}" class="MarRight10 Fleft" >
+                                        <h:graphicImage url="#{foto.pathToFile}" width="150" height="150" title="Fotos del bloque #{regPredioRuralView.bloqueSeleccionado.numeroBloque}"/>
+                                    </h:outputLink>
+                                </c:if>
+                            </c:forEach>
+                        </p:lightBox>
+
+                    </h:panelGroup>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20" style="margin-bottom: 20px;">
+
+            <p:commandButton id="cancelar-bloque-btn"
+                             class="Fleft MarRight20"
+                             value="Cancelar"  
+                             update="datosConstruccion,bloque-form,piso-list-form,datosConstruccionMessages"
+                             icon="fa fa-ban white" action="#{regPredioRuralView.cancelarCreacionBloque()}"
+                             process="@this"
+                             />
+            <p:commandButton id="guardar-bloque-btn"
+                             class="Fright"
+                             value="Guardar"  
+                             process="@this,bloque-form,piso-list-form"
+                             update="datosConstruccion,piso-list-form,bloque-form,datosConstruccionMessages" 
+                             icon="fa fa-save white" action="#{regPredioRuralView.crearBloque}"
+                             />
+        </h:panelGroup>   
+
+
+        <p:dialog id="datos-piso-dlg" widgetVar="datosPisoDialog" 
+                  modal="true" resizable="false"
+                  header="Datos del piso">   
+            <p:ajax event="close" update="piso-list-form" listener="#{regPredioRuralView.cancelarCreacionPiso}" />
+            <h:form id="datos-piso-form" prependId="false">
+                <p:messages id="datos-piso-messages" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                <h:panelGrid columns="2">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="area_piso" value="&Aacute;rea:" class="DispBlock"/>
+                        <p:inputText id="area_piso" 
+                                     required="true"
+                                     class="Wid70"
+                                     value="#{regPredioRuralView.pisoSeleccionado.area}" 
+                                     onkeypress="validateFloatValueAndFocusNext(event, 'crear-piso-btn')"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="&nbsp;" class="DispBlock"/>
+                        <p:commandButton id="crear-piso-btn" 
+                                         icon="fa fa-save" styleClass="white Fright" value="#{regPredioRuralView.creandoPiso ? 'Guardar' : 'Actualizar'}"
+                                         process="@this,area_piso"
+                                         actionListener="#{regPredioRuralView.guardarPiso}"
+                                         update="datosConstruccion,bloque-form,datosConstruccionMessages"
+                                         oncomplete="PF('datosPisoDialog').hide();"/>
+
+                    </h:panelGroup>
+
+                </h:panelGrid>
+
+            </h:form>
+        </p:dialog>
+        
+        <ui:include src="_formUsoSuelo.xhtml"/>
+    </ui:composition>
+</html>

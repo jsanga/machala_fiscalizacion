@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10">
+            <fieldset>
+                <legend>Datos generales del nuevo predio</legend>
+                <p:panelGrid columns="4">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="C&oacute;digo catastral:" class="show-detail" />
+                        <p:outputLabel  value="#{crearPredioPropioView.codigoCatastral}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Status del sector:" class="show-detail" />
+                        <p:outputLabel value="Municipal"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Sector:" class="show-detail" />
+                    <p:outputLabel  value="#{crearPredioPropioView.predio.sector}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Manzana:" class="show-detail" />
+                    <p:outputLabel  value="#{crearPredioPropioView.predio.manzana}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                         <p:outputLabel value="Solar:" class="show-detail" />
+                    <p:outputLabel  value="#{crearPredioPropioView.predio.solar}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Status del sector:" class="show-detail" />
+                    <p:outputLabel value="#{crearPredioPropioView.predio.solar}"/>
+                    </h:panelGroup>
+                </p:panelGrid>
+            </fieldset>
+        </h:panelGroup>
+    </ui:composition>
+
+</html>

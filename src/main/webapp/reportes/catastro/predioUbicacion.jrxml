@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="predioUbicacion" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="feab985f-ac77-4c15-8766-87d8e3da5487">
+	<property name="ireport.zoom" value="2.593742460100003"/>
+	<property name="ireport.x" value="197"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idPredio" class="java.lang.Long">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT T.ancho_via_publica, T.ancho_acera, T.frente_propiedad, T.LIN_NORTE_REF AS NORTE, T.LIN_NORTE_LONGITUD AS NORTE_CON,
+	T.LIN_SUR_REF AS SUR, T.LIN_SUR_LONGITUD AS SUR_CON,
+	T.LIN_ESTE_REF AS ESTE, T.LIN_ESTE_LONGITUD AS ESTE_CON,
+	T.LIN_OESTE_REF AS OESTE, T.LIN_OESTE_LONGITUD AS OESTE_CON,
+	T.AREA_LEVANTAMIENTO, T.PERIMETRO_LEVANTAMIENTO,
+	T.CORD_X, T.CORD_Y, P.OBSERVACION,
+	(SELECT APELLIDOS||' '||NOMBRE FROM CAT_INTEGRANTE WHERE ID = P.ID_RELEVAMIENTO) AS RELEVAMIENTO_TECNICO,
+	P.FECHA_RELEVAMIENTO,
+	(SELECT APELLIDOS||' '||NOMBRE FROM CAT_INTEGRANTE WHERE ID = P.ID_SUPERVISOR) AS SUPERVISOR_TEC,
+	P.FECHA_SUPERVICION,
+	(SELECT APELLIDOS||' '||NOMBRE FROM CAT_INTEGRANTE WHERE ID = P.ID_CARTOGRAFO) AS CARTOGRAFIA,
+	P.FECHA_CARTOGRAFIA,
+	(SELECT APELLIDOS||' '||NOMBRE FROM CAT_INTEGRANTE WHERE ID = P.ID_DIGITADOR) AS DIGITACION,
+	P.FECHA_DIGITACION,
+	(SELECT APELLIDOS||' '||NOMBRE FROM CAT_INTEGRANTE WHERE ID = P.ID_SUPERVISOR_DIGITADOR) AS SUPERVISOR_DIG,
+	P.FECHA_SUPERVICION_DIGITACION
+FROM CAT_PREDIO P
+	INNER JOIN PARROQUIA PR ON PR.COD_PROVINCIA = P.COD_PROVINCIA
+		AND PR.COD_CANTON = P.COD_CANTON
+		AND PR.COD_PARROQUIA = P.COD_PARROQUIA
+	INNER JOIN CAT_TERRENO T ON T.COD_PROVINCIA = P.COD_PROVINCIA
+		AND T.COD_CANTON = P.COD_CANTON
+		AND T.COD_PARROQUIA = P.COD_PARROQUIA
+		AND T.COD_ZONA = P.COD_ZONA
+		AND T.COD_SECTOR = P.COD_SECTOR
+		AND T.COD_MANZANA = P.COD_MANZANA
+		AND T.COD_SOLAR =  P.COD_SOLAR
+WHERE P.ID = $P{idPredio};]]>
+	</queryString>
+	<field name="ancho_via_publica" class="java.lang.Double"/>
+	<field name="ancho_acera" class="java.lang.Double"/>
+	<field name="frente_propiedad" class="java.math.BigDecimal"/>
+	<field name="norte" class="java.lang.String"/>
+	<field name="norte_con" class="java.lang.String"/>
+	<field name="sur" class="java.lang.String"/>
+	<field name="sur_con" class="java.lang.String"/>
+	<field name="este" class="java.lang.String"/>
+	<field name="este_con" class="java.lang.String"/>
+	<field name="oeste" class="java.lang.String"/>
+	<field name="oeste_con" class="java.lang.String"/>
+	<field name="area_levantamiento" class="java.lang.Double"/>
+	<field name="perimetro_levantamiento" class="java.lang.Double"/>
+	<field name="cord_x" class="java.lang.String"/>
+	<field name="cord_y" class="java.lang.String"/>
+	<field name="observacion" class="java.lang.String"/>
+	<field name="relevamiento_tecnico" class="java.lang.String"/>
+	<field name="fecha_relevamiento" class="java.sql.Date"/>
+	<field name="supervisor_tec" class="java.lang.String"/>
+	<field name="fecha_supervicion" class="java.sql.Date"/>
+	<field name="cartografia" class="java.lang.String"/>
+	<field name="fecha_cartografia" class="java.sql.Date"/>
+	<field name="digitacion" class="java.lang.String"/>
+	<field name="fecha_digitacion" class="java.sql.Date"/>
+	<field name="supervisor_dig" class="java.lang.String"/>
+	<field name="fecha_supervicion_digitacion" class="java.sql.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="16" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="16" forecolor="#FFFFFF" backcolor="#000000" uuid="23c2aa7a-fa7f-43e6-bb8c-add334cbc263"/>
+				<box leftPadding="10">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[13.- UBICACIÓN]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="15" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="553" height="15" backcolor="#CCCCCC" uuid="708ecc25-8e2e-4961-967c-0de396882771"/>
+				<box leftPadding="7">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[13.2 LINDEROS Y MENSURAS DE ACUERDO A INSPECCIÓN EN CAMPO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="152" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="89" height="15" backcolor="#CCCCCC" uuid="e5ea5f1a-b69e-4682-948b-c8f444997241"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NORTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="0" width="191" height="15" uuid="eab1360a-5c9a-42d7-87bf-1dd61be22e16"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{norte}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="292" y="0" width="44" height="15" backcolor="#CCCCCC" uuid="e92f4fe6-2a38-4140-87f9-a986ba571357"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CON]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="336" y="0" width="66" height="15" uuid="57a01fe3-939e-4eeb-bec3-c438504d872e"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{norte_con} == null ? "0" : $F{norte_con} + " m."]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="15" width="89" height="15" backcolor="#CCCCCC" uuid="dbb00c24-b934-4ec8-8bfe-18cbb56aa0b6"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="15" width="191" height="15" uuid="ac54df37-123e-49db-9a7d-a56c9d8dd217"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sur}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="30" width="89" height="15" backcolor="#CCCCCC" uuid="25e7f467-52d5-4003-ace4-dc835ac44a03"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ESTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="30" width="191" height="15" uuid="308528aa-8cd6-44a5-a8bd-21ee4cf9501b"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{este}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="45" width="89" height="15" backcolor="#CCCCCC" uuid="1724157a-d190-4f5f-9363-1a83b6d8d064"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OESTE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="90" y="45" width="191" height="15" uuid="b39860dc-7fa4-414b-b67e-1b82be48cdfe"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oeste}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="292" y="15" width="44" height="15" backcolor="#CCCCCC" uuid="3a192aa0-fd7e-4f92-be6f-cf71499f1f4c"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CON]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="336" y="15" width="66" height="15" uuid="5827f6ff-d797-4cdb-92c3-fd1db09f79e2"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{sur_con} == null ? "0" : $F{sur_con} + " m"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="292" y="30" width="44" height="15" backcolor="#CCCCCC" uuid="bfc003d6-c6a1-46eb-8686-c43637b66132"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CON]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="336" y="30" width="66" height="15" uuid="2ec4c98d-f111-4ff4-9360-a47dc39a12c9"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{este_con} == null ? "0" : $F{este_con} + " m"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="292" y="45" width="44" height="15" backcolor="#CCCCCC" uuid="8f3b28d0-5f3b-49ba-955e-66d36bf67807"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CON]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="336" y="45" width="66" height="15" uuid="c9ec8400-6b44-4cf5-b900-b869333d01fc"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{oeste_con} == null ? "0" : $F{oeste_con} + " m"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="105" width="554" height="16" forecolor="#FFFFFF" backcolor="#000000" uuid="3daa5424-aa9a-46eb-b4b3-906d17a46d95"/>
+				<box leftPadding="10">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[14.- OBSERVACIONES GENERALES]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="1" y="121" width="553" height="31" uuid="ad5f4f6e-d96f-4a5c-ae52-eae1e18b35f5"/>
+				<box topPadding="2" leftPadding="2" rightPadding="0"/>
+				<textElement textAlignment="Justified">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{observacion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="413" y="0" width="64" height="15" backcolor="#CCCCCC" uuid="436fc4c6-a9e2-4691-9292-44d5f0955c57"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUPERFÍCIE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="413" y="15" width="64" height="15" backcolor="#CCCCCC" uuid="9453e7c9-f3d2-4531-be8e-655ea171ff76"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERÍMETRO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="90" width="90" height="15" backcolor="#CCCCCC" uuid="48e27141-4bb8-420c-a148-87026ac24a7c"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COORD X(ESTE)=]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="277" y="90" width="90" height="15" backcolor="#CCCCCC" uuid="f7ad9cc5-720f-4a3b-bba7-3ed77455fcda"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COORD Y(NORTE)=]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="477" y="0" width="66" height="15" uuid="72304ff6-cad1-4c59-ba27-e06e6ced20c0"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{area_levantamiento} == null ? "0" : $F{area_levantamiento} + " m²"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="477" y="15" width="66" height="15" uuid="1599b715-d79a-425f-b869-a74cf9c308b0"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{perimetro_levantamiento} == null ? "0" : $F{perimetro_levantamiento} + " m"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="91" y="90" width="186" height="15" uuid="a11e4150-714a-47d7-a555-e28251988d8e"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cord_x}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="367" y="90" width="187" height="15" uuid="df492344-86f8-4911-9e2c-0e562816b358"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cord_y}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="60" width="110" height="15" backcolor="#CCCCCC" uuid="ea9493bb-c9f4-4e4d-ab86-4453e9c1ce55"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANCHO DE LA VIA PUBLICA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="179" y="60" width="92" height="15" backcolor="#CCCCCC" uuid="12c8c5cf-d287-4890-86df-e2c846598d63"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANCHO DE ACERA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="348" y="60" width="119" height="15" backcolor="#CCCCCC" uuid="1f7f1544-3a68-4e38-a473-2993620c1afa"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FRENTE DE LA PROPIEDAD]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="111" y="60" width="68" height="15" uuid="96ab2c2b-42ff-488a-ace9-6b43346f2be3"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ancho_via_publica} == null ? "0" : $F{ancho_via_publica} + " m"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="271" y="60" width="77" height="15" uuid="999bdcd6-bf6b-46fc-af8d-f8a88af3ff32"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ancho_acera} == null ? "0" : $F{ancho_acera} + " m"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="467" y="60" width="76" height="15" uuid="d9006b5d-c919-46de-bbd5-b992b30863bf"/>
+				<box leftPadding="2">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{frente_propiedad} == null ? "0" : $F{frente_propiedad} + " m"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="75" width="553" height="15" backcolor="#CCCCCC" uuid="72d2f575-73e5-41a8-bc40-bb6b9c431998"/>
+				<box leftPadding="7">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[13.3 SIST. DE COORDENADAS PROYECCIÓN UTM DATUM WGS-84]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

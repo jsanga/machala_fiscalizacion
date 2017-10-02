@@ -1,0 +1,221 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop20">
+            <h1 class="BigTopic Fs16">Datos del nuevo predio</h1>
+            <hr></hr>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Wid100 MarTop10">
+            <p:fieldset legend="Datos del Predio Urbano" toggleable="true" toggleSpeed="500" >
+                <p:panelGrid columns="4">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Clave catastral: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.codigoCatastral}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Clave anterior: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.predio.claveAnterior}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Tipo de propiedad: " class="show-detail" />
+                        <p:outputLabel value="#{regPredioUrbanoView.variablesService.obtenerValor('cat_predio', 'tipo_propiedad', regPredioUrbanoView.predio.tipoPropiedad, regPredioUrbanoView.anioActual)}"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Sitio/Barrio/Cooperativa/Urb.: " class="show-detail" />
+                        <p:outputLabel value="#{regPredioUrbanoView.terreno.barrio}"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Origen: " class="show-detail" />
+                        <p:outputLabel value="#{regPredioUrbanoView.variablesService.obtenerValor('cat_predio', 'origen', regPredioUrbanoView.predio.origen, regPredioUrbanoView.anioActual)}"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Ficha madre: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.predio.tipoPropiedad == 2 ? 'SI' : 'NO'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Cantidad de edificaciones: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.predio.bloques.size()}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="&Aacute;rea de construcci&oacute;n: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.predio.areaTotalEdificacion()}" />
+                    </h:panelGroup>                 
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Manzana: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.predio.manzana}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="&Aacute;rea terreno: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.terreno.areaLevantamiento} m&sup2;." />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Localizaci&oacute;n: " class="show-detail" />
+                        <p:outputLabel value="#{regPredioUrbanoView.variablesService.obtenerValor('cat_terreno', 'ubicacion', regPredioUrbanoView.terreno.ubicacion, regPredioUrbanoView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Topograf&iacute;a: " class="show-detail" />
+                        <p:outputLabel value="#{regPredioUrbanoView.variablesService.obtenerValor('cat_terreno', 'topografia', regPredioUrbanoView.terreno.topografia, regPredioUrbanoView.anioActual)}" />
+                    </h:panelGroup>
+                </p:panelGrid>
+            </p:fieldset>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop20">
+            <p:fieldset legend="Obras de Infraestructura" toggleable="true" toggleSpeed="500" >
+                <p:panelGrid columns="4">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Agua potable: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.terreno.redAguaPotable == 0 ? 'NO TIENE' : 'TIENE'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Energ&iacute;a el&eacute;ctrica: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.terreno.redEnergiaElectrica == 0 ? 'NO TIENE' : 'TIENE'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Alcantarillado sanitario: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.terreno.redAlcantarillado == 0 ? 'NO TIENE' : 'TIENE'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Trasporte p&uacute;blico: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.terreno.transportePublico == 0 ? 'NO TIENE' : 'TIENE'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Tel&eacute;fono: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.terreno.redTelefonica== 0 ? 'NO TIENE' : 'TIENE'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Recolecci&oacute;n de basura: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.terreno.recoleccionBasura== 0 ? 'NO TIENE' : 'TIENE'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Aseo de calles: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.terreno.aseoCalles == 0 ? 'NO TIENE' : 'TIENE'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Aceras: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.terreno.aceras == 2 ? 'NO TIENE' : 'TIENE'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Bordillos: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.terreno.bordillos == 2 ? 'NO TIENE' : 'TIENE'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="V&iacute;as: " class="show-detail" />
+                        <p:outputLabel value="#{regPredioUrbanoView.variablesService.obtenerValor('cat_terreno', 'tipo_via', regPredioUrbanoView.terreno.tipoVias, regPredioUrbanoView.anioActual)}" />
+                    </h:panelGroup>
+                </p:panelGrid>
+
+            </p:fieldset>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Wid100 MarTop20">
+            <p:fieldset legend="Datos de escrituras" toggleable="true" toggleSpeed="500" >
+                <p:panelGrid columns="4">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Notar&iacute;a: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.escritura.notaria}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Cant&oacute;n: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.escritura.canton}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Fecha de notaria: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.escritura.fechaInscripcion}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Repertorio: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.escritura.repertorio}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Folio: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.escritura.folio}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Fecha de escritura: " class="show-detail" />
+                        <p:outputLabel  value="#{regPredioUrbanoView.escritura.fechaEscritura}"> 
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+                    </h:panelGroup>
+                </p:panelGrid>
+
+            </p:fieldset>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Responsive Container100 MarRight20 MarTop20 MarBot10">
+            <p:fieldset legend="Propietarios" toggleable="true" toggleSpeed="500" >
+                <div class="ContainerIndent Container100 MarBot10">
+                    <div class="ContainerIndent Container96">
+                        <p:dataTable var="prop" value="#{regPredioUrbanoView.propietarios}" selection="#{regPredioUrbanoView.propietarioSeleccionado}" rowKey="#{prop.id}" style="margin-bottom:0"
+                                     rows="5" paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15"
+
+                                     paginatorPosition="bottom" selectionMode="single">
+                            <p:column style="width:16px">
+                                <p:rowToggler />
+                            </p:column>
+                            <p:column headerText="Tipo propietario">
+                                <h:outputText value="#{prop.valorTipoPropietario()}"  />
+                            </p:column>
+                            <p:column headerText="Contribuyente">
+                                <h:outputText value="#{prop.nombreCompleto}"  />
+                            </p:column>
+                            <p:column headerText="C&eacute;dula/RUC">
+                                <h:outputText value="#{prop.identificacion}" />
+                            </p:column>
+                            <p:column headerText="Tel&eacute;fono celular">
+                                <h:outputText value="#{prop.celular}" />
+                            </p:column>
+                            <p:column headerText="Tel&eacute;fono convencional">
+                                <h:outputText value="#{prop.telefono}" />
+                            </p:column>
+                            <p:rowExpansion>
+                                <p:panelGrid  columns="6" columnClasses="show-detail,value,show-detail,value,show-detail,value">
+                                    <h:outputText value="Personer&iacute;a:" />
+                                    <h:outputText value="#{prop.valorPersoneria()}" />
+                                    <h:outputText value="Nombre Representante legal:" />
+                                    <h:outputText value="#{prop.representanteLegal}" />
+                                    <h:outputText value="C&eacute;dula Representante legal:" />
+                                    <h:outputText value="#{prop.representanteLegalCedula}" />
+                                </p:panelGrid>
+                            </p:rowExpansion>
+
+                        </p:dataTable>
+                    </div>
+                </div>
+            </p:fieldset>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop20 MarBot10">
+            <p:fieldset legend="Fotos del predio" toggleable="true" toggleSpeed="500" >
+                <p:outputLabel style="margin-left: 30px;" value="El predio no tiene fotos registradas." rendered="#{empty regPredioUrbanoView.fotosPredio and empty regPredioUrbanoView.fotosBloque}"/>
+                <p:lightBox styleClass="imagebox">
+                    <c:forEach var="foto" items="#{regPredioUrbanoView.fotosPredio}" varStatus="loop">
+                        <c:if test="#{not empty regPredioUrbanoView.fotosPredio}">
+                            <h:outputLink value="#{foto.pathToFile}" class="MarRight10 Fleft" >
+                                <h:graphicImage url="#{foto.pathToFile}" width="150" height="150" title="Fotos del predio"/>
+                            </h:outputLink>
+                        </c:if>
+                    </c:forEach>
+                    <c:forEach var="foto1" items="#{regPredioUrbanoView.fotosBloque}" varStatus="loop">
+                        <c:if test="#{not empty regPredioUrbanoView.fotosBloque}">
+                            <h:outputLink value="#{foto1.pathToFile}" class="MarRight10 Fleft" >
+                                <h:graphicImage url="#{foto1.pathToFile}" width="150" height="150" title="Fotos del predio"/>
+                            </h:outputLink>
+                        </c:if>
+                    </c:forEach>
+                </p:lightBox>
+            </p:fieldset>
+        </h:panelGroup>
+
+    </ui:composition>
+
+</html>

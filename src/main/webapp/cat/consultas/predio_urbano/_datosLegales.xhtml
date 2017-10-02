@@ -1,0 +1,239 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="escriturasContainer" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">T&iacute;tulo de dominio del bien inmueble  </h1>
+                <hr></hr>
+                <h:panelGroup layout="block" class="Responsive Container100 MarRight20">
+                    <p:fieldset legend="Contribuyentes" toggleable="true" toggleSpeed="500" >   
+                        <div class="ContainerIndent Container100 MarBot10" id="propietarios">
+                            <div class="ContainerIndent Container96">
+                                <p:dataTable id="propietarioListDelete" var="prop" value="#{consultasView.predioSeleccionado.propietarios}" style="margin-bottom:0"
+                                             rows="5" paginator="true"
+                                             editable="true" editMode="cell"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15"
+                                             emptyMessage="No se han registrados contribuyentes al predio."
+                                             paginatorPosition="bottom" >
+                                    <p:column style="width:16px">
+                                        <p:rowToggler />
+                                    </p:column>
+                                    <p:column headerText="Tipo propietario">
+                                        <h:outputText value="#{prop.valorTipoPropietario()}"  />
+                                    </p:column>
+                                    <p:column headerText="Contribuyente">
+                                        <h:outputText value="#{prop.nombreCompleto}"  />
+                                    </p:column>
+                                    <p:column headerText="C&eacute;dula/RUC">
+                                        <h:outputText value="#{prop.identificacion}" />
+                                    </p:column>
+                                    <p:column headerText="Tel&eacute;fono celular">
+                                        <h:outputText value="#{prop.celular}" />
+                                    </p:column>
+                                    <p:column headerText="Tel&eacute;fono convencional">
+                                        <h:outputText value="#{prop.telefono}" />
+                                    </p:column>
+                                    <p:rowExpansion>
+                                        <p:panelGrid  columns="6" columnClasses="show-detail,value,show-detail,value,show-detail,value">
+                                            <h:outputText value="Personer&iacute;a:" />
+                                            <h:outputText value="#{prop.valorPersoneria()}" />
+                                            <h:outputText value="Nombre Representante legal:" />
+                                            <h:outputText value="#{prop.representanteLegal}" />
+                                            <h:outputText value="C&eacute;dula Representante legal:" />
+                                            <h:outputText value="#{prop.representanteLegalCedula}" />
+                                        </p:panelGrid>
+                                    </p:rowExpansion>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </p:fieldset>
+
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Responsive Container100 MarTop20" style="margin-bottom: 20px;">
+                <div class="ContainerIndent Wid100 MarRight20">
+                    <p:fieldset legend="Situaci&oacute;n legal de la propiedad" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid columns="4" style="width: 100%">
+                            <var:varDisInputText id="presentaron_escritura" label="Presentaron escritura:"
+                                                 table="comun" column="si_no_sin_dato"
+                                                 bind="#{consultasView.escritura.presentaronEscritura}"
+                                                 showlabel="true"
+                                                 changeOnEnter="true"
+                                                 defaultValue="0"
+                                                 disabled="true"
+                                                 next="notaria"
+                                                 labelPosition="top"/>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="notaria" value="Notar&iacute;a:" class="DispBlock Wid100"/>
+                                <p:inputText id="notaria" value="#{consultasView.escritura.notaria}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'canton')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="canton" value="Canton:"  class="DispBlock Wid100"/>
+                                <p:inputText id="canton" value="#{consultasView.escritura.canton}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'fecha_escritura_input')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_escritura" value="Fecha escritura:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_escritura" value="#{consultasView.escritura.fechaEscritura}" style="width: 180px;" disabled="true"
+                                            class="input_180" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'ficha_registral')"/>
+                            </h:panelGroup> 
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="ficha_registral" value="Ficha registral:"  class="DispBlock Wid100"/>
+                                <p:inputText id="ficha_registral" value="#{consultasView.escritura.fichaRegistral}" disabled="true"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'cod_phv')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cod_phv" value="C. Piso:"  class="DispBlock Wid100"/>
+                                <p:inputText id="cod_phv" value="#{consultasView.escritura.phv}" disabled="true"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'cod_phh')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cod_phh" value="C. Unidad:"  class="DispBlock Wid100"/>
+                                <p:inputText id="cod_phh" value="#{consultasView.escritura.phh}" disabled="true"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'alicuota')"/>
+                            </h:panelGroup>
+                            
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="alicuota" value="Al&iacute;cuota:" class="DispBlock Wid100"/>
+                                <p:inputText id="alicuota" value="#{consultasView.escritura.alicuota}" disabled="true"
+                                             class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'area_contruccion')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="area_contruccion" value="&Aacute;rea construcci&oacute;n:" class="DispBlock Wid100"/>
+                                <p:inputText id="area_contruccion" value="#{consultasView.escritura.areaConstruccion}" disabled="true"
+                                             class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'folio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="folio" value="Fojas:"  class="DispBlock Wid100"/>
+                                <p:inputText id="folio" value="#{consultasView.escritura.folio}" disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'nro_inscripcion')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_inscripcion" value="No. inscripci&oacute;n:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_inscripcion" value="#{consultasView.escritura.nroInscripcion}"  disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'repertorio')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="repertorio" value="Repertorio:" class="DispBlock Wid100"/>
+                                <p:inputText id="repertorio" value="#{consultasView.escritura.repertorio}"  disabled="true"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'fecha_inscripcion_input')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_inscripcion" value="Fecha inscripci&oacute;n:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_inscripcion" value="#{consultasView.escritura.fechaInscripcion}" style="width: 180px;" disabled="true"
+                                            class="input_180" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'dominio:cat_predio-dominio-input')"/>
+                            </h:panelGroup>
+                            <var:varDisInputText id="dominio" label="Dominio:"
+                                                 table="cat_predio" column="dominio"
+                                                 bind="#{consultasView.predioSeleccionado.dominio}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                  disabled="true"
+                                                 changeOnEnter="true"
+                                                 next="origen:cat_predio-origen-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="origen" label="Origen del predio:"
+                                                 table="cat_predio" column="origen"
+                                                 bind="#{consultasView.predioSeleccionado.origen}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                  disabled="true"
+                                                 changeOnEnter="true"
+                                                 next="tipo_propiedad:cat_predio-tipo_propiedad-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="tipo_propiedad" label="Tipo de propiedad:"
+                                                 table="cat_predio" column="tipo_propiedad"
+                                                 bind="#{consultasView.predioSeleccionado.tipoPropiedad}"
+                                                 showlabel="true"
+                                                 changeOnEnter="true"
+                                                 defaultValue="3"
+                                                  disabled="true"
+                                                 next="esc_norte_ref"
+                                                 labelPosition="top"/>
+                            <!--                                <h:panelGroup layout="block">
+                                                                <p:outputLabel for="propietario_anterior" value="Repertorio:" class="DispBlock Wid100"/>
+                                                                <p:inputText id="propietario_anterior" value="#{consultasView.escritura.repertorio}" 
+                                                                             class="input_180" onkeypress="focusNextOnEnter(event, 'esc_norte_ref')"/>
+                                                            </h:panelGroup>-->
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container Wid100 MarTop20" id="LinderosDiv">
+                <h:panelGroup layout="block" class="Responsive Container100 MarRight20">
+                    <div class="ContainerIndent Wid100">
+                        <p:fieldset legend="Linderos y mensuras de acuerdo al t&iacute;tulo de dominio" toggleable="true" toggleSpeed="500" >
+                            <div class="Responsive Container50">
+                                <div class="ContainerIndent MarRight20">
+                                    <h:panelGrid columns="5" class="linderoEscritura">
+                                        <p:outputLabel for="esc_norte_ref" value="Norte:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_norte_ref" value="#{consultasView.escritura.norteRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_norte_long')" disabled="true"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel for="esc_norte_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_norte_long" value="#{consultasView.escritura.norteLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_sur_ref')" disabled="true"
+                                                     class="input_160" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_sur_ref" value="Sur:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_sur_ref" value="#{consultasView.escritura.surRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_sur_long')" disabled="true"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel for="esc_sur_long" value="Con:" class="DispBlock Wid100"/>
+                                        <p:inputText id="esc_sur_long" value="#{consultasView.escritura.surLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_perimetro')" disabled="true"
+                                                     class="input_160" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_perimetro" value="Per&iacute;metro:" class="DispBlock Wid100" />
+                                        <p:inputText id="esc_perimetro" value="#{consultasView.escritura.perimetro}"
+                                                     onkeypress="validateFloatValueAndFocusNext(event, 'esc_este_ref')" disabled="true"
+                                                     class="input_160 MarRight10" />
+                                        <p:outputLabel value="mts." />
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                            <div class="Responsive Container50">
+                                <div class="ContainerIndent">
+                                    <h:panelGrid columns="5" class="linderoEscritura">
+                                        <p:outputLabel for="esc_este_ref" value="Este:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_este_ref" value="#{consultasView.escritura.esteRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_este_long')" disabled="true"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel for="esc_este_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_este_long" value="#{consultasView.escritura.esteLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_oeste_ref')" disabled="true"
+                                                     class="input_160" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_oeste_ref" value="Oeste:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_oeste_ref" value="#{consultasView.escritura.oesteRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_oeste_long')" disabled="true"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel for="esc_oeste_long" value="Con:" class="DispBlock Wid100"/>
+                                        <p:inputText id="esc_oeste_long" value="#{consultasView.escritura.oesteLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'esc_superficie')" disabled="true"
+                                                     class="input_160" style="margin-bottom: 8px;"/>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_superficie" value="Superficie:" class="DispBlock Wid100" />
+                                        <p:inputText id="esc_superficie" value="#{consultasView.escritura.superficie}"
+                                                     onkeypress="validateFloatValueAndFocusNext(event, 'wiz_next')" disabled="true"
+                                                     class="input_160 MarRight10"/>
+                                        <p:outputLabel value="m&sup2;." />
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                        </p:fieldset>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+
+</html>

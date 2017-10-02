@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+    
+    <ui:composition>
+        <p:messages id="messagesEstado" showDetail="true" autoUpdate="true" closable="true" />
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <h1 class="BigTopic Fs16">Datos de coactiva del predio</h1>
+            
+            <hr></hr>
+            <p:fieldset legend="Coactivas" toggleable="true" toggleSpeed="500" >
+                
+                <p:dataTable value="#{consultasView.coactivasList}" var="c" emptyMessage="No se encontraron coactivas">
+                    <p:column headerText="Nombre del Contribuyente">
+                        <h:outputText value="#{c.nombresContribuyente}"/>
+                    </p:column>
+                    <p:column headerText="Número de Emisión">
+                        <h:outputText value="#{c.numEmision}"/>
+                    </p:column>
+                    <p:column headerText="Fecha de Coactiva">
+                        <h:outputText value="#{c.fecha_coactiva}">
+                            <f:convertDateTime type="date" pattern="dd-MMMM-yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Valor">
+                        <h:outputText value="#{c.valor}"/>
+                    </p:column>
+                    <p:column headerText="Número de Juicio">
+                        <h:outputText value="#{c.numJuicio}"/>
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{c.estado}"/>
+                    </p:column>
+                    <p:column headerText="Número de Notificación">
+                        <h:outputText value="#{c.numNotificacion}"/>
+                    </p:column>
+                    <p:column headerText="Acción">
+                        <p:commandButton icon="fa fa-send-o white" title="Enviar notificación" action="#{consultasView.prepararNotificacion(c)}"/>
+                    </p:column>
+                </p:dataTable>
+            
+            </p:fieldset>
+            <h1 class="BigTopic Fs16">Datos de deudas del predio</h1>
+            <hr></hr>
+            <p:fieldset legend="Deudas" toggleable="true" toggleSpeed="500" >
+                
+                <p:dataTable value="#{consultasView.deudasList}" var="d" emptyMessage="No se encontraron deudas">
+                    <p:column style="width:16px">
+                        <p:rowToggler />
+                    </p:column>
+                    <p:column headerText="Nombre del Contribuyente">
+                        <h:outputText value="#{d.nombreContribuyente}"/>
+                    </p:column>
+                    <p:column headerText="Número de Emisión">
+                        <h:outputText value="#{d.numEmision}"/>
+                    </p:column>
+                    <p:column headerText="Valor">
+                        <h:outputText value="#{d.valor}"/>
+                    </p:column>
+                    <p:column headerText="Fecha de Emisión">
+                        <h:outputText value="#{d.fechaEmision}"/>
+                    </p:column>
+                    <p:column headerText="Av. de Terreno">
+                        <h:outputText value="#{d.avaluoTerreno}"/>
+                    </p:column>
+                    <p:column headerText="Av. de Const.">
+                        <h:outputText value="#{d.avaluoConstruccion}"/>
+                    </p:column>
+                    <p:column headerText="Detalles">
+                        <p:commandButton icon="fa fa-list-alt white" title="Ver rubros" update="datosConsultas,predios-list,datos-tab" action="#{consultasView.mostrarRubros(d)}"/>
+                    </p:column>
+                    <p:rowExpansion>
+                        <p:panelGrid  columns="8" columnClasses="show-detail,value,show-detail,value,show-detail,value">
+                            <h:outputText value="Habilitado:" />
+                            <h:outputText value="#{d.habilitado}" />
+                            <h:outputText value="Coactiva:" />
+                            <h:outputText value="#{d.coactiva}" />
+                            <h:outputText value="Estado:" />
+                            <h:outputText value="#{d.estado}" />
+                            <h:outputText value="Exoneración:" />
+                            <h:outputText value="#{d.exoneracion}" />
+                        </p:panelGrid>
+                    </p:rowExpansion>
+                </p:dataTable>
+            
+            </p:fieldset>
+        </h:panelGroup>
+        
+        <!-- -->
+        
+        <p:dialog id="dlgNotificacion" widgetVar="dlgNotificacion" header="Envío de notificación" modal="true" closable="true" closeOnEscape="true" resizable="false" width="30%">
+            <h:form id="frmNotificacion">
+                <h1 class="BigTopic Fs16">Notificación de coactiva</h1>
+                <hr></hr>
+                <center>
+                    <p:panelGrid columns="2" style="width: 90%">
+                        <h:outputText value="Correo electronico: "/>
+                        <p:inputText value="#{consultasView.email}" style="width: 100%"/>
+                        <h:outputText value="Mensaje: "/>
+                        <p:inputTextarea value="#{consultasView.msg}" style="width: 100%"/>
+                    </p:panelGrid>
+                
+                    <p:panelGrid columns="2" >
+
+                        <p:commandButton value="Cancelar" id="cancelar"  icon="fa fa-ban" style="margin-left: 25px;"
+                                         onclick="PF('dlgNotificacion').hide();"
+                                         class="white"/>
+                        <p:commandButton id="add-contribuyente" style=""
+                                         icon="fa fa-check white" value="Enviar"
+                                         process="@form" oncomplete="PF('dlgNotificacion').hide();"
+                                         actionListener="#{consultasView.enviarMensaje()}"/>
+                    </p:panelGrid>
+                </center>
+            </h:form>
+        </p:dialog>
+        
+    </ui:composition>
+</html>

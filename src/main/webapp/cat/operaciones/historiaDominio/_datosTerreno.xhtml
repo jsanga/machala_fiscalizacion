@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+    <ui:composition> 
+        
+         
+        <h:panelGroup layout="block" class="Container Wid100" id="reporte-Datos-Terreno">
+            <h:panelGroup layout="block" class="Container Wid100 MarTop20">          
+            <div class="Container100">                                       
+                <fieldset id="inf_datos">
+                    <legend>Obras de infraestructura</legend>
+                    <h:panelGrid columns="5" class="ObrasComplementariasTbl">
+                        <var:varDisInputText id="inf_vias" label="Vias" 
+                                             table="cat_terreno" column="inf_vias" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.infVias}"
+                                             showlabel="true"     
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="inf_energia_electrica\\:cat_terreno-inf_energia_electrica-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="inf_energia_electrica" label="Eherg&iacute;a el&eacute;ctrica" 
+                                             table="cat_terreno" column="inf_energia_electrica" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.infEnergiaElectrica}"
+                                             showlabel="true"      
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="inf_agua_potable\\:cat_terreno-inf_agua_potable-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="inf_agua_potable" label="Agua potable" 
+                                             table="cat_terreno" column="inf_agua_potable" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.infAguaPotable}"
+                                             showlabel="true"  
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="inf_alcantarillado_sanitario\\:cat_terreno-inf_alcantarillado_sanitario-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="inf_alcantarillado_sanitario" label="Alcantarillado sanitario" 
+                                             table="cat_terreno" column="inf_alcantarillado_sanitario" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.infAlcantarilladoSanitario}"
+                                             showlabel="true"    
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="inf_alcantarillado_pluvial\\:cat_terreno-inf_alcantarillado_pluvial-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="inf_alcantarillado_pluvial" label="Alcantarillado pluvial" 
+                                             table="cat_terreno" column="inf_alcantarillado_pluvial" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.infAlcantarilladoPluvial}"
+                                             showlabel="true"  
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="inf_transporte_publico\\:cat_terreno-inf_transporte_publico-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="inf_transporte_publico" label="Transporte p&uacute;blico" 
+                                             table="cat_terreno" column="inf_transporte_publico" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.infTransportePublico}"
+                                             showlabel="true"   
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="inf_acera_bordillos\\:cat_terreno-inf_acera_bordillos-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="inf_acera_bordillos" label="Aceras y bordillos" 
+                                             table="cat_terreno" column="inf_acera_bordillos" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.infAceraBordillos}"
+                                             showlabel="true"    
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="inf_recoleccion_basura\\:cat_terreno-inf_recoleccion_basura-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="inf_recoleccion_basura" label="Recolecci&oacute;n de basura" 
+                                             table="cat_terreno" column="inf_recoleccion_basura" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.infRecoleccionBasura}"
+                                             showlabel="true"    
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="inf_aseo_calles\\:cat_terreno-inf_aseo_calles-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="inf_aseo_calles" label="Aseo de calles" 
+                                             table="cat_terreno" column="inf_aseo_calles" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.infAseoCalles}"
+                                             showlabel="true"     
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="inf_red_telefonica\\:cat_terreno-inf_red_telefonica-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="inf_red_telefonica" label="Red telef&oacute;nica" 
+                                             table="cat_terreno" column="inf_red_telefonica" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.infRedTelefonica}"
+                                             showlabel="true"                                                                        
+                                             changeOnEnter="true"
+                                             disabled="true"
+                                             next="de_cerramiento\\:cat_terreno-cerramiento-input"
+                                             labelPosition="top"/>
+
+                    </h:panelGrid>
+                </fieldset>                                       
+            </div>                                   
+        </h:panelGroup>
+
+
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20" id="ObrasComplementariasDiv">
+            <div class="Container100">                                       
+                <fieldset >
+                    <legend>Obras complementarias</legend>
+                    <h:panelGrid columns="4" class="ObrasComplementariasTbl">
+                        <var:varDisInputText id="de_cerramiento" label="Cerramiento:" 
+                                             table="cat_terreno" column="cerramiento" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.cerramiento}"
+                                             showlabel="true"     
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="de_pavimento\\:cat_terreno-pavimento-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="de_pavimento" label="Pavimento:" 
+                                             table="cat_terreno" column="pavimento" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.pavimento}"
+                                             showlabel="true"   
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="de_c_deportivo\\:cat_terreno-c_deportivo-input"
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="de_c_deportivo" label="Cancha deportiva:" 
+                                             table="cat_terreno" column="c_deportivo" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.cDeportivo}"
+                                             showlabel="true"                                                                        
+                                             changeOnEnter="true"
+                                             disabled="true"
+                                             next="de_piscina\\:cat_terreno-piscina-input"                                                                                
+                                             labelPosition="top"/>
+                        <var:varDisInputText id="de_piscina" label="Piscina:" 
+                                             table="cat_terreno" column="piscina" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.piscina}"
+                                             showlabel="true"                                                                        
+                                             changeOnEnter="true"
+                                             disabled="true"
+                                             next="di_localizacion\\:cat_terreno-localizacion-input"
+                                             labelPosition="top"/>
+                    </h:panelGrid>
+                </fieldset>                                       
+            </div>                                   
+        </h:panelGroup>
+
+
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20" id="DatosInfraestructuraDiv">
+            <div class="Container100">                                       
+                <fieldset>
+                    <legend>Datos de infraestructura</legend>
+                    <h:panelGrid columns="4" class="ObrasComplementariasTbl">
+                        <var:varDisInputText id="di_localizacion" label="Localizaci&oacute;n:" 
+                                             table="cat_terreno" column="localizacion" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.localizacion}"
+                                             showlabel="true"    
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="di_topografia\\:cat_terreno-topografia-input"
+                                             labelPosition="top"/>
+
+                        <var:varDisInputText id="di_topografia" label="Topograf&iacute;a:" 
+                                             table="cat_terreno" column="topografia" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.topografia}"
+                                             showlabel="true"    
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="di_estado\\:cat_terreno-estado-input"
+                                             labelPosition="top"/>
+
+                        <var:varDisInputText id="di_estado" label="Estado:" 
+                                             table="cat_terreno" column="estado" 
+                                             bind="#{consultasView.predioSeleccionado.terreno.estado}"
+                                             showlabel="true"    
+                                             disabled="true"
+                                             changeOnEnter="true"
+                                             next="ed_norte"
+                                             labelPosition="top"/>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="cat_terreno-valor_metro" value="Valor:" class="DispBlock Wid100"/>
+                            <p:inputText id="cat_terreno-valor_metro" value="250.55" 
+                                         disabled="true"
+                                         class="input_125"/>
+                        </h:panelGroup>
+
+
+                    </h:panelGrid>
+                </fieldset>                                       
+            </div>                                   
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20" id="LinderosDiv">
+            <div class="Responsive Container50">
+                <div class="ContainerIndent">
+                    <fieldset style="margin-right: 20px">
+                        <legend>Linderos y mensuras seg&uacute;n escritura</legend>
+                        <h:panelGrid columns="6" >
+                            <p:outputLabel for="ed_norte" value="Norte:" />
+                            <p:inputText id="ed_norte" value="#{consultasView.predioSeleccionado.terreno.lindero.linNorteRefEsc}" 
+                                         onkeypress="focusNextOnEnter(event, 'el_norte')"
+                                         class="input_160" disabled="true"/>
+                            <p:inputText id="el_norte" value="#{consultasView.predioSeleccionado.terreno.lindero.linNorteLongitudEsc}" 
+                                         onkeypress="focusNextOnEnter(event, 'f_norte_e')"
+                                         class="input_115" disabled="true"/>
+                            <p:outputLabel for="el_norte" value="m." />
+                            <p:outputLabel for="f_norte_e" value="Frente:" />
+                            <p:inputText id="f_norte_e" value="#{consultasView.predioSeleccionado.terreno.lindero.linFrenteNorteEsc}" 
+                                         onkeypress="focusNextOnEnter(event, 'ed_sur')"
+                                         class="input_15 app-input-integer" disabled="true"/>
+                            <p:outputLabel for="ed_sur" value="Sur:" />
+                            <p:inputText id="ed_sur" value="#{consultasView.predioSeleccionado.terreno.lindero.linSurRefEsc}" 
+                                         onkeypress="focusNextOnEnter(event, 'el_sur')" disabled="true"
+                                         class="input_160"/>                     
+                            <p:inputText id="el_sur" value="#{consultasView.predioSeleccionado.terreno.lindero.linSurLongitudEsc}" 
+                                         onkeypress="validateFloatValueAndFocusNext(event, 'f_sur_e')" disabled="true"
+                                         class="input_115"/>
+                            <p:outputLabel for="el_sur" value="m." />
+                            <p:outputLabel for="f_sur_e" value="Frente:" />                    
+                            <p:inputText id="f_sur_e" value="#{consultasView.predioSeleccionado.terreno.lindero.linFrenteSurEsc}" 
+                                         onkeypress="focusNextOnEnter(event, 'ed_este')" disabled="true" 
+                                         class="input_15 app-input-integer"/>
+                             <p:outputLabel for="ed_este" value="Este:" />
+                            <p:inputText id="ed_este" value="#{consultasView.predioSeleccionado.terreno.lindero.linEsteRefEsc}"
+                                         onkeypress="focusNextOnEnter(event, 'el_este')" disabled="true"
+                                         class="input_160"/>                       
+                            <p:inputText id="el_este" value="#{consultasView.predioSeleccionado.terreno.lindero.linEsteLongitudEsc}" 
+                                         onkeypress="focusNextOnEnter(event, 'f_este_e')" disabled="true"
+                                         class="input_115"/>
+                            <p:outputLabel for="el_este" value="m." />
+                             <p:outputLabel for="f_este_e" value="Frente:" />
+                             <p:inputText id="f_este_e" value="#{consultasView.predioSeleccionado.terreno.lindero.linFrenteEsteEsc}" 
+                                         onkeypress="focusNextOnEnter(event, 'ed_oeste')" disabled="true"
+                                         class="input_15"/>
+                            <p:outputLabel for="ed_oeste" value="Oeste:" />
+                            <p:inputText id="ed_oeste" value="#{consultasView.predioSeleccionado.terreno.lindero.linOesteRefEsc}" 
+                                         onkeypress="focusNextOnEnter(event, 'el_oeste')" disabled="true"
+                                         class="input_160"/>                      
+                            <p:inputText id="el_oeste" value="#{consultasView.predioSeleccionado.terreno.lindero.linOesteLongitudEsc}"
+                                         onkeypress="focusNextOnEnter(event, 'f_oeste_e')" disabled="true"
+                                         class="input_115"/>
+                            <p:outputLabel for="el_oeste" value="m." style="margin-right: 15px;"/>
+                            <p:outputLabel for="f_oeste_e" value="Frente:" />                      
+                            <p:inputText id="f_oeste_e" value="#{consultasView.predioSeleccionado.terreno.lindero.linFrenteOesteEsc}" 
+                                         onkeypress="focusNextOnEnter(event, 'area_esc')" disabled="true"
+                                         class="input_15 app-input-integer"/>
+                            <p:outputLabel for="area_esc" value="&Aacute;rea:" />                    
+                            <p:inputText id="area_esc" value="#{consultasView.predioSeleccionado.terreno.areaEscritura}" 
+                                         onkeypress="validateFloatValueAndFocusNext(event, 'td_norte')" disabled="true"
+                                         class="input_160"/>
+                        </h:panelGrid>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="Responsive Container50">
+                <div class="ContainerIndent">
+                    <fieldset style="margin-right: 20px">
+                        <legend>Linderos y mesuras seg&uacute;n SISCAT</legend>
+
+                        <h:panelGrid columns="6">
+                            <p:outputLabel for="td_norte" value="Norte:" class="DispBlock Wid100"/>
+                            <p:inputText id="td_norte" value="#{consultasView.predioSeleccionado.terreno.lindero.linNorteRefSis}"
+                                         onkeypress="focusNextOnEnter(event, 'tl_norte')" disabled="true"
+                                         class="input_160"/>                            
+                            <p:inputText id="tl_norte" value="#{consultasView.predioSeleccionado.terreno.lindero.linNorteLongitudSis}"
+                                         onkeypress="focusNextOnEnter(event, 'f_norte_s')" disabled="true" 
+                                         class="input_115"/>
+                            <p:outputLabel for="tl_norte" value="m." class="DispBlock Wid100"/>
+                            <p:outputLabel for="f_norte_s" value="Frente:" class="DispBlock Wid100"/>                   
+                            <p:inputText id="f_norte_s" value="#{consultasView.predioSeleccionado.terreno.lindero.linFrenteNorteSis}" 
+                                         onkeypress="focusNextOnEnter(event, 'td_sur')" disabled="true" 
+                                         class="input_15 app-input-integer"/>
+                            <p:outputLabel for="td_sur" value="Sur:" class="DispBlock Wid100"/>
+                            <p:inputText id="td_sur" value="#{consultasView.predioSeleccionado.terreno.lindero.linSurRefSis}" 
+                                         onkeypress="focusNextOnEnter(event, 'tl_sur')" disabled="true"
+                                         class="input_160"/>
+                            <p:inputText id="tl_sur" value="#{consultasView.predioSeleccionado.terreno.lindero.linSurLongitudSis}" 
+                                         onkeypress="focusNextOnEnter(event, 'f_sur_s')" disabled="true" 
+                                         class="input_115"/>
+                            <p:outputLabel for="tl_sur" value="m." class="DispBlock Wid100"/>
+                            <p:outputLabel for="f_sur_s" value="Frente:" class="DispBlock Wid100" />
+                            <p:inputText id="f_sur_s" value="#{consultasView.predioSeleccionado.terreno.lindero.linFrenteSurSIs}" 
+                                         onkeypress="focusNextOnEnter(event, 'td_este')" disabled="true" 
+                                         class="input_15 app-input-integer"/>
+                            <p:outputLabel for="td_este" value="Este:" class="DispBlock Wid100"/>
+                            <p:inputText id="td_este" value="#{consultasView.predioSeleccionado.terreno.lindero.linEsteRefSis}" 
+                                         onkeypress="focusNextOnEnter(event, 'tl_este')" disabled="true" 
+                                         class="input_160"/>
+                            <p:inputText id="tl_este" value="#{consultasView.predioSeleccionado.terreno.lindero.linEsteLongitudSis}" 
+                                         onkeypress="focusNextOnEnter(event, 'f_este_s')" disabled="true" 
+                                         class="input_115"/> 
+                            <p:outputLabel for="tl_este" value="m." class="DispBlock Wid100"/>
+                            <p:outputLabel for="f_este_s" value="Frente:" class="DispBlock Wid100" />
+                            <p:inputText id="f_este_s" value="#{consultasView.predioSeleccionado.terreno.lindero.linFrenteEsteSis}" 
+                                         onkeypress="focusNextOnEnter(event, 'td_oeste')" disabled="true" 
+                                         class="input_15 app-input-integer"/>
+                            <p:outputLabel for="td_oeste" value="Oeste:" class="DispBlock Wid100" />
+                            <p:inputText id="td_oeste" value="#{consultasView.predioSeleccionado.terreno.lindero.linOesteRefSis}"
+                                         onkeypress="focusNextOnEnter(event, 'tl_oeste')" disabled="true" 
+                                         class="input_160"/>
+                            <p:inputText id="tl_oeste" value="#{consultasView.predioSeleccionado.terreno.lindero.linOesteLongitudSis}"
+                                         onkeypress="focusNextOnEnter(event, 'f_oeste_s')" disabled="true" 
+                                         class="input_115"/>
+                            <p:outputLabel for="tl_oeste" value="m." class="DispBlock Wid100" style="margin-right: 15px;"/>
+                            <p:outputLabel for="f_oeste_s" value="Frente:" class="DispBlock Wid100" />
+                            <p:inputText id="f_oeste_s" value="#{consultasView.predioSeleccionado.terreno.lindero.linFrenteOesteSis}" 
+                                         onkeypress="focusNextOnEnter(event, 'area_sis')" disabled="true"
+                                         class="input_15 app-input-integer"/>
+                            <p:outputLabel for="area_sis" value="&Aacute;rea:" class="DispBlock Wid100" />
+                            <p:inputText id="area_sis" value="#{consultasView.predioSeleccionado.terreno.areaLevantamiento}" 
+                                         onkeypress="validateFloatValueAndFocusNext(event, 'cat_terreno-observacion')" disabled="true"
+                                         class="input_160"/>
+
+                        </h:panelGrid>
+                    </fieldset>
+                </div>
+            </div>
+        </h:panelGroup>
+
+
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20">
+            <div class="Container">
+                <fieldset>
+                    <legend>Observaciones</legend>
+                    <p:inputTextarea id="cat_terreno-observacion" style="width: 99%" value="#{consultasView.predioSeleccionado.terreno.observacion}"
+                                     onkeypress="focusNextOnEnter(event, 'wiz_next')" disabled="true"/>
+                </fieldset>
+            </div>
+        </h:panelGroup>
+        </h:panelGroup>
+
+    </ui:composition>
+</html>

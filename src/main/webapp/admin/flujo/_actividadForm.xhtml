@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="actividad-dlg" widgetVar="actividadDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Datos de la Actividad">   
+                <p:ajax event="close" update="actividad-list-form" listener="#{actividadView.cancelarCreacionActividad()}" />
+                <h:panelGroup layout="block" rendered="#{actividadView.creandoActividad or actividadView.editandoActividad}">
+                <h:form id="actividad-form" prependId="false">
+                    <!--<p:messages id="datos-usuario-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />-->
+                    <p:messages id="datos-actividad-messages" showDetail="true" autoUpdate="false" closable="true" />
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="2">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="nombre_actividad" value="Nombre:"  class="DispBlock Wid100"/>
+                                    <p:inputText id="nombre_actividad" required="true" value="#{actividadView.actividadSeleccionada.nombre}"
+                                                 onkeypress="focusNextOnEnter(event, 'actividad_descripcion')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel value="Descripci&oacute;n:"  class="DispBlock Wid100"/>
+                                    <p:inputText id="actividad_descripcion" value="#{actividadView.actividadSeleccionada.descripcion}"
+                                                 onkeypress="focusNextOnEnter(event, 'flujo')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                     <p:outputLabel for="integrante" value="Integrantes:"  class="DispBlock Wid100" />
+                                     <p:pickList id="integrante" value="#{actividadView.integrantes}" var="integ" itemLabel="#{integ.nombre} #{integ.apellidos}" itemValue="#{integ}" converter="integranteConverter"/>
+                                     
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" rendered="#{actividadView.editandoActividad}">
+                                  <p:outputLabel value="Estado" />
+                                  <p:selectBooleanCheckbox id="estado" value="#{actividadView.actividadSeleccionada.estado}"/>
+                                </h:panelGroup>
+                                
+                            </h:panelGrid>                         
+
+                            <h:panelGroup layout="block">
+                                <p:commandButton id="crear-actividad-btn" 
+                                                 rendered="#{actividadView.creandoActividad}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Guardar"                                         
+                                                 actionListener="#{actividadView.crearActividad()}"
+                                                 update=":actividad-list-form,actividad-form,messages"/>
+                                <p:commandButton id="actualizar-actividad-btn" 
+                                                 rendered="#{actividadView.editandoActividad}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Actualizar"                                         
+                                                 actionListener="#{actividadView.editarActividad()}" oncomplete="PF('actividadDialog').hide();"
+                                                 update=":actividad-list-form:tblActividad,messages"/>
+                                <p:commandButton id="cancelar-actividad-btn" 
+                                                 icon="fa fa-times" styleClass="white" value="Cancelar" actionListener="#{actividadView.inicializarNuevaActividad()}"                                        
+                                                 onclick="PF('actividadDialog').hide();" update=":actividad-list-form"
+                                                 />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+    </ui:composition>
+</html>

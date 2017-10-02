@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+
+    <ui:composition>
+
+            <p:messages id="datosConstruccionMessages" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+
+            <h:panelGroup layout="block" id="datosConstruccion"> 
+
+                <div class="Container">
+                    <div class="Responsive Container50">
+                        <div class="ContainerIndent">
+                            <h:panelGroup id="bloque-list-form" layout="block" class="Container">
+                                <fieldset>
+                                    <legend>Bloques</legend>
+                                    <table style="width: 100%;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align: right;">
+                                                    <p:selectOneMenu id="bloqueSelect" value="#{consultasView.bloqueSeleccionadoIndex}" style="width: 90%"> 
+                                                        <p:ajax listener="#{consultasView.cambiarBloque}" update="bloque-list-form,piso-list-form,bloque-form" process="@this"/>
+                                                        <c:forEach items="#{consultasView.bloques}" var="bloque" varStatus="loop">
+                                                            <f:selectItem itemValue="#{loop.index}" itemLabel="Bloque #{bloque.numeroBloque}" />
+                                                        </c:forEach>
+                                                    </p:selectOneMenu> 
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </fieldset> 
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                    <div class="Responsive Container50">
+                        <div class="ContainerIndent">
+                            <h:panelGroup id="piso-list-form" layout="block" class="Container">
+                                <h:panelGroup layout="block">
+                                    <fieldset>
+                                        <legend>Pisos</legend> 
+                                        <table style="width: 100%;">
+                                            <tbody>
+                                                <tr>
+                                                    <td style="text-align: right;">
+                                                        <p:selectOneMenu id="pisoSelect" value="#{consultasView.pisoSeleccionadoIndex}"
+                                                                         style="width: 90%">   
+                                                            <p:ajax listener="#{consultasView.cambiarPiso}"  process="@this,pisoSelect"/>
+
+                                                            <c:forEach items="#{consultasView.pisos}" var="piso" varStatus="loop">
+                                                                <f:selectItem itemValue="#{loop.index}" itemLabel="Piso-#{piso.numeroPiso} (#{piso.area} m2)" />
+                                                            </c:forEach>
+                                                        </p:selectOneMenu>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                       
+
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                    </fieldset>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </div>
+
+            </h:panelGroup>
+
+            <h:panelGroup class="Container Wid100" layout="block" id="bloque-form">
+                <h:panelGroup layout="block">
+                    <ui:include src="_caracteristicasBloque.xhtml"/>
+                </h:panelGroup>
+            </h:panelGroup>
+            
+    </ui:composition>
+</html>

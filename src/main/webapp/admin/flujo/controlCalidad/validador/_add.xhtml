@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition>
+
+        <p:dialog id="addDlg" widgetVar="addDialog"
+                  modal="true" resizable="false"
+                  header="Modificar Predio de Relevamiento" position="top" style="width: 600px;" appendTo="@(body)">
+            <h:form id="form-form" prependId="false">
+                <p:tabView id="tab-view-predio">
+                    <p:tab id="tab-1" title="Información de Predio">
+                        <h:panelGrid columns="4" styleClass="Wid100">
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Parroquia"/>
+                                <p:inputText value="#{FWPRedioValidadorView.entidadSeleccionada.manzana.manzanaPK.codParroquia}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Zona"/>
+                                <p:inputText value="#{FWPRedioValidadorView.entidadSeleccionada.manzana.manzanaPK.codZona}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Sector"/>
+                                <p:inputText value="#{FWPRedioValidadorView.entidadSeleccionada.manzana.manzanaPK.codSector}" styleClass="Wid40" required="true" />
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Manzana"/>
+                                <p:inputText value="#{FWPRedioValidadorView.entidadSeleccionada.manzana.manzanaPK.codManzana}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Predio"/>
+                                <p:inputText value="#{FWPRedioValidadorView.entidadSeleccionada.codSolar}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="Bloque"/>
+                                <p:inputText value="#{FWPRedioValidadorView.entidadSeleccionada.codBloque}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="C. Piso"/>
+                                <p:inputText value="#{FWPRedioValidadorView.entidadSeleccionada.codPhh}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1">
+                                <p:outputLabel value="C. Unidad"/>
+                                <p:inputText value="#{FWPRedioValidadorView.entidadSeleccionada.codPhv}" styleClass="Wid40" required="true"/>
+                            </h:panelGrid>
+                            <h:panelGrid columns="1" styleClass="Wid100">
+                                <p:outputLabel value="Número de Ficha"/>
+                                <p:inputText value="#{FWPRedioValidadorView.entidadSeleccionada.numeroFicha}"/>
+                            </h:panelGrid>
+                            <!--<var:varDisInputText  id="flujo_estado" label="Estado:"
+                                                 table="wf_estado" column="estado"
+                                                 bind="{FWPRedioValidadorView.entidadSeleccionada.}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                 changeOnEnter="true"
+                                                 next="observacion"
+                                                 labelPosition="top"/>-->
+                        </h:panelGrid>
+
+                    </p:tab>
+                    <p:tab id="tab-2" title="Integrantes">
+                        <ui:include src="_integrantes.xhtml"/>
+                    </p:tab>
+                    <p:tab id="tab-3" title="Fotos de Predio">
+                       <ui:include src="_fotos.xhtml"/>
+                    </p:tab>
+                </p:tabView>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

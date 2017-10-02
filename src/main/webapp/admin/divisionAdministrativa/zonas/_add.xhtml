@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition>
+        <p:dialog id="addDlg" widgetVar="addDialog" 
+                  modal="true" resizable="false"
+                  header="#{zonaView.opcion.name()} Datos de Zona">   
+            <p:ajax event="close" update="listado-form,addDlg" listener="#{zonaView.prepararGuardar()}" />
+            <h:panelGroup layout="block" class="Container Container100">
+                <h:form id="form-form" prependId="false">
+                    <p:messages id="datos-messages" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1" id="datos-info">
+                            <h:panelGrid columns="3">
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="parroquia-select" value="Parroquia:" class="DispBlock Wid100"/> 
+                                    <p:selectOneMenu id="parroquia-select" value="#{zonaView.entidadSeleccionada.zonaPK.codParroquia}" 
+                                                     styleClass="varDisSelectContainer" disabled="#{zonaView.opcion.name() eq  'Eliminar'}"
+                                                     class="DispBlock Wid100" style="width: 160px; margin-right: 50px;" required="true">
+                                        <f:selectItem itemLabel="- Parroquia -" itemValue="#{null}" noSelectionOption="true" />
+                                        <f:selectItems  value="#{zonaView.parroquias}" var="p" itemLabel="#{p.label}" itemValue="#{p.value}"/>                           
+                                    </p:selectOneMenu>                      
+                                </h:panelGroup>
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="zona_cod" value="Códido zona:" class="DispBlock Wid100"/>                            
+                                    <p:inputText id="zona_cod" value="#{zonaView.entidadSeleccionada.zonaPK.codZona}" readonly="#{zonaView.opcion.name() eq  'Eliminar'}" maxlength="2"
+                                                 class="input_125" required="true" onkeypress="validateIntegerValueAndFocusNextComponent(event, 'nombre')"/>
+                                </h:panelGroup>   
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="nombre" value="Nombre:" class="DispBlock Wid100"/>                            
+                                    <p:inputText id="nombre" value="#{zonaView.entidadSeleccionada.nombre}" readonly="#{zonaView.opcion.name() eq  'Eliminar'}"
+                                                 class="input_125" onkeypress="focusNextOnEnter(event, 'cem')"/>
+                                </h:panelGroup>
+
+                            </h:panelGrid> 
+
+                        </h:panelGrid>                           
+                        <h:panelGroup layout="block" class="MarTop20">
+                            <p:commandButton id="crear-usuario-btn"
+                                             icon="fa fa-save" styleClass="white Fright" value="#{zonaView.opcion.name()}"                                         
+                                             actionListener="#{zonaView.realizarAccion()}"
+                                             update="listado-form,datos-info,table-list,datos-messages,messages"
+                                             oncomplete="handleSaveRequest(xhr, status, args)"/>
+                            <p:commandButton id="cancelar-usuario-btn" 
+                                             icon="fa fa-ban" styleClass="white" value="Cancelar" actionListener="#{zonaView.prepararGuardar()}"                                        
+                                             oncomplete="PF('addDialog').hide();"
+                                             />
+                        </h:panelGroup>
+                    </h:panelGroup>
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade" >
+                        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check white" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-times white" />
+                    </p:confirmDialog>
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

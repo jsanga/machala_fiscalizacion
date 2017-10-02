@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <p:dialog id="addDlg" widgetVar="addDialog"
+                  modal="true" resizable="false"
+                  header="Datos del coeficiente #{coefGeneralView.coeficienteSeleccionado.texto}" appendTo="@(body)">
+            <p:ajax event="close" update="listado-form,addDlg" listener="#{coefGeneralView.cancelar()}" />
+            <h:panelGroup layout="block" class="Container Container100">
+                <h:form id="form-form" prependId="false">
+                    <p:messages id="datos-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                    <f:event listener="#{coefGeneralView.validarFormulario}" type="postValidate"/>
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="3"> 
+
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="cod_" value="C&oacute;digo:" class="DispBlock Wid100"/>
+                                    <p:inputText id="cod_" value="#{coefGeneralView.coeficienteSeleccionado.valorDiscretoPK.valor}"  disabled="true"
+                                                 class="input_125" required="true" onkeypress="validateFloatValueAndFocusNext(event, 'base')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="rango" value="Rubro:" class="DispBlock Wid100"/>
+                                    <p:inputText id="rango" value="#{coefGeneralView.coeficienteSeleccionado.texto}" disabled="true"
+                                                 class="input_125" required="true" onkeypress="validateFloatValueAndFocusNext(event, 'piso2')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="coef" value="Coeficiente:" class="DispBlock Wid100"/>
+                                    <p:inputText id="coef" value="#{coefGeneralView.coeficienteSeleccionado.coeficiente}" 
+                                                 class="input_125" required="true" onkeypress="validateFloatValueAndFocusNext(event, 'actualizar-btn')"/>
+                                </h:panelGroup>
+
+                            </h:panelGrid>
+
+                        </h:panelGrid>
+
+                        <h:panelGroup layout="block" class="MarTop20">
+
+                            <p:commandButton id="actualizar-btn"
+
+                                             icon="fa fa-save" styleClass="white Fright" value="Actualizar"
+                                             actionListener="#{coefGeneralView.editar()}"
+                                             process="@this,datos-messages,cod_,rango,coef"
+                                             update="listado-form,datos-messages,form-form,table-list"/>
+                            <p:commandButton id="cancelar-usuario-btn"
+                                             process="@this"
+                                             icon="fa fa-save" styleClass="white" value="Cancelar" actionListener="#{coefGeneralView.cancelar()}"
+                                             onclick="PF('addDialog').hide();"
+                                             />
+                        </h:panelGroup>
+                    </h:panelGroup>
+
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

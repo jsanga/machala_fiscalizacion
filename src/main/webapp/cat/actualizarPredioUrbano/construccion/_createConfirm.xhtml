@@ -1,0 +1,145 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop20">
+            <h1 class="BigTopic Fs16">Datos del predio</h1>
+            <hr></hr>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Wid100 MarTop10">
+            <p:fieldset legend="Datos generales del nuevo predio" toggleable="true" toggleSpeed="500" >
+                <p:panelGrid columns="4">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Clave catastral: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.predio.claveCatastral}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                         <p:outputLabel value="Tipo de propiedad: " class="show-detail" />
+                        <p:outputLabel value="#{updateConstruccionView.variablesService.obtenerValor('cat_predio', 'tipo_propiedad', updateConstruccionView.predio.tipoPropiedad, updateConstruccionView.anioActual)}"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Ficha madre: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.predio.terreno.alumbrado== 0 ? 'NO' : 'SI'}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Cantidad de edificaciones: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.predio.bloques.size()}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Manzana: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.predio.manzana}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="&Aacute;rea terreno: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.predio.terreno.areaLevantamiento} m&sup2;." />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Localizaci&oacute;n: " class="show-detail" />
+                        <p:outputLabel value="#{updateConstruccionView.variablesService.obtenerValor('cat_terreno', 'ubicacion', updateConstruccionView.predio.terreno.ubicacion, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Topograf&iacute;a: " class="show-detail" />
+                        <p:outputLabel value="#{updateConstruccionView.variablesService.obtenerValor('cat_terreno', 'topografia', updateConstruccionView.predio.terreno.topografia, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                </p:panelGrid>
+            </p:fieldset>
+        </h:panelGroup>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop20">
+            <p:fieldset legend="Obras de Infraestructura" toggleable="true" toggleSpeed="500" >
+                <p:panelGrid columns="4">
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Agua potable: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.variablesService.obtenerValor('cat_terreno', 'red_agua_potable', updateConstruccionView.predio.terreno.redAguaPotable, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Energ&iacute;a el&eacute;ctrica: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.variablesService.obtenerValor('cat_terreno', 'red_energia_electrica', updateConstruccionView.predio.terreno.redEnergiaElectrica, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Alcantarillado sanitario: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.variablesService.obtenerValor('cat_terreno', 'red_alcantarillado', updateConstruccionView.predio.terreno.redAlcantarillado, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Trasporte p&uacute;blico: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.variablesService.obtenerValor('comun', 'tiene', updateConstruccionView.predio.terreno.transportePublico, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Tel&eacute;fono: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.variablesService.obtenerValor('cat_terreno', 'red_telefonica', updateConstruccionView.predio.terreno.redTelefonica, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Recolecci&oacute;n de basura: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.variablesService.obtenerValor('comun', 'tiene', updateConstruccionView.predio.terreno.recoleccionBasura, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Aseo de calles: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.variablesService.obtenerValor('comun', 'tiene', updateConstruccionView.predio.terreno.aseoCalles, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Aceras: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.variablesService.obtenerValor('comun', 'tiene', updateConstruccionView.predio.terreno.aceras, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="Bordillos: " class="show-detail" />
+                        <p:outputLabel  value="#{updateConstruccionView.variablesService.obtenerValor('comun', 'tiene', updateConstruccionView.predio.terreno.bordillos, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel value="V&iacute;as: " class="show-detail" />
+                        <p:outputLabel value="#{updateConstruccionView.variablesService.obtenerValor('cat_terreno', 'tipo_via', updateConstruccionView.predio.terreno.tipoVias, updateConstruccionView.anioActual)}" />
+                    </h:panelGroup>
+                </p:panelGrid>
+
+            </p:fieldset>
+        </h:panelGroup>
+         <h:panelGroup layout="block" class="Responsive Container100 MarRight20 MarTop20 MarBot10">
+                <p:fieldset legend="Propietarios" toggleable="true" toggleSpeed="500" >
+                <div class="ContainerIndent Container100 MarBot10">
+                    <div class="ContainerIndent Container96">
+                        <p:dataTable var="prop" value="#{updateConstruccionView.predio.propietarios}" style="margin-bottom:0"
+                                     rows="5" paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15"
+                                     paginatorPosition="bottom" >
+                           
+                            <p:column headerText="Tipo propietario">
+                                <h:outputText value="#{prop.valorTipoPropietario()}"  />
+                            </p:column>
+                            <p:column headerText="Contribuyente">
+                                <h:outputText value="#{prop.nombreCompleto}"  />
+                            </p:column>
+                            <p:column headerText="C&eacute;dula/RUC">
+                                <h:outputText value="#{prop.identificacion}" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+                </p:fieldset>
+            </h:panelGroup>
+         <h:panelGroup layout="block" class="Wid100 MarTop20 MarBot10">
+            <p:fieldset legend="Fotos del predio" toggleable="true" toggleSpeed="500" >
+                <p:outputLabel style="margin-left: 30px;" value="No se han registrado fotos al predio." rendered="#{empty updateConstruccionView.fotos and empty updateConstruccionView.fotosPreview}"/>
+                <p:lightBox styleClass="imagebox">
+                    <c:forEach var="foto1" items="#{updateConstruccionView.fotosPreview}" varStatus="loop">
+                                    <h:outputLink value="#{foto1.ruta}" class="MarRight20 Fleft" rendered="#{!foto1.eliminado}">
+                                        <h:graphicImage url="#{foto1.ruta}" width="150" height="150" title="Fotos del predio"/>
+                                    </h:outputLink>
+                                </c:forEach>
+                                <c:forEach var="foto" items="#{updateConstruccionView.fotos}" varStatus="loop">
+                                    <c:if test="#{not empty updateConstruccionView.fotos}">
+                                        <h:outputLink value="#{foto.pathToFile}" class="MarRight20 Fleft" >
+                                            <h:graphicImage url="#{foto.pathToFile}" width="150" height="150" title="Fotos del predio"/>
+                                        </h:outputLink>
+                                    </c:if>
+                                </c:forEach>   
+                </p:lightBox>
+            </p:fieldset>
+        </h:panelGroup>
+    </ui:composition>
+
+</html>

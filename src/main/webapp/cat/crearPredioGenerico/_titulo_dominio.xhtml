@@ -1,0 +1,335 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="escriturasContainer" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">T&iacute;tulo de dominio del bien inmueble  </h1>
+                <hr></hr>
+
+                <h:panelGroup layout="block" class="Responsive Container100 MarRight20">
+                    <p:fieldset legend="Contribuyentes" toggleable="true" toggleSpeed="500" >   
+                        <div class="ContainerIndent Container100">
+
+                            <h:panelGroup layout="block" class="actions" id="propietarioListDelete-update">                                
+                                <p:commandButton title="Eliminar"
+                                                 id="eliminar-propietario-btn" styleClass="Fs16" update="tabMain:propietarioListDelete,tabMain:propietarioListDelete-update"
+                                                 icon="fa fa-user-times white" actionListener="#{crearPredioView.eliminarPropietario}"
+                                                 process="@this"
+                                                 style="margin-right: 10px; margin-bottom: 5px;"
+                                                 disabled="#{crearPredioView.propietarioSeleccionado == null}"
+                                                 value="Eliminar">
+
+                                    <p:commandButton title="Agregar"
+                                                     id="add-propietario-btn"  styleClass="Fs16" update="CreateContribuyenteDlg"
+                                                     icon="fa fa-user-plus white" actionListener="#{crearPredioView.nuevoContribuyente()}"
+                                                     process="@this"
+                                                     value="Agregar"
+                                                     oncomplete="PF('CreateContribuyenteDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                     style="margin-right: 10px; margin-bottom: 5px;"/>
+
+
+                                    <p:confirm header="Confirmación" message="Está seguro de eliminar el usuario seleccionado #{crearPredioView.propietarioSeleccionado.nombreCompleto}?" icon="ui-icon-alert" />
+                                </p:commandButton>
+                                <!--<p:inputText style="margin-left: 20px;"  id="clave_anterior2" placeholder="Clave catastral anterior" value="#{crearPredioView.predio.claveAnterior}" maxlength="11"
+                                             class="input_200" onkeypress="validateIntegerValueAndFocusNext(event, 'tabMain:#{crearPredioView.predio.claveAnterior}btn_bucarCA2')"/>
+                                <p:commandButton id="btn_bucarCA2" icon="fa fa-search" action="#{consultaRegistroView.ejecutarConsulta(crearPredioView.predio.claveAnterior)}" 
+                                                 oncomplete="PF('dlgResultadoConsulta').show();" title="Busqueda de Propietario por Clave Anterior." 
+                                                 update="messages"/>  -->
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                </p:confirmDialog>
+
+                            </h:panelGroup>
+                        </div>
+                        <div class="ContainerIndent Container100 MarBot10" id="propietarios">
+                            <div class="ContainerIndent Container96">
+                                <p:dataTable id="propietarioListDelete" var="prop" value="#{crearPredioView.propietarios}" selection="#{crearPredioView.propietarioSeleccionado}" rowKey="#{prop.id}" style="margin-bottom:0"
+                                             rows="5" paginator="true"
+                                             editable="true" editMode="cell"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15"
+                                             emptyMessage="No se han registrados contribuyentes al predio."
+                                             paginatorPosition="bottom" selectionMode="single">
+                                    <p:ajax event="rowSelect" listener="#{crearPredioView.onRowSelect}" update="tabMain:propietarioListDelete-update,tabMain:propietarioListDelete" />
+                                    <p:ajax event="rowUnselect" listener="#{crearPredioView.onRowSelect}" update="tabMain:propietarioListDelete-update,tabMain:propietarioListDelete" />
+                                    <p:ajax event="cellEdit" listener="#{crearPredioView.onCellEditPropietario}" />
+
+                                    <f:facet name="header">
+                                        Clic en Tipo propietario para cambiar el tipo
+                                    </f:facet>
+                                    <p:column style="width:16px">
+                                        <p:rowToggler />
+                                    </p:column>
+                                    <p:column headerText="Tipo propietario">
+                                        <p:cellEditor>
+                                            <f:facet name="output"><h:outputText value="#{prop.valorTipoPropietario()}" /></f:facet>
+                                            <f:facet name="input">
+                                                <h:selectOneMenu value="#{prop.tipoPropietario}" style="width:100%; height: 24px;" >
+                                                    <f:selectItems value="#{crearPredioView.tiposPropietarios}" var="item" itemLabel="#{item.label}" itemValue="#{item.value}" />
+                                                </h:selectOneMenu>
+                                            </f:facet>
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="Contribuyente" id="nombres">
+                                        <p:cellEditor>
+                                            <f:facet name="output"><h:outputText value="#{prop.nombreCompleto}"  /></f:facet>
+                                            <f:facet name="input"><p:inputText id="modelInput" value="#{prop.nombreCompleto}" style="width:96%"/></f:facet>
+                                            
+                                        </p:cellEditor>
+                                    </p:column>
+                                    <p:column headerText="C&eacute;dula/RUC" id="cedula">
+                                        <h:outputText value="#{prop.identificacion}" />
+                                    </p:column>
+                                    <p:column headerText="Tel&eacute;fono celular" id="celular">
+                                        <h:outputText value="#{prop.celular}" />
+                                    </p:column>
+                                    <p:column headerText="Tel&eacute;fono convencional" id="telefono">
+                                        <h:outputText value="#{prop.telefono}" />
+                                    </p:column>
+                                    <p:rowExpansion>
+                                        <p:panelGrid  columns="6" columnClasses="show-detail,value,show-detail,value,show-detail,value">
+                                            <h:outputText value="Personer&iacute;a:" />
+                                            <h:outputText value="#{prop.valorPersoneria()}" />
+                                            <h:outputText value="Nombre Representante legal:" />
+                                            <h:outputText value="#{prop.representanteLegal}" />
+                                            <h:outputText value="C&eacute;dula Representante legal:" />
+                                            <h:outputText value="#{prop.representanteLegalCedula}" />
+                                        </p:panelGrid>
+                                    </p:rowExpansion>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </p:fieldset>
+
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Responsive Container100 MarTop20" style="margin-bottom: 20px;">
+                <div class="ContainerIndent Wid100 MarRight20">
+                    <p:fieldset legend="Situaci&oacute;n legal de la propiedad" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid columns="4" style="width: 100%">
+                            <var:varDisInputText id="presentaron_escritura" label="Presentaron escritura:"
+                                                 table="comun" column="si_no"
+                                                 bind="#{crearPredioView.escritura.presentaronEscritura}"
+                                                 showlabel="true"
+                                                 changeOnEnter="true"
+                                                 defaultValue="2"
+                                                 next="notaria"
+                                                 labelPosition="top"/>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="notaria" value="Notar&iacute;a:" class="DispBlock Wid100"/>
+                                <p:inputText id="notaria" value="#{crearPredioView.escritura.notaria}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'tabMain:canton')">
+                                    <p:ajax update="cat_predio_manzana"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="canton" value="Canton:"  class="DispBlock Wid100"/>
+                                <p:inputText id="canton" value="#{crearPredioView.escritura.canton}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'tabMain:fecha_escritura_input')">
+                                    <p:ajax update="cat_predio_manzana"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_escritura" value="Fecha escritura:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_escritura" value="#{crearPredioView.escritura.fechaEscritura}" style="width: 180px;"
+                                            class="input_180" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'tabMain:ficha_registral')">
+                                    <p:ajax update="cat_predio_manzana"/>
+                                </p:calendar>
+                            </h:panelGroup> 
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="ficha_registral" value="Ficha registral:"  class="DispBlock Wid100"/>
+                                <p:inputText id="ficha_registral" value="#{crearPredioView.escritura.fichaRegistral}"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'tabMain:cod_phv')">
+                                    <p:ajax update="cat_predio_manzana"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cod_phv" value="C. Piso:"  class="DispBlock Wid100"/>
+                                <p:inputText id="cod_phv" value="#{crearPredioView.escritura.phv}"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'tabMain:cod_phh')">
+                                    <p:ajax update="cat_predio_manzana"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="cod_phh" value="C. Unidad:"  class="DispBlock Wid100"/>
+                                <p:inputText id="cod_phh" value="#{crearPredioView.escritura.phh}"
+                                             class="input_180" onkeypress="validateIntegerValueAndFocusNext(event, 'tabMain:alicuota')">
+                                    <p:ajax update="cat_predio_manzana"/>
+                                </p:inputText>
+                            </h:panelGroup>                            
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="alicuota" value="Al&iacute;cuota:" class="DispBlock Wid100"/>
+                                <p:inputText id="alicuota" value="#{crearPredioView.escritura.alicuota}"
+                                             class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'tabMain:area_contruccion')">
+                                    <p:ajax update="cat_predio_manzana"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="area_contruccion" value="&Aacute;rea construcci&oacute;n:" class="DispBlock Wid100"/>
+                                <p:inputText id="area_contruccion" value="#{crearPredioView.escritura.areaConstruccion}"
+                                             class="input_180" onkeypress="validateFloatValueAndFocusNext(event, 'tabMain:folio')">
+                                    <p:ajax update="cat_predio_manzana"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="folio" value="Fojas:"  class="DispBlock Wid100"/>
+                                <p:inputText id="folio" value="#{crearPredioView.escritura.folio}"
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'tabMain:nro_inscripcion')">
+                                    <p:ajax update="cat_predio_manzana"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="nro_inscripcion" value="No. inscripci&oacute;n:" class="DispBlock Wid100"/>
+                                <p:inputText id="nro_inscripcion" value="#{crearPredioView.escritura.nroInscripcion}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'tabMain:repertorio')">
+                                    <p:ajax update="nro_inscripcion"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="repertorio" value="Repertorio:" class="DispBlock Wid100"/>
+                                <p:inputText id="repertorio" value="#{crearPredioView.escritura.repertorio}" 
+                                             class="input_180" onkeypress="focusNextOnEnter(event, 'tabMain:fecha_inscripcion_input')">
+                                    <p:ajax update="repertorio"/>
+                                </p:inputText>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="fecha_inscripcion" value="Fecha inscripci&oacute;n:"  class="DispBlock Wid100"/>
+                                <p:calendar id="fecha_inscripcion" value="#{crearPredioView.escritura.fechaInscripcion}" style="width: 180px;"
+                                            class="input_180" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'tabMain:dominio:cat_predio-dominio-input')">
+                                    <p:ajax update="fecha_inscripcion"/>
+                                </p:calendar>
+                            </h:panelGroup>
+                            <var:varDisInputText id="dominio" label="Dominio:"
+                                                 table="cat_predio" column="dominio"
+                                                 bind="#{crearPredioView.predio.dominio}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                 changeOnEnter="true"
+                                                 next="origen:cat_predio-origen-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="origen" label="Origen del predio:"
+                                                 table="cat_predio" column="origen"
+                                                 bind="#{crearPredioView.predio.origen}"
+                                                 showlabel="true"
+                                                 defaultValue="0"
+                                                 changeOnEnter="true"
+                                                 next="tipo_propiedad:cat_predio-tipo_propiedad-input"
+                                                 labelPosition="top"/>
+                            <var:varDisInputText id="tipo_propiedad" label="Tipo de propiedad:"
+                                                 table="cat_predio" column="tipo_propiedad"
+                                                 bind="#{crearPredioView.predio.tipoPropiedad}"
+                                                 showlabel="true"
+                                                 changeOnEnter="true"
+                                                 defaultValue="3"
+                                                 next="esc_norte_ref"
+                                                 labelPosition="top"/>
+                            <!--                                <h:panelGroup layout="block">
+                                                                <p:outputLabel for="propietario_anterior" value="Repertorio:" class="DispBlock Wid100"/>
+                                                                <p:inputText id="propietario_anterior" value="#{crearPredioView.escritura.repertorio}" 
+                                                                             class="input_180" onkeypress="focusNextOnEnter(event, 'tabMain:esc_norte_ref')"/>
+                                                            </h:panelGroup>-->
+                        </h:panelGrid>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container Wid100 MarTop20" id="LinderosDiv">
+                <h:panelGroup layout="block" class="Responsive Container100 MarRight20">
+                    <div class="ContainerIndent Wid100">
+                        <p:fieldset legend="Linderos y mensuras de acuerdo al t&iacute;tulo de dominio" toggleable="true" toggleSpeed="500" >
+                            <div class="Responsive Container50">
+                                <div class="ContainerIndent MarRight20">
+                                    <h:panelGrid columns="5" class="linderoEscritura">
+                                        <p:outputLabel for="esc_norte_ref" value="Norte:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_norte_ref" value="#{crearPredioView.escritura.norteRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'tabMain:esc_norte_long')"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;">
+                                            <p:ajax update="esc_norte_ref"/>
+                                        </p:inputText>
+                                        <p:outputLabel for="esc_norte_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_norte_long" value="#{crearPredioView.escritura.norteLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'tabMain:esc_sur_ref')"
+                                                     class="input_160" style="margin-bottom: 8px;">
+                                            <p:ajax update="esc_norte_long"/>
+                                        </p:inputText>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_sur_ref" value="Sur:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_sur_ref" value="#{crearPredioView.escritura.surRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'tabMain:esc_sur_long')"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;">
+                                            <p:ajax update="esc_sur_ref"/>
+                                        </p:inputText>
+                                        <p:outputLabel for="esc_sur_long" value="Con:" class="DispBlock Wid100"/>
+                                        <p:inputText id="esc_sur_long" value="#{crearPredioView.escritura.surLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'tabMain:esc_perimetro')"
+                                                     class="input_160" style="margin-bottom: 8px;">
+                                            <p:ajax update="esc_sur_long"/>
+                                        </p:inputText>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_perimetro" value="Per&iacute;metro:" class="DispBlock Wid100" />
+                                        <p:inputText id="esc_perimetro" value="#{crearPredioView.escritura.perimetro}"
+                                                     onkeypress="validateFloatValueAndFocusNext(event, 'tabMain:esc_este_ref')"
+                                                     class="input_160 MarRight10" >
+                                            <p:ajax update="esc_perimetro"/>
+                                        </p:inputText>
+                                        <p:outputLabel value="mts." />
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                            <div class="Responsive Container50">
+                                <div class="ContainerIndent">
+                                    <h:panelGrid columns="5" class="linderoEscritura">
+                                        <p:outputLabel for="esc_este_ref" value="Este:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_este_ref" value="#{crearPredioView.escritura.esteRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'tabMain:esc_este_long')"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;">
+                                            <p:ajax update="esc_este_ref"/>
+                                        </p:inputText>
+                                        <p:outputLabel for="esc_este_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_este_long" value="#{crearPredioView.escritura.esteLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'tabMain:esc_oeste_ref')"
+                                                     class="input_160" style="margin-bottom: 8px;">
+                                            <p:ajax update="esc_este_long"/>
+                                        </p:inputText>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_oeste_ref" value="Oeste:" class="DispBlock Wid100 Fright"/>
+                                        <p:inputText id="esc_oeste_ref" value="#{crearPredioView.escritura.oesteRef}"
+                                                     onkeypress="focusNextOnEnter(event, 'tabMain:esc_oeste_long')"
+                                                     class="input_160 MarRight10" style="margin-bottom: 8px;">
+                                            <p:ajax update="esc_oeste_ref"/>
+                                        </p:inputText>
+                                        <p:outputLabel for="esc_oeste_long" value="Con:" class="DispBlock Wid100"/>
+                                        <p:inputText id="esc_oeste_long" value="#{crearPredioView.escritura.oesteLongitud}"
+                                                     onkeypress="focusNextOnEnter(event, 'tabMain:esc_superficie')"
+                                                     class="input_160" style="margin-bottom: 8px;">
+                                            <p:ajax update="esc_oeste_long"/>
+                                        </p:inputText>
+                                        <p:outputLabel value="mts." />
+                                        <p:outputLabel for="esc_superficie" value="Superficie:" class="DispBlock Wid100" />
+                                        <p:inputText id="esc_superficie" value="#{crearPredioView.escritura.superficie}"
+                                                     onkeypress="validateFloatValueAndFocusNext(event, 'tabMain:wiz_next')"
+                                                     class="input_160 MarRight10">
+                                            <p:ajax update="esc_superficie"/>
+                                        </p:inputText>
+                                        <p:outputLabel value="m&sup2;." />
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                        </p:fieldset>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+            
+        </h:panelGroup>
+        <ui:include src="_addPosesionario.xhtml"/>
+    </ui:composition>
+
+</html>

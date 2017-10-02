@@ -1,0 +1,284 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="escriturasContainer" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">T&iacute;tulo de dominio del bien inmueble  </h1>
+                <hr></hr>
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent MarRight20">
+                        <p:fieldset legend="Datos de escritura" toggleable="true" toggleSpeed="500" >
+                            <h:panelGrid columns="4" style="width: 100%">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="notaria" value="Notar&iacute;a:" class="DispBlock Wid100"/>
+                                    <p:inputText id="notaria" value="#{catastroEscrituraView.escritura.notaria}"
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'canton')"/>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="canton" value="Canton:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="canton" value="#{catastroEscrituraView.escritura.canton}"
+                                                     class="input_150" onkeypress="focusNextOnEnter(event, 'fecha_escritura_input')"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="fecha_escritura" value="Fecha escritura:"  class="DispBlock Wid100"/>
+                                        <p:calendar id="fecha_escritura" value="#{catastroEscrituraView.escritura.fechaEscritura}" 
+                                                    class="input_150" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'folio')"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="folio" value="Folio:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="folio" value="#{catastroEscrituraView.escritura.folio}"
+                                                     class="input_150" onkeypress="focusNextOnEnter(event, 'nro_inscripcion')"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="nro_inscripcion" value="Nro. inscripci&oacute;n:" class="DispBlock Wid100"/>
+                                    <p:inputText id="nro_inscripcion" value="#{catastroEscrituraView.escritura.nroInscripcion}" 
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'repertorio')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="repertorio" value="Repertorio:" class="DispBlock Wid100"/>
+                                    <p:inputText id="repertorio" value="#{catastroEscrituraView.escritura.repertorio}" 
+                                                 class="input_150" onkeypress="focusNextOnEnter(event, 'fecha_inscripcion_input')"/>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="fecha_inscripcion" value="Fecha inscripci&oacute;n:"  class="DispBlock Wid100"/>
+                                        <p:calendar id="fecha_inscripcion" value="#{catastroEscrituraView.escritura.fechaInscripcion}" 
+                                                    class="input_150" mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'alicuota')"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="alicuota" value="Al&iacute;cuota:" class="DispBlock Wid100"/>
+                                    <p:inputText id="alicuota" value="#{catastroEscrituraView.escritura.alicuota}"
+                                                 class="input_150" onkeypress="validateFloatValueAndFocusNext(event, 'cod_phv')"/>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="cod_phv" value="C. Piso:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="cod_phv" value="#{catastroEscrituraView.escritura.phv}"
+                                                     class="input_150" onkeypress="validateIntegerValueAndFocusNext(event, 'cod_phh')"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="cod_phh" value="C. Unidad:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="cod_phh" value="#{catastroEscrituraView.escritura.phh}"
+                                                     class="input_150" onkeypress="validateIntegerValueAndFocusNext(event, 'area_solar')"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup>
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="area_solar" value="&Aacute;rea solar:"  class="DispBlock Wid100"/>
+                                        <p:inputText id="area_solar" value="#{catastroEscrituraView.escritura.area}"
+                                                     class="input_150" onkeypress="validateFloatValueAndFocusNext(event, 'area_contruccion')"/>
+                                    </h:panelGroup>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="area_contruccion" value="&Aacute;rea construcci&oacute;n:" class="DispBlock Wid100"/>
+                                    <p:inputText id="area_contruccion" value="#{catastroEscrituraView.escritura.areaConstruccion}"
+                                                 class="input_150" onkeypress="validateFloatValueAndFocusNext(event, 'esc_norte_ref')"/>
+                                </h:panelGroup> 
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+
+            <h:panelGroup layout="block" class="Container Wid100 MarTop20" id="LinderosDiv">
+                <div class="ContainerIndent Wid100">
+                    <p:fieldset legend="Linderos y mensuras seg&uacute;n escritura" toggleable="true" toggleSpeed="500" >
+                        <div class="Responsive Container50">
+                            <div class="ContainerIndent MarRight20">
+                                <h:panelGrid columns="5" class="linderoEscritura">
+                                    <p:outputLabel for="esc_norte_ref" value="Norte:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="esc_norte_ref" value="#{catastroEscrituraView.escritura.norteRef}"
+                                                 onkeypress="focusNextOnEnter(event, 'esc_norte_long')"
+                                                 class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="esc_norte_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="esc_norte_long" value="#{catastroEscrituraView.escritura.norteLongitud}"
+                                                 onkeypress="focusNextOnEnter(event, 'esc_sur_ref')"
+                                                 class="input_160" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel value="mts." />
+                                    <p:outputLabel for="esc_sur_ref" value="Sur:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="esc_sur_ref" value="#{catastroEscrituraView.escritura.surRef}"
+                                                 onkeypress="focusNextOnEnter(event, 'esc_sur_long')"
+                                                 class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="esc_sur_long" value="Con:" class="DispBlock Wid100"/>
+                                    <p:inputText id="esc_sur_long" value="#{catastroEscrituraView.escritura.surLongitud}"
+                                                 onkeypress="focusNextOnEnter(event, 'esc_perimetro')"
+                                                 class="input_160" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel value="mts." />
+                                    <p:outputLabel for="esc_perimetro" value="Per&iacute;metro:" class="DispBlock Wid100" />
+                                    <p:inputText id="esc_perimetro" value="#{catastroEscrituraView.escritura.perimetro}"
+                                                 onkeypress="validateFloatValueAndFocusNext(event, 'esc_este_ref')"
+                                                 class="input_160 MarRight10" />
+                                    <p:outputLabel value="mts." />
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                        <div class="Responsive Container50">
+                            <div class="ContainerIndent">
+                                <h:panelGrid columns="5" class="linderoEscritura">
+                                    <p:outputLabel for="esc_este_ref" value="Este:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="esc_este_ref" value="#{catastroEscrituraView.escritura.esteRef}"
+                                                 onkeypress="focusNextOnEnter(event, 'esc_este_long')"
+                                                 class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="esc_este_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="esc_este_long" value="#{catastroEscrituraView.escritura.esteLongitud}"
+                                                 onkeypress="focusNextOnEnter(event, 'esc_oeste_ref')"
+                                                 class="input_160" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel value="mts." />
+                                    <p:outputLabel for="esc_oeste_ref" value="Oeste:" class="DispBlock Wid100 Fright"/>
+                                    <p:inputText id="esc_oeste_ref" value="#{catastroEscrituraView.escritura.oesteRef}"
+                                                 onkeypress="focusNextOnEnter(event, 'esc_oeste_long')"
+                                                 class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel for="esc_oeste_long" value="Con:" class="DispBlock Wid100"/>
+                                    <p:inputText id="esc_oeste_long" value="#{catastroEscrituraView.escritura.oesteLongitud}"
+                                                 onkeypress="focusNextOnEnter(event, 'esc_superficie')"
+                                                 class="input_160" style="margin-bottom: 8px;"/>
+                                    <p:outputLabel value="mts." />
+                                    <p:outputLabel for="esc_superficie" value="Superficie:" class="DispBlock Wid100" />
+                                    <p:inputText id="esc_superficie" value="#{catastroEscrituraView.escritura.superficie}"
+                                                 onkeypress="validateFloatValueAndFocusNext(event, 'cat_terreno-observacion')"
+                                                 class="input_160 MarRight10"/>
+                                    <p:outputLabel value="m&sup2;." />
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:fieldset>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Responsive Container MarBot10 Wid100">
+                <div class="ContainerIndent">
+                     <p:fieldset legend="Datos del catastro de escrituras" toggleable="true" toggleSpeed="500" >
+                        <h:panelGrid columns="4" style="width: 100%">
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="eProtOtroResolucion" value="Resoluci&oacute;n:" class="DispBlock Wid100"/>
+                                <p:inputText id="eProtOtroResolucion" value="#{catastroEscrituraView.escritura.nroResolucion}" required="false"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'eProtOtroLamina')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="eProtOtroLamina" value="L&aacute;mina:" class="DispBlock Wid100"/>
+                                <p:inputText id="eProtOtroLamina" value="#{catastroEscrituraView.escritura.nroLamina}" required="false"
+                                             class="input_150" onkeypress="focusNextOnEnter(event, 'observacion')"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="eProtOtroNumero" value="N&uacute;mero:" class="DispBlock Wid100"/>
+                                <p:inputText id="eProtOtroNumero" value="#{catastroEscrituraView.escritura.nroCatastro}" required="false"
+                                             class="input_150"  readonly="true"/>
+                            </h:panelGroup>
+                            <h:panelGroup layout="block">
+                                <p:outputLabel for="eProtOtroFecha" value="Fecha:" class="DispBlock Wid100"/>
+                                <p:calendar id="eProtOtroFecha" value="#{catastroEscrituraView.escritura.fechaCatastro}" required="false"
+                                            pattern="dd/MM/yyyy" readonly="true" style="width: 153px !important;"/>
+                            </h:panelGroup>
+                        </h:panelGrid>
+                     </p:fieldset>
+                </div>
+            </h:panelGroup>
+              <h:panelGroup layout="block" class="Responsive Container100 MarRight20 MarTop20">
+                <h1 class="BigTopic Fs16">Propietarios</h1>
+                <hr></hr>
+                <div class="ContainerIndent Container100">
+                    <h:panelGroup layout="block" class="actions" id="propietarioListDelete-update">
+                        <p:commandButton title="Nuevo propietario"
+                                         id="buscar-propietario-btn"  styleClass="Fs16" update=":BuscarContribuyenteForm"
+                                         icon="fa fa-user-plus white" actionListener="#{catastroEscrituraView.inicializarBusquedaContribuyente()}"
+                                         process="@this,propietarioListDelete-update"
+                                         value="Adicionar"
+                                         oncomplete="PF('BuscarContribuyenteDialog').show();"
+                                         style="margin-right: 10px; margin-bottom: 5px;"/>
+                        <p:commandButton title="Eliminar"
+                                         id="eliminar-propietario-btn" styleClass="Fs16" update="propietarioListDelete,propietarioListDelete-update"
+                                         icon="fa fa-user-times white" actionListener="#{catastroEscrituraView.eliminarPropietario}"
+                                         process="@this"
+                                         disabled="#{catastroEscrituraView.propietarios.size() == 0}"
+                                         value="Eliminar">
+                            <p:confirm header="Confirmación" message="Está seguro de eliminar el propietario #{catastroEscrituraView.propietarioSeleccionado.nombreCompleto} ?" icon="ui-icon-alert" />
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                        </p:confirmDialog>
+                    </h:panelGroup>
+                </div>
+                <div class="ContainerIndent Container100 MarBot10" id="propietarios">
+                    <div class="ContainerIndent Container96">
+                        <p:dataTable id="propietarioListDelete" var="prop" value="#{catastroEscrituraView.propietarios}" selection="#{catastroEscrituraView.propietarioSeleccionado}" rowKey="#{prop.id}" style="margin-bottom:0"
+                                     rows="5" paginator="true"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15"
+                                     paginatorPosition="bottom" selectionMode="single">
+                            <p:ajax event="rowSelect" listener="#{catastroEscrituraView.onRowSelect}" update="propietarioListDelete-update,propietarioListDelete" />
+                            <p:ajax event="rowUnselect" listener="#{catastroEscrituraView.onRowUnselect}" update="propietarioListDelete-update,propietarioListDelete" />
+
+                            <p:column headerText="Propietario">
+                                <h:outputText value="#{prop.nombreCompleto}"  />
+                            </p:column>
+                            <p:column headerText="Tipo identificaci&oacute;n">
+                                <h:outputText value="#{prop.valorIdentificacion()}" />
+                            </p:column>
+                            <p:column headerText="Identificaci&oacute;n">
+                                <h:outputText value="#{prop.identificacion}" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </div>
+                </div>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h:panelGroup layout="block" class="Responsive Container100 MarRight20">
+                    <h1 class="BigTopic Fs15">Documentos escaneados</h1>
+                    <hr></hr>
+                    <div class="ContainerIndent">
+                        <p:fileUpload fileUploadListener="#{catastroEscrituraView.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                      multiple="true" fileLimit="1" allowTypes="/(\.|\/)(pdf)$/" invalidFileMessage="Solo formato PDF"
+                                      cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="documento-preview" fileLimitMessage="Solo se admite un documento."/>
+                        <h:panelGroup layout="block" id="documento-preview">
+                            <table>
+                                <tbody>
+                                    <c:forEach var="foto" items="#{catastroEscrituraView.infoDocumentos}" varStatus="loop">
+                                        <c:if test="#{not empty catastroEscrituraView.infoDocumentos[loop.index]}">                                           
+                                            <tr>
+                                                <td>
+                                                    <h:graphicImage  width="80" height="80" name="images/pdf96x96.png"/>
+                                                </td>
+                                                <td>
+                                                    <h:panelGroup layout="block">
+                                                        <p:outputLabel value="#{catastroEscrituraView.infoDocumentos[loop.index].fileName}" class="DispBlock Wid100"/>
+                                                        <p:inputTextarea style="height: 70%" maxlength="255" value="#{catastroEscrituraView.infoDocumentos[loop.index].description}"
+                                                                         placeholder="Descripci&oacute;n del documento" />
+                                                    </h:panelGroup>
+                                                </td>
+                                                <td class="column-photo-actions">
+                                                    <p:commandButton icon="fa fa-times white" actionListener="#{catastroEscrituraView.eliminarDocumento(index)}" update="documento-preview" process="@this"/>
+                                                </td>
+                                            </tr>                                          
+                                        </c:if>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+
+        </h:panelGroup>
+        <ui:include src="_buscarContribuyente.xhtml"/>
+    </ui:composition>
+
+</html>
+
+
+

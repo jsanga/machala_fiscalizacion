@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <ui:composition>
+
+        <h:panelGroup layout="block" class="Wid100 MarTop10 Container" id="datosAutorizacionContainer" style="margin-bottom: 20px;">
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h1 class="BigTopic Fs16">Datos de Autorizaci&oacute;n</h1>
+                <h:panelGroup layout="block" class="Responsive100 Container100">
+                    <h:panelGrid columns="4" style="width: 100%">
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="tipo_documento" value="Tipo de documento:" class="DispBlock Wid100"/>
+                            <p:selectOneMenu id="tipo_documento"  value="#{modDatosGeneralesView.idTipoDocumento}" onchange="focusNextOnEnter(event, 'referencia_datos')">
+                                <f:selectItems  value="#{modDatosGeneralesView.tiposDocumentos}" var="tipoDoc" itemLabel="#{tipoDoc.label}" itemValue="#{tipoDoc.value}"/>
+                            </p:selectOneMenu>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="referencia_datos" value="Referencia:" class="DispBlock Wid100"/>
+                            <p:inputText id="referencia_datos" value="#{modDatosGeneralesView.datosAutorizacion.referencia}"
+                                         class="input_125" onkeypress="focusNextOnEnter(event, 'fecha_datos_input')"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="fecha_datos" value="Fecha:"  class="DispBlock Wid100"/>
+                            <p:calendar id="fecha_datos" value="#{modDatosGeneralesView.datosAutorizacion.fecha}"
+                                        mask="true" pattern="dd/MM/yyyy" onkeypress="focusNextOnEnter(event, 'observacion_datos')"/>
+                        </h:panelGroup>
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="responsable" value="Responsable:"  class="DispBlock Wid100" />
+                            <p:inputText id="responsable" value="#{modDatosGeneralesView.datosAutorizacion.responsable}" class="input_125" readonly="true"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:panelGrid columns="1" style="width: 90%">
+                        <h:panelGroup layout="block">
+                            <p:outputLabel for="observacion_datos" value="Observaciones:" class="DispBlock Wid100"/>
+                            <p:inputTextarea id="observacion_datos" style="width: 90%" value="#{modDatosGeneralesView.datosAutorizacion.observaciones}"
+                                             onkeypress="focusNextOnEnter(event, 'wiz_next')"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                </h:panelGroup>
+            </h:panelGroup>
+            <h:panelGroup layout="block" class="Container Wid100">
+                <h:panelGroup layout="block" class="Responsive Container100">
+                    <div class="ContainerIndent">
+                        <h1 class="BigTopic Fs15">Documento escaneado</h1>
+                        <p:fileUpload fileUploadListener="#{modDatosGeneralesView.handleFileUploadDocs}" mode="advanced" dragDropSupport="false"
+                                      multiple="true" fileLimit="1" allowTypes="/(\.|\/)(pdf)$/" invalidFileMessage="Solo formato PDF"
+                                      cancelLabel="Cancelar" uploadLabel="Subir" label="Seleccionar" update="documento-preview"/>
+                        <h:panelGroup layout="block" id="documento-preview">
+                            <table>
+                                <tbody>
+                                    <c:forEach var="foto" items="#{modDatosGeneralesView.datosDocs}" varStatus="loop">
+                                        <c:if test="#{not empty modDatosGeneralesView.datosDocs[loop.index]}">
+                                            <tr>
+                                                <td>
+                                                    <h:graphicImage  width="80" height="80" name="images/pdf96x96.png"/>
+                                                </td>
+                                                <td>
+                                                    <h:panelGroup layout="block">
+                                                        <p:outputLabel value="#{modDatosGeneralesView.datosDocs[loop.index].fileName}" class="DispBlock Wid100"/>
+                                                        <p:inputTextarea style="height: 70%" maxlength="255" value="#{modDatosGeneralesView.datosDocs[loop.index].description}"/>
+                                                    </h:panelGroup>
+                                                </td>
+                                                <td class="column-photo-actions">
+                                                    <p:commandButton icon="fa fa-times white" actionListener="#{modDatosGeneralesView.eliminarDoc(index)}" update="documento-preview" process="@this"/>
+                                                </td>
+                                            </tr>
+                                        </c:if>
+
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </h:panelGroup>
+                    </div>
+                </h:panelGroup>
+            </h:panelGroup>
+        </h:panelGroup>
+    </ui:composition>
+
+</html>

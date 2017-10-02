@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="usuario-dlg" widgetVar="usuarioDialog" 
+                  modal="true" resizable="false" appendTo="@(body)" 
+                  header="Datos del usuario">   
+            <p:ajax event="close" update="user-list-form" listener="#{userAdminView.cancelarCreacionUsuario}" />
+            <h:panelGroup layout="block" rendered="#{userAdminView.creandoUsuario or userAdminView.editandoUsuario}">
+                <h:form id="user-form" prependId="false">
+                    <!--<p:messages id="datos-usuario-messages" globalOnly="true" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />-->
+                    <p:messages id="datos-usuario-messages" showDetail="true" autoUpdate="false" closable="true" />
+                    <h:panelGroup layout="block" >
+                        <h:panelGrid columns="1">
+                            <h:panelGrid columns="3">
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="usuario_tipo_identificacion" value="Tipo de identificaci&oacute;n:" class="DispBlock Wid100"/>                            
+                                    <p:selectOneMenu id="usuario_tipo_identificacion" value="#{userAdminView.usuarioSeleccionado.tipoIdentificacion}" class="select_100" >
+                                        <f:selectItem itemLabel="Cedula" itemValue="C" />
+                                        <f:selectItem itemLabel="RUC" itemValue="R" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="usuario_identificacion" value="Nro Identificaci&oacute;n" class="DispBlock Wid100"/>                            
+                                    <p:inputText id="usuario_identificacion" value="#{userAdminView.usuarioSeleccionado.identificacion}" class="input_125"
+                                                 onkeypress="focusNextOnEnter(event, 'usuario_nombre')" required="true" requiredMessage="Identificaci&oacute;n requerido"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="usuario_nombre" value="Nombre:" class="DispBlock Wid100"/>                            
+                                    <p:inputText id="usuario_nombre" value="#{userAdminView.usuarioSeleccionado.nombre}" class="input_125" required="true"
+                                                 onkeypress="focusNextOnEnter(event, 'usuario_apellidos')" requiredMessage="Nombre requerido"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="usuario_apellidos" value="Apellidos:" class="DispBlock Wid100"/>                            
+                                    <p:inputText id="usuario_apellidos" value="#{userAdminView.usuarioSeleccionado.apellidos}" class="input_125"
+                                                 onkeypress="focusNextOnEnter(event, 'usuario_username')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="usuario_username" value="Usuario:" class="DispBlock Wid100"/>                            
+                                    <p:inputText id="usuario_username" value="#{userAdminView.usuarioSeleccionado.username}" class="input_125"
+                                                 required="true" requiredMessage="Usuario requerido"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel  value="Contrase&ntilde;a:" class="DispBlock Wid100"/>                            
+                                    <p:inputText id="usuario_pass" rendered="#{userAdminView.creandoUsuario}" value="#{userAdminView.usuarioSeleccionado.password}" class="input_125"
+                                                onkeypress="focusNextOnEnter(event, 'usuario_email')" required="#{userAdminView.creandoUsuario}" requiredMessage="Contrase&ntilde;a requerido"/>
+                                    <p:password id="usuario_pass2" rendered="#{userAdminView.editandoUsuario}" value="#{userAdminView.usuarioSeleccionado.password}" class="input_125"
+                                                onkeypress="focusNextOnEnter(event, 'usuario_email')" required="#{userAdminView.creandoUsuario}" requiredMessage="Contrase&ntilde;a requerido"/>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="usuario_email" value="Correo:" class="DispBlock Wid100"/>                            
+                                    <p:inputText id="usuario_email" value="#{userAdminView.usuarioSeleccionado.email}" class="input_125"
+                                                 onkeypress="focusNextOnEnter(event, 'usuario_telefono')"/>
+                                </h:panelGroup> 
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="usuario_telefono" value="Tel&eacute;fono:" class="DispBlock Wid100"/>                            
+                                    <p:inputText id="usuario_telefono" value="#{userAdminView.usuarioSeleccionado.telefono}" class="input_125"
+                                                 onkeypress="focusNextOnEnter(event, 'usuario_sexo')"/>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block">
+                                    <p:outputLabel for="usuario_sexo" value="Sexo:" class="DispBlock Wid100"/>
+                                    <p:selectOneMenu id="usuario_sexo" value="#{userAdminView.usuarioSeleccionado.sexo}" class="select_100">
+                                        <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                        <f:selectItem itemLabel="Femenino" itemValue="F" />
+                                    </p:selectOneMenu>
+                                </h:panelGroup>
+                            </h:panelGrid>
+
+                            <h:panelGroup layout="block" class="Responsive Responsive100 Wid100">
+                                <h:panelGrid columns="1">
+                                    <h:panelGroup layout="block">
+                                        <p:outputLabel for="pickListRoles" value="Roles" class="DispBlock Wid100"/> 
+                                        <p:pickList id="pickListRoles" value="#{userAdminView.dualListModelRoles}" var="rol" 
+                                                    itemLabel="#{rol.rol}" itemValue="#{rol}" converter="rolConverter"/>
+                                    </h:panelGroup>                                
+                                </h:panelGrid>
+                            </h:panelGroup>                              
+
+                            <h:panelGroup layout="block">
+                                <p:commandButton id="crear-usuario-btn" 
+                                                 rendered="#{userAdminView.creandoUsuario}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Guardar"                                         
+                                                 actionListener="#{userAdminView.crearUsuario()}"
+                                                 update="user-list-form,user-form"/>
+                                <p:commandButton id="actualizar-usuario-btn" 
+                                                 rendered="#{userAdminView.editandoUsuario}"
+                                                 icon="fa fa-save" styleClass="white Fright" value="Actualizar"                                         
+                                                 actionListener="#{userAdminView.editUsuario()}"
+                                                 update="user-list-form,user-form"/>
+                                <p:commandButton id="cancelar-usuario-btn" 
+                                                 icon="fa fa-times" styleClass="white" value="Cancelar" actionListener="#{userAdminView.inicializarNuevoUsuario()}"                                        
+                                                 onclick="PF('usuarioDialog').hide();" update="user-list-form"
+                                                 />
+                            </h:panelGroup>
+                        </h:panelGrid>
+                    </h:panelGroup>
+
+
+                </h:form>
+            </h:panelGroup>
+        </p:dialog>
+
+    </ui:composition>
+</html>

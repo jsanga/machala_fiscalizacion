@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+
+    <ui:composition>
+
+        <p:panel>
+            <p:messages id="dibujoPredioMessages" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+
+            <h:outputStylesheet library="js" name="leaflet/leaflet.css" />
+            <h:outputScript library="js" name="leaflet/leaflet.js" />
+            <h:outputScript library="js" name="dibujoPredio.js" />
+            <div id="mapContainer" style="width: 600px; height: 500px; margin: 30px;">
+                <div id="map" >
+
+                </div>
+            </div>
+            <script>
+                // Crea un mapa y inicializa su posición y escala
+
+                var map = L.map('mapContainer', {
+                    zoom: 15,
+                    maxZoom: 19,
+                    //origin: [504557, 9755681],
+                    //crs: L.CRS.EPSG3857,
+                    //center: new L.LatLng(51.3, 0.7),
+                    //center: map_center,
+                    // center: new L.LatLng(-245633.38216222863,-9014064.264169712),
+                    center: [-2.2040006, -80.9665101, 14.25],
+                    //layers: [mapquestOSM, boroughs, markerClusters, highlight],
+                    zoomControl: true,
+                    attributionControl: true
+                });
+                // var map = L.map('mapContainer').setView([39.57, 3.0], 8);
+
+                // Crea capa openstreetmap y la añade al mapa
+
+                L.tileLayer.wms("http://localhost:8081/geoserver/Salinas/wms", {
+                    layers: 'Salinas:ortofoto',
+                    format: 'image/png',
+                    transparent: true,
+                    version: '1.1.0',
+                    attribution: "Ortofoto Salinas"
+                }).addTo(map);
+
+            </script>
+        </p:panel>
+    </ui:composition>
+</html>

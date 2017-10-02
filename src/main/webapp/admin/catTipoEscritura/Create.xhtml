@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CatTipoEscrituraCreateDlg" widgetVar="CatTipoEscrituraCreateDialog" modal="true" resizable="false" appendTo="@(content)" header="Crear tipo de escritura">
+            <h:form id="CatTipoEscrituraCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{catTipoEscrituraController.selected != null}">
+                        <p:outputLabel value="Codigo" for="codigo" />
+                        <p:inputText id="codigo" value="#{catTipoEscrituraController.selected.codigo}" title="Codigo" required="true" requiredMessage="Codigo requerido"/>
+                        <p:outputLabel value="Descripcion" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{catTipoEscrituraController.selected.descripcion}" title="Descripcion" required="true" requiredMessage="Descripcion requerida"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{catTipoEscrituraController.create}" value="Guardar" update="display,:CatTipoEscrituraListForm:datalist,:growl" oncomplete="handleSubmit(args,'CatTipoEscrituraCreateDialog');"/>
+                    <p:commandButton value="Cancelar" onclick="CatTipoEscrituraCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

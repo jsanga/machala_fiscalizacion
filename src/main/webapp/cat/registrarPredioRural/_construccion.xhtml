@@ -1,0 +1,707 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:var="http://xmlns.jcp.org/jsf/composite/components/predios">
+
+    <ui:composition>
+
+        <h:panelGroup layout="block" class="Responsive Container100 MarTop20 MarBot20">
+            <div class="Container100">
+                <h1 class="BigTopic Fs16">Otros tipos de construcci&oacute;n</h1>
+                <hr></hr>
+                <p:fieldset legend="Otros tipos de construcci&oacute;n" toggleable="true" toggleSpeed="500" >
+                    <h:panelGroup layout="block" class="Responsive Container100">
+                        <div class="ContainerIndent Container100">
+                            <h:panelGroup layout="block" class="actions" id="obras-complementarias-update">
+                                <p:commandButton title="Adicionar"
+                                                 id="nuevo-muro-btn"  styleClass="Fs16" update="obras-dlg,:obras-form"
+                                                 icon="fa fa-plus white" actionListener="#{regPredioRuralView.initNuevaObra()}"
+                                                 process="@this,obras-complementarias-update"
+                                                 value="Adicionar"
+                                                 class="Fleft" 
+                                                 oncomplete="PF('obrasDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                 style="margin-right: 10px; margin-bottom: 5px;"/>
+                                <p:commandButton title="Editar"
+                                                 id="edit-obra-btn"  styleClass="Fs16" update="obras-dlg,:obras-form"
+                                                 icon="fa fa-plus white" actionListener="#{regPredioRuralView.initEditObra()}"
+                                                 process="@this,obras-complementarias-update"
+                                                 value="Editar"
+                                                 disabled="#{regPredioRuralView.obrasComplementarias.size() == 0}"
+                                                 class="Fleft"
+                                                 oncomplete="PF('obrasDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                 style="margin-right: 10px; margin-bottom: 5px;"/>
+                                <p:commandButton title="Eliminar"
+                                                 id="eliminar-obra-btn" styleClass="Fs16"
+                                                 icon="fa fa-trash white" actionListener="#{regPredioRuralView.eliminarObra()}"
+                                                 class="Fleft"
+                                                 process="@this"
+                                                 update="obras-complementarias-list,obras-dataTable,obras-complementarias-update"
+                                                 disabled="#{regPredioRuralView.obrasComplementarias.size() == 0}"
+                                                 value="Eliminar">
+                                </p:commandButton>
+                            </h:panelGroup>
+                        </div>
+                        <div class="ContainerIndent Container100 MarBot10" id="obras-complementarias">
+                            <h:panelGroup layout="block" class="actions" id="obras-complementarias-list">
+                                <p:dataTable id="obras-dataTable" var="obra" value="#{regPredioRuralView.obrasComplementarias}" selection="#{regPredioRuralView.obraSeleccionada}" rowKey="#{obra.numero}" style="margin-bottom:0"
+                                             rows="5" paginator="true"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15"
+                                             paginatorPosition="bottom" selectionMode="single"
+                                             emptyMessage="No se han registrados otros tipos de construcciones.">
+
+                                    <p:ajax event="rowSelect" listener="#{regPredioRuralView.onRowSelectObra}" update="obras-form,obras-dataTable,obras-complementarias-update" />
+                                    <p:ajax event="rowUnselect" listener="#{regPredioRuralView.onRowUnselectObra}" update="obras-form,obras-dataTable,obras-complementarias-update" />
+                                    <p:column headerText="Tipo de construcci&oacute;n">
+                                        <h:outputText value="#{regPredioRuralView.nombreVariable(obra.variable)}"  />
+                                    </p:column>
+                                    <p:column headerText="Material/Construcci&oacute;n">
+                                        <h:outputText value="#{regPredioRuralView.nombreValorDiscreto(obra.variable, obra.tipoConstruccion, obra.estructura, obra.cubierta)}"  />
+                                    </p:column>
+                                    <p:column headerText="Valor">
+                                        <h:outputText value="#{obra.medida()}" escape="false" />                                       
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGroup>
+                        </div>
+                    </h:panelGroup>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container Wid100 MarTop20" rendered="#{regPredioRuralView.terreno.estado != 2}" >
+            <h:panelGroup layout="block" id="datosConstruccion"> 
+                <h1 class="BigTopic Fs16">Caracter&iacute;sticas de las edificaciones</h1>
+                <hr></hr>
+                <p:messages id="datosConstruccionMessages" showSummary="false" showDetail="true" autoUpdate="false" closable="true" />
+                <div class="Responsive Container50">
+                    <h:panelGroup id="bloque-list-form" layout="block" class="Container MarRight20">
+                        <p:fieldset legend="Bloques" toggleable="false" toggleSpeed="500" >
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="text-align: left;">
+                                            <p:selectOneMenu id="bloqueSelect" value="#{regPredioRuralView.bloqueSeleccionadoIndex}" style="width: 85%" required="#{regPredioRuralView.PH || regPredioRuralView.terreno.estado !=2}" requiredMessage="#{regPredioRuralView.PH ? 'Debe registrar al menos un bloque de construcci&oacute;n a una PH.' : 'Debe registrar al menos un bloque de construcci&oacute;n, no es un solar vacio.'}"> 
+                                                <p:ajax listener="#{regPredioRuralView.cambiarBloque}" update="bloque-list-form,piso-list-form,bloque-form" process="@this"/>
+                                                <c:forEach items="#{regPredioRuralView.bloques}" var="bloque" varStatus="loop">
+                                                    <f:selectItem itemValue="#{loop.index}" itemLabel="Bloque #{bloque.numeroBloque}" />
+                                                </c:forEach>
+                                            </p:selectOneMenu> 
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <p:commandButton id="eliminar-bloque-btn"                                                                             
+                                                             class="Fright"
+                                                             process="@this" 
+                                                             disabled="#{regPredioRuralView.bloqueSeleccionado == null}"
+                                                             update="bloque-list-form,piso-list-form,bloque-form"  
+                                                             icon="fa fa-trash white" action="#{regPredioRuralView.eliminarBloque()}" >
+                                                <p:confirm header="Confirmaci&oacute;n de eliminaci&oacute;n" message="Est&aacute; seguro de eliminar el Bloque #{regPredioRuralView.bloqueSeleccionado.numeroBloque} ?" icon="ui-icon-alert" />
+                                            </p:commandButton>
+                                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                                <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                                            </p:confirmDialog>
+                                            <p:commandButton id="editar-bloque-btn"
+                                                             update="bloque-list-form,piso-list-form,bloque-form" 
+                                                             disabled="#{regPredioRuralView.bloqueSeleccionado == null}"
+                                                             icon="fa fa-edit white" action="#{regPredioRuralView.inicializarActualizacionBloque()}"
+                                                             styleClass="Fright" />
+                                            <p:commandButton id="adicionar-bloque-btn"
+                                                             process="@this"
+                                                             update="bloque-list-form,piso-list-form,bloque-form,datosConstruccionMessages" 
+                                                             icon="fa fa-plus white" action="#{regPredioRuralView.inicializarNuevoBloque}"
+                                                             styleClass="Fright" />
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </p:fieldset>
+                    </h:panelGroup>
+                </div>
+                <div class="Responsive Container50">
+                    <h:panelGroup id="piso-list-form" layout="block" class="Container">
+                        <h:panelGroup layout="block" rendered="#{regPredioRuralView.creandoBloque or regPredioRuralView.editandoBloque}">
+                            <p:fieldset legend="Pisos" toggleable="false" toggleSpeed="500" >
+                                <table style="width: 100%;">
+                                    <tbody>
+                                        <tr>
+                                            <td style="text-align: right;">
+                                                <p:selectOneMenu id="pisoSelect" value="#{regPredioRuralView.pisoSeleccionadoIndex}"
+                                                                 disabled="#{(regPredioRuralView.creandoPiso or regPredioRuralView.editandoPiso)}"
+                                                                 style="width: 90%">   
+                                                    <p:ajax listener="#{regPredioRuralView.cambiarPiso}" update="piso-btns" process="@this,pisoSelect"/>
+
+                                                    <c:forEach items="#{regPredioRuralView.pisos}" var="piso" varStatus="loop">
+                                                        <f:selectItem itemValue="#{loop.index}" itemLabel="Piso-#{piso.numeroPiso} (#{piso.area} m&sup2;)" />
+                                                    </c:forEach>
+                                                </p:selectOneMenu>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:panelGroup layout="block" class="Container100" id="piso-btns"> 
+
+                                                    <p:commandButton id="eliminar-piso-btn"                                                                             
+                                                                     class="Fright"
+                                                                     disabled="#{empty regPredioRuralView.pisos}"
+                                                                     update="datosConstruccion,bloque-form,datosConstruccionMessages" 
+                                                                     process="@this"
+                                                                     icon="fa fa-trash white" action="#{regPredioRuralView.eliminarPiso()}" >
+                                                        <p:confirm header="Confirmaci&oacute;n de eliminaci&oacute;n" message="Est&aacute; seguro de eliminar el Piso #{regPredioRuralView.pisoSeleccionado.numeroPiso} del Bloque #{regPredioRuralView.bloqueSeleccionado.numeroBloque}?" icon="ui-icon-alert" />
+                                                    </p:commandButton>
+                                                    <p:commandButton id="editar-piso-btn" 
+                                                                     disabled="#{empty regPredioRuralView.pisos}"
+                                                                     class="Fright"
+                                                                     process="@this"
+                                                                     update="datos-piso-dlg,datosConstruccion,bloque-form,piso-list-form,datosConstruccionMessages" 
+                                                                     oncomplete="PF('datosPisoDialog').show();"
+                                                                     icon="fa fa-edit white" action="#{regPredioRuralView.inicializarActualizacionPiso}"
+                                                                     />
+                                                    <p:commandButton id="nuevo-piso-btn" 
+                                                                     class="Fright"
+                                                                     process="@this"
+                                                                     update="datos-piso-dlg,piso-list-form,datosConstruccionMessages,messages,bloque-form" 
+                                                                     icon="fa fa-plus white" action="#{regPredioRuralView.inicializarNuevoPiso}"
+
+                                                                     />
+                                                </h:panelGroup>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </p:fieldset>
+                        </h:panelGroup>
+                    </h:panelGroup>
+                </div>
+            </h:panelGroup>
+        </h:panelGroup>
+
+        <h:panelGroup class="Container Wid100" layout="block" id="bloque-form" style="margin-bottom: 30px;" rendered="#{regPredioRuralView.terreno.estado != 2}">
+            <h:panelGroup layout="block" rendered="#{(regPredioRuralView.creandoBloque or regPredioRuralView.editandoBloque)}">
+                <ui:include src="_caracteristicasBloque.xhtml"/>
+            </h:panelGroup>
+        </h:panelGroup>
+        <h:panelGroup class="Container Wid100" layout="block" style="margin-bottom: 30px;" rendered="#{regPredioRuralView.terreno.estado == 2}">
+            <h:panelGroup layout="block" >
+                <p:outputLabel  value="TERRENO ESTA MARCADO SIN EDIFICACI&Oacute;N, ES UN SOLAR VACIO" class="DispBlock Wid100 Fright"/>
+            </h:panelGroup>
+        </h:panelGroup>
+        <ui:include src="_formOtroTipoConstruccion.xhtml"/>
+        <h:panelGroup layout="block" class="Container100 Wid100 MarTop20" >
+            <div class="Container100">
+                <p:fieldset legend="Linderos y mensuras seg&uacute;n levantamiento en campo" toggleable="true" toggleSpeed="500" >
+                    <div class="Responsive Container50">
+                        <div class="ContainerIndent MarRight20">
+                            <h:panelGrid columns="4" class="linderoEscritura">
+                                <p:outputLabel for="terreno_norte_ref" value="Norte:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_norte_ref" value="#{regPredioRuralView.terreno.linNorteRef}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_norte_long')"
+                                             class="input_200 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_norte_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_norte_long" value="#{regPredioRuralView.terreno.linNorteLongitud}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_sur_ref')"                                          
+                                             class="input_160" style="margin-bottom: 8px;">
+                                    <p:ajax listener="#{regPredioRuralView.sumarLinderos(1)}" update="terreno_norte_long, terreno_perimetro"/>
+                                </p:inputText>
+                                <p:outputLabel for="terreno_sur_ref" value="Sur:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_sur_ref" value="#{regPredioRuralView.terreno.linSurRef}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_sur_long')"
+                                             class="input_200 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_sur_long" value="Con:" class="DispBlock Wid100"/>
+                                <p:inputText id="terreno_sur_long" value="#{regPredioRuralView.terreno.linSurLongitud}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_este_ref')"
+                                             class="input_160" style="margin-bottom: 8px;">
+                                    <p:ajax listener="#{regPredioRuralView.sumarLinderos(2)}" update="terreno_sur_long, terreno_perimetro"/>
+                                </p:inputText>                                
+                                <p:outputLabel for="terreno_este_ref" value="Este:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_este_ref" value="#{regPredioRuralView.terreno.linEsteRef}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_este_long')"
+                                             class="input_200 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_este_long" value="Con:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_este_long" value="#{regPredioRuralView.terreno.linEsteLongitud}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_oeste_ref')"
+                                             class="input_160" style="margin-bottom: 8px;">
+                                    <p:ajax listener="#{regPredioRuralView.sumarLinderos(3)}" update="terreno_este_long, terreno_perimetro"/>
+                                </p:inputText>
+                                <p:outputLabel for="terreno_oeste_ref" value="Oeste:" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="terreno_oeste_ref" value="#{regPredioRuralView.terreno.linOesteRef}"
+                                             onkeypress="focusNextOnEnter(event, 'terreno_oeste_long')"
+                                             class="input_200 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel for="terreno_oeste_long" value="Con:" class="DispBlock Wid100"/>
+                                <p:inputText id="terreno_oeste_long" value="#{regPredioRuralView.terreno.linOesteLongitud}"
+                                             onkeypress="focusNextOnEnter(event, 'ancho_via_r')"
+                                             class="input_160" style="margin-bottom: 8px;">
+                                    <p:ajax listener="#{regPredioRuralView.sumarLinderos(4)}" update="terreno_oeste_long, terreno_perimetro"/>
+                                </p:inputText>
+
+
+                            </h:panelGrid>
+                        </div>
+                    </div>
+                    <div class="Responsive Container50">
+                        <div class="ContainerIndent">
+                            <h:panelGrid columns="3" class="linderoEscritura">
+                                <p:outputLabel for="ancho_via_r" value="Ancho de vía:" class="DispBlock Wid100" />
+                                <p:inputText id="ancho_via_r" value="#{regPredioRuralView.terreno.anchoViaPuplica}"
+                                             onkeypress="validateFloatValueAndFocusNext(event, 'terreno_superficie')" 
+                                             class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel value="m&sup2;."/>
+                                <p:outputLabel for="terreno_superficie" value="Superficie:" class="DispBlock Wid100" />
+                                <p:inputText id="terreno_superficie" value="#{regPredioRuralView.terreno.areaLevantamiento}"
+                                             onkeypress="validateFloatValueAndFocusNext(event, 'frente_propiedad')" required="true"
+                                             class="input_160 MarRight10" style="margin-bottom: 8px;">
+                                    <p:ajax listener="#{regPredioRuralView.verificarAreaTerreno()}" event="blur"/>
+                                </p:inputText>
+                                <p:outputLabel value="m&sup2;."/>
+                                <p:outputLabel for="terreno_perimetro" value="Per&iacute;metro:&nbsp;" class="DispBlock Wid100" />
+                                <p:inputText id="terreno_perimetro" value="#{regPredioRuralView.terreno.perimetroLevantamiento}" disabled="true"
+                                             onkeypress="validateFloatValueAndFocusNext(event, 'frente_propiedad')"
+                                             class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel value="mts." />
+                                <p:outputLabel for="frente_propiedad" value="Frente de la propiedad:" class="DispBlock Wid100" />
+                                <p:inputText id="frente_propiedad" value="#{regPredioRuralView.terreno.frentePropiedad}"
+                                             onkeypress="validateFloatValueAndFocusNext(event, 'x_este')" required="true"
+                                             class="input_160 MarRight10" style="margin-bottom: 8px;"/>
+                                <p:outputLabel value="mts." />
+                            </h:panelGrid>
+                        </div>
+                    </div>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+        <h:panelGroup layout="block" class="Container100 Wid100 MarTop20" style="margin-bottom: 20px;">
+            <div class="Container100">
+                <p:fieldset legend="Sistema de coordenadas proyecci&oacute;n UTM DATUM WGS-84" toggleable="true" toggleSpeed="500" >
+                    <div class="Responsive Container100">
+                        <h1 class="BigTopic Fs15">Coordenada centroide del predio</h1>
+                        <hr></hr>
+                        <div class="ContainerIndent MarRight20">
+                            <h:panelGrid columns="4" class="linderoEscritura">
+                                <p:outputLabel for="x_este" value="X (Este):" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="x_este" value="#{regPredioRuralView.terreno.cordX}"
+                                             onkeypress="focusNextOnEnter(event, 'y_norte')"
+                                             class="input_300 MarRight10" style="margin-bottom: 8px; margin-right: 30px;"/>
+                                <p:outputLabel for="y_norte" value="Y (Norte):" class="DispBlock Wid100 Fright"/>
+                                <p:inputText id="y_norte" value="#{regPredioRuralView.terreno.cordY}"
+                                             onkeypress="focusNextOnEnter(event, 'wiz_next')"
+                                             class="input_300" style="margin-bottom: 8px;"/>
+                            </h:panelGrid>
+                        </div>
+                    </div>
+                </p:fieldset>
+            </div>
+        </h:panelGroup>
+
+        <!-- -->
+
+        <h:panelGroup id="idPanelListas" layout="block" class="Container100 Wid100 MarTop20" style="margin-bottom: 20px; width: 100%">
+            
+            <div class="Container100">
+                <p:panelGrid columns="2" style="width: 100%">
+                    <p:fieldset legend="Clase de tierra" toggleable="true" toggleSpeed="500" >
+                        <div class="Responsive Container100">
+                            <p:panelGrid columns="1">
+                                <h:panelGroup layout="block" class="actions" id="clases_de_tierra">
+                                    <p:commandButton title="Adicionar"
+                                                     id="nuevo-muro-btn1"  styleClass="Fs16" 
+                                                     icon="fa fa-plus white" actionListener="#{regPredioRuralView.iniciarTerrenoClases(1)}"
+                                                     process="@this"
+                                                     value="Adicionar"
+                                                     class="Fleft"
+                                                     oncomplete="PF('datosTerrenoDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                     style="margin-right: 10px; margin-bottom: 5px;"/>
+                                    <p:commandButton title="Eliminar"
+                                                     id="eliminar-muro-btn1"  styleClass="Fs16" 
+                                                     icon="fa fa-trash white" actionListener="#{regPredioRuralView.eliminarClaseTerreno(1)}"
+                                                     process="@this"
+                                                     value="Eliminar"
+                                                     class="Fleft"
+                                                     disabled="#{regPredioRuralView.getListClases(1).size() == 0}"
+                                                     style="margin-right: 10px; margin-bottom: 5px;">
+                                    </p:commandButton>
+                                </h:panelGroup>
+                            </p:panelGrid>
+                            <p:dataTable id="dtClaseTierra" value="#{regPredioRuralView.getListClases(1)}" var="v"
+                                         selectionMode="single" rowKey="#{v.idTemporal}" selection="#{regPredioRuralView.terrenoClaseSel}">
+                                <p:ajax event="rowSelect" listener="#{regPredioRuralView.onRowSelectClaseTierra}"/>
+                                <p:column headerText="Código" style="text-align: center;">
+                                    #{v.claseTierra}
+                                </p:column>
+                                <p:column headerText="Clase" style="text-align: center;">
+                                    #{regPredioRuralView.getTextoValorDiscreto(169, v.claseTierra).split('-')[0]}
+                                </p:column>
+                                <p:column headerText="Nombre" style="text-align: center;">
+                                    #{regPredioRuralView.getTextoValorDiscreto(169, v.claseTierra).split('-')[1]}
+                                </p:column>                                
+                                <p:column headerText="Superficie" style="text-align: center;">
+                                    <h:outputText value="#{v.superficie} #{v.tipoSuperficie==1 ? 'm².(s)' : v.tipoSuperficie==2 ? 'ha.(s)' : 'Km.²(s)'}" style="text-transform: lowercase"/>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:fieldset>
+                    <p:fieldset legend="Cultivos Anuales y Semiperennes" toggleable="true" toggleSpeed="500" >
+                        <div class="Responsive Container100">
+                            <p:panelGrid columns="1">
+                                <h:panelGroup layout="block" class="actions" id="cultivos_anuales">
+                                    <p:commandButton title="Adicionar"
+                                                     id="nuevo-muro-btn2"  styleClass="Fs16" 
+                                                     icon="fa fa-plus white" actionListener="#{regPredioRuralView.iniciarTerrenoClases(2)}"
+                                                     process="@this"
+                                                     value="Adicionar"
+                                                     class="Fleft"
+                                                     oncomplete="PF('datosTerrenoDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                     style="margin-right: 10px; margin-bottom: 5px;"/>
+                                    <p:commandButton title="Eliminar"
+                                                     id="eliminar-muro-btn2"  styleClass="Fs16" 
+                                                     icon="fa fa-trash white" actionListener="#{regPredioRuralView.eliminarClaseTerreno(2)}"
+                                                     process="@this"
+                                                     value="Eliminar"
+                                                     class="Fleft"
+                                                     disabled="#{regPredioRuralView.getListClases(2).size() == 0}"
+                                                     style="margin-right: 10px; margin-bottom: 5px;">
+                                    </p:commandButton>
+                                </h:panelGroup>
+                            </p:panelGrid>
+                            <p:dataTable id="dtCultAnuales" value="#{regPredioRuralView.getListClases(2)}" var="v"
+                                         selectionMode="single" rowKey="#{v.idTemporal}" selection="#{regPredioRuralView.terrenoClaseSel}">
+                                <p:ajax event="rowSelect" listener="#{regPredioRuralView.onRowSelectClaseTierra}"/>
+                                <p:column headerText="Código" style="text-align: center;">
+                                    #{v.cultivosAnuales}
+                                </p:column>
+                                <p:column headerText="Clase" style="text-align: center;">
+                                    #{regPredioRuralView.getTextoValorDiscreto(119, v.clase)}
+                                </p:column>
+                                <p:column headerText="Nombre" style="text-align: center;">
+                                    #{regPredioRuralView.getTextoValorDiscreto(170, v.cultivosAnuales)}
+                                </p:column>                                
+                                <p:column headerText="Superficie" style="text-align: center;">
+                                    <h:outputText value="#{v.superficie} #{v.tipoSuperficie==1 ? 'm².(s)' : v.tipoSuperficie==2 ? 'ha.(s)' : 'Km.²(s)'}" style="text-transform: lowercase"/>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:fieldset>
+                    <p:fieldset legend="Plantaciones (Cultivos Perennes)" toggleable="true" toggleSpeed="500" >
+                        <div class="Responsive Container100">
+                            <p:panelGrid columns="1">
+                                <h:panelGroup layout="block" class="actions" id="cultivos_perennes">
+                                    <p:commandButton title="Adicionar"
+                                                     id="nuevo-muro-btn3"  styleClass="Fs16" update="obras-dlg,:obras-form"
+                                                     icon="fa fa-plus white" actionListener="#{regPredioRuralView.iniciarTerrenoClases(3)}"
+                                                     process="@this,obras-complementarias-update"
+                                                     value="Adicionar"
+                                                     class="Fleft"
+                                                     oncomplete="PF('datosTerrenoDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                     style="margin-right: 10px; margin-bottom: 5px;"/>     
+                                    <p:commandButton title="Eliminar"
+                                                     id="eliminar-muro-btn3"  styleClass="Fs16" 
+                                                     icon="fa fa-trash white" actionListener="#{regPredioRuralView.eliminarClaseTerreno(3)}"
+                                                     process="@this"
+                                                     value="Eliminar"
+                                                     class="Fleft"
+                                                     disabled="#{regPredioRuralView.getListClases(3).size() == 0}"
+                                                     style="margin-right: 10px; margin-bottom: 5px;">
+                                    </p:commandButton>
+                                </h:panelGroup>
+                            </p:panelGrid>
+                            <p:dataTable id="dtCultPerennes" value="#{regPredioRuralView.getListClases(3)}" var="v"
+                                         selectionMode="single" rowKey="#{v.idTemporal}" selection="#{regPredioRuralView.terrenoClaseSel}">
+                                <p:ajax event="rowSelect" listener="#{regPredioRuralView.onRowSelectClaseTierra}"/>
+                                <p:column headerText="Código" style="text-align: center;">
+                                    #{v.cultivosPerennes}
+                                </p:column>
+                                <p:column headerText="Clase" style="text-align: center;">
+                                    #{regPredioRuralView.getTextoValorDiscreto(119, v.clase)}
+                                </p:column>
+                                <p:column headerText="Nombre" style="text-align: center;">
+                                    #{regPredioRuralView.getTextoValorDiscreto(171, v.cultivosPerennes)}
+                                </p:column>                                
+                                <p:column headerText="Superficie" style="text-align: center;">
+                                    <h:outputText value="#{v.superficie} #{v.tipoSuperficie==1 ? 'm².(s)' : v.tipoSuperficie==2 ? 'ha.(s)' : 'Km.²(s)'}" style="text-transform: lowercase"/>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:fieldset>
+                    <p:fieldset legend="Plantaciones Forestales" toggleable="true" toggleSpeed="500" >
+                        <div class="Responsive Container100">
+                            <p:panelGrid columns="1">
+                                <h:panelGroup layout="block" class="actions" id="plantaciones_forestales">
+                                    <p:commandButton title="Adicionar"
+                                                     id="nuevo-muro-btn4"  styleClass="Fs16" update="obras-dlg,:obras-form"
+                                                     icon="fa fa-plus white" actionListener="#{regPredioRuralView.iniciarTerrenoClases(4)}"
+                                                     process="@this,obras-complementarias-update"
+                                                     value="Adicionar"
+                                                     class="Fleft"
+                                                     oncomplete="PF('datosTerrenoDialog').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                     style="margin-right: 10px; margin-bottom: 5px;"/>                    
+                                    <p:commandButton title="Eliminar"
+                                                     id="eliminar-muro-btn4"  styleClass="Fs16" 
+                                                     icon="fa fa-trash white" actionListener="#{regPredioRuralView.eliminarClaseTerreno(4)}"
+                                                     process="@this"
+                                                     value="Eliminar"
+                                                     class="Fleft"
+                                                     disabled="#{regPredioRuralView.getListClases(4).size() == 0}"
+                                                     style="margin-right: 10px; margin-bottom: 5px;">
+                                    </p:commandButton>
+                                </h:panelGroup>
+                            </p:panelGrid>
+                            <p:dataTable id="dtForestales" value="#{regPredioRuralView.getListClases(4)}" var="v"
+                                         selectionMode="single" rowKey="#{v.idTemporal}" selection="#{regPredioRuralView.terrenoClaseSel}">
+                                <p:ajax event="rowSelect" listener="#{regPredioRuralView.onRowSelectClaseTierra}"/>
+                                <p:column headerText="Código" style="text-align: center;">
+                                    #{v.plantacionesForestales}
+                                </p:column>
+                                <p:column headerText="Clase" style="text-align: center;">
+                                    #{regPredioRuralView.getTextoValorDiscreto(119, v.clase)}
+                                </p:column>
+                                <p:column headerText="Nombre" style="text-align: center;">
+                                    #{regPredioRuralView.getTextoValorDiscreto(172, v.plantacionesForestales)}
+                                </p:column>                                
+                                <p:column headerText="Superficie" style="text-align: center;">
+                                    <h:outputText value="#{v.superficie} #{v.tipoSuperficie==1 ? 'm².(s)' : v.tipoSuperficie==2 ? 'ha.(s)' : 'Km.²(s)'}" style="text-transform: lowercase"/>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:fieldset>
+                    <p:fieldset legend="Semovientes" toggleable="true" toggleSpeed="500" >
+                        <div class="Responsive Container100">
+                            <p:panelGrid columns="1">
+                                <h:panelGroup layout="block" class="actions" id="semovientes">
+                                    <p:commandButton title="Adicionar"
+                                                     id="nuevo-muro-btn5"  styleClass="Fs16" update="obras-dlg,:obras-form"
+                                                     icon="fa fa-plus white" actionListener="#{regPredioRuralView.iniciarTerrenoClases(5)}"
+                                                     process="@this,obras-complementarias-update"
+                                                     value="Adicionar"
+                                                     class="Fleft"
+                                                     oncomplete="PF('datosTerrenoDialog2').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                     style="margin-right: 10px; margin-bottom: 5px;"/>   
+                                    <p:commandButton title="Eliminar"
+                                                     id="eliminar-muro-btn5"  styleClass="Fs16" 
+                                                     icon="fa fa-trash white" actionListener="#{regPredioRuralView.eliminarClaseTerreno(5)}"
+                                                     process="@this"
+                                                     value="Eliminar"
+                                                     class="Fleft"
+                                                     disabled="#{regPredioRuralView.getListClases(5).size() == 0}"
+                                                     style="margin-right: 10px; margin-bottom: 5px;">
+                                    </p:commandButton>
+                                </h:panelGroup>
+                            </p:panelGrid>
+                            <p:dataTable id="dtSemovientes" value="#{regPredioRuralView.getListClases(5)}" var="v"
+                                         selectionMode="single" rowKey="#{v.idTemporal}" selection="#{regPredioRuralView.terrenoClaseSel}">
+                                <p:ajax event="rowSelect" listener="#{regPredioRuralView.onRowSelectClaseTierra}"/>
+                                <p:column headerText="Código" style="text-align: center;">
+                                    #{v.semovientes}
+                                </p:column>
+                                <p:column headerText="Especie" style="text-align: center;">
+
+                                </p:column>
+                                <p:column headerText="Nombre" style="text-align: center;">
+                                    #{regPredioRuralView.getTextoValorDiscreto(173, v.semovientes)}
+                                </p:column>   
+                                <p:column headerText="Clase" style="text-align: center;">
+                                    #{regPredioRuralView.getTextoValorDiscreto(120, v.clase)}
+                                </p:column>
+                                <p:column headerText="Superficie" style="text-align: center;">
+                                    <h:outputText value="#{v.superficie} #{v.tipoSuperficie==1 ? 'm².(s)' : v.tipoSuperficie==2 ? 'ha.(s)' : 'Km.²(s)'}" style="text-transform: lowercase"/>
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                    </p:fieldset>
+                    <p:fieldset legend="Aves de corral" toggleable="true" toggleSpeed="500" >
+                        <div class="Responsive Container100">
+                            <p:panelGrid columns="1">
+                                <h:panelGroup layout="block" class="actions" id="aves_corral">
+                                    <p:commandButton title="Adicionar"
+                                                     id="nuevo-muro-btn6"  styleClass="Fs16" update="obras-dlg,:obras-form"
+                                                     icon="fa fa-plus white" actionListener="#{regPredioRuralView.iniciarTerrenoClases(6)}"
+                                                     process="@this,obras-complementarias-update"
+                                                     value="Adicionar"
+                                                     class="Fleft"
+                                                     oncomplete="PF('datosTerrenoDialog2').show();$('.ui-state-error').removeClass('ui-state-error');"
+                                                     style="margin-right: 10px; margin-bottom: 5px;"/>  
+                                    <p:commandButton title="Eliminar"
+                                                     id="eliminar-muro-btn6"  styleClass="Fs16" 
+                                                     icon="fa fa-trash white" actionListener="#{regPredioRuralView.eliminarClaseTerreno(6)}"
+                                                     process="@this"
+                                                     value="Eliminar"
+                                                     class="Fleft"
+                                                     disabled="#{regPredioRuralView.getListClases(6).size() == 0}"
+                                                     style="margin-right: 10px; margin-bottom: 5px;">
+                                    </p:commandButton>
+                                </h:panelGroup>
+                                <p:dataTable id="dtAvesCorral" value="#{regPredioRuralView.getListClases(6)}" var="v"
+                                             selectionMode="single" rowKey="#{v.idTemporal}" selection="#{regPredioRuralView.terrenoClaseSel}">
+                                    <p:ajax event="rowSelect" listener="#{regPredioRuralView.onRowSelectClaseTierra}"/>
+                                    <p:column headerText="Código" style="text-align: center;">
+                                        #{v.avesDeCorral}
+                                    </p:column>
+                                    <p:column headerText="Especie" style="text-align: center;">
+                                    </p:column>
+                                    <p:column headerText="Nombre" style="text-align: center;">
+                                        #{regPredioRuralView.getTextoValorDiscreto(174, v.avesDeCorral)}
+                                    </p:column>   
+                                    <p:column headerText="Clase" style="text-align: center;">
+                                        #{regPredioRuralView.getTextoValorDiscreto(120, v.clase)}
+                                    </p:column>
+                                    <p:column headerText="Superficie" style="text-align: center;">
+                                        <h:outputText value="#{v.superficie} #{v.tipoSuperficie==1 ? 'm².(s)' : v.tipoSuperficie==2 ? 'ha.(s)' : 'Km.²(s)'}" style="text-transform: lowercase"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panelGrid>
+                        </div>
+                    </p:fieldset>
+                </p:panelGrid>
+            </div>
+        </h:panelGroup>
+
+
+        <!-- -->
+
+        <p:dialog id="datos-terreno-tipo1" widgetVar="datosTerrenoDialog" 
+                  modal="true" resizable="false" width="60%"
+                  header="#{regPredioRuralView.headerTextDialog}" appendTo="@(body)">   
+            <h:form id="datos-terreno-form1" prependId="false">
+                <p:panelGrid columns="#{regPredioRuralView.columna == 'clase_de_tierra' ? 3 : 4}" layout="grid">
+                    <h:panelGroup layout="block">
+                        <var:varDisInputText id="id_var_input1" label="Descripción"
+                                             table="cat_terreno" column="#{regPredioRuralView.columna}"
+                                             bind="#{regPredioRuralView.claseTipoTerreno}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             update="id_var_input3"
+                                             changeOnEnter="true"
+                                             next="id_var_input3:cat_terreno-clase_tierra-input"
+                                             labelPosition="top"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{regPredioRuralView.columna != 'clase_de_tierra'}">
+                        <var:varDisInputText id="id_var_input3" label="Clase:"
+                                             table="cat_terreno" column="clase_tierra"
+                                             bind="#{regPredioRuralView.claseTerreno.clase}"
+                                             showlabel="true"
+                                             next="superficie"
+                                             defaultValue="2"
+                                             changeOnEnter="true"
+                                             labelPosition="top"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="superficie" value="Superficie" class="form-field-label"/>
+                        <p:inputText id="superficie" value="#{regPredioRuralView.claseTerreno.superficie}"
+                                     class="input_125" onkeypress="validateFloatValueAndFocusNext(event, 'unidades2:comun-unidad_area-input')">
+                            <p:ajax update="superficie"/>
+                        </p:inputText>
+                    </h:panelGroup>
+                    <h:panelGroup layout="grid" rendered="true">
+                        <var:varDisInputText id="unidades2" label="Unidad Superficie"
+                                             table="comun" column="unidad_area"
+                                             bind="#{regPredioRuralView.claseTerreno.tipoSuperficie}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             next="add-clase-terreno"
+                                             changeOnEnter="true"
+                                             labelPosition="top"/>
+                    </h:panelGroup>
+                </p:panelGrid>
+                <p:panelGrid columns="2">
+                    <p:row>
+                        <p:column>
+                            <h:panelGrid></h:panelGrid>
+                        </p:column>
+                        <p:column>
+                            <h:panelGrid></h:panelGrid>
+                        </p:column>
+                        <p:column style="margin-right: 20px;">
+                            <p:commandButton value="Cancelar" id="cancelarDlg"  icon="fa fa-ban"
+                                             onclick="PF('datosTerrenoDialog').hide();"
+                                             class="white"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton id="add-clase-terreno" style="margin-left: 50px;"
+                                             icon="fa fa-save" styleClass="white Fright" value="Guardar"
+                                             process="@this"
+                                             actionListener="#{regPredioRuralView.agregarClaseTerreno()}"/>
+
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+
+        <!-- -->
+
+        <p:dialog id="datos-terreno-tipo2" widgetVar="datosTerrenoDialog2" 
+                  modal="true" resizable="false" width="60%"
+                  header="#{regPredioRuralView.headerTextDialog}">   
+            <h:form id="datos-terreno-form2" prependId="false">
+                <p:panelGrid columns="4" layout="grid">
+                    <h:panelGroup layout="block">
+                        <var:varDisInputText id="id_var_input2" label="Descripción"
+                                             table="cat_terreno" column="#{regPredioRuralView.columna}"
+                                             bind="#{regPredioRuralView.claseTipoTerreno}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             next="id_var_input4:cat_terreno-clase_semovientes-input"
+                                             changeOnEnter="true"
+                                             labelPosition="top"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <var:varDisInputText id="id_var_input4" label="Clase:"
+                                             table="cat_terreno" column="clase_semovientes"
+                                             bind="#{regPredioRuralView.claseTerreno.clase}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             next="cantidad"
+                                             changeOnEnter="true"
+                                             labelPosition="top"/>
+                    </h:panelGroup>
+                    <h:panelGroup layout="block">
+                        <p:outputLabel for="cantidad" value="Cantidad:" class="form-field-label"/>
+                        <p:inputText id="cantidad" value="#{regPredioRuralView.claseTerreno.cantidad}"
+                                     class="input_125" onkeypress="validateIntegerValueAndFocusNextComponent(event, 'cantidad')">
+                            <p:ajax update="datos-terreno-form2"/>
+                        </p:inputText>
+                    </h:panelGroup>
+                    <h:panelGroup layout="grid" rendered="true">
+                        <var:varDisInputText id="unidades" label="Unidades"
+                                             table="comun" column="unidad_cantidad"
+                                             bind="#{regPredioRuralView.claseTerreno.tipoSuperficie}"
+                                             showlabel="true"
+                                             defaultValue="1"
+                                             changeOnEnter="true"
+                                             labelPosition="top"/>
+                    </h:panelGroup>
+                </p:panelGrid>
+                <p:panelGrid columns="2">
+                    <p:row>
+                        <p:column>
+                            <h:panelGrid></h:panelGrid>
+                        </p:column>
+                        <p:column>
+                            <h:panelGrid></h:panelGrid>
+                        </p:column>
+                        <p:column style="margin-right: 20px;">
+                            <p:commandButton value="Cancelar" id="cancelarDlg2"  icon="fa fa-ban"
+                                             onclick="PF('datosTerrenoDialog2').hide();"
+                                             class="white"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton id="add-clase-terreno2" style="margin-left: 50px;"
+                                             icon="fa fa-save" styleClass="white Fright" value="Guardar"
+                                             process="@this"
+                                             actionListener="#{regPredioRuralView.agregarClaseTerreno()}"/>
+
+                        </p:column>
+                    </p:row>
+
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+    </ui:composition>
+</html>
